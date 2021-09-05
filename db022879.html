@@ -1,0 +1,1412 @@
+<!DOCTYPE html><html class="theme-next pisces use-motion" lang="zh-Hans"><head>
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+  
+  
+    
+    
+  <script src="/lib/pace/pace.min.js?v=1.0.2"></script>
+  <link href="/lib/pace/pace-theme-minimal.min.css?v=1.0.2" rel="stylesheet">
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Monda:300,300italic,400,400italic,700,700italic|Roboto Slab:300,300italic,400,400italic,700,700italic|Lobster Two:300,300italic,400,400italic,700,700italic|PT Mono:300,300italic,400,400italic,700,700italic&amp;subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/logo.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/logo-32-32.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/logo-16-16.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.png?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="多线程,">
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="吕小医&amp;BLOG" type="application/atom+xml">
+
+
+
+
+
+
+<meta name="description" content="知识点计算机组成">
+<meta property="og:type" content="article">
+<meta property="og:title" content="volatile的底层实现">
+<meta property="og:url" content="https://lvxiaoyi.top/db022879.html">
+<meta property="og:site_name" content="吕小医&amp;BLOG">
+<meta property="og:description" content="知识点计算机组成">
+<meta property="og:locale">
+<meta property="og:image" content="https://typora-lvxiaoyi.oss-cn-beijing.aliyuncs.com/typora-img/image-20210827154138917.png">
+<meta property="og:image" content="https://typora-lvxiaoyi.oss-cn-beijing.aliyuncs.com/typora-img/image-20210827154320590.png">
+<meta property="og:image" content="c:/Users/Think/AppData/Roaming/Typora/typora-user-images/image-20210826203900185.png">
+<meta property="og:image" content="c:/Users/Think/AppData/Roaming/Typora/typora-user-images/image-20210826204905874.png">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20200615155252495.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzIyMDc1OTEz,size_16,color_FFFFFF,t_70">
+<meta property="og:image" content="https://typora-lvxiaoyi.oss-cn-beijing.aliyuncs.com/typora-img/20200615160905272.png">
+<meta property="og:image" content="https://typora-lvxiaoyi.oss-cn-beijing.aliyuncs.com/typora-img/20200615142955206.png">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20200615161340679.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzIyMDc1OTEz,size_16,color_FFFFFF,t_70">
+<meta property="article:published_time" content="2021-09-05T10:41:50.965Z">
+<meta property="article:modified_time" content="2021-09-05T10:41:50.965Z">
+<meta property="article:author" content="吕小医">
+<meta property="article:tag" content="多线程">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://typora-lvxiaoyi.oss-cn-beijing.aliyuncs.com/typora-img/image-20210827154138917.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":true,"scrollpercent":true,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://lvxiaoyi.top/db022879.html">
+
+
+
+
+
+  <title>volatile的底层实现 | 吕小医&amp;BLOG</title>
+  
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?595ca75132ee34c50833c66069598b95";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+  <meta name="baidu-site-verification" content="code-ZVblDGWMtI">
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">吕小医&amp;BLOG</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">good good study</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://lvxiaoyi.top/db022879.html">
+
+    <span hidden="" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.png">
+    </span>
+
+    <span hidden="" itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="吕小医&amp;BLOG">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">volatile的底层实现</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+		  
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2021-09-05T18:41:50+08:00">
+                2021-09-05
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%A4%9A%E7%BA%BF%E7%A8%8B/" itemprop="url" rel="index">
+                    <span itemprop="name">多线程</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%A4%9A%E7%BA%BF%E7%A8%8B/%E5%A4%9A%E7%BA%BF%E7%A8%8B%E7%90%86%E8%AE%BA%E7%AF%87/" itemprop="url" rel="index">
+                    <span itemprop="name">多线程理论篇</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-file-o"></i>
+            <span class="busuanzi-value" id="busuanzi_value_page_pv"></span>次
+            </span>
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计:</span>
+                
+                <span title="字数统计">
+                  2.3k
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 ≈</span>
+                
+                <span title="阅读时长">
+                  8
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="知识点"><a href="#知识点" class="headerlink" title="知识点"></a>知识点</h1><h2 id="计算机组成"><a href="#计算机组成" class="headerlink" title="计算机组成"></a>计算机组成</h2><p><img src="https://typora-lvxiaoyi.oss-cn-beijing.aliyuncs.com/typora-img/image-20210827154138917.png" alt="image-20210827154138917"><span id="more"></span></p>
+<h2 id="cpu读取数据"><a href="#cpu读取数据" class="headerlink" title="cpu读取数据"></a>cpu读取数据</h2><ol>
+<li><p>三级缓存</p>
+</li>
+<li><p>cpu读取数据的时候，先从寄存器中读取数据，如果没有然后从L1（一级缓存）中读取数据，如果没有然后从L2（二级缓存总读取数据），如果没有然后从L3中读取数据，L3中没有，从内存中读取数据，内存中还没有从磁盘中读取数据，拿到数据后在一级一级放回（L3到L2到L1到寄存器）</p>
+<p><img src="https://typora-lvxiaoyi.oss-cn-beijing.aliyuncs.com/typora-img/image-20210827154320590.png" alt="image-20210827154320590"></p>
+</li>
+</ol>
+<h2 id="cpu线程切换"><a href="#cpu线程切换" class="headerlink" title="cpu线程切换"></a>cpu线程切换</h2><ol>
+<li>每个线程独占cpu寄存器中的数据，当第二个线程执行的之后，把寄存器中的数据保存起来，然后读取第二个线程的数据到寄存器，然后执行第二个线程</li>
+<li>一核两线程cpu是，一核内有两个寄存器，在两个线程切换的时候，不需要切换寄存器中的数据</li>
+</ol>
+<img src="C:/Users/Think/AppData/Roaming/Typora/typora-user-images/image-20210826203900185.png" alt="image-20210826203900185" style="zoom:50%;">
+
+<h2 id="cpu缓存意义"><a href="#cpu缓存意义" class="headerlink" title="cpu缓存意义"></a>cpu缓存意义</h2><ul>
+<li><p>时间局部性：如果某个数据被访问，那么在不久的将来它很有可能会被再次访问。</p>
+</li>
+<li><p>空间局部性：如果某个数据被访问，那么与它相邻的数据很快也能被访问。</p>
+<h2 id="缓存行"><a href="#缓存行" class="headerlink" title="缓存行"></a>缓存行</h2></li>
+</ul>
+<h3 id="按块预读取（也叫缓存行）（cache-line）"><a href="#按块预读取（也叫缓存行）（cache-line）" class="headerlink" title="按块预读取（也叫缓存行）（cache line）"></a>按块预读取（也叫缓存行）（cache line）</h3><p>缓存在读取的数据的时候并不是只拿需要的数据，这样缓存的意义也就没有了，获取一个数据的时候，其周边的数据也会顺便拿过来，这如果当这个数据执行完成后，马上会旁边的数据的情况下，可以立即从最近的缓存中直接拿到，而不用再次逐级读取</p>
+<p>缓存行经过实践后一般缓存行大小为<strong>64BIt(字节)</strong></p>
+<img src="C:/Users/Think/AppData/Roaming/Typora/typora-user-images/image-20210826204905874.png" alt="image-20210826204905874" style="zoom:50%;">
+
+<h3 id="缓存一致性："><a href="#缓存一致性：" class="headerlink" title="缓存一致性："></a>缓存一致性：</h3><p>两个核一个用到了x，一个用到了y，但是都把周边的数据读取到了缓存中，当核1执行完x的逻辑后，接着执行y的逻辑，这个时候两个核内的数据并没有同步，这个就是</p>
+<h4 id="解决方案"><a href="#解决方案" class="headerlink" title="解决方案"></a>解决方案</h4><h5 id="intel的cpu"><a href="#intel的cpu" class="headerlink" title="intel的cpu"></a>intel的cpu</h5><p>因特尔通常使用MESI协议保证缓存一致性。也就是一个核对数据更改后，通知另一个cpu把这个数据状态改为<code>Invalid</code>状态，然后该核执行的时候要到缓存中再次读取数据。</p>
+<p>推荐文章：<a target="_blank" rel="noopener" href="https://www.cnblogs.com/z00377750/p/9180644.html">https://www.cnblogs.com/z00377750/p/9180644.html</a></p>
+<p>然后项目在运行过程中，如果有大量的这样的缓存行，高并发情况下<strong>频繁写</strong>会造成效率的降低。</p>
+<h5 id="解决方案：缓存行对齐"><a href="#解决方案：缓存行对齐" class="headerlink" title="解决方案：缓存行对齐"></a>解决方案：缓存行对齐</h5><p>让X和Y这个连个数据不在一个缓存行中，及在XY数据中间添加无用的数据，这样反而在高并发情况下<strong>频繁写</strong>会增加运行效率。</p>
+<p>例如：</p>
+<ul>
+<li><p>disruptor（世界上最快的单机MQ）中的RingBuffer；</p>
+</li>
+<li><p>jdk1.7中的集合</p>
+<figure class="highlight java"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">LongWithPadding</span> </span>{</span><br><span class="line">	<span class="keyword">long</span> value;<span class="comment">//8个字节</span></span><br><span class="line">	<span class="keyword">long</span> p0, p1, p2, p3, p4, p5, p6;<span class="comment">//7*8=56个字节，然后下一个value必然独占一个缓存行</span></span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure></li>
+</ul>
+<p>然后在jdk1.8中添加了一个注解<code>@sun.misc.Contended</code>，对某字段加上该注解则表示该字段会单独占用一个<strong>缓存行</strong>（Cache Line）</p>
+<h5 id="适用场景"><a href="#适用场景" class="headerlink" title="适用场景"></a>适用场景</h5><p>主要适用于<strong>频繁写</strong>的<strong>共享数据</strong>上。如果不是频繁写的数据，那么 CPU 缓存行被锁的几率就不多，所以没必要使用了，否则不仅占空间还会浪费 CPU 访问操作数据的时间。</p>
+<h2 id="java线程内存模型"><a href="#java线程内存模型" class="headerlink" title="java线程内存模型"></a>java线程内存模型</h2><ul>
+<li>java线程内存模型和CPU缓存模型类似，是基于CPU缓存模型来建立的，<br>java线程内存模型是标准化的，屏蔽掉了底层不同计算机的区别。</li>
+</ul>
+<p><img src="https://img-blog.csdnimg.cn/20200615155252495.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzIyMDc1OTEz,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"></p>
+<h2 id="重排序"><a href="#重排序" class="headerlink" title="重排序"></a>重排序</h2><p>重排序是cpu内部的优化过程。</p>
+<p>加入有三条指令，指令1，指令2，指令3；如果顺序执行，我必须等待指令1执行完毕，然后才能执行指令3，这样如果指令1在等待有个状态，就会造成cpu资源利用率下降。所以在执行指令1的通知，也可以执行执行2，指令3，只要保证最后执行的结果是争取的，那么这个就是可以的</p>
+<p>在java中这个是非常常见的，例如有一个程序</p>
+<figure class="highlight java"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span>(isStart) {</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &gt; <span class="number">100000L</span>; i++){</span><br><span class="line">		i = (i + <span class="number">9</span>) / <span class="number">3</span>; </span><br><span class="line">	}</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
+<p>这个并不是等待if（isStart）判断为ture后，才开始执行里面的for循环，在指令重排后，有可能是里面的for循环先执行，然后执行到一半后在进行判断，如果这个判断为false，则丢弃这个计算for循环的结果。这个指令重排是cpu内部做的，为的就是提高效率</p>
+<h2 id="内存屏障"><a href="#内存屏障" class="headerlink" title="内存屏障"></a>内存屏障</h2><p>一旦内存数据被推送到缓存，就会有消息协议来确保所有的缓存会对所有的共享数据同步并保持一致。这个使内存数据对CPU核可见的技术被称为<strong>内存屏障或内存栅栏</strong>。</p>
+<p>大多数的内存屏障都是复杂的话题。在不同的CPU架构上内存屏障的实现非常不一样。</p>
+<h1 id="volatile底层实现"><a href="#volatile底层实现" class="headerlink" title="volatile底层实现"></a>volatile底层实现</h1><p>volatile的作用是</p>
+<ol>
+<li>内存可见性</li>
+<li>禁止指令重排序</li>
+</ol>
+<h2 id="可见性"><a href="#可见性" class="headerlink" title="可见性"></a>可见性</h2><p><strong>volatile 是怎么实现共享变量在多个线程之间工作内存的可见性的呢?</strong></p>
+<h3 id="JMM的8种数据原子操作："><a href="#JMM的8种数据原子操作：" class="headerlink" title="JMM的8种数据原子操作："></a>JMM的8种数据原子操作：</h3><p>read 读取，作用于主内存把变量从主内存中读取到本本地内存。<br>load 加载，把从主内存中读取的变量加载到本地内存的变量副本中<br>use 使用，把工作内存中的一个变量值传递给执行引擎，每当虚拟机遇到一个<br>需要使用变量的值的字节码指令时将会执行这个操作。、<br>assign 赋值 它把一个从执行引擎接收到的值赋值给工作内存的变量，<br>每当虚拟机遇到一个给变量赋值的字节码指令时执行这个操作。<br>store 存储 ，把工作内存中的一个变量的值传送到主内存中，以便随后的write的操作。<br>write 写入 ，它把store操作从工作内存中一个变量的值传送到主内存的变量中。<br>lock 锁定 ：作用于主内存的变量，把一个变量标识为一条线程独占状态。<br>unlock 解锁：作用于主内存变量，把一个处于锁定状态的变量释放出来，释放后的变量才可以被其他线程锁定。</p>
+<p><img src="https://typora-lvxiaoyi.oss-cn-beijing.aliyuncs.com/typora-img/20200615160905272.png" alt="在这里插入图片描述"></p>
+<p><img src="https://typora-lvxiaoyi.oss-cn-beijing.aliyuncs.com/typora-img/20200615142955206.png" alt="在这里插入图片描述"></p>
+<p>线程1：先把initFlag变量read读取出来，再load载入工作内存，use使用线程1执行代码!initFlag<br>线程2：先把initFlag变量read读取出来，再load载入工作内存，use使用线程2执行代码initFlag=true，<br>再assign重新赋值，store存储并写入主内存，write写入到主内存中的变量。(线程2对缓存行lock加锁，<br>write写入主内存后会解锁unlock，防止initFlag还未write写入主内存就被线程1读取为false）。<br>线程1：因为initFlag被volatile修饰，使用MESI缓存一致性协议，线程1cpu总线嗅探机制监听到了<br>initFlag值的修改，线程1中initFlag=false失效变为true退出循环继续执行，<br>体现了多线程同步运行共享变量副本的可见性。如果initFlag没有被volatile修饰，<br>线程1将感知不到initFlag的变化，一直循环下去停止不了。</p>
+<p><img src="https://img-blog.csdnimg.cn/20200615161340679.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzIyMDc1OTEz,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"></p>
+<h3 id="jmm缓存不一致的问题解决办法"><a href="#jmm缓存不一致的问题解决办法" class="headerlink" title="jmm缓存不一致的问题解决办法"></a>jmm缓存不一致的问题解决办法</h3><h4 id="总线加锁-性能太低-："><a href="#总线加锁-性能太低-：" class="headerlink" title="总线加锁(性能太低)："></a>总线加锁(性能太低)：</h4><p>cpu从主内存读取数据到高速缓存，会在总线对这个数据加锁，这样其它cpu没法去读或写这个数据，直到这个cpu使用完数据释放锁之后其它cpu才能读取该数据，导致结果：改并行为串行。</p>
+<h4 id="MESI缓存一致性协议"><a href="#MESI缓存一致性协议" class="headerlink" title="MESI缓存一致性协议"></a>MESI缓存一致性协议</h4><p>多个cpu从主内存读取同一个数据到各自的高速缓存,当其中某个cpu修改了缓存里的数据，该数据会马上同步回主内存,其它cpu通过总线嗅探机制可以感知到数据的变化从而将自己缓存里的数据失效。</p>
+<h2 id="禁止指令重排"><a href="#禁止指令重排" class="headerlink" title="禁止指令重排"></a>禁止指令重排</h2><h3 id="为什么要禁止"><a href="#为什么要禁止" class="headerlink" title="为什么要禁止"></a>为什么要禁止</h3><p>为了提高程序执行的性能，编译器和执行器（处理器）通常会对指令做一些优化（重排序）</p>
+<ol>
+<li>编译器重排序。编译器在不改变单线程语义的前提下，可以重新安排语句的执行顺序；</li>
+<li>处理器重排序。如果不存在数据依赖性，处理器可以改变语句对机器指令的执行顺序</li>
+</ol>
+<p>现在的操作系统执行命令一般都是流水线式的执行，为了保证cpu的执行效率。</p>
+<p>volatile底层是通过lock前缀指令、内存屏障来实现的</p>
+<p>参考：</p>
+<p>多线程：<a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1aQ4y1P7Me?p=9&amp;spm_id_from=pageDriver">https://www.bilibili.com/video/BV1aQ4y1P7Me?p=9&amp;spm_id_from=pageDriver</a></p>
+<p>可见性：<a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_22075913/article/details/106758864">https://blog.csdn.net/qq_22075913/article/details/106758864</a></p>
+<p>重排序：<a target="_blank" rel="noopener" href="https://blog.csdn.net/ljheee/article/details/82317448">https://blog.csdn.net/ljheee/article/details/82317448</a></p>
+<p>内存屏障：<a target="_blank" rel="noopener" href="http://ifeve.com/memory-barriers-or-fences/">http://ifeve.com/memory-barriers-or-fences/</a></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+      <div>
+        <ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者：</strong>
+    吕小医
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="https://lvxiaoyi.top/db022879.html" title="volatile的底层实现">https://lvxiaoyi.top/db022879.html</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>
+    本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 3.0</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+
+      </div>
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/%E5%A4%9A%E7%BA%BF%E7%A8%8B/" rel="tag"><i class="fa fa-tag"></i> 多线程</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/cbd84e4c.html" rel="next" title="hospot虚拟机中的synchronized底层实现">
+                <i class="fa fa-chevron-left"></i> hospot虚拟机中的synchronized底层实现
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/77ed6e38.html" rel="prev" title="偏向锁四秒延迟探究">
+                偏向锁四秒延迟探究 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+<div>
+    
+        <div style="text-align:center;color: #ccc;font-size:14px;">------ 本文结束------</div>
+    
+</div>
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/avatar.png" alt="">
+            
+              <p class="site-author-name" itemprop="name"></p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives%7C%7C%20archive">
+              
+                  <span class="site-state-item-count">41</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">25</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">16</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%9F%A5%E8%AF%86%E7%82%B9"><span class="nav-text">知识点</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90"><span class="nav-text">计算机组成</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#cpu%E8%AF%BB%E5%8F%96%E6%95%B0%E6%8D%AE"><span class="nav-text">cpu读取数据</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#cpu%E7%BA%BF%E7%A8%8B%E5%88%87%E6%8D%A2"><span class="nav-text">cpu线程切换</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#cpu%E7%BC%93%E5%AD%98%E6%84%8F%E4%B9%89"><span class="nav-text">cpu缓存意义</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BC%93%E5%AD%98%E8%A1%8C"><span class="nav-text">缓存行</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%8C%89%E5%9D%97%E9%A2%84%E8%AF%BB%E5%8F%96%EF%BC%88%E4%B9%9F%E5%8F%AB%E7%BC%93%E5%AD%98%E8%A1%8C%EF%BC%89%EF%BC%88cache-line%EF%BC%89"><span class="nav-text">按块预读取（也叫缓存行）（cache line）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BC%93%E5%AD%98%E4%B8%80%E8%87%B4%E6%80%A7%EF%BC%9A"><span class="nav-text">缓存一致性：</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88"><span class="nav-text">解决方案</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#intel%E7%9A%84cpu"><span class="nav-text">intel的cpu</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88%EF%BC%9A%E7%BC%93%E5%AD%98%E8%A1%8C%E5%AF%B9%E9%BD%90"><span class="nav-text">解决方案：缓存行对齐</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E9%80%82%E7%94%A8%E5%9C%BA%E6%99%AF"><span class="nav-text">适用场景</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#java%E7%BA%BF%E7%A8%8B%E5%86%85%E5%AD%98%E6%A8%A1%E5%9E%8B"><span class="nav-text">java线程内存模型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%87%8D%E6%8E%92%E5%BA%8F"><span class="nav-text">重排序</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%86%85%E5%AD%98%E5%B1%8F%E9%9A%9C"><span class="nav-text">内存屏障</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#volatile%E5%BA%95%E5%B1%82%E5%AE%9E%E7%8E%B0"><span class="nav-text">volatile底层实现</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%AF%E8%A7%81%E6%80%A7"><span class="nav-text">可见性</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#JMM%E7%9A%848%E7%A7%8D%E6%95%B0%E6%8D%AE%E5%8E%9F%E5%AD%90%E6%93%8D%E4%BD%9C%EF%BC%9A"><span class="nav-text">JMM的8种数据原子操作：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#jmm%E7%BC%93%E5%AD%98%E4%B8%8D%E4%B8%80%E8%87%B4%E7%9A%84%E9%97%AE%E9%A2%98%E8%A7%A3%E5%86%B3%E5%8A%9E%E6%B3%95"><span class="nav-text">jmm缓存不一致的问题解决办法</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%80%BB%E7%BA%BF%E5%8A%A0%E9%94%81-%E6%80%A7%E8%83%BD%E5%A4%AA%E4%BD%8E-%EF%BC%9A"><span class="nav-text">总线加锁(性能太低)：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#MESI%E7%BC%93%E5%AD%98%E4%B8%80%E8%87%B4%E6%80%A7%E5%8D%8F%E8%AE%AE"><span class="nav-text">MESI缓存一致性协议</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%A6%81%E6%AD%A2%E6%8C%87%E4%BB%A4%E9%87%8D%E6%8E%92"><span class="nav-text">禁止指令重排</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E8%A6%81%E7%A6%81%E6%AD%A2"><span class="nav-text">为什么要禁止</span></a></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+        <div class="back-to-top">
+          <i class="fa fa-arrow-up"></i>
+          
+            <span id="scrollpercent"><span>0</span>%</span>
+          
+        </div>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">© 2019 — <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">吕小医</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 — <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.4</div>
+
+
+
+
+        
+<div class="busuanzi-count">
+  <script async="" src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">
+      <i class="fa fa-user"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      次
+    </span>
+  
+
+  
+    <span class="site-pv">
+      <i class="fa fa-eye"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      次
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+
+    
+
+  </div>
+  
+  
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+  <style>
+    .copy-btn {
+      display: inline-block;
+      padding: 6px 12px;
+      font-size: 13px;
+      font-weight: 700;
+      line-height: 20px;
+      color: #333;
+      white-space: nowrap;
+      vertical-align: middle;
+      cursor: pointer;
+      background-color: #eee;
+      background-image: linear-gradient(#fcfcfc, #eee);
+      border: 1px solid #d5d5d5;
+      border-radius: 3px;
+      user-select: none;
+      outline: 0;
+    }
+
+    .highlight-wrap .copy-btn {
+      transition: opacity .3s ease-in-out;
+      opacity: 0;
+      padding: 2px 6px;
+      position: absolute;
+      right: 4px;
+      top: 8px;
+    }
+
+    .highlight-wrap:hover .copy-btn,
+    .highlight-wrap .copy-btn:focus {
+      opacity: 1
+    }
+
+    .highlight-wrap {
+      position: relative;
+    }
+  </style>
+  
+  <script>
+    $('.highlight').each(function (i, e) {
+      var $wrap = $('<div>').addClass('highlight-wrap')
+      $(e).after($wrap)
+      $wrap.append($('<button>').addClass('copy-btn').append('复制').on('click', function (e) {
+        var code = $(this).parent().find('.code').find('.line').map(function (i, e) {
+          return $(e).text()
+        }).toArray().join('\n')
+        var ta = document.createElement('textarea')
+        document.body.appendChild(ta)
+        ta.style.position = 'absolute'
+        ta.style.top = '0px'
+        ta.style.left = '0px'
+        ta.value = code
+        ta.select()
+        ta.focus()
+        var result = document.execCommand('copy')
+        document.body.removeChild(ta)
+        
+          if(result)$(this).text('复制成功')
+          else $(this).text('复制失败')
+        
+        $(this).blur()
+      })).on('mouseleave', function (e) {
+        var $b = $(this).find('.copy-btn')
+        setTimeout(function () {
+          $b.text('复制')
+        }, 300)
+      }).append(e)
+    })
+  </script>
+
+
+
+
+<script type="text/javascript" charset="utf-8" src="/js/lazyload-plugin/lazyload.intersectionObserver.min.js"></script></body></html>

@@ -1,0 +1,1913 @@
+<!DOCTYPE html><html class="theme-next pisces use-motion" lang="zh-Hans"><head>
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+  
+  
+    
+    
+  <script src="/lib/pace/pace.min.js?v=1.0.2"></script>
+  <link href="/lib/pace/pace-theme-minimal.min.css?v=1.0.2" rel="stylesheet">
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Monda:300,300italic,400,400italic,700,700italic|Roboto Slab:300,300italic,400,400italic,700,700italic|Lobster Two:300,300italic,400,400italic,700,700italic|PT Mono:300,300italic,400,400italic,700,700italic&amp;subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/logo.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/logo-32-32.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/logo-16-16.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.png?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="MySQL,">
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="吕小医&amp;BLOG" type="application/atom+xml">
+
+
+
+
+
+
+<meta name="description" content="一、MySQL的架构介绍 1.MySql简介 2.MySQL逻辑架构介绍 1.Connectors 2 Management Serveices &amp; Utilities： 3 Connection Pool: 连接池 4 SQL Interface: SQL接口。 5 Parser: 解析器。 6 Optimizer: 查询优化器。 7 Cache和Buffer： 查询缓存。 8 、存储">
+<meta property="og:type" content="article">
+<meta property="og:title" content="MySQL进阶部分">
+<meta property="og:url" content="https://lvxiaoyi.top/353ffb0.html">
+<meta property="og:site_name" content="吕小医&amp;BLOG">
+<meta property="og:description" content="一、MySQL的架构介绍 1.MySql简介 2.MySQL逻辑架构介绍 1.Connectors 2 Management Serveices &amp; Utilities： 3 Connection Pool: 连接池 4 SQL Interface: SQL接口。 5 Parser: 解析器。 6 Optimizer: 查询优化器。 7 Cache和Buffer： 查询缓存。 8 、存储">
+<meta property="og:locale">
+<meta property="og:image" content="https://typora-lvxiaoyi.oss-cn-beijing.aliyuncs.com/typora-img/1.png">
+<meta property="og:image" content="https://typora-lvxiaoyi.oss-cn-beijing.aliyuncs.com/typora-img/2.png">
+<meta property="og:image" content="https://typora-lvxiaoyi.oss-cn-beijing.aliyuncs.com/typora-img/3.png">
+<meta property="og:image" content="https://typora-lvxiaoyi.oss-cn-beijing.aliyuncs.com/typora-img/4.png">
+<meta property="og:image" content="https://typora-lvxiaoyi.oss-cn-beijing.aliyuncs.com/typora-img/5.png">
+<meta property="og:image" content="https://typora-lvxiaoyi.oss-cn-beijing.aliyuncs.com/typora-img/image-20210629172838705.png">
+<meta property="og:image" content="https://typora-lvxiaoyi.oss-cn-beijing.aliyuncs.com/typora-img/20210627104446.png">
+<meta property="og:image" content="https://typora-lvxiaoyi.oss-cn-beijing.aliyuncs.com/typora-img/6.png">
+<meta property="og:image" content="https://typora-lvxiaoyi.oss-cn-beijing.aliyuncs.com/typora-img/image-20210629183227536.png">
+<meta property="og:image" content="https://typora-lvxiaoyi.oss-cn-beijing.aliyuncs.com/typora-img/7.jpg">
+<meta property="og:image" content="https://typora-lvxiaoyi.oss-cn-beijing.aliyuncs.com/typora-img/8.png">
+<meta property="og:image" content="https://typora-lvxiaoyi.oss-cn-beijing.aliyuncs.com/typora-img/9.jpg">
+<meta property="og:image" content="https://typora-lvxiaoyi.oss-cn-beijing.aliyuncs.com/typora-img/10.jpg">
+<meta property="og:image" content="https://typora-lvxiaoyi.oss-cn-beijing.aliyuncs.com/typora-img/11.jpg">
+<meta property="og:image" content="https://typora-lvxiaoyi.oss-cn-beijing.aliyuncs.com/typora-img/12.jpg">
+<meta property="og:image" content="https://typora-lvxiaoyi.oss-cn-beijing.aliyuncs.com/typora-img/13.jpg">
+<meta property="og:image" content="https://typora-lvxiaoyi.oss-cn-beijing.aliyuncs.com/typora-img/14.png">
+<meta property="og:image" content="https://typora-lvxiaoyi.oss-cn-beijing.aliyuncs.com/typora-img/15.png">
+<meta property="og:image" content="https://typora-lvxiaoyi.oss-cn-beijing.aliyuncs.com/typora-img/16.png">
+<meta property="og:image" content="https://typora-lvxiaoyi.oss-cn-beijing.aliyuncs.com/typora-img/17.png">
+<meta property="og:image" content="https://typora-lvxiaoyi.oss-cn-beijing.aliyuncs.com/typora-img/18.png">
+<meta property="og:image" content="https://typora-lvxiaoyi.oss-cn-beijing.aliyuncs.com/typora-img/19.png">
+<meta property="og:image" content="https://typora-lvxiaoyi.oss-cn-beijing.aliyuncs.com/typora-img/20.png">
+<meta property="og:image" content="https://typora-lvxiaoyi.oss-cn-beijing.aliyuncs.com/typora-img/21.png">
+<meta property="og:image" content="https://typora-lvxiaoyi.oss-cn-beijing.aliyuncs.com/typora-img/22.png">
+<meta property="og:image" content="https://typora-lvxiaoyi.oss-cn-beijing.aliyuncs.com/typora-img/23.png">
+<meta property="og:image" content="https://typora-lvxiaoyi.oss-cn-beijing.aliyuncs.com/typora-img/24.png">
+<meta property="og:image" content="https://typora-lvxiaoyi.oss-cn-beijing.aliyuncs.com/typora-img/26.png">
+<meta property="og:image" content="https://lvxiaoyi.top/MySQL%E8%BF%9B%E9%98%B6%E9%83%A8%E5%88%86-img/27.png">
+<meta property="og:image" content="https://typora-lvxiaoyi.oss-cn-beijing.aliyuncs.com/typora-img/28.png">
+<meta property="og:image" content="https://typora-lvxiaoyi.oss-cn-beijing.aliyuncs.com/typora-img/29.png">
+<meta property="og:image" content="https://typora-lvxiaoyi.oss-cn-beijing.aliyuncs.com/typora-img/30.png">
+<meta property="og:image" content="https://typora-lvxiaoyi.oss-cn-beijing.aliyuncs.com/typora-img/31.png">
+<meta property="og:image" content="https://typora-lvxiaoyi.oss-cn-beijing.aliyuncs.com/typora-img/32.png">
+<meta property="og:image" content="https://typora-lvxiaoyi.oss-cn-beijing.aliyuncs.com/typora-img/33.png">
+<meta property="og:image" content="https://typora-lvxiaoyi.oss-cn-beijing.aliyuncs.com/typora-img/34.png">
+<meta property="og:image" content="https://typora-lvxiaoyi.oss-cn-beijing.aliyuncs.com/typora-img/v2-3d8cde8ac15ee65c6e7f0554246b2f97_720w.jpg">
+<meta property="og:image" content="https://typora-lvxiaoyi.oss-cn-beijing.aliyuncs.com/typora-img/v2-3d8cde8ac15ee65c6e7f0554246b2f97_720w.jpg">
+<meta property="og:image" content="https://typora-lvxiaoyi.oss-cn-beijing.aliyuncs.com/typora-img/v2-9dab07a4adc00c794f80e91bc0289e36_720w.jpg">
+<meta property="og:image" content="https://typora-lvxiaoyi.oss-cn-beijing.aliyuncs.com/typora-img/v2-9dab07a4adc00c794f80e91bc0289e36_720w.jpg">
+<meta property="og:image" content="https://typora-lvxiaoyi.oss-cn-beijing.aliyuncs.com/typora-img/v2-60d787835b462e2ee2151ddce8340002_720w.jpg">
+<meta property="og:image" content="https://typora-lvxiaoyi.oss-cn-beijing.aliyuncs.com/typora-img/v2-60d787835b462e2ee2151ddce8340002_720w.jpg">
+<meta property="og:image" content="https://typora-lvxiaoyi.oss-cn-beijing.aliyuncs.com/typora-img/35.png">
+<meta property="og:image" content="https://typora-lvxiaoyi.oss-cn-beijing.aliyuncs.com/typora-img/36.png">
+<meta property="og:image" content="https://typora-lvxiaoyi.oss-cn-beijing.aliyuncs.com/typora-img/37.png">
+<meta property="og:image" content="https://typora-lvxiaoyi.oss-cn-beijing.aliyuncs.com/typora-img/38.png">
+<meta property="og:image" content="https://typora-lvxiaoyi.oss-cn-beijing.aliyuncs.com/typora-img/39.png">
+<meta property="og:image" content="https://typora-lvxiaoyi.oss-cn-beijing.aliyuncs.com/typora-img/40.png">
+<meta property="og:image" content="https://typora-lvxiaoyi.oss-cn-beijing.aliyuncs.com/typora-img/41.png">
+<meta property="og:image" content="https://typora-lvxiaoyi.oss-cn-beijing.aliyuncs.com/typora-img/42.png">
+<meta property="og:image" content="https://typora-lvxiaoyi.oss-cn-beijing.aliyuncs.com/typora-img/43.png">
+<meta property="og:image" content="https://typora-lvxiaoyi.oss-cn-beijing.aliyuncs.com/typora-img/44.png">
+<meta property="og:image" content="https://typora-lvxiaoyi.oss-cn-beijing.aliyuncs.com/typora-img/45.png">
+<meta property="og:image" content="https://typora-lvxiaoyi.oss-cn-beijing.aliyuncs.com/typora-img/46.png">
+<meta property="og:image" content="https://typora-lvxiaoyi.oss-cn-beijing.aliyuncs.com/typora-img/47.png">
+<meta property="og:image" content="https://typora-lvxiaoyi.oss-cn-beijing.aliyuncs.com/typora-img/48.png">
+<meta property="og:image" content="https://typora-lvxiaoyi.oss-cn-beijing.aliyuncs.com/typora-img/49.png">
+<meta property="og:image" content="https://typora-lvxiaoyi.oss-cn-beijing.aliyuncs.com/typora-img/50.png">
+<meta property="og:image" content="https://lvxiaoyi.top/MySQL%E8%BF%9B%E9%98%B6%E9%83%A8%E5%88%86-img/51.png">
+<meta property="og:image" content="https://typora-lvxiaoyi.oss-cn-beijing.aliyuncs.com/typora-img/52.png">
+<meta property="og:image" content="https://typora-lvxiaoyi.oss-cn-beijing.aliyuncs.com/typora-img/53.png">
+<meta property="og:image" content="https://typora-lvxiaoyi.oss-cn-beijing.aliyuncs.com/typora-img/54.png">
+<meta property="og:image" content="https://typora-lvxiaoyi.oss-cn-beijing.aliyuncs.com/typora-img/55.png">
+<meta property="og:image" content="https://typora-lvxiaoyi.oss-cn-beijing.aliyuncs.com/typora-img/56.png">
+<meta property="og:image" content="https://typora-lvxiaoyi.oss-cn-beijing.aliyuncs.com/typora-img/57.png">
+<meta property="og:image" content="https://typora-lvxiaoyi.oss-cn-beijing.aliyuncs.com/typora-img/58.png">
+<meta property="og:image" content="https://typora-lvxiaoyi.oss-cn-beijing.aliyuncs.com/typora-img/59.png">
+<meta property="og:image" content="https://typora-lvxiaoyi.oss-cn-beijing.aliyuncs.com/typora-img/60.png">
+<meta property="og:image" content="https://typora-lvxiaoyi.oss-cn-beijing.aliyuncs.com/typora-img/61.png">
+<meta property="og:image" content="https://typora-lvxiaoyi.oss-cn-beijing.aliyuncs.com/typora-img/62.png">
+<meta property="og:image" content="https://typora-lvxiaoyi.oss-cn-beijing.aliyuncs.com/typora-img/63.png">
+<meta property="og:image" content="https://typora-lvxiaoyi.oss-cn-beijing.aliyuncs.com/typora-img/64.png">
+<meta property="og:image" content="https://typora-lvxiaoyi.oss-cn-beijing.aliyuncs.com/typora-img/65.png">
+<meta property="og:image" content="https://typora-lvxiaoyi.oss-cn-beijing.aliyuncs.com/typora-img/66.png">
+<meta property="article:published_time" content="2021-09-05T10:41:50.879Z">
+<meta property="article:modified_time" content="2021-09-05T10:41:50.879Z">
+<meta property="article:author" content="吕小医">
+<meta property="article:tag" content="MySQL">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://typora-lvxiaoyi.oss-cn-beijing.aliyuncs.com/typora-img/1.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":true,"scrollpercent":true,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://lvxiaoyi.top/353ffb0.html">
+
+
+
+
+
+  <title>MySQL进阶部分 | 吕小医&amp;BLOG</title>
+  
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?595ca75132ee34c50833c66069598b95";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+  <meta name="baidu-site-verification" content="code-ZVblDGWMtI">
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">吕小医&amp;BLOG</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">good good study</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://lvxiaoyi.top/353ffb0.html">
+
+    <span hidden="" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.png">
+    </span>
+
+    <span hidden="" itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="吕小医&amp;BLOG">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">MySQL进阶部分</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+		  
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2021-09-05T18:41:50+08:00">
+                2021-09-05
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/MySQL/" itemprop="url" rel="index">
+                    <span itemprop="name">MySQL</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-file-o"></i>
+            <span class="busuanzi-value" id="busuanzi_value_page_pv"></span>次
+            </span>
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计:</span>
+                
+                <span title="字数统计">
+                  8.7k
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 ≈</span>
+                
+                <span title="阅读时长">
+                  31
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <ul>
+<li><a href="#%E4%B8%80mysql%E7%9A%84%E6%9E%B6%E6%9E%84%E4%BB%8B%E7%BB%8D">一、MySQL的架构介绍</a><ul>
+<li><a href="#1mysql%E7%AE%80%E4%BB%8B">1.MySql简介</a></li>
+<li><a href="#2mysql%E9%80%BB%E8%BE%91%E6%9E%B6%E6%9E%84%E4%BB%8B%E7%BB%8D">2.MySQL逻辑架构介绍</a><ul>
+<li><a href="#1connectors">1.Connectors</a></li>
+<li><a href="#2-management-serveices--utilities%EF%BC%9A">2 Management Serveices &amp; Utilities：</a></li>
+<li><a href="#3-connection-pool-%E8%BF%9E%E6%8E%A5%E6%B1%A0">3 Connection Pool: 连接池</a></li>
+<li><a href="#4-sql-interface-sql%E6%8E%A5%E5%8F%A3%E3%80%82">4 SQL Interface: SQL接口。</a></li>
+<li><a href="#5-parser-%E8%A7%A3%E6%9E%90%E5%99%A8%E3%80%82">5 Parser: 解析器。</a></li>
+<li><a href="#6-optimizer-%E6%9F%A5%E8%AF%A2%E4%BC%98%E5%8C%96%E5%99%A8%E3%80%82">6 Optimizer: 查询优化器。</a></li>
+<li><a href="#7-cache%E5%92%8Cbuffer%EF%BC%9A-%E6%9F%A5%E8%AF%A2%E7%BC%93%E5%AD%98%E3%80%82">7 Cache和Buffer： 查询缓存。</a></li>
+<li><a href="#8-%E3%80%81%E5%AD%98%E5%82%A8%E5%BC%95%E6%93%8E%E6%8E%A5%E5%8F%A3">8 、存储引擎接口</a></li>
+</ul>
+</li>
+<li><a href="#3mysql%E5%AD%98%E5%82%A8%E5%BC%95%E6%93%8E">3.MySQL存储引擎</a><ul>
+<li><a href="#%E6%9F%A5%E7%9C%8B%E5%91%BD%E4%BB%A4%EF%BC%9A">查看命令：</a></li>
+<li><a href="#myisam%E5%92%8Cinnodb%E5%8C%BA%E5%88%AB%EF%BC%9A">MyISAM和InnoDB区别：</a></li>
+</ul>
+<span id="more"></span></li>
+</ul>
+</li>
+<li><a href="#%E4%BA%8C%E7%B4%A2%E5%BC%95%E4%BC%98%E5%8C%96%E5%88%86%E6%9E%90">二、索引优化分析</a><ul>
+<li><a href="#1%E7%B4%A2%E5%BC%95%E7%AE%80%E4%BB%8B">1.索引简介</a><ul>
+<li><a href="#%E6%98%AF%E4%BB%80%E4%B9%88%EF%BC%9F">是什么？</a></li>
+<li><a href="#%E4%BC%98%E5%8A%BF%EF%BC%9A">优势：</a></li>
+<li><a href="#%E5%8A%A3%E5%8A%BF%EF%BC%9A">劣势：</a></li>
+<li><a href="#mysql%E7%B4%A2%E5%BC%95%E5%88%86%E7%B1%BB">mysql索引分类</a></li>
+<li><a href="#%E5%9F%BA%E6%9C%AC%E8%AF%AD%E6%B3%95%EF%BC%9A">基本语法：</a></li>
+<li><a href="#%E4%BD%BF%E7%94%A8alter%E5%91%BD%E4%BB%A4%EF%BC%9A">使用Alter命令：</a></li>
+<li><a href="#mysql%E7%B4%A2%E5%BC%95%E7%BB%93%E6%9E%84%EF%BC%9A">mysql索引结构：</a></li>
+<li><a href="#btree%EF%BC%9A">BTree：</a></li>
+<li><a href="#btree">B+Tree</a></li>
+<li><a href="#b%E6%A0%91%E7%B4%A2%E5%BC%95%EF%BC%9A">B树索引：</a></li>
+<li><a href="#b%E6%A0%91%E7%B4%A2%E5%BC%95%EF%BC%9A-1">B+树索引：</a></li>
+<li><a href="#%E5%85%B6%E4%B8%ADmyisam%E5%92%8Cinnodb%E5%AD%98%E5%82%A8%E5%BC%95%E6%93%8E%E9%83%BD%E9%87%87%E7%94%A8b%E6%A0%91%E7%B4%A2%E5%BC%95%EF%BC%8C%E4%BD%86%E5%BA%95%E5%B1%82%E5%AE%9E%E7%8E%B0%E6%96%B9%E5%BC%8F%E4%B8%8D%E5%90%8C">其中MyISAM和InnoDB存储引擎都采用B+树索引，但底层实现方式不同</a></li>
+<li><a href="#hash%E7%B4%A2%E5%BC%95%EF%BC%9A">Hash索引：</a></li>
+<li><a href="#%E5%93%AA%E4%BA%9B%E6%83%85%E5%86%B5%E9%9C%80%E8%A6%81%E5%88%9B%E5%BB%BA%E7%B4%A2%E5%BC%95">哪些情况需要创建索引</a></li>
+<li><a href="#%E5%93%AA%E4%BA%9B%E6%83%85%E5%86%B5%E4%B8%8D%E8%A6%81%E5%88%9B%E5%BB%BA%E7%B4%A2%E5%BC%95">哪些情况不要创建索引</a></li>
+</ul>
+</li>
+<li><a href="#2%E6%80%A7%E8%83%BD%E5%88%86%E6%9E%90">2.性能分析</a><ul>
+<li><a href="#mysql-query-optimizer">MySQL Query Optimizer</a></li>
+<li><a href="#mysql%E5%B8%B8%E8%A7%81%E7%93%B6%E9%A2%88">MySQL常见瓶颈:</a></li>
+<li><a href="#explain">Explain</a><ul>
+<li><a href="#%E6%98%AF%E4%BB%80%E4%B9%88%EF%BC%88%E6%9F%A5%E7%9C%8B%E6%89%A7%E8%A1%8C%E8%AE%A1%E5%88%92%EF%BC%89">是什么（查看执行计划）</a></li>
+<li><a href="#%E6%80%8E%E4%B9%88%E7%8E%A9">怎么玩</a></li>
+<li><a href="#%E6%89%A7%E8%A1%8C%E8%AE%A1%E5%88%92%E5%8C%85%E5%90%AB%E7%9A%84%E4%BF%A1%E6%81%AF">执行计划包含的信息</a></li>
+<li><a href="#%E5%90%84%E4%B8%AA%E5%AD%97%E6%AE%B5%E8%A7%A3%E9%87%8A">各个字段解释</a></li>
+<li><a href="#id">id</a></li>
+<li><a href="#select_type">select_type</a></li>
+<li><a href="#table">table</a></li>
+<li><a href="#type">type</a></li>
+<li><a href="#possible_keys">possible_keys</a></li>
+<li><a href="#key">key</a></li>
+<li><a href="#key_len">key_len</a></li>
+<li><a href="#ref">ref</a></li>
+<li><a href="#rows">rows</a></li>
+<li><a href="#extra">Extra</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#3%E7%B4%A2%E5%BC%95%E4%BC%98%E5%8C%96">3.索引优化</a><ul>
+<li><a href="#%E7%B4%A2%E5%BC%95%E5%A4%B1%E6%95%88%EF%BC%88%E5%BA%94%E8%AF%A5%E9%81%BF%E5%85%8D%EF%BC%89">索引失效（应该避免）</a></li>
+<li><a href="#%E4%B8%80%E8%88%AC%E6%80%A7%E5%BB%BA%E8%AE%AE">一般性建议</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#%E4%B8%89%E6%9F%A5%E8%AF%A2%E6%88%AA%E5%8F%96%E5%88%86%E6%9E%90">三、查询截取分析</a><ul>
+<li><a href="#%E6%9F%A5%E8%AF%A2%E4%BC%98%E5%8C%96">查询优化</a><ul>
+<li><a href="#order-by%E5%85%B3%E9%94%AE%E5%AD%97%E4%BC%98%E5%8C%96">order by关键字优化</a></li>
+<li><a href="#%E4%BC%98%E5%8C%96%E7%AD%96%E7%95%A5">优化策略</a></li>
+<li><a href="#%E5%B0%8F%E6%80%BB%E7%BB%93">小总结:</a></li>
+<li><a href="#group-by%E5%85%B3%E9%94%AE%E5%AD%97%E4%BC%98%E5%8C%96">GROUP BY关键字优化</a></li>
+</ul>
+</li>
+<li><a href="#%E6%85%A2%E6%9F%A5%E8%AF%A2%E6%97%A5%E5%BF%97">慢查询日志</a><ul>
+<li><a href="#%E6%98%AF%E4%BB%80%E4%B9%88">是什么</a></li>
+<li><a href="#%E6%97%A5%E5%BF%97%E5%88%86%E6%9E%90%E5%B7%A5%E5%85%B7mysqldumpslow">日志分析工具mysqldumpslow</a></li>
+</ul>
+</li>
+<li><a href="#%E6%89%B9%E9%87%8F%E6%95%B0%E6%8D%AE%E8%84%9A%E6%9C%AC">批量数据脚本</a><ul>
+<li><a href="#%E5%BE%80%E8%A1%A8%E9%87%8C%E6%8F%92%E5%85%A51000w%E6%95%B0%E6%8D%AE">往表里插入1000W数据</a></li>
+</ul>
+</li>
+<li><a href="#show-profiles">Show profiles</a><ul>
+<li><a href="#%E6%98%AF%E4%BB%80%E4%B9%88%EF%BC%9A">是什么：</a></li>
+<li><a href="#%E5%88%86%E6%9E%90%E6%AD%A5%E9%AA%A4">分析步骤:</a></li>
+</ul>
+</li>
+<li><a href="#%E5%85%A8%E5%B1%80%E6%9F%A5%E8%AF%A2%E6%97%A5%E5%BF%97">全局查询日志</a><ul>
+<li><a href="#%E6%B0%B8%E8%BF%9C%E4%B8%8D%E8%A6%81%E5%9C%A8%E7%94%9F%E4%BA%A7%E7%8E%AF%E5%A2%83%E5%BC%80%E5%90%AF%E8%BF%99%E4%B8%AA%E5%8A%9F%E8%83%BD%E3%80%82">永远不要在生产环境开启这个功能。</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#%E5%9B%9Bmysql%E9%94%81%E6%9C%BA%E5%88%B6">四、MySQL锁机制</a><ul>
+<li><a href="#%E6%A6%82%E8%BF%B0">概述</a><ul>
+<li><a href="#%E9%94%81%E7%9A%84%E5%88%86%E7%B1%BB">锁的分类</a><ul>
+<li><a href="#%E4%BB%8E%E6%95%B0%E6%8D%AE%E6%93%8D%E4%BD%9C%E7%9A%84%E7%B1%BB%E5%9E%8B%EF%BC%88%E8%AF%BB%E3%80%81%E5%86%99%EF%BC%89%E5%88%86%EF%BC%9A">从数据操作的类型（读、写）分：</a></li>
+<li><a href="#%E4%BB%8E%E5%AF%B9%E6%95%B0%E6%8D%AE%E6%93%8D%E4%BD%9C%E7%9A%84%E9%A2%97%E7%B2%92%E5%BA%A6%EF%BC%9A">从对数据操作的颗粒度：</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#%E8%A1%A8%E9%94%81%EF%BC%88%E5%81%8F%E8%AF%BB%EF%BC%89">表锁（偏读）</a><ul>
+<li><a href="#%E7%89%B9%E7%82%B9">特点</a></li>
+<li><a href="#%E6%A1%88%E4%BE%8B%E5%88%86%E6%9E%90">案例分析</a><ul>
+<li><a href="#%E5%BB%BA%E8%A1%A8sql">建表SQL</a></li>
+<li><a href="#%E5%8A%A0%E8%AF%BB%E9%94%81">加读锁</a></li>
+<li><a href="#%E5%8A%A0%E5%86%99%E9%94%81">加写锁</a></li>
+</ul>
+</li>
+<li><a href="#%E6%A1%88%E4%BE%8B%E7%BB%93%E8%AE%BA">案例结论</a></li>
+<li><a href="#%E8%A1%A8%E9%94%81%E5%88%86%E6%9E%90">表锁分析</a></li>
+</ul>
+</li>
+<li><a href="#%E8%A1%8C%E9%94%81%EF%BC%88%E5%81%8F%E5%86%99%EF%BC%89">行锁（偏写）</a><ul>
+<li><a href="#%E7%89%B9%E7%82%B9-1">特点</a></li>
+<li><a href="#%E7%94%B1%E4%BA%8E%E8%A1%8C%E9%94%81%E6%94%AF%E6%8C%81%E4%BA%8B%E5%8A%A1%EF%BC%8C%E5%A4%8D%E4%B9%A0%E8%80%81%E7%9F%A5%E8%AF%86">由于行锁支持事务，复习老知识</a><ul>
+<li><a href="#%E4%BA%8B%E5%8A%A1%EF%BC%88transation%EF%BC%89%E5%8F%8A%E5%85%B6acid%E5%B1%9E%E6%80%A7">事务（Transation）及其ACID属性</a></li>
+<li><a href="#%E5%B9%B6%E5%8F%91%E4%BA%8B%E5%8A%A1%E5%A4%84%E7%90%86%E5%B8%A6%E6%9D%A5%E7%9A%84%E9%97%AE%E9%A2%98">并发事务处理带来的问题</a></li>
+<li><a href="#%E4%BA%8B%E5%8A%A1%E9%9A%94%E7%A6%BB%E7%BA%A7%E5%88%AB">事务隔离级别</a></li>
+</ul>
+</li>
+<li><a href="#%E6%A1%88%E4%BE%8B%E5%88%86%E6%9E%90-1">案例分析</a><ul>
+<li><a href="#%E5%BB%BA%E8%A1%A8sql-1">建表SQL</a></li>
+<li><a href="#%E8%A1%8C%E9%94%81%E5%AE%9A%E5%9F%BA%E6%9C%AC%E6%BC%94%E7%A4%BA">行锁定基本演示</a></li>
+<li><a href="#%E6%97%A0%E7%B4%A2%E5%BC%95%E8%A1%8C%E9%94%81%E5%8D%87%E7%BA%A7%E4%B8%BA%E8%A1%A8%E9%94%81">无索引行锁升级为表锁</a></li>
+<li><a href="#%E9%97%B4%E9%9A%99%E9%94%81%E5%8D%B1%E5%AE%B3">间隙锁危害</a></li>
+<li><a href="#%E9%9D%A2%E8%AF%95%E9%A2%98%EF%BC%9A%E5%B8%B8%E8%80%83%E5%A6%82%E4%BD%95%E9%94%81%E5%AE%9A%E4%B8%80%E8%A1%8C">面试题：常考如何锁定一行</a></li>
+</ul>
+</li>
+<li><a href="#%E6%A1%88%E4%BE%8B%E7%BB%93%E8%AE%BA-1">案例结论</a></li>
+<li><a href="#%E8%A1%8C%E9%94%81%E5%88%86%E6%9E%90">行锁分析</a></li>
+<li><a href="#%E4%BC%98%E5%8C%96%E5%BB%BA%E8%AE%AE">优化建议</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#%E4%BA%94%E4%B8%BB%E4%BB%8E%E5%A4%8D%E5%88%B6">五、主从复制</a><ul>
+<li><a href="#%E5%A4%8D%E5%88%B6%E7%9A%84%E5%9F%BA%E6%9C%AC%E5%8E%9F%E7%90%86">复制的基本原理</a><ul>
+<li><a href="#%E4%B8%89%E5%A4%A7%E6%AD%A5%E9%AA%A4%EF%BC%9A">三大步骤：</a></li>
+</ul>
+</li>
+<li><a href="#%E5%A4%8D%E5%88%B6%E7%9A%84%E5%9F%BA%E6%9C%AC%E5%8E%9F%E5%88%99">复制的基本原则</a></li>
+<li><a href="#%E5%A4%8D%E5%88%B6%E6%9C%80%E5%A4%A7%E9%97%AE%E9%A2%98">复制最大问题</a><ul>
+<li><a href="#%E5%BB%B6%E6%97%B6">延时</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#%E5%85%AD%E5%8F%82%E8%80%83%E8%B5%84%E6%96%99">六、参考资料</a>  <pre><code>* [尚硅谷讲堂](#尚硅谷讲堂)  
+* [图灵学院](#图灵学院)
+</code></pre>
+</li>
+</ul>
+<h2 id="一、MySQL的架构介绍"><a href="#一、MySQL的架构介绍" class="headerlink" title="一、MySQL的架构介绍"></a>一、MySQL的架构介绍</h2><h3 id="1-MySql简介"><a href="#1-MySql简介" class="headerlink" title="1.MySql简介"></a>1.MySql简介</h3><p>​        概述：<img src="https://typora-lvxiaoyi.oss-cn-beijing.aliyuncs.com/typora-img/1.png"></p>
+<h3 id="2-MySQL逻辑架构介绍"><a href="#2-MySQL逻辑架构介绍" class="headerlink" title="2.MySQL逻辑架构介绍"></a>2.MySQL逻辑架构介绍</h3><p>​        <img src="https://typora-lvxiaoyi.oss-cn-beijing.aliyuncs.com/typora-img/2.png" alt="2"></p>
+<p>​    <img src="https://typora-lvxiaoyi.oss-cn-beijing.aliyuncs.com/typora-img/3.png" alt="2"></p>
+<h5 id="1-Connectors"><a href="#1-Connectors" class="headerlink" title="1.Connectors"></a>1.Connectors</h5><p>指的是不同语言中与SQL的交互</p>
+<h5 id="2-Management-Serveices-amp-Utilities："><a href="#2-Management-Serveices-amp-Utilities：" class="headerlink" title="2 Management Serveices &amp; Utilities："></a>2 Management Serveices &amp; Utilities：</h5><p>系统管理和控制工具</p>
+<h5 id="3-Connection-Pool-连接池"><a href="#3-Connection-Pool-连接池" class="headerlink" title="3 Connection Pool: 连接池"></a>3 Connection Pool: 连接池</h5><p>管理缓冲用户连接，线程处理等需要缓存的需求。<br>负责监听对 MySQL Server 的各种请求，接收连接请求，转发所有连接请求到线程管理模块。每一个连接上 MySQL Server 的客户端请求都会被分配（或创建）一个连接线程为其单独服务。而连接线程的主要工作就是负责 MySQL Server 与客户端的通信，<br>接受客户端的命令请求，传递 Server 端的结果信息等。线程管理模块则负责管理维护这些连接线程。包括线程的创建，线程的 cache 等。</p>
+<h5 id="4-SQL-Interface-SQL接口。"><a href="#4-SQL-Interface-SQL接口。" class="headerlink" title="4 SQL Interface: SQL接口。"></a>4 SQL Interface: SQL接口。</h5><p>接受用户的SQL命令，并且返回用户需要查询的结果。比如select from就是调用SQL Interface</p>
+<h5 id="5-Parser-解析器。"><a href="#5-Parser-解析器。" class="headerlink" title="5 Parser: 解析器。"></a>5 Parser: 解析器。</h5><p>SQL命令传递到解析器的时候会被解析器验证和解析。解析器是由Lex和YACC实现的，是一个很长的脚本。<br>在 MySQL中我们习惯将所有 Client 端发送给 Server 端的命令都称为 query ，在 MySQL Server 里面，连接线程接收到客户端的一个 Query 后，会直接将该 query 传递给专门负责将各种 Query 进行分类然后转发给各个对应的处理模块。<br>主要功能：<br>a . 将SQL语句进行语义和语法的分析，分解成数据结构，然后按照不同的操作类型进行分类，然后做出针对性的转发到后续步骤，以后SQL语句的传递和处理就是基于这个结构的。<br>b.  如果在分解构成中遇到错误，那么就说明这个sql语句是不合理的</p>
+<h5 id="6-Optimizer-查询优化器。"><a href="#6-Optimizer-查询优化器。" class="headerlink" title="6 Optimizer: 查询优化器。"></a>6 Optimizer: 查询优化器。</h5><p>SQL语句在查询之前会使用查询优化器对查询进行优化。就是优化客户端请求的 query（sql语句） ，根据客户端请求的 query 语句，和数据库中的一些统计信息，在一系列算法的基础上进行分析，得出一个最优的策略，告诉后面的程序如何取得这个 query 语句的结果<br>他使用的是“选取-投影-联接”策略进行查询。<br>       用一个例子就可以理解： select uid,name from user where gender = 1;<br>       这个select 查询先根据where 语句进行选取，而不是先将表全部查询出来以后再进行gender过滤<br>       这个select查询先根据uid和name进行属性投影，而不是将属性全部取出以后再进行过滤<br>       将这两个查询条件联接起来生成最终查询结果</p>
+<h5 id="7-Cache和Buffer：-查询缓存。"><a href="#7-Cache和Buffer：-查询缓存。" class="headerlink" title="7 Cache和Buffer： 查询缓存。"></a>7 Cache和Buffer： 查询缓存。</h5><p>他的主要功能是将客户端提交 给MySQL 的 Select 类 query 请求的返回结果集 cache 到内存中，与该 query 的一个 hash 值 做一个对应。该 Query 所取数据的基表发生任何数据的变化之后， MySQL 会自动使该 query 的Cache 失效。在读写比例非常高的应用系统中， Query Cache 对性能的提高是非常显著的。当然它对内存的消耗也是非常大的。<br>如果查询缓存有命中的查询结果，查询语句就可以直接去查询缓存中取数据。这个缓存机制是由一系列小缓存组成的。比如表缓存，记录缓存，key缓存，权限缓存等</p>
+<h5 id="8-、存储引擎接口"><a href="#8-、存储引擎接口" class="headerlink" title="8 、存储引擎接口"></a>8 、存储引擎接口</h5><p>存储引擎接口模块可以说是 MySQL 数据库中最有特色的一点了。目前各种数据库产品中，基本上只有 MySQL 可以实现其底层数据存储引擎的插件式管理。这个模块实际上只是 一个抽象类，但正是因为它成功地将各种数据处理高度抽象化，才成就了今天 MySQL 可插拔存储引擎的特色。<br>     从图2还可以看出，MySQL区别于其他数据库的最重要的特点就是其插件式的表存储引擎。MySQL插件式的存储引擎架构提供了一系列标准的管理和服务支持，这些标准与存储引擎本身无关，可能是每个数据库系统本身都必需的，如SQL分析器和优化器等，而存储引擎是底层物理结构的实现，每个存储引擎开发者都可以按照自己的意愿来进行开发。<br>    注意：存储引擎是基于表的，而不是数据库。</p>
+<h3 id="3-MySQL存储引擎"><a href="#3-MySQL存储引擎" class="headerlink" title="3.MySQL存储引擎"></a>3.MySQL存储引擎</h3><h4 id="查看命令："><a href="#查看命令：" class="headerlink" title="查看命令："></a>查看命令：</h4><p>​        <img src="https://typora-lvxiaoyi.oss-cn-beijing.aliyuncs.com/typora-img/4.png" alt="2"></p>
+<h4 id="MyISAM和InnoDB区别："><a href="#MyISAM和InnoDB区别：" class="headerlink" title="MyISAM和InnoDB区别："></a>MyISAM和InnoDB区别：</h4><p>​    <img src="https://typora-lvxiaoyi.oss-cn-beijing.aliyuncs.com/typora-img/5.png" alt="2"></p>
+<p><img src="https://typora-lvxiaoyi.oss-cn-beijing.aliyuncs.com/typora-img/image-20210629172838705.png" alt="image-20210629172838705"></p>
+<h2 id="InnoDB四大特性"><a href="#InnoDB四大特性" class="headerlink" title="InnoDB四大特性"></a>InnoDB四大特性</h2><h4 id="1、插入缓冲（insert-buffer）"><a href="#1、插入缓冲（insert-buffer）" class="headerlink" title="1、插入缓冲（insert buffer）"></a>1、插入缓冲（insert buffer）</h4><p>插入缓冲（Insert Buffer/Change Buffer）：提升插入性能，change buffering是insert buffer的加强，insert buffer只针对insert有效，change buffering对insert、delete、update(delete+insert)、purge都有效</p>
+<p>使用插入缓冲的条件：</p>
+<ul>
+<li><p>非聚集索引（辅助索引）</p>
+</li>
+<li><p>非唯一索引</p>
+</li>
+</ul>
+<p>Change buffer是作为buffer pool中的一部分存在。<code>Innodb_change_buffering</code>参数缓存所对应的操作(update会被认为是delete+insert)：</p>
+<ul>
+<li><p><code>all</code>: 默认值，缓存insert, delete, purges操作</p>
+</li>
+<li><p><code>none</code>: 不缓存</p>
+</li>
+<li><p><code>inserts</code>: 缓存insert操作</p>
+</li>
+<li><p><code>deletes</code>: 缓存delete操作</p>
+</li>
+<li><p><code>changes</code>: 缓存insert和delete操作</p>
+</li>
+<li><p><code>purges</code>: 缓存后台执行的物理删除操作</p>
+</li>
+</ul>
+<p><code>innodb_change_buffer_max_size</code>参数：控制使用的大小，默认25%，最大可设置50%，如果mysql实例中有大量的修改操作，可考虑增大该参数；</p>
+<p>对满足插入缓存条件的插入，每一次的插入不是写到索引页中，而是：</p>
+<ol>
+<li><p>会先判断插入的非聚集索引页是否在缓冲池中，如果在直接插入；</p>
+</li>
+<li><p>如果不在，则先放到insert buffer中，再按照一定的频率进行合并操作，再写会磁盘；</p>
+</li>
+<li><p>通常可以将多个插入合并到一个操作中，目的是为了减少随机IO带来的性能损耗；</p>
+</li>
+</ol>
+<p>这样通常能将多个插入合并到一个操作中，目的还是为了<strong>减少随机IO带来性能损耗</strong>。</p>
+<p><strong>上面提过在一定频率下进行合并，那所谓的频率是什么条件</strong>？</p>
+<ol>
+<li><p>辅助索引页被读取到缓冲池中。正常的select先检查Insert Buffer是否有该非聚集索引页存在，若有则合并插入。</p>
+</li>
+<li><p>辅助索引页没有可用空间。空间小于1/32页的大小，则会强制合并操作。</p>
+</li>
+<li><p>Master Thread 每秒和每10秒的合并操作。</p>
+</li>
+</ol>
+<p>insert buffer的数据结构是一颗B+树；</p>
+<ul>
+<li><p>全局只有一颗insert buffer B+树，负责对所有表的辅助索引进行insert buffer；</p>
+</li>
+<li><p>这颗B+树放在共享表空间中，试图通过独立表空间ibd文件恢复表中数据时，往往会导致check table失败，因为表中的辅助索引中的数据可能还在insert buffer中，也就是共享表空间中，所以ibd文件恢复后，还需要repair table操作来重建表上所有的辅助索引；</p>
+</li>
+</ul>
+<h4 id="2、二次写（double-write）"><a href="#2、二次写（double-write）" class="headerlink" title="2、二次写（double write）"></a>2、二次写（double write）</h4><ol>
+<li><p>doublewrite缓存位于系统表空间的存储区域，用来缓存innodb的数据页从innodb buffer pool中flush之后并写入到数据文件之前；</p>
+</li>
+<li><p>当操作系统或数据库进程在数据页写入磁盘的过程中崩溃，可以在doublewrite缓存中找到数据页的备份，用来执行crash恢复；</p>
+</li>
+<li><p>数据页写入到doublewrite缓存的动作所需要的io消耗要小于写入到数据文件的消耗，因为此写入操作会以一次大的连续块的方式写入；</p>
+</li>
+</ol>
+<p><img src="https://typora-lvxiaoyi.oss-cn-beijing.aliyuncs.com/typora-img/20210627104446.png" alt="img"></p>
+<p>从上图可知：</p>
+<ol>
+<li><p>内存中doublewrite buffer大小2M；物理磁盘上共享表空间中连续的128个页，也就是2个区（extent）大小同样为2M</p>
+</li>
+<li><p>对缓冲池脏页进行刷新时，不是直接写磁盘。流程： </p>
+</li>
+<li><p>通过memcpy()函数将脏页先复制到内存中的doublewrite buffer</p>
+</li>
+<li><p>通过doublewrite分两次，每次1M顺序的写入共享表空间的物理磁盘上。这个过程中，doublewrite页是连续的，因此这个过程是顺序的，所以开销并不大；</p>
+</li>
+<li><p>完成doublewrite页的写入后，再将doublewrite buffer中的页写入各个表空间文件中，此时写入是离散的，可能会较慢；</p>
+</li>
+<li><p>如果操作系统在第三步的过程中发生了崩溃，在恢复过程中，可以从共享表空间中的doublewrite中找到该页的一个副本，将其复制到表空间文件中，再应用重做日志；</p>
+</li>
+</ol>
+<h4 id="3、自适应hash索引（ahi）"><a href="#3、自适应hash索引（ahi）" class="headerlink" title="3、自适应hash索引（ahi）"></a>3、自适应hash索引（ahi）</h4><p>innodb存储引擎会监控对表上二级索引的查找，如果发现某二级索引被频繁访问，此索引成为热数据，建立hash索引以提升查询速度，此建立是自动建立哈希索引，故称为自适应哈希索引（adaptive hash index）。</p>
+<p>该属性通过<code>innodb_adapitve_hash_index</code>开启，也可以通过<code>—skip-innodb_adaptive_hash_index</code>参数关闭</p>
+<p>注意事项：</p>
+<ul>
+<li><p>自适应哈希索引会占用innodb buffer pool</p>
+</li>
+<li><p>只适合搜索等值（=）的查询，对于范围查找等操作，是不能使用的</p>
+</li>
+<li><p>极端情况下，自适应hash索引才有比较大的意义，可以降低逻辑读</p>
+</li>
+</ul>
+<h4 id="4、预读-read-ahead"><a href="#4、预读-read-ahead" class="headerlink" title="4、预读(read ahead)"></a>4、预读(read ahead)</h4><p><strong>extent 定义</strong>：表空间（tablespace 中的一组 page）</p>
+<p>InnoDB使用两种预读算法来提高I/O性能：线性预读（linear read-ahead）和随机预读（randomread-ahead）。</p>
+<ul>
+<li><p>线性预读：以extent为单位，将下一个extent提前读取到buffer pool中；</p>
+</li>
+<li><p>随机预读：以extent中的page为单位，将当前extent中的剩余的page提前读取到buffer pool中；</p>
+</li>
+</ul>
+<p>线性预读一个重要参数：innodb_read_ahead_threshold，控制什么时间（访问extent中多少页的阈值）触发预读；</p>
+<ul>
+<li><p>默认：56，范围：0～64，值越高，访问模式检查越严格；</p>
+</li>
+<li><p>没有该变量之前，当访问到extent最后一个page时，innodb会决定是否将下一个extent放入到buffer pool中；</p>
+</li>
+</ul>
+<p>随机预读说明：</p>
+<ul>
+<li><p>当同一个extent的一些page在buffer pool中发现时，innodb会将extent中剩余page一并读取到buffer pool中；</p>
+</li>
+<li><p>随机预读给innodb code带来一些不必要的复杂性，性能上也不稳定，在5.5版本已经废弃，如果启用，需要修改变量：innodb_random_read_ahead为ON；</p>
+</li>
+</ul>
+<h2 id="二、索引优化分析"><a href="#二、索引优化分析" class="headerlink" title="二、索引优化分析"></a>二、索引优化分析</h2><h3 id="1-索引简介"><a href="#1-索引简介" class="headerlink" title="1.索引简介"></a>1.索引简介</h3><h5 id="是什么？"><a href="#是什么？" class="headerlink" title="是什么？"></a>是什么？</h5><p>MySQL官方对索引的定义为：索引(Index)是帮助MySQL高校获取数据的数据结构。可以得到索引的本质：索引是数据结构。可以简单理解为”排好序的快速查找数据结构”。</p>
+<p>结论：数据本身之外,数据库还维护着一个满足特定查找算法的数据结构，这些数据结构以某种方式指向数据，<br>这样就可以在这些数据结构的基础上实现高级查找算法,这种数据结构就是索引。</p>
+<p>一般来说索引本身也很大，不可能全部存储在内存中，因此索引往往以文件形式存储在硬盘上。</p>
+<h5 id="优势："><a href="#优势：" class="headerlink" title="优势："></a>优势：</h5><p>通过索引列对数据进行排序，降低数据排序成本，降低了CPU的消耗</p>
+<h5 id="劣势："><a href="#劣势：" class="headerlink" title="劣势："></a>劣势：</h5><p>1.实际上索引也是一张表，该表保存了主键和索引字段，并指向实体表的记录,所以索引列也是要占用空间的。</p>
+<p>2.虽然索引大大提高了查询速度，同时却会降低更新表的速度,如果对表INSERT,UPDATE和DELETE。因为更新表时，MySQL不仅要不存数据，还要保存一下索引文件每次更新添加了索引列的字段，都会调整因为更新所带来的键值变化后的索引信息。</p>
+<p>3.索引只是提高效率的一个因素，如果你的MySQL有大数据量的表，就需要花时间研究建立优秀的索引，或优化查询语句。</p>
+<h5 id="mysql索引分类"><a href="#mysql索引分类" class="headerlink" title="mysql索引分类"></a>mysql索引分类</h5><figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">单值索引：即一个索引只包含单个列，一个表可以有多个单列索引</span><br><span class="line"></span><br><span class="line">唯一索引：索引列的值必须唯一，但允许有空值</span><br><span class="line"></span><br><span class="line">复合索引：即一个索引包含多个列</span><br></pre></td></tr></tbody></table></figure>
+
+<h5 id="基本语法："><a href="#基本语法：" class="headerlink" title="基本语法："></a>基本语法：</h5><figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">创建：</span><br><span class="line">1.CREATE [UNIQUE] INDEX  indexName ON mytable(columnname(length));</span><br><span class="line">	//如果是CHAR,VARCHAR类型，length可以小于字段实际长度；如果是BLOB和TEXT类型，必须指定length。</span><br><span class="line">2.ALTER mytable ADD [UNIQUE]  INDEX [indexName] ON(columnname(length));</span><br><span class="line"></span><br><span class="line">删除：</span><br><span class="line">DROP INDEX [indexName] ON mytable;</span><br><span class="line"></span><br><span class="line">查看：</span><br><span class="line">SHOW INDEX FROM table_name\G</span><br></pre></td></tr></tbody></table></figure>
+
+<h5 id="使用Alter命令："><a href="#使用Alter命令：" class="headerlink" title="使用Alter命令："></a>使用Alter命令：</h5><p><img src="https://typora-lvxiaoyi.oss-cn-beijing.aliyuncs.com/typora-img/6.png" alt="2"></p>
+<h5 id="mysql索引结构："><a href="#mysql索引结构：" class="headerlink" title="mysql索引结构："></a>mysql索引结构：</h5><h5 id="BTree："><a href="#BTree：" class="headerlink" title="BTree："></a>BTree：</h5><p>B树（Balance Tree）是一种多路平衡查找树，他的<strong>每一个节点最多包含M个孩子，M就是B树的阶。</strong>M的大小取决于磁盘页的大小。</p>
+<p><a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1UJ411J7CU?p=2&amp;spm_id_from=pageDriver">https://www.bilibili.com/video/BV1UJ411J7CU?p=2&amp;spm_id_from=pageDriver</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1BK4y1X7Gp?from=search&amp;seid=1872408051532032494">https://www.bilibili.com/video/BV1BK4y1X7Gp?from=search&amp;seid=1872408051532032494</a></p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/whoamiyang/article/details/51926985">https://blog.csdn.net/whoamiyang/article/details/51926985</a></p>
+<p><img src="https://typora-lvxiaoyi.oss-cn-beijing.aliyuncs.com/typora-img/image-20210629183227536.png" alt="image-20210629183227536"></p>
+<p><strong>B-树就是B树，中间的横线不是减号，所以不要读成B减树。</strong></p>
+<p><img src="https://typora-lvxiaoyi.oss-cn-beijing.aliyuncs.com/typora-img/7.jpg" alt="2"></p>
+<h5 id="B-Tree"><a href="#B-Tree" class="headerlink" title="B+Tree"></a>B+Tree</h5><p>一个m阶的B+树具有如下几个特征：</p>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">1.有k个子树的中间节点包含有k个元素（B树中是k-1个元素），每个元素不保存数据，只用来索引，所有数据都保存在叶子节点。</span><br><span class="line"></span><br><span class="line">2.所有的叶子结点中包含了全部元素的信息，及指向含这些元素记录的指针，且叶子结点本身依关键字的大小自小而大顺序链接。</span><br><span class="line"></span><br><span class="line">3.每个父节点的元素都同时存在于子节点中，是子节点中的最大（或最小）元素。</span><br><span class="line"></span><br><span class="line">4.根节点的最大元素是整个B+树的最大元素。</span><br><span class="line"></span><br><span class="line">5.由于父节点的元素都包含在子节点，因此所有叶子节点包括了全部的元素信息。</span><br><span class="line"></span><br><span class="line">6.每个叶子节点都带有指向下一个节点的指针，形成一个有序链表。</span><br></pre></td></tr></tbody></table></figure>
+
+<p><img src="https://typora-lvxiaoyi.oss-cn-beijing.aliyuncs.com/typora-img/8.png" alt="2"></p>
+<h5 id="B树索引："><a href="#B树索引：" class="headerlink" title="B树索引："></a>B树索引：</h5><p><img src="https://typora-lvxiaoyi.oss-cn-beijing.aliyuncs.com/typora-img/9.jpg" alt="2"></p>
+<h5 id="B-树索引："><a href="#B-树索引：" class="headerlink" title="B+树索引："></a>B+树索引：</h5><p><img src="https://typora-lvxiaoyi.oss-cn-beijing.aliyuncs.com/typora-img/10.jpg" alt="2"></p>
+<h5 id="其中MyISAM和InnoDB存储引擎都采用B-树索引，但底层实现方式不同"><a href="#其中MyISAM和InnoDB存储引擎都采用B-树索引，但底层实现方式不同" class="headerlink" title="其中MyISAM和InnoDB存储引擎都采用B+树索引，但底层实现方式不同"></a>其中MyISAM和InnoDB存储引擎都采用B+树索引，但底层实现方式不同</h5><p>InnoDB实现方式：其中叶子节点存储数据和键值即是原表中数据（聚集索引）</p>
+<p><img src="https://typora-lvxiaoyi.oss-cn-beijing.aliyuncs.com/typora-img/11.jpg" alt="2"></p>
+<p>MyISAM实现方式：其中叶子节点存储键值和数据表中对应数据的物理地址（非聚集索引）</p>
+<p><img src="https://typora-lvxiaoyi.oss-cn-beijing.aliyuncs.com/typora-img/12.jpg" alt="2"></p>
+<h5 id="Hash索引："><a href="#Hash索引：" class="headerlink" title="Hash索引："></a>Hash索引：</h5><figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">1.只能使用=或&lt;=&gt;操作符的等式比较</span><br><span class="line"></span><br><span class="line">2.优化器不能使用hash索引来加速order by操作</span><br><span class="line"></span><br><span class="line">3.mysql不能确定在两个值之间大约有多少行。如果将一个myisam表改为hash索引的memory表，会影响一些查询的执行效率。</span><br><span class="line"></span><br><span class="line">4.只能使用整个关键字来搜索一行</span><br></pre></td></tr></tbody></table></figure>
+
+<p> hash index是基于哈希表实现的，只有精确匹配索引所有列的查询才会生效。对于每一行数据，存储引擎都会对所有的索引列计算一个hash code,并将的有的hash code存储在索引中，同时在哈希表中保存指向每个数据行的指针。</p>
+<p><img src="https://typora-lvxiaoyi.oss-cn-beijing.aliyuncs.com/typora-img/13.jpg" alt="2"></p>
+<h5 id="哪些情况需要创建索引"><a href="#哪些情况需要创建索引" class="headerlink" title="哪些情况需要创建索引"></a>哪些情况需要创建索引</h5><figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">1.主键自动建立唯一索引</span><br><span class="line"></span><br><span class="line">2.频繁作为查询的条件的字段应该创建索引</span><br><span class="line"></span><br><span class="line">3.查询中与其他表关联的字段，外键关系建立索引</span><br><span class="line"></span><br><span class="line">4.频繁更新的字段不适合创建索引</span><br><span class="line"></span><br><span class="line">5.Where条件里用不到的字段不创建索引</span><br><span class="line"></span><br><span class="line">6.单间/组合索引的选择问题，who？（在高并发下倾向创建组合索引）</span><br><span class="line"></span><br><span class="line">7.查询中排序的字段，排序字段若通过索引去访问将大大提高排序的速度</span><br><span class="line"></span><br><span class="line">8.查询中统计或者分组字段</span><br></pre></td></tr></tbody></table></figure>
+
+<h5 id="哪些情况不要创建索引"><a href="#哪些情况不要创建索引" class="headerlink" title="哪些情况不要创建索引"></a>哪些情况不要创建索引</h5><figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">1.表记录太少</span><br><span class="line"></span><br><span class="line">2.经常增删改的表</span><br><span class="line"></span><br><span class="line">3.数据重复且分布平均的表字段，因此应该只为经常查询和经常排序的数据列建立索引。注意，如果某个数据列包含许多重复的内容，为它建立索引就没有太大的实际效果。</span><br></pre></td></tr></tbody></table></figure>
+
+
+
+<h3 id="2-性能分析"><a href="#2-性能分析" class="headerlink" title="2.性能分析"></a>2.性能分析</h3><h5 id="MySQL-Query-Optimizer"><a href="#MySQL-Query-Optimizer" class="headerlink" title="MySQL Query Optimizer"></a>MySQL Query Optimizer</h5><p><img src="https://typora-lvxiaoyi.oss-cn-beijing.aliyuncs.com/typora-img/14.png" alt="2"></p>
+<h5 id="MySQL常见瓶颈"><a href="#MySQL常见瓶颈" class="headerlink" title="MySQL常见瓶颈:"></a>MySQL常见瓶颈:</h5><figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">CPU:CPU在饱和的时候一般发生在数据装入在内存或从磁盘上读取数据时候</span><br><span class="line"></span><br><span class="line">IO:磁盘I/O瓶颈发生在装入数据远大于内存容量时</span><br><span class="line"></span><br><span class="line">服务器硬件的性能瓶颈：top,free,iostat和vmstat来查看系统的性能状态</span><br></pre></td></tr></tbody></table></figure>
+
+
+
+<h4 id="Explain"><a href="#Explain" class="headerlink" title="Explain"></a>Explain</h4><h5 id="是什么（查看执行计划）"><a href="#是什么（查看执行计划）" class="headerlink" title="是什么（查看执行计划）"></a>是什么（查看执行计划）</h5><figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">使用EXPLAIN关键字可以模拟优化器执行SQL语句，从而知道MySQL是如何处理你的SQL语句的。分析你的查询语句或是结构的性能瓶颈</span><br></pre></td></tr></tbody></table></figure>
+
+<h5 id="怎么玩"><a href="#怎么玩" class="headerlink" title="怎么玩"></a>怎么玩</h5><figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Explain+SQL语句</span><br></pre></td></tr></tbody></table></figure>
+
+<h5 id="执行计划包含的信息"><a href="#执行计划包含的信息" class="headerlink" title="执行计划包含的信息"></a>执行计划包含的信息</h5><p><img src="https://typora-lvxiaoyi.oss-cn-beijing.aliyuncs.com/typora-img/15.png" alt="2"></p>
+<h5 id="各个字段解释"><a href="#各个字段解释" class="headerlink" title="各个字段解释"></a>各个字段解释</h5><h5 id="id"><a href="#id" class="headerlink" title="id"></a>id</h5><p>select查询的序列号，包含一组数字，表示查询中执行select子句或操作表的顺序<br>三种情况<br>id相同，执行顺序由上至下</p>
+<p><img src="https://typora-lvxiaoyi.oss-cn-beijing.aliyuncs.com/typora-img/16.png" alt="2"></p>
+<p>id不同，如果是子查询，id的序号会递增，id值越大优先级越高，越先被执行</p>
+<p><img src="https://typora-lvxiaoyi.oss-cn-beijing.aliyuncs.com/typora-img/17.png" alt="2"></p>
+<p>id相同不同，同时存在</p>
+<p><img src="https://typora-lvxiaoyi.oss-cn-beijing.aliyuncs.com/typora-img/18.png" alt="2"></p>
+<h5 id="select-type"><a href="#select-type" class="headerlink" title="select_type"></a>select_type</h5><p>有哪些：</p>
+<p><img src="https://typora-lvxiaoyi.oss-cn-beijing.aliyuncs.com/typora-img/19.png" alt="2"></p>
+<p>查询的类型，主要用于区别普通查询、联合查询、子查询等的复杂查询</p>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">1.SIMPLE：简单的select查询，查询中不包含子查询或者UNION</span><br><span class="line"></span><br><span class="line">2.PRIMARY：查询中若包含任何复杂的子部分，最外层查询则被标记为</span><br><span class="line"></span><br><span class="line">3.SUBQUERY：在SELECT或者WHERE列表中包含了子查询</span><br><span class="line"></span><br><span class="line">4.DERIVED：在FROM列表中包含的子查询被标记为DERIVED（衍生）MySQL会递归执行这些子查询，把结果放						在临时表里。</span><br><span class="line"></span><br><span class="line">5.UNION：若第二个SELECT出现在UNION之后，则被标记为UNION;若UNION包含在FROM子句的子查询中，外					层SELECT将被标记为：DERIVED</span><br><span class="line"></span><br><span class="line">6.UNION RESULT：从UNION表获取结果的SELECT</span><br></pre></td></tr></tbody></table></figure>
+
+
+
+<h5 id="table"><a href="#table" class="headerlink" title="table"></a>table</h5><p>显示这一行的数据是关于哪张表的</p>
+<h5 id="type"><a href="#type" class="headerlink" title="type"></a>type</h5><p>显示查询使用了何种类型<br>从最好到最差依次是：</p>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">system&gt;con st&gt;eq_ref&gt;ref&gt;range&gt;index&gt;ALL</span><br></pre></td></tr></tbody></table></figure>
+
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">system：表只有一行记录（等于系统表），这是const类型的特例，平时不会出现，这个也可以忽略不计</span><br><span class="line"></span><br><span class="line">const：表示通过索引一次就找到了，const用于比较primary key或者unique索引。因为只匹配一行数据，所以很			快。如将主键至于where列表中，MySQL就能将该查询转换为一个常量</span><br><span class="line"></span><br><span class="line">eq_ref：唯一性索引，对于每个索引键，表中只有一条记录与之匹配，常见于主键或唯一索引扫描</span><br><span class="line"></span><br><span class="line">ref：非唯一索引扫描，返回匹配某个单独值的所有行。本质上也是一种索引访问，它返回所有匹配某个单独值的		行，然而，它可能会找到多个符合条件的行，所以他应该属于查找和扫描的混合体</span><br><span class="line"></span><br><span class="line">range：只检索给定范围的行，使用一个索引来选择行。key列显示使用了哪个索引一般就是在你的where语句中				出现了between、&lt;、&gt;、in等的查询这种范围扫描索引扫描比全表扫描要好，因为他只需要开始索引的				某一点，而结束语另一点，不用扫描全部索引</span><br><span class="line"></span><br><span class="line">index：Full Index Scan,index与ALL区别为index类型只遍历索引树。这通常比ALL快，因为索引文件通常比数据		文件小。（也就是说虽然all和index都是读全表，但index是从索引中读取的，而all是从硬盘中读的）</span><br><span class="line"></span><br><span class="line">all：FullTable Scan,将遍历全表以找到匹配的行</span><br></pre></td></tr></tbody></table></figure>
+
+<h5 id="possible-keys"><a href="#possible-keys" class="headerlink" title="possible_keys"></a>possible_keys</h5><p>显示可能应用在这张表中的索引,一个或多个。查询涉及的字段上若存在索引，则该索引将被列出，但不一定被查询实际使用</p>
+<h5 id="key"><a href="#key" class="headerlink" title="key"></a>key</h5><p>实际使用的索引。如果为null则没有使用索引</p>
+<h5 id="key-len"><a href="#key-len" class="headerlink" title="key_len"></a>key_len</h5><p>表示索引中使用的字节数，可通过该列计算查询中使用的索引的长度。在不损失精确性的情况下，长度越短越好key_len显示的值为索引最大可能长度，并非实际使用长度，即key_len是根据表定义计算而得，不是通过表内检索出的</p>
+<h5 id="ref"><a href="#ref" class="headerlink" title="ref"></a>ref</h5><p>显示索引那一列被使用了，如果可能的话，是一个常数。那些列或常量被用于查找索引列上的值</p>
+<h5 id="rows"><a href="#rows" class="headerlink" title="rows"></a>rows</h5><p>根据表统计信息及索引选用情况，大致估算出找到所需的记录所需要读取的行数</p>
+<h5 id="Extra"><a href="#Extra" class="headerlink" title="Extra"></a>Extra</h5><p>包含不适合在其他列中显示但十分重要的额外信息</p>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">1.Using filesort：说明mysql会对数据使用一个外部的索引排序，而不是按照表内的索引顺序进行读取。</span><br><span class="line">MySQL中无法利用索引完成排序操作成为“文件排序”</span><br><span class="line"></span><br><span class="line">2.Using temporary：使用了临时表保存中间结果，MySQL在对查询结果排序时使用临时表。常见于排序order by 和分组查询 group by</span><br><span class="line"></span><br><span class="line">3.USING index：表示相应的select操作中使用了覆盖索引（Coveing Index）,避免访问了表的数据行，效率不错！</span><br><span class="line">如果同时出现using where，表明索引被用来执行索引键值的查找；</span><br><span class="line">如果没有同时出现using where，表面索引用来读取数据而非执行查找动作。</span><br></pre></td></tr></tbody></table></figure>
+
+<p>覆盖索引（Covering Index）：</p>
+<p><img src="https://typora-lvxiaoyi.oss-cn-beijing.aliyuncs.com/typora-img/20.png" alt="2"></p>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">4.Using where：表面使用了where过滤</span><br><span class="line"></span><br><span class="line">5.using join buffer：使用了连接缓存</span><br><span class="line"></span><br><span class="line">6.impossible where：where子句的值总是false，不能用来获取任何元组</span><br><span class="line"></span><br><span class="line">7.select tables optimized away：在没有GROUPBY子句的情况下，基于索引优化MIN/MAX操作或者</span><br><span class="line">对于MyISAM存储引擎优化COUNT(*)操作，不必等到执行阶段再进行计算，</span><br><span class="line">查询执行计划生成的阶段即完成优化。</span><br><span class="line"></span><br><span class="line">8.distinct：优化distinct，在找到第一匹配的元组后即停止找同样值的工作</span><br></pre></td></tr></tbody></table></figure>
+
+
+
+<h3 id="3-索引优化"><a href="#3-索引优化" class="headerlink" title="3.索引优化"></a>3.索引优化</h3><h5 id="索引失效（应该避免）"><a href="#索引失效（应该避免）" class="headerlink" title="索引失效（应该避免）"></a>索引失效（应该避免）</h5><p>1.全值匹配我最爱</p>
+<p><img src="https://typora-lvxiaoyi.oss-cn-beijing.aliyuncs.com/typora-img/21.png" alt="2"></p>
+<p>2.最佳左前缀法则</p>
+<p><img src="https://typora-lvxiaoyi.oss-cn-beijing.aliyuncs.com/typora-img/22.png" alt="2"></p>
+<p>3.不在索引列上做任何操作（计算、函数、（自动or手动）类型转换），会导致索引失效而转向全表扫描</p>
+<p><img src="https://typora-lvxiaoyi.oss-cn-beijing.aliyuncs.com/typora-img/23.png" alt="2"></p>
+<p>4.存储引擎不能使用索引中范围条件右边的列</p>
+<p><img src="https://typora-lvxiaoyi.oss-cn-beijing.aliyuncs.com/typora-img/24.png" alt="2"></p>
+<p>5.尽量使用覆盖索引（只访问索引的查询（索引列和查询列一致）），减少select*</p>
+<p><img src="https://typora-lvxiaoyi.oss-cn-beijing.aliyuncs.com/typora-img/26.png" alt="2"></p>
+<p><img src="MySQL%E8%BF%9B%E9%98%B6%E9%83%A8%E5%88%86-img/27.png" alt="2"></p>
+<p>6.mysql在使用不等于（！=或者&lt;&gt;）的时候无法使用索引会导致全表扫描</p>
+<p><img src="https://typora-lvxiaoyi.oss-cn-beijing.aliyuncs.com/typora-img/28.png" alt="2"></p>
+<p>7.is null,is not null 也无法使用索引</p>
+<p><img src="https://typora-lvxiaoyi.oss-cn-beijing.aliyuncs.com/typora-img/29.png" alt="2"></p>
+<p>8.like以通配符开头（’$abc…’）mysql索引失效会变成全表扫描操作</p>
+<p><img src="https://typora-lvxiaoyi.oss-cn-beijing.aliyuncs.com/typora-img/30.png" alt="2"></p>
+<p>​    建立全文索引：<a target="_blank" rel="noopener" href="https://blog.csdn.net/Samdy_Chan/article/details/78138420">https://blog.csdn.net/Samdy_Chan/article/details/78138420</a></p>
+<p>如果要使用全值匹配，，但是又不想要索引失效，则对要匹配的值和要筛选的值建立索引，要符合索引覆盖。</p>
+<p>9.字符串不加单引号索引失效</p>
+<p><img src="https://typora-lvxiaoyi.oss-cn-beijing.aliyuncs.com/typora-img/31.png" alt="2"></p>
+<p>10.少用or,用它连接时会索引失效</p>
+<p><img src="https://typora-lvxiaoyi.oss-cn-beijing.aliyuncs.com/typora-img/32.png" alt="2"></p>
+<p>11.小总结</p>
+<p><img src="https://typora-lvxiaoyi.oss-cn-beijing.aliyuncs.com/typora-img/33.png" alt="2"></p>
+<p><img src="https://typora-lvxiaoyi.oss-cn-beijing.aliyuncs.com/typora-img/34.png" alt="2"></p>
+<h4 id="一般性建议"><a href="#一般性建议" class="headerlink" title="一般性建议"></a>一般性建议</h4><figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">对于单键索引，尽量选择针对当前query过滤性更好的索引</span><br><span class="line"></span><br><span class="line">在选择组合索引的时候，当前Query中过滤性最好的字段在索引字段顺序中，位置越靠前越好。</span><br><span class="line"></span><br><span class="line">在选择组合索引的时候，尽量选择可以能包含当前query中的where子句中更多字段的索引</span><br><span class="line"></span><br><span class="line">尽可能通过分析统计信息和调整query的写法来达到选择合适索引的目的</span><br></pre></td></tr></tbody></table></figure>
+
+
+
+
+
+
+
+<h3 id="4-索引下推"><a href="#4-索引下推" class="headerlink" title="4.索引下推"></a>4.索引下推</h3><p><a target="_blank" rel="noopener" href="https://blog.csdn.net/sinat_29774479/article/details/103470244">https://blog.csdn.net/sinat_29774479/article/details/103470244</a></p>
+<h3 id="为什么范围查找索引回失效，后续索引回失效"><a href="#为什么范围查找索引回失效，后续索引回失效" class="headerlink" title="为什么范围查找索引回失效，后续索引回失效"></a>为什么范围查找索引回失效，后续索引回失效</h3><p>作者：Limit<br>链接：<a target="_blank" rel="noopener" href="https://www.zhihu.com/question/304037770/answer/1287557228">https://www.zhihu.com/question/304037770/answer/1287557228</a><br>来源：知乎<br>著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。</p>
+<p>假设 表T1有字段a,b,c,d,e，其中a是主键，除e为varchar其余为int类型，并创建了一个联合索引idx_t1_bcd(b,c,d)，然后b、c、d三列作为联合索引。Tip:基于InnoDB存储引擎。</p>
+<p><img src="https://typora-lvxiaoyi.oss-cn-beijing.aliyuncs.com/typora-img/v2-3d8cde8ac15ee65c6e7f0554246b2f97_720w.jpg" alt="img"><img src="https://typora-lvxiaoyi.oss-cn-beijing.aliyuncs.com/typora-img/v2-3d8cde8ac15ee65c6e7f0554246b2f97_720w.jpg" alt="img">T1表</p>
+<p>联合索引：<strong>联合索引的所有索引列都出现在索引数上，并依次比较三列的大小。</strong></p>
+<p><img src="https://typora-lvxiaoyi.oss-cn-beijing.aliyuncs.com/typora-img/v2-9dab07a4adc00c794f80e91bc0289e36_720w.jpg" alt="img"><img src="https://typora-lvxiaoyi.oss-cn-beijing.aliyuncs.com/typora-img/v2-9dab07a4adc00c794f80e91bc0289e36_720w.jpg" alt="img">联合索引B+树的结构</p>
+<p>先看T1表，他的主键暂且我们将它设为整型自增的（PS：为什么是整型自增），InnoDB会使用主键索引在B+树维护索引和数据文件，<strong>然后我们创建了一个联合索引（b，c，d）也会生成一个索引树</strong>，同样是B+树的结构，<strong>只不过它的data部分存储的是联合索引所在行的主键值</strong>（上图叶子节点紫色背景部分）</p>
+<p>对于联合索引来说只不过比单值索引多了几列，而这些索引列全都出现在索引树上。对于联合索引，存储引擎会首先根据第一个索引列排序，如上图我们可以单看第一个索引列，如，1 1 5 12 13…他是单调递增的；如果第一列相等则再根据第二列排序，依次类推就构成了上图的索引树，上图中的1 1 4 ，1 1 5以及13 12 4,13 16 1,13 16 5就可以说明这种情况。</p>
+<p><strong>联合索引的查找方式</strong></p>
+<p>当我们的SQL语言可以应用到索引的时候，比如</p>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">select * from T1 where b = 12 and c = 14 and d = 3;  </span><br></pre></td></tr></tbody></table></figure>
+
+<p>也就是T1表中a列为4的这条记录。存储引擎首先从根节点（一般常驻内存）开始查找，<strong>第一个索引的第一个索引列为1,12大于1，第二个索引的第一个索引列为56,12小于56，于是从这俩索引的中间读到下一个节点的磁盘文件地址</strong>，从磁盘上Load这个节点，通常伴随一次磁盘IO，然后在内存里去查找。当Load叶子节点的第二个节点时又是一次磁盘IO，比较第一个元素，b=12,c=14,d=3完全符合，于是找到该索引下的data元素即ID值，再从主键索引树上找到最终数据。</p>
+<p><img src="https://typora-lvxiaoyi.oss-cn-beijing.aliyuncs.com/typora-img/v2-60d787835b462e2ee2151ddce8340002_720w.jpg" alt="img"><img src="https://typora-lvxiaoyi.oss-cn-beijing.aliyuncs.com/typora-img/v2-60d787835b462e2ee2151ddce8340002_720w.jpg" alt="img"></p>
+<h2 id="三、查询截取分析"><a href="#三、查询截取分析" class="headerlink" title="三、查询截取分析"></a>三、查询截取分析</h2><h3 id="查询优化"><a href="#查询优化" class="headerlink" title="查询优化"></a>查询优化</h3><p>永远小表驱动大表，类似嵌套循环Nested Loop</p>
+<p><img src="https://typora-lvxiaoyi.oss-cn-beijing.aliyuncs.com/typora-img/35.png" alt="2"></p>
+<p><img src="https://typora-lvxiaoyi.oss-cn-beijing.aliyuncs.com/typora-img/36.png" alt="2"></p>
+<p><img src="https://typora-lvxiaoyi.oss-cn-beijing.aliyuncs.com/typora-img/37.png" alt="2"></p>
+<h5 id="order-by关键字优化"><a href="#order-by关键字优化" class="headerlink" title="order by关键字优化"></a>order by关键字优化</h5><p>ORDER BY子句，尽量使用Index方式排序，避免使用FileSort方式排序</p>
+<p>尽可能在索引列上完成排序操作，遵照索引建的最佳左前缀</p>
+<p>如果不在索引列上，filesort有两种算法：<br>mysql就要启动双路排序和单路排序</p>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">双路排序</span><br><span class="line">1.MySQL4.1之前是使用双路排序，字面意思是两次扫描磁盘，最终得到数据。</span><br><span class="line">读取行指针和orderby列，对他们进行排序，然后扫描已经排序好的列表，按照列表中的值重新从列表中读取对应的数据传输</span><br><span class="line">2.从磁盘取排序字段，在buffer进行排序，再从磁盘取其他字段。</span><br><span class="line">取一批数据，要对磁盘进行两次扫描，众所周知，I\O是很耗时的，所以在mysql4.1之后，出现了第二张改进的算法，就是单路排序。</span><br><span class="line"></span><br><span class="line">单路排序</span><br><span class="line">从磁盘读取查询需要的所有列，按照orderby列在buffer对它们进行排序，然后扫描排序后的列表进行输出，</span><br><span class="line">它的效率更快一些，避免了第二次读取数据，并且把随机IO变成顺序IO，但是它会使用更多的空间，</span><br><span class="line">因为它把每一行都保存在内存中了。</span><br><span class="line"></span><br><span class="line">结论及引申出的问题</span><br><span class="line">由于单路是后出来的，总体而言好过双路</span><br><span class="line">但是用单路有问题</span><br></pre></td></tr></tbody></table></figure>
+
+<p><img src="https://typora-lvxiaoyi.oss-cn-beijing.aliyuncs.com/typora-img/38.png" alt="2"></p>
+<h5 id="优化策略"><a href="#优化策略" class="headerlink" title="优化策略"></a>优化策略</h5><p>增大sort_buffer_size参数的设置</p>
+<p>增大max_length_for_sort_data参数的设置</p>
+<p><img src="https://typora-lvxiaoyi.oss-cn-beijing.aliyuncs.com/typora-img/39.png" alt="2"></p>
+<h5 id="小总结"><a href="#小总结" class="headerlink" title="小总结:"></a>小总结:</h5><p><img src="https://typora-lvxiaoyi.oss-cn-beijing.aliyuncs.com/typora-img/40.png" alt="2"></p>
+<h5 id="GROUP-BY关键字优化"><a href="#GROUP-BY关键字优化" class="headerlink" title="GROUP BY关键字优化"></a>GROUP BY关键字优化</h5><figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">groupby实质是先排序后进行分组，遵照索引建的最佳左前缀</span><br><span class="line"></span><br><span class="line">当无法使用索引列，增大max_length_for_sort_data参数的设置+增大sort_buffer_size参数的设置</span><br><span class="line"></span><br><span class="line">where高于having,能写在where限定的条件就不要去having限定了。</span><br></pre></td></tr></tbody></table></figure>
+
+
+
+<h3 id="慢查询日志"><a href="#慢查询日志" class="headerlink" title="慢查询日志"></a>慢查询日志</h3><h5 id="是什么"><a href="#是什么" class="headerlink" title="是什么"></a>是什么</h5><p><img src="https://typora-lvxiaoyi.oss-cn-beijing.aliyuncs.com/typora-img/41.png" alt="2"></p>
+<h5 id="日志分析工具mysqldumpslow"><a href="#日志分析工具mysqldumpslow" class="headerlink" title="日志分析工具mysqldumpslow"></a>日志分析工具mysqldumpslow</h5><p>查看mysqldumpshow的帮助信息</p>
+<p><img src="https://typora-lvxiaoyi.oss-cn-beijing.aliyuncs.com/typora-img/42.png" alt="2"></p>
+<h3 id="批量数据脚本"><a href="#批量数据脚本" class="headerlink" title="批量数据脚本"></a>批量数据脚本</h3><h5 id="往表里插入1000W数据"><a href="#往表里插入1000W数据" class="headerlink" title="往表里插入1000W数据"></a>往表里插入1000W数据</h5><p>1.建表</p>
+<p>2.设置参数log_trust_function_createors</p>
+<p><img src="https://typora-lvxiaoyi.oss-cn-beijing.aliyuncs.com/typora-img/43.png" alt="2"></p>
+<p>3创建函数保证每条数据都不同</p>
+<p><img src="https://typora-lvxiaoyi.oss-cn-beijing.aliyuncs.com/typora-img/44.png" alt="2"></p>
+<p>​    随机产生字符串</p>
+<p>​    随机产生部门编号</p>
+<p>4.创建存储过程</p>
+<p><img src="https://typora-lvxiaoyi.oss-cn-beijing.aliyuncs.com/typora-img/45.png" alt="2"></p>
+<p>​    创建往emp表中插入数据的存储过程</p>
+<p>​    创建往dept表中插入数据的存储过程</p>
+<p>5.调用存储过程</p>
+<h3 id="Show-profiles"><a href="#Show-profiles" class="headerlink" title="Show profiles"></a>Show profiles</h3><h5 id="是什么："><a href="#是什么：" class="headerlink" title="是什么："></a>是什么：</h5><figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">是mysql提供可以用来分析当前会话中语句执行的资源消耗情况。可以用于SQL的调优测量</span><br></pre></td></tr></tbody></table></figure>
+
+<p>默认情况下，参数处于关闭状态，并保存最近15次的运行结果</p>
+<h5 id="分析步骤"><a href="#分析步骤" class="headerlink" title="分析步骤:"></a>分析步骤:</h5><p>1.是否支持，看看当前的SQL版本是否支持</p>
+<p><img src="https://typora-lvxiaoyi.oss-cn-beijing.aliyuncs.com/typora-img/46.png" alt="2"></p>
+<p>2.开启功能，默认是关闭，使用前需要开启</p>
+<p>3.运行SQL</p>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">select * from emp group by id%10 limit 150000</span><br></pre></td></tr></tbody></table></figure>
+
+<p>4.查看结果，show profiles;</p>
+<p>5.诊断SQL，show profile cpu,block io for query 上一步前面的问题SQL 数字号码；</p>
+<p><img src="https://typora-lvxiaoyi.oss-cn-beijing.aliyuncs.com/typora-img/47.png" alt="2"></p>
+<p><img src="https://typora-lvxiaoyi.oss-cn-beijing.aliyuncs.com/typora-img/48.png" alt="2"></p>
+<p>6.日常开发需要注意的结论</p>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">converting HEAP to MyISAM 查询结果太大，内存都不够用了往磁盘上搬了。</span><br><span class="line"></span><br><span class="line">Creating tmp table 创建临时表</span><br><span class="line"></span><br><span class="line">Copying to tmp table on disk 把内存中临时表复制到磁盘，危险！！！</span><br><span class="line"></span><br><span class="line">locked</span><br></pre></td></tr></tbody></table></figure>
+
+
+
+
+
+
+
+<h3 id="全局查询日志"><a href="#全局查询日志" class="headerlink" title="全局查询日志"></a>全局查询日志</h3><p>配置启用</p>
+<p><img src="https://typora-lvxiaoyi.oss-cn-beijing.aliyuncs.com/typora-img/49.png" alt="2"></p>
+<p>编码启用</p>
+<p><img src="https://typora-lvxiaoyi.oss-cn-beijing.aliyuncs.com/typora-img/50.png" alt="2"></p>
+<h5 id="永远不要在生产环境开启这个功能。"><a href="#永远不要在生产环境开启这个功能。" class="headerlink" title="永远不要在生产环境开启这个功能。"></a>永远不要在生产环境开启这个功能。</h5><h2 id="四、MySQL锁机制"><a href="#四、MySQL锁机制" class="headerlink" title="四、MySQL锁机制"></a>四、MySQL锁机制</h2><h3 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h3><p><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_44766883/article/details/105879308">https://blog.csdn.net/qq_44766883/article/details/105879308</a></p>
+<h4 id="锁的分类"><a href="#锁的分类" class="headerlink" title="锁的分类"></a>锁的分类</h4><h5 id="从数据操作的类型（读、写）分："><a href="#从数据操作的类型（读、写）分：" class="headerlink" title="从数据操作的类型（读、写）分："></a>从数据操作的类型（读、写）分：</h5><figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">读锁（共享锁）：针对同一份数据，多个读操作可以同时进行而不会互相影响</span><br><span class="line"></span><br><span class="line">写锁（排它锁）：当前写操作没有完成前，它会阻断其他写锁和读锁。</span><br></pre></td></tr></tbody></table></figure>
+
+<h5 id="从对数据操作的颗粒度："><a href="#从对数据操作的颗粒度：" class="headerlink" title="从对数据操作的颗粒度："></a>从对数据操作的颗粒度：</h5><figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">表锁</span><br><span class="line"></span><br><span class="line">行锁</span><br></pre></td></tr></tbody></table></figure>
+
+<p>从程度上划分：</p>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">悲观锁</span><br><span class="line"></span><br><span class="line">乐观锁</span><br></pre></td></tr></tbody></table></figure>
+
+
+
+<h3 id="表锁（偏读）"><a href="#表锁（偏读）" class="headerlink" title="表锁（偏读）"></a>表锁（偏读）</h3><h4 id="特点"><a href="#特点" class="headerlink" title="特点"></a>特点</h4><figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">偏向MyISAM存储引擎，开销小，加锁快，无死锁，锁定粒度大，发生锁冲突的概率最高，并发最低</span><br></pre></td></tr></tbody></table></figure>
+
+<h4 id="案例分析"><a href="#案例分析" class="headerlink" title="案例分析"></a>案例分析</h4><h5 id="建表SQL"><a href="#建表SQL" class="headerlink" title="建表SQL"></a>建表SQL</h5><p><img src="MySQL%E8%BF%9B%E9%98%B6%E9%83%A8%E5%88%86-img/51.png" alt="2"></p>
+<h5 id="加读锁"><a href="#加读锁" class="headerlink" title="加读锁"></a>加读锁</h5><p><img src="https://typora-lvxiaoyi.oss-cn-beijing.aliyuncs.com/typora-img/52.png" alt="2"></p>
+<p><img src="https://typora-lvxiaoyi.oss-cn-beijing.aliyuncs.com/typora-img/53.png" alt="2"></p>
+<p><img src="https://typora-lvxiaoyi.oss-cn-beijing.aliyuncs.com/typora-img/54.png" alt="2"></p>
+<h5 id="加写锁"><a href="#加写锁" class="headerlink" title="加写锁"></a>加写锁</h5><p><img src="https://typora-lvxiaoyi.oss-cn-beijing.aliyuncs.com/typora-img/55.png" alt="2"></p>
+<p><img src="https://typora-lvxiaoyi.oss-cn-beijing.aliyuncs.com/typora-img/56.png" alt="2"></p>
+<h4 id="案例结论"><a href="#案例结论" class="headerlink" title="案例结论"></a>案例结论</h4><p><img src="https://typora-lvxiaoyi.oss-cn-beijing.aliyuncs.com/typora-img/57.png" alt="2"></p>
+<h4 id="表锁分析"><a href="#表锁分析" class="headerlink" title="表锁分析"></a>表锁分析</h4><p><img src="https://typora-lvxiaoyi.oss-cn-beijing.aliyuncs.com/typora-img/58.png" alt="2"></p>
+<h3 id="行锁（偏写）"><a href="#行锁（偏写）" class="headerlink" title="行锁（偏写）"></a>行锁（偏写）</h3><h4 id="特点-1"><a href="#特点-1" class="headerlink" title="特点"></a>特点</h4><figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">偏向InnoDB存储引擎，开销大，加锁慢；会出现死锁；锁定粒度最小，发生锁冲突的概率最低，并发度也最高。</span><br><span class="line"></span><br><span class="line">InnoDB与MyISAM的最大不同有两点：一是支持事务（TRANSACTION）;二是采用了行级锁</span><br></pre></td></tr></tbody></table></figure>
+
+
+
+<h4 id="由于行锁支持事务，复习老知识"><a href="#由于行锁支持事务，复习老知识" class="headerlink" title="由于行锁支持事务，复习老知识"></a>由于行锁支持事务，复习老知识</h4><h5 id="事务（Transation）及其ACID属性"><a href="#事务（Transation）及其ACID属性" class="headerlink" title="事务（Transation）及其ACID属性"></a>事务（Transation）及其ACID属性</h5><h5 id="并发事务处理带来的问题"><a href="#并发事务处理带来的问题" class="headerlink" title="并发事务处理带来的问题"></a>并发事务处理带来的问题</h5><figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">脏读:（Dirty Reads）：事务A读到了事务B已修改但尚未提交的数据，还在这个数据基础上做了操作，此时，如果						B事务回滚，A读取的数据无效，不符合一致性要求。</span><br><span class="line">不可重复读（Non-Repeatable Reads）：事务A读取到事务B已经提交的数据,不符合隔离性</span><br><span class="line">幻读（Phantom Reads）:事务A读取到事务B新增的数据</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">脏读和幻读的区别：脏读是事务B修改了数据，幻读是事务B新增了数据.</span><br></pre></td></tr></tbody></table></figure>
+
+
+
+<h5 id="事务隔离级别"><a href="#事务隔离级别" class="headerlink" title="事务隔离级别"></a>事务隔离级别</h5><p><img src="https://typora-lvxiaoyi.oss-cn-beijing.aliyuncs.com/typora-img/59.png" alt="2"></p>
+<h4 id="案例分析-1"><a href="#案例分析-1" class="headerlink" title="案例分析"></a>案例分析</h4><h5 id="建表SQL-1"><a href="#建表SQL-1" class="headerlink" title="建表SQL"></a>建表SQL</h5><p><img src="https://typora-lvxiaoyi.oss-cn-beijing.aliyuncs.com/typora-img/60.png" alt="2"></p>
+<h5 id="行锁定基本演示"><a href="#行锁定基本演示" class="headerlink" title="行锁定基本演示"></a>行锁定基本演示</h5><p><img src="https://typora-lvxiaoyi.oss-cn-beijing.aliyuncs.com/typora-img/61.png" alt="2"></p>
+<h5 id="无索引行锁升级为表锁"><a href="#无索引行锁升级为表锁" class="headerlink" title="无索引行锁升级为表锁"></a>无索引行锁升级为表锁</h5><figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">varchar  不用 ' '  导致系统自动转换类型, 行锁变表锁</span><br></pre></td></tr></tbody></table></figure>
+
+<h5 id="间隙锁危害"><a href="#间隙锁危害" class="headerlink" title="间隙锁危害"></a>间隙锁危害</h5><p><img src="https://typora-lvxiaoyi.oss-cn-beijing.aliyuncs.com/typora-img/62.png" alt="2"></p>
+<h5 id="面试题：常考如何锁定一行"><a href="#面试题：常考如何锁定一行" class="headerlink" title="面试题：常考如何锁定一行"></a>面试题：常考如何锁定一行</h5><p><img src="https://typora-lvxiaoyi.oss-cn-beijing.aliyuncs.com/typora-img/63.png" alt="2"></p>
+<h4 id="案例结论-1"><a href="#案例结论-1" class="headerlink" title="案例结论"></a>案例结论</h4><p><img src="https://typora-lvxiaoyi.oss-cn-beijing.aliyuncs.com/typora-img/64.png" alt="2"></p>
+<h4 id="行锁分析"><a href="#行锁分析" class="headerlink" title="行锁分析"></a>行锁分析</h4><p><img src="https://typora-lvxiaoyi.oss-cn-beijing.aliyuncs.com/typora-img/65.png" alt="2"></p>
+<h4 id="优化建议"><a href="#优化建议" class="headerlink" title="优化建议"></a>优化建议</h4><figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">尽可能让所有数据检索都通过索引来完成，避免无索引行锁升级为表锁</span><br><span class="line">合理设计索引，尽量缩小锁的范围</span><br><span class="line">尽可能较少检索条件，避免间隙锁</span><br><span class="line">尽量控制事务大小，减少锁定资源量和时间长度</span><br><span class="line">尽可能低级别事务隔离</span><br></pre></td></tr></tbody></table></figure>
+
+
+
+
+
+<h2 id="五、主从复制"><a href="#五、主从复制" class="headerlink" title="五、主从复制"></a>五、主从复制</h2><h3 id="复制的基本原理"><a href="#复制的基本原理" class="headerlink" title="复制的基本原理"></a>复制的基本原理</h3><figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">slave会从master读取binlog来进行数据同步</span><br></pre></td></tr></tbody></table></figure>
+
+<h5 id="三大步骤："><a href="#三大步骤：" class="headerlink" title="三大步骤："></a>三大步骤：</h5><figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">master将改变记录到二进制日志（binary log）。这些记录过程叫做二进制日志时间，binary log events</span><br><span class="line"></span><br><span class="line">slave将master的binary log ebents拷贝到它的中继日志（relay log</span><br><span class="line"></span><br><span class="line">slave重做中继日志中的时间，将改变应用到自己的数据库中。MySQL复制是异步的且串行化的</span><br></pre></td></tr></tbody></table></figure>
+
+<p><img src="https://typora-lvxiaoyi.oss-cn-beijing.aliyuncs.com/typora-img/66.png" alt="2"></p>
+<h3 id="复制的基本原则"><a href="#复制的基本原则" class="headerlink" title="复制的基本原则"></a>复制的基本原则</h3><figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">每个slave只有一个master</span><br><span class="line"></span><br><span class="line">每个slave只能有一个唯一的服务器ID</span><br><span class="line"></span><br><span class="line">每个master可以有多个salve</span><br></pre></td></tr></tbody></table></figure>
+
+
+
+<h3 id="复制最大问题"><a href="#复制最大问题" class="headerlink" title="复制最大问题"></a>复制最大问题</h3><h5 id="延时"><a href="#延时" class="headerlink" title="延时"></a>延时</h5><h2 id="六、参考资料"><a href="#六、参考资料" class="headerlink" title="六、参考资料"></a>六、参考资料</h2><h5 id="哔哩哔哩尚硅谷讲堂"><a href="#哔哩哔哩尚硅谷讲堂" class="headerlink" title="哔哩哔哩尚硅谷讲堂"></a>哔哩哔哩尚硅谷讲堂</h5><h5 id="哔哩哔哩图灵学院"><a href="#哔哩哔哩图灵学院" class="headerlink" title="哔哩哔哩图灵学院"></a>哔哩哔哩图灵学院</h5><p><strong>github：java2020</strong></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+      <div>
+        <ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者：</strong>
+    吕小医
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="https://lvxiaoyi.top/353ffb0.html" title="MySQL进阶部分">https://lvxiaoyi.top/353ffb0.html</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>
+    本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 3.0</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+
+      </div>
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/MySQL/" rel="tag"><i class="fa fa-tag"></i> MySQL</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/220c1acb.html" rel="next" title="MySQL基础部分">
+                <i class="fa fa-chevron-left"></i> MySQL基础部分
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/0.html" rel="prev" title="">
+                 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+<div>
+    
+        <div style="text-align:center;color: #ccc;font-size:14px;">------ 本文结束------</div>
+    
+</div>
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/avatar.png" alt="">
+            
+              <p class="site-author-name" itemprop="name"></p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives%7C%7C%20archive">
+              
+                  <span class="site-state-item-count">41</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">25</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">16</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%80%E3%80%81MySQL%E7%9A%84%E6%9E%B6%E6%9E%84%E4%BB%8B%E7%BB%8D"><span class="nav-text">一、MySQL的架构介绍</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-MySql%E7%AE%80%E4%BB%8B"><span class="nav-text">1.MySql简介</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-MySQL%E9%80%BB%E8%BE%91%E6%9E%B6%E6%9E%84%E4%BB%8B%E7%BB%8D"><span class="nav-text">2.MySQL逻辑架构介绍</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#1-Connectors"><span class="nav-text">1.Connectors</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2-Management-Serveices-amp-Utilities%EF%BC%9A"><span class="nav-text">2 Management Serveices &amp; Utilities：</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#3-Connection-Pool-%E8%BF%9E%E6%8E%A5%E6%B1%A0"><span class="nav-text">3 Connection Pool: 连接池</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#4-SQL-Interface-SQL%E6%8E%A5%E5%8F%A3%E3%80%82"><span class="nav-text">4 SQL Interface: SQL接口。</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#5-Parser-%E8%A7%A3%E6%9E%90%E5%99%A8%E3%80%82"><span class="nav-text">5 Parser: 解析器。</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#6-Optimizer-%E6%9F%A5%E8%AF%A2%E4%BC%98%E5%8C%96%E5%99%A8%E3%80%82"><span class="nav-text">6 Optimizer: 查询优化器。</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#7-Cache%E5%92%8CBuffer%EF%BC%9A-%E6%9F%A5%E8%AF%A2%E7%BC%93%E5%AD%98%E3%80%82"><span class="nav-text">7 Cache和Buffer： 查询缓存。</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#8-%E3%80%81%E5%AD%98%E5%82%A8%E5%BC%95%E6%93%8E%E6%8E%A5%E5%8F%A3"><span class="nav-text">8 、存储引擎接口</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-MySQL%E5%AD%98%E5%82%A8%E5%BC%95%E6%93%8E"><span class="nav-text">3.MySQL存储引擎</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%9F%A5%E7%9C%8B%E5%91%BD%E4%BB%A4%EF%BC%9A"><span class="nav-text">查看命令：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#MyISAM%E5%92%8CInnoDB%E5%8C%BA%E5%88%AB%EF%BC%9A"><span class="nav-text">MyISAM和InnoDB区别：</span></a></li></ol></li></ol><li class="nav-item nav-level-2"><a class="nav-link" href="#InnoDB%E5%9B%9B%E5%A4%A7%E7%89%B9%E6%80%A7"><span class="nav-text">InnoDB四大特性</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1%E3%80%81%E6%8F%92%E5%85%A5%E7%BC%93%E5%86%B2%EF%BC%88insert-buffer%EF%BC%89"><span class="nav-text">1、插入缓冲（insert buffer）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2%E3%80%81%E4%BA%8C%E6%AC%A1%E5%86%99%EF%BC%88double-write%EF%BC%89"><span class="nav-text">2、二次写（double write）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3%E3%80%81%E8%87%AA%E9%80%82%E5%BA%94hash%E7%B4%A2%E5%BC%95%EF%BC%88ahi%EF%BC%89"><span class="nav-text">3、自适应hash索引（ahi）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4%E3%80%81%E9%A2%84%E8%AF%BB-read-ahead"><span class="nav-text">4、预读(read ahead)</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%8C%E3%80%81%E7%B4%A2%E5%BC%95%E4%BC%98%E5%8C%96%E5%88%86%E6%9E%90"><span class="nav-text">二、索引优化分析</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-%E7%B4%A2%E5%BC%95%E7%AE%80%E4%BB%8B"><span class="nav-text">1.索引简介</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E6%98%AF%E4%BB%80%E4%B9%88%EF%BC%9F"><span class="nav-text">是什么？</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E4%BC%98%E5%8A%BF%EF%BC%9A"><span class="nav-text">优势：</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%8A%A3%E5%8A%BF%EF%BC%9A"><span class="nav-text">劣势：</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#mysql%E7%B4%A2%E5%BC%95%E5%88%86%E7%B1%BB"><span class="nav-text">mysql索引分类</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%9F%BA%E6%9C%AC%E8%AF%AD%E6%B3%95%EF%BC%9A"><span class="nav-text">基本语法：</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8Alter%E5%91%BD%E4%BB%A4%EF%BC%9A"><span class="nav-text">使用Alter命令：</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#mysql%E7%B4%A2%E5%BC%95%E7%BB%93%E6%9E%84%EF%BC%9A"><span class="nav-text">mysql索引结构：</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#BTree%EF%BC%9A"><span class="nav-text">BTree：</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#B-Tree"><span class="nav-text">B+Tree</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#B%E6%A0%91%E7%B4%A2%E5%BC%95%EF%BC%9A"><span class="nav-text">B树索引：</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#B-%E6%A0%91%E7%B4%A2%E5%BC%95%EF%BC%9A"><span class="nav-text">B+树索引：</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%85%B6%E4%B8%ADMyISAM%E5%92%8CInnoDB%E5%AD%98%E5%82%A8%E5%BC%95%E6%93%8E%E9%83%BD%E9%87%87%E7%94%A8B-%E6%A0%91%E7%B4%A2%E5%BC%95%EF%BC%8C%E4%BD%86%E5%BA%95%E5%B1%82%E5%AE%9E%E7%8E%B0%E6%96%B9%E5%BC%8F%E4%B8%8D%E5%90%8C"><span class="nav-text">其中MyISAM和InnoDB存储引擎都采用B+树索引，但底层实现方式不同</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#Hash%E7%B4%A2%E5%BC%95%EF%BC%9A"><span class="nav-text">Hash索引：</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%93%AA%E4%BA%9B%E6%83%85%E5%86%B5%E9%9C%80%E8%A6%81%E5%88%9B%E5%BB%BA%E7%B4%A2%E5%BC%95"><span class="nav-text">哪些情况需要创建索引</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%93%AA%E4%BA%9B%E6%83%85%E5%86%B5%E4%B8%8D%E8%A6%81%E5%88%9B%E5%BB%BA%E7%B4%A2%E5%BC%95"><span class="nav-text">哪些情况不要创建索引</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-%E6%80%A7%E8%83%BD%E5%88%86%E6%9E%90"><span class="nav-text">2.性能分析</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#MySQL-Query-Optimizer"><span class="nav-text">MySQL Query Optimizer</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#MySQL%E5%B8%B8%E8%A7%81%E7%93%B6%E9%A2%88"><span class="nav-text">MySQL常见瓶颈:</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Explain"><span class="nav-text">Explain</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E6%98%AF%E4%BB%80%E4%B9%88%EF%BC%88%E6%9F%A5%E7%9C%8B%E6%89%A7%E8%A1%8C%E8%AE%A1%E5%88%92%EF%BC%89"><span class="nav-text">是什么（查看执行计划）</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E6%80%8E%E4%B9%88%E7%8E%A9"><span class="nav-text">怎么玩</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E6%89%A7%E8%A1%8C%E8%AE%A1%E5%88%92%E5%8C%85%E5%90%AB%E7%9A%84%E4%BF%A1%E6%81%AF"><span class="nav-text">执行计划包含的信息</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%90%84%E4%B8%AA%E5%AD%97%E6%AE%B5%E8%A7%A3%E9%87%8A"><span class="nav-text">各个字段解释</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#id"><span class="nav-text">id</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#select-type"><span class="nav-text">select_type</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#table"><span class="nav-text">table</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#type"><span class="nav-text">type</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#possible-keys"><span class="nav-text">possible_keys</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#key"><span class="nav-text">key</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#key-len"><span class="nav-text">key_len</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#ref"><span class="nav-text">ref</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#rows"><span class="nav-text">rows</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#Extra"><span class="nav-text">Extra</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-%E7%B4%A2%E5%BC%95%E4%BC%98%E5%8C%96"><span class="nav-text">3.索引优化</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E7%B4%A2%E5%BC%95%E5%A4%B1%E6%95%88%EF%BC%88%E5%BA%94%E8%AF%A5%E9%81%BF%E5%85%8D%EF%BC%89"><span class="nav-text">索引失效（应该避免）</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%B8%80%E8%88%AC%E6%80%A7%E5%BB%BA%E8%AE%AE"><span class="nav-text">一般性建议</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-%E7%B4%A2%E5%BC%95%E4%B8%8B%E6%8E%A8"><span class="nav-text">4.索引下推</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E8%8C%83%E5%9B%B4%E6%9F%A5%E6%89%BE%E7%B4%A2%E5%BC%95%E5%9B%9E%E5%A4%B1%E6%95%88%EF%BC%8C%E5%90%8E%E7%BB%AD%E7%B4%A2%E5%BC%95%E5%9B%9E%E5%A4%B1%E6%95%88"><span class="nav-text">为什么范围查找索引回失效，后续索引回失效</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%89%E3%80%81%E6%9F%A5%E8%AF%A2%E6%88%AA%E5%8F%96%E5%88%86%E6%9E%90"><span class="nav-text">三、查询截取分析</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9F%A5%E8%AF%A2%E4%BC%98%E5%8C%96"><span class="nav-text">查询优化</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#order-by%E5%85%B3%E9%94%AE%E5%AD%97%E4%BC%98%E5%8C%96"><span class="nav-text">order by关键字优化</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E4%BC%98%E5%8C%96%E7%AD%96%E7%95%A5"><span class="nav-text">优化策略</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%B0%8F%E6%80%BB%E7%BB%93"><span class="nav-text">小总结:</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#GROUP-BY%E5%85%B3%E9%94%AE%E5%AD%97%E4%BC%98%E5%8C%96"><span class="nav-text">GROUP BY关键字优化</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%85%A2%E6%9F%A5%E8%AF%A2%E6%97%A5%E5%BF%97"><span class="nav-text">慢查询日志</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E6%98%AF%E4%BB%80%E4%B9%88"><span class="nav-text">是什么</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E6%97%A5%E5%BF%97%E5%88%86%E6%9E%90%E5%B7%A5%E5%85%B7mysqldumpslow"><span class="nav-text">日志分析工具mysqldumpslow</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%89%B9%E9%87%8F%E6%95%B0%E6%8D%AE%E8%84%9A%E6%9C%AC"><span class="nav-text">批量数据脚本</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%BE%80%E8%A1%A8%E9%87%8C%E6%8F%92%E5%85%A51000W%E6%95%B0%E6%8D%AE"><span class="nav-text">往表里插入1000W数据</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Show-profiles"><span class="nav-text">Show profiles</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E6%98%AF%E4%BB%80%E4%B9%88%EF%BC%9A"><span class="nav-text">是什么：</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%88%86%E6%9E%90%E6%AD%A5%E9%AA%A4"><span class="nav-text">分析步骤:</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%85%A8%E5%B1%80%E6%9F%A5%E8%AF%A2%E6%97%A5%E5%BF%97"><span class="nav-text">全局查询日志</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E6%B0%B8%E8%BF%9C%E4%B8%8D%E8%A6%81%E5%9C%A8%E7%94%9F%E4%BA%A7%E7%8E%AF%E5%A2%83%E5%BC%80%E5%90%AF%E8%BF%99%E4%B8%AA%E5%8A%9F%E8%83%BD%E3%80%82"><span class="nav-text">永远不要在生产环境开启这个功能。</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9B%9B%E3%80%81MySQL%E9%94%81%E6%9C%BA%E5%88%B6"><span class="nav-text">四、MySQL锁机制</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%A6%82%E8%BF%B0"><span class="nav-text">概述</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%94%81%E7%9A%84%E5%88%86%E7%B1%BB"><span class="nav-text">锁的分类</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E4%BB%8E%E6%95%B0%E6%8D%AE%E6%93%8D%E4%BD%9C%E7%9A%84%E7%B1%BB%E5%9E%8B%EF%BC%88%E8%AF%BB%E3%80%81%E5%86%99%EF%BC%89%E5%88%86%EF%BC%9A"><span class="nav-text">从数据操作的类型（读、写）分：</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E4%BB%8E%E5%AF%B9%E6%95%B0%E6%8D%AE%E6%93%8D%E4%BD%9C%E7%9A%84%E9%A2%97%E7%B2%92%E5%BA%A6%EF%BC%9A"><span class="nav-text">从对数据操作的颗粒度：</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%A1%A8%E9%94%81%EF%BC%88%E5%81%8F%E8%AF%BB%EF%BC%89"><span class="nav-text">表锁（偏读）</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%89%B9%E7%82%B9"><span class="nav-text">特点</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%A1%88%E4%BE%8B%E5%88%86%E6%9E%90"><span class="nav-text">案例分析</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%BB%BA%E8%A1%A8SQL"><span class="nav-text">建表SQL</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%8A%A0%E8%AF%BB%E9%94%81"><span class="nav-text">加读锁</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%8A%A0%E5%86%99%E9%94%81"><span class="nav-text">加写锁</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%A1%88%E4%BE%8B%E7%BB%93%E8%AE%BA"><span class="nav-text">案例结论</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%A1%A8%E9%94%81%E5%88%86%E6%9E%90"><span class="nav-text">表锁分析</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%A1%8C%E9%94%81%EF%BC%88%E5%81%8F%E5%86%99%EF%BC%89"><span class="nav-text">行锁（偏写）</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%89%B9%E7%82%B9-1"><span class="nav-text">特点</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%94%B1%E4%BA%8E%E8%A1%8C%E9%94%81%E6%94%AF%E6%8C%81%E4%BA%8B%E5%8A%A1%EF%BC%8C%E5%A4%8D%E4%B9%A0%E8%80%81%E7%9F%A5%E8%AF%86"><span class="nav-text">由于行锁支持事务，复习老知识</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E4%BA%8B%E5%8A%A1%EF%BC%88Transation%EF%BC%89%E5%8F%8A%E5%85%B6ACID%E5%B1%9E%E6%80%A7"><span class="nav-text">事务（Transation）及其ACID属性</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%B9%B6%E5%8F%91%E4%BA%8B%E5%8A%A1%E5%A4%84%E7%90%86%E5%B8%A6%E6%9D%A5%E7%9A%84%E9%97%AE%E9%A2%98"><span class="nav-text">并发事务处理带来的问题</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E4%BA%8B%E5%8A%A1%E9%9A%94%E7%A6%BB%E7%BA%A7%E5%88%AB"><span class="nav-text">事务隔离级别</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%A1%88%E4%BE%8B%E5%88%86%E6%9E%90-1"><span class="nav-text">案例分析</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%BB%BA%E8%A1%A8SQL-1"><span class="nav-text">建表SQL</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E8%A1%8C%E9%94%81%E5%AE%9A%E5%9F%BA%E6%9C%AC%E6%BC%94%E7%A4%BA"><span class="nav-text">行锁定基本演示</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E6%97%A0%E7%B4%A2%E5%BC%95%E8%A1%8C%E9%94%81%E5%8D%87%E7%BA%A7%E4%B8%BA%E8%A1%A8%E9%94%81"><span class="nav-text">无索引行锁升级为表锁</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E9%97%B4%E9%9A%99%E9%94%81%E5%8D%B1%E5%AE%B3"><span class="nav-text">间隙锁危害</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E9%9D%A2%E8%AF%95%E9%A2%98%EF%BC%9A%E5%B8%B8%E8%80%83%E5%A6%82%E4%BD%95%E9%94%81%E5%AE%9A%E4%B8%80%E8%A1%8C"><span class="nav-text">面试题：常考如何锁定一行</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%A1%88%E4%BE%8B%E7%BB%93%E8%AE%BA-1"><span class="nav-text">案例结论</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%A1%8C%E9%94%81%E5%88%86%E6%9E%90"><span class="nav-text">行锁分析</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BC%98%E5%8C%96%E5%BB%BA%E8%AE%AE"><span class="nav-text">优化建议</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%94%E3%80%81%E4%B8%BB%E4%BB%8E%E5%A4%8D%E5%88%B6"><span class="nav-text">五、主从复制</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%A4%8D%E5%88%B6%E7%9A%84%E5%9F%BA%E6%9C%AC%E5%8E%9F%E7%90%86"><span class="nav-text">复制的基本原理</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E4%B8%89%E5%A4%A7%E6%AD%A5%E9%AA%A4%EF%BC%9A"><span class="nav-text">三大步骤：</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%A4%8D%E5%88%B6%E7%9A%84%E5%9F%BA%E6%9C%AC%E5%8E%9F%E5%88%99"><span class="nav-text">复制的基本原则</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%A4%8D%E5%88%B6%E6%9C%80%E5%A4%A7%E9%97%AE%E9%A2%98"><span class="nav-text">复制最大问题</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%BB%B6%E6%97%B6"><span class="nav-text">延时</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%AD%E3%80%81%E5%8F%82%E8%80%83%E8%B5%84%E6%96%99"><span class="nav-text">六、参考资料</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%93%94%E5%93%A9%E5%93%94%E5%93%A9%E5%B0%9A%E7%A1%85%E8%B0%B7%E8%AE%B2%E5%A0%82"><span class="nav-text">哔哩哔哩尚硅谷讲堂</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%93%94%E5%93%A9%E5%93%94%E5%93%A9%E5%9B%BE%E7%81%B5%E5%AD%A6%E9%99%A2"><span class="nav-text">哔哩哔哩图灵学院</span></a></li></ol></li></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+        <div class="back-to-top">
+          <i class="fa fa-arrow-up"></i>
+          
+            <span id="scrollpercent"><span>0</span>%</span>
+          
+        </div>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">© 2019 — <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">吕小医</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 — <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.4</div>
+
+
+
+
+        
+<div class="busuanzi-count">
+  <script async="" src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">
+      <i class="fa fa-user"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      次
+    </span>
+  
+
+  
+    <span class="site-pv">
+      <i class="fa fa-eye"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      次
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+
+    
+
+  </div>
+  
+  
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+  <style>
+    .copy-btn {
+      display: inline-block;
+      padding: 6px 12px;
+      font-size: 13px;
+      font-weight: 700;
+      line-height: 20px;
+      color: #333;
+      white-space: nowrap;
+      vertical-align: middle;
+      cursor: pointer;
+      background-color: #eee;
+      background-image: linear-gradient(#fcfcfc, #eee);
+      border: 1px solid #d5d5d5;
+      border-radius: 3px;
+      user-select: none;
+      outline: 0;
+    }
+
+    .highlight-wrap .copy-btn {
+      transition: opacity .3s ease-in-out;
+      opacity: 0;
+      padding: 2px 6px;
+      position: absolute;
+      right: 4px;
+      top: 8px;
+    }
+
+    .highlight-wrap:hover .copy-btn,
+    .highlight-wrap .copy-btn:focus {
+      opacity: 1
+    }
+
+    .highlight-wrap {
+      position: relative;
+    }
+  </style>
+  
+  <script>
+    $('.highlight').each(function (i, e) {
+      var $wrap = $('<div>').addClass('highlight-wrap')
+      $(e).after($wrap)
+      $wrap.append($('<button>').addClass('copy-btn').append('复制').on('click', function (e) {
+        var code = $(this).parent().find('.code').find('.line').map(function (i, e) {
+          return $(e).text()
+        }).toArray().join('\n')
+        var ta = document.createElement('textarea')
+        document.body.appendChild(ta)
+        ta.style.position = 'absolute'
+        ta.style.top = '0px'
+        ta.style.left = '0px'
+        ta.value = code
+        ta.select()
+        ta.focus()
+        var result = document.execCommand('copy')
+        document.body.removeChild(ta)
+        
+          if(result)$(this).text('复制成功')
+          else $(this).text('复制失败')
+        
+        $(this).blur()
+      })).on('mouseleave', function (e) {
+        var $b = $(this).find('.copy-btn')
+        setTimeout(function () {
+          $b.text('复制')
+        }, 300)
+      }).append(e)
+    })
+  </script>
+
+
+
+
+<script type="text/javascript" charset="utf-8" src="/js/lazyload-plugin/lazyload.intersectionObserver.min.js"></script></body></html>
