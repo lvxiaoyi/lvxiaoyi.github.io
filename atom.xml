@@ -6,7 +6,7 @@
   <link href="https://lvxiaoyi.top/atom.xml" rel="self"/>
   
   <link href="https://lvxiaoyi.top/"/>
-  <updated>2021-09-10T09:30:03.424Z</updated>
+  <updated>2021-09-13T07:32:48.484Z</updated>
   <id>https://lvxiaoyi.top/</id>
   
   <author>
@@ -15,6 +15,179 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>源码级别理解java拆箱装箱过程</title>
+    <link href="https://lvxiaoyi.top/2134a338.html"/>
+    <id>https://lvxiaoyi.top/2134a338.html</id>
+    <published>2021-09-13T07:07:45.072Z</published>
+    <updated>2021-09-13T07:32:48.484Z</updated>
+    
+    
+    <summary type="html">&lt;h1 id=&quot;题目&quot;&gt;&lt;a href=&quot;#题目&quot; class=&quot;headerlink&quot; title=&quot;题目&quot;&gt;&lt;/a&gt;题目&lt;/h1&gt;&lt;p&gt;知道字节码吗，字节码都有哪些？比较下面代码&lt;code&gt;x == y&lt;/code&gt;都经过了哪些过程&lt;/p&gt;
+&lt;figure class=&quot;highlight java&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;class&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;title&quot;&gt;interview&lt;/span&gt; &lt;/span&gt;&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;static&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;title&quot;&gt;main&lt;/span&gt;&lt;span class=&quot;params&quot;&gt;(String[] args)&lt;/span&gt; &lt;/span&gt;&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        Integer x = &lt;span class=&quot;number&quot;&gt;5&lt;/span&gt;;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        &lt;span class=&quot;keyword&quot;&gt;int&lt;/span&gt; y = &lt;span class=&quot;number&quot;&gt;5&lt;/span&gt;;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        System.out.println(x == y);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+
+&lt;p&gt;正确答案：&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="jvm" scheme="https://lvxiaoyi.top/categories/jvm/"/>
+    
+    <category term="jvm杂篇" scheme="https://lvxiaoyi.top/categories/jvm/jvm%E6%9D%82%E7%AF%87/"/>
+    
+    
+    <category term="jvm" scheme="https://lvxiaoyi.top/tags/jvm/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>前端编译器和后端编译器</title>
+    <link href="https://lvxiaoyi.top/dd88deb1.html"/>
+    <id>https://lvxiaoyi.top/dd88deb1.html</id>
+    <published>2021-09-13T03:24:18.462Z</published>
+    <updated>2021-09-13T06:00:01.588Z</updated>
+    
+    
+      
+      
+    <summary type="html">&lt;p&gt;本文章转载于：&lt;a href=&quot;https://blog.csdn.net/qq_20009015/article/details/105190415&quot;&gt;https://blog.csdn.net/qq_20009015/article/details/105190415&lt;</summary>
+      
+    
+    
+    
+    <category term="jvm" scheme="https://lvxiaoyi.top/categories/jvm/"/>
+    
+    <category term="jvm理论" scheme="https://lvxiaoyi.top/categories/jvm/jvm%E7%90%86%E8%AE%BA/"/>
+    
+    
+    <category term="jvm" scheme="https://lvxiaoyi.top/tags/jvm/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>jvm基础3之性能监控与调优篇</title>
+    <link href="https://lvxiaoyi.top/6197d47a.html"/>
+    <id>https://lvxiaoyi.top/6197d47a.html</id>
+    <published>2021-09-11T13:35:25.581Z</published>
+    <updated>2021-09-13T01:51:31.729Z</updated>
+    
+    
+    <summary type="html">&lt;h1 id=&quot;jvm基础3&quot;&gt;&lt;a href=&quot;#jvm基础3&quot; class=&quot;headerlink&quot; title=&quot;jvm基础3&quot;&gt;&lt;/a&gt;jvm基础3&lt;/h1&gt;</summary>
+    
+    
+    
+    <category term="jvm" scheme="https://lvxiaoyi.top/categories/jvm/"/>
+    
+    <category term="jvm理论" scheme="https://lvxiaoyi.top/categories/jvm/jvm%E7%90%86%E8%AE%BA/"/>
+    
+    
+    <category term="jvm" scheme="https://lvxiaoyi.top/tags/jvm/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>jvm基础2之字节码与类的加载篇</title>
+    <link href="https://lvxiaoyi.top/9f1e208e.html"/>
+    <id>https://lvxiaoyi.top/9f1e208e.html</id>
+    <published>2021-09-11T13:21:18.223Z</published>
+    <updated>2021-09-16T08:00:08.372Z</updated>
+    
+    
+    <summary type="html">&lt;h1 id=&quot;jvm基础2&quot;&gt;&lt;a href=&quot;#jvm基础2&quot; class=&quot;headerlink&quot; title=&quot;jvm基础2&quot;&gt;&lt;/a&gt;jvm基础2&lt;/h1&gt;&lt;h1 id=&quot;01概述&quot;&gt;&lt;a href=&quot;#01概述&quot; class=&quot;headerlink&quot; title=&quot;01概述&quot;&gt;&lt;/a&gt;01概述&lt;/h1&gt;&lt;h2 id=&quot;字节码文件的跨平台性&quot;&gt;&lt;a href=&quot;#字节码文件的跨平台性&quot; class=&quot;headerlink&quot; title=&quot;字节码文件的跨平台性&quot;&gt;&lt;/a&gt;字节码文件的跨平台性&lt;/h2&gt;&lt;h3 id=&quot;Java语言：跨平台的语言（write-once，run-anywhere&quot;&gt;&lt;a href=&quot;#Java语言：跨平台的语言（write-once，run-anywhere&quot; class=&quot;headerlink&quot; title=&quot;Java语言：跨平台的语言（write once，run anywhere&quot;&gt;&lt;/a&gt;Java语言：跨平台的语言（write once，run anywhere&lt;/h3&gt;&lt;ul&gt;
+&lt;li&gt;当Java源代码成功编译成字节码后，如果想在不同的平台上运行，则无须再次编译&lt;/li&gt;
+&lt;li&gt;这个优势现在不在那么吸引人&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;Python&lt;/code&gt;、&lt;code&gt;PHP&lt;/code&gt;、&lt;code&gt;Perl&lt;/code&gt;、&lt;code&gt;Ruby&lt;/code&gt;、&lt;code&gt;LISP&lt;/code&gt;等都有强大的解释器&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;跨平台似乎快成为了一门语言必选的特性。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&quot;Java虚拟机：跨语言的平台&quot;&gt;&lt;a href=&quot;#Java虚拟机：跨语言的平台&quot; class=&quot;headerlink&quot; title=&quot;Java虚拟机：跨语言的平台&quot;&gt;&lt;/a&gt;Java虚拟机：跨语言的平台&lt;/h3&gt;</summary>
+    
+    
+    
+    <category term="jvm" scheme="https://lvxiaoyi.top/categories/jvm/"/>
+    
+    <category term="jvm理论" scheme="https://lvxiaoyi.top/categories/jvm/jvm%E7%90%86%E8%AE%BA/"/>
+    
+    
+    <category term="jvm" scheme="https://lvxiaoyi.top/tags/jvm/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>jvm基础1之内存与垃圾回收篇</title>
+    <link href="https://lvxiaoyi.top/539b1196.html"/>
+    <id>https://lvxiaoyi.top/539b1196.html</id>
+    <published>2021-09-11T13:20:47.351Z</published>
+    <updated>2021-09-16T08:00:27.619Z</updated>
+    
+    
+    <summary type="html">&lt;h1 id=&quot;jvm基础1&quot;&gt;&lt;a href=&quot;#jvm基础1&quot; class=&quot;headerlink&quot; title=&quot;jvm基础1&quot;&gt;&lt;/a&gt;jvm基础1&lt;/h1&gt;&lt;h1 id=&quot;为什么要学习jvm&quot;&gt;&lt;a href=&quot;#为什么要学习jvm&quot; class=&quot;headerlink&quot; title=&quot;为什么要学习jvm&quot;&gt;&lt;/a&gt;为什么要学习jvm&lt;/h1&gt;&lt;ol&gt;
+&lt;li&gt;&lt;p&gt;面试&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;系统调优&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="jvm" scheme="https://lvxiaoyi.top/categories/jvm/"/>
+    
+    <category term="jvm理论" scheme="https://lvxiaoyi.top/categories/jvm/jvm%E7%90%86%E8%AE%BA/"/>
+    
+    
+    <category term="jvm" scheme="https://lvxiaoyi.top/tags/jvm/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>深入理解Phaser</title>
+    <link href="https://lvxiaoyi.top/3937b410.html"/>
+    <id>https://lvxiaoyi.top/3937b410.html</id>
+    <published>2021-09-11T06:21:48.707Z</published>
+    <updated>2021-09-12T10:24:06.148Z</updated>
+    
+    
+      
+      
+    <summary type="html">&lt;h1 id=&quot;Phaser&quot;&gt;&lt;a href=&quot;#Phaser&quot; class=&quot;headerlink&quot; title=&quot;Phaser&quot;&gt;&lt;/a&gt;Phaser&lt;/h1&gt;&lt;h2 id=&quot;介绍&quot;&gt;&lt;a href=&quot;#介绍&quot; class=&quot;headerlink&quot; title=&quot;介绍&quot;&gt;&lt;</summary>
+      
+    
+    
+    
+    <category term="多线程" scheme="https://lvxiaoyi.top/categories/%E5%A4%9A%E7%BA%BF%E7%A8%8B/"/>
+    
+    <category term="多线程理论篇" scheme="https://lvxiaoyi.top/categories/%E5%A4%9A%E7%BA%BF%E7%A8%8B/%E5%A4%9A%E7%BA%BF%E7%A8%8B%E7%90%86%E8%AE%BA%E7%AF%87/"/>
+    
+    
+    <category term="多线程" scheme="https://lvxiaoyi.top/tags/%E5%A4%9A%E7%BA%BF%E7%A8%8B/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>深入理解Semaphore</title>
+    <link href="https://lvxiaoyi.top/4bbf9af.html"/>
+    <id>https://lvxiaoyi.top/4bbf9af.html</id>
+    <published>2021-09-11T00:59:31.454Z</published>
+    <updated>2021-09-12T10:24:07.447Z</updated>
+    
+    
+    <summary type="html">&lt;h1 id=&quot;深入理解Semaphore&quot;&gt;&lt;a href=&quot;#深入理解Semaphore&quot; class=&quot;headerlink&quot; title=&quot;深入理解Semaphore&quot;&gt;&lt;/a&gt;深入理解Semaphore&lt;/h1&gt;&lt;figure class=&quot;highlight java&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;以下从java jdk1&lt;span class=&quot;number&quot;&gt;.8&lt;/span&gt;的api中摘录&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+
+&lt;h2 id=&quot;介绍&quot;&gt;&lt;a href=&quot;#介绍&quot; class=&quot;headerlink&quot; title=&quot;介绍&quot;&gt;&lt;/a&gt;介绍&lt;/h2&gt;&lt;p&gt;Semaphore：一个计数信号量。在概念上，信号量维持一组许可证。如果有必要，每个acquire（）都会阻塞，直到许可证可用，然后才能使用它。每个release（）添加许可证（&lt;strong&gt;只要调用这个方法就会添加，在写项目的时候要注意这个问题&lt;/strong&gt;），潜在的释放阻塞获取地方。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;信号量通常用于限制线程数，而不是访问某些（物理或逻辑）资源&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;例如，这是一个使用信号量来控制对一个项目池的访问的类：&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="多线程" scheme="https://lvxiaoyi.top/categories/%E5%A4%9A%E7%BA%BF%E7%A8%8B/"/>
+    
+    <category term="多线程理论篇" scheme="https://lvxiaoyi.top/categories/%E5%A4%9A%E7%BA%BF%E7%A8%8B/%E5%A4%9A%E7%BA%BF%E7%A8%8B%E7%90%86%E8%AE%BA%E7%AF%87/"/>
+    
+    
+    <category term="多线程" scheme="https://lvxiaoyi.top/tags/%E5%A4%9A%E7%BA%BF%E7%A8%8B/"/>
+    
+  </entry>
   
   <entry>
     <title>动态规划</title>
@@ -295,7 +468,7 @@
     <link href="https://lvxiaoyi.top/cfe2d636.html"/>
     <id>https://lvxiaoyi.top/cfe2d636.html</id>
     <published>2021-09-05T10:41:50.978Z</published>
-    <updated>2021-09-10T08:28:51.375Z</updated>
+    <updated>2021-09-12T11:13:55.468Z</updated>
     
     
     <summary type="html">&lt;h1 id=&quot;线程、进程、协程-纤程&quot;&gt;&lt;a href=&quot;#线程、进程、协程-纤程&quot; class=&quot;headerlink&quot; title=&quot;线程、进程、协程/纤程&quot;&gt;&lt;/a&gt;线程、进程、协程/纤程&lt;/h1&gt;&lt;p&gt;进程是资源分配的基本单位，一个进程中包括过个线程，各个进程之间互不影响&lt;/p&gt;
@@ -310,167 +483,6 @@
     
     
     <category term="多线程" scheme="https://lvxiaoyi.top/tags/%E5%A4%9A%E7%BA%BF%E7%A8%8B/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>偏向锁四秒延迟探究</title>
-    <link href="https://lvxiaoyi.top/77ed6e38.html"/>
-    <id>https://lvxiaoyi.top/77ed6e38.html</id>
-    <published>2021-09-05T10:41:50.975Z</published>
-    <updated>2021-09-05T10:41:50.976Z</updated>
-    
-    
-    <summary type="html">&lt;p&gt;在项目中发现偏向锁并不是立即生效的，而是有着一个默认延迟，下面深入探究一下，为什么偏向锁有着四秒延迟，以及怎么调优&lt;/p&gt;</summary>
-    
-    
-    
-    <category term="多线程" scheme="https://lvxiaoyi.top/categories/%E5%A4%9A%E7%BA%BF%E7%A8%8B/"/>
-    
-    <category term="多线程理论篇" scheme="https://lvxiaoyi.top/categories/%E5%A4%9A%E7%BA%BF%E7%A8%8B/%E5%A4%9A%E7%BA%BF%E7%A8%8B%E7%90%86%E8%AE%BA%E7%AF%87/"/>
-    
-    
-    <category term="多线程" scheme="https://lvxiaoyi.top/tags/%E5%A4%9A%E7%BA%BF%E7%A8%8B/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>volatile的底层实现</title>
-    <link href="https://lvxiaoyi.top/db022879.html"/>
-    <id>https://lvxiaoyi.top/db022879.html</id>
-    <published>2021-09-05T10:41:50.965Z</published>
-    <updated>2021-09-05T10:41:50.965Z</updated>
-    
-    
-    <summary type="html">&lt;h1 id=&quot;知识点&quot;&gt;&lt;a href=&quot;#知识点&quot; class=&quot;headerlink&quot; title=&quot;知识点&quot;&gt;&lt;/a&gt;知识点&lt;/h1&gt;&lt;h2 id=&quot;计算机组成&quot;&gt;&lt;a href=&quot;#计算机组成&quot; class=&quot;headerlink&quot; title=&quot;计算机组成&quot;&gt;&lt;/a&gt;计算机组成&lt;/h2&gt;&lt;p&gt;&lt;img src=&quot;https://typora-lvxiaoyi.oss-cn-beijing.aliyuncs.com/typora-img/image-20210827154138917.png&quot; alt=&quot;image-20210827154138917&quot;&gt;</summary>
-    
-    
-    
-    <category term="多线程" scheme="https://lvxiaoyi.top/categories/%E5%A4%9A%E7%BA%BF%E7%A8%8B/"/>
-    
-    <category term="多线程理论篇" scheme="https://lvxiaoyi.top/categories/%E5%A4%9A%E7%BA%BF%E7%A8%8B/%E5%A4%9A%E7%BA%BF%E7%A8%8B%E7%90%86%E8%AE%BA%E7%AF%87/"/>
-    
-    
-    <category term="多线程" scheme="https://lvxiaoyi.top/tags/%E5%A4%9A%E7%BA%BF%E7%A8%8B/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>hospot虚拟机中的synchronized底层实现</title>
-    <link href="https://lvxiaoyi.top/cbd84e4c.html"/>
-    <id>https://lvxiaoyi.top/cbd84e4c.html</id>
-    <published>2021-09-05T10:41:50.950Z</published>
-    <updated>2021-09-05T10:41:50.950Z</updated>
-    
-    
-    <summary type="html">&lt;h1 id=&quot;概述&quot;&gt;&lt;a href=&quot;#概述&quot; class=&quot;headerlink&quot; title=&quot;概述&quot;&gt;&lt;/a&gt;概述&lt;/h1&gt;&lt;h2 id=&quot;synchronized作用&quot;&gt;&lt;a href=&quot;#synchronized作用&quot; class=&quot;headerlink&quot; title=&quot;synchronized作用&quot;&gt;&lt;/a&gt;synchronized作用&lt;/h2&gt;&lt;ul&gt;
-&lt;li&gt;原子性：synchronized保证语句块内操作是原子的&lt;/li&gt;
-&lt;li&gt;可见性：synchronized保证可见性（通过“在执行unlock之前，必须先把此变量同步回主内存”实现）&lt;/li&gt;
-&lt;li&gt;有序性：synchronized保证有序性（通过“一个变量在同一时刻只允许一条线程对其进行lock操作”）&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h2 id=&quot;synchronized的使用&quot;&gt;&lt;a href=&quot;#synchronized的使用&quot; class=&quot;headerlink&quot; title=&quot;synchronized的使用&quot;&gt;&lt;/a&gt;synchronized的使用&lt;/h2&gt;&lt;ul&gt;
-&lt;li&gt;修饰实例方法，对当前实例对象加锁&lt;/li&gt;
-&lt;li&gt;修饰静态方法，多当前类的Class对象加锁&lt;/li&gt;
-&lt;li&gt;修饰代码块，对synchronized括号内的对象加锁&lt;/li&gt;
-&lt;/ul&gt;</summary>
-    
-    
-    
-    <category term="多线程" scheme="https://lvxiaoyi.top/categories/%E5%A4%9A%E7%BA%BF%E7%A8%8B/"/>
-    
-    <category term="多线程理论篇" scheme="https://lvxiaoyi.top/categories/%E5%A4%9A%E7%BA%BF%E7%A8%8B/%E5%A4%9A%E7%BA%BF%E7%A8%8B%E7%90%86%E8%AE%BA%E7%AF%87/"/>
-    
-    
-    <category term="多线程" scheme="https://lvxiaoyi.top/tags/%E5%A4%9A%E7%BA%BF%E7%A8%8B/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>ReentrantLock底层实现原理</title>
-    <link href="https://lvxiaoyi.top/9682c195.html"/>
-    <id>https://lvxiaoyi.top/9682c195.html</id>
-    <published>2021-09-05T10:41:50.947Z</published>
-    <updated>2021-09-05T10:41:50.947Z</updated>
-    
-    
-    
-    
-    <category term="多线程" scheme="https://lvxiaoyi.top/categories/%E5%A4%9A%E7%BA%BF%E7%A8%8B/"/>
-    
-    <category term="多线程理论篇" scheme="https://lvxiaoyi.top/categories/%E5%A4%9A%E7%BA%BF%E7%A8%8B/%E5%A4%9A%E7%BA%BF%E7%A8%8B%E7%90%86%E8%AE%BA%E7%AF%87/"/>
-    
-    
-    <category term="多线程" scheme="https://lvxiaoyi.top/tags/%E5%A4%9A%E7%BA%BF%E7%A8%8B/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>JOL使用</title>
-    <link href="https://lvxiaoyi.top/9fbd3b67.html"/>
-    <id>https://lvxiaoyi.top/9fbd3b67.html</id>
-    <published>2021-09-05T10:41:50.945Z</published>
-    <updated>2021-09-05T10:41:50.945Z</updated>
-    
-    
-    <summary type="html">&lt;p&gt;查看普通java对象的内部布局工具JOL(JAVA OBJECT LAYOUT)&lt;/p&gt;
-&lt;p&gt;使用此工具可以查看new出来的一个java对象的内部布局,以及一个普通的java对象占用多少字节。&lt;/p&gt;</summary>
-    
-    
-    
-    <category term="多线程" scheme="https://lvxiaoyi.top/categories/%E5%A4%9A%E7%BA%BF%E7%A8%8B/"/>
-    
-    <category term="多线程理论篇" scheme="https://lvxiaoyi.top/categories/%E5%A4%9A%E7%BA%BF%E7%A8%8B/%E5%A4%9A%E7%BA%BF%E7%A8%8B%E7%90%86%E8%AE%BA%E7%AF%87/"/>
-    
-    
-    <category term="多线程" scheme="https://lvxiaoyi.top/tags/%E5%A4%9A%E7%BA%BF%E7%A8%8B/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>CAS</title>
-    <link href="https://lvxiaoyi.top/969d9481.html"/>
-    <id>https://lvxiaoyi.top/969d9481.html</id>
-    <published>2021-09-05T10:41:50.942Z</published>
-    <updated>2021-09-05T10:41:50.942Z</updated>
-    
-    
-    <summary type="html">&lt;p&gt;CAS：compar and swap，是一种自旋锁&lt;/p&gt;
-&lt;img src=&quot;https://typora-lvxiaoyi.oss-cn-beijing.aliyuncs.com/typora-img/image-20210826103838080.png&quot; alt=&quot;image-20210826103838080&quot; style=&quot;zoom:33%;&quot; /&gt;
-
-&lt;p&gt;属于乐观锁，是解决多线程并行情况下使用锁造成性能损耗的一种机制，CAS操作包含三个操作数——内存位置（V）、预期原值（A）和新值(B)。如果内存位置的值与预期原值相匹配，那么处理器会自动将该位置值更新为新值。否则，处理器不做任何操作。无论哪种情况，它都会在CAS指令之前返回该位置的值。CAS有效地说明了“我认为位置V应该包含值A；如果包含该值，则将B放到这个位置；否则，不要更改该位置，只告诉我这个位置现在的值即可。&lt;/p&gt;</summary>
-    
-    
-    
-    <category term="多线程" scheme="https://lvxiaoyi.top/categories/%E5%A4%9A%E7%BA%BF%E7%A8%8B/"/>
-    
-    <category term="多线程理论篇" scheme="https://lvxiaoyi.top/categories/%E5%A4%9A%E7%BA%BF%E7%A8%8B/%E5%A4%9A%E7%BA%BF%E7%A8%8B%E7%90%86%E8%AE%BA%E7%AF%87/"/>
-    
-    
-    <category term="多线程" scheme="https://lvxiaoyi.top/tags/%E5%A4%9A%E7%BA%BF%E7%A8%8B/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>百万数据快速插入数据库</title>
-    <link href="https://lvxiaoyi.top/859f2ea9.html"/>
-    <id>https://lvxiaoyi.top/859f2ea9.html</id>
-    <published>2021-09-05T10:41:50.938Z</published>
-    <updated>2021-09-05T10:41:50.939Z</updated>
-    
-    
-      
-      
-    <summary type="html">&lt;p&gt;&lt;a href=&quot;https://blog.csdn.net/zl1zl2zl3/article/details/105007492?utm_medium=distribute.pc_relevant.none-task-blog-2~default~BlogCommend</summary>
-      
-    
-    
-    
-    <category term="多线程" scheme="https://lvxiaoyi.top/categories/%E5%A4%9A%E7%BA%BF%E7%A8%8B/"/>
-    
-    <category term="多线程实战篇" scheme="https://lvxiaoyi.top/categories/%E5%A4%9A%E7%BA%BF%E7%A8%8B/%E5%A4%9A%E7%BA%BF%E7%A8%8B%E5%AE%9E%E6%88%98%E7%AF%87/"/>
-    
-    
-    <category term="多线程实战" scheme="https://lvxiaoyi.top/tags/%E5%A4%9A%E7%BA%BF%E7%A8%8B%E5%AE%9E%E6%88%98/"/>
     
   </entry>
   
