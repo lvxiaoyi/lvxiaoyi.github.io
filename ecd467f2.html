@@ -139,13 +139,13 @@
 <meta property="og:site_name" content="吕小医&amp;BLOG">
 <meta property="og:description" content="背景为了保证数据的一致性，在一些业务处理中都会选择加锁来保证数据的一致性。在单机模式下我们通常选择使用synchronized等这种JAVA提供好的jvm锁来实现，但是在集群和分布式情况下，这种jvm级别的锁式无法满足我们的需求，因为一个服务部署在多台服务器上，这些服务器上的jvm是无法通讯的，所以我们需要一种方案来解决分布式情况下数据一致性。 在互联网公司，基本上企业内部都会有自己的一套分布式锁">
 <meta property="og:locale">
-<meta property="og:image" content="https://typora-lvxiaoyi.oss-cn-beijing.aliyuncs.com/typora-img/image-20210901220545870.png">
+<meta property="og:image" content="https://img.lvxiaoyi.top/typora-img/image-20210901220545870.png">
 <meta property="article:published_time" content="2021-09-03T01:08:13.658Z">
-<meta property="article:modified_time" content="2021-09-05T07:59:59.606Z">
+<meta property="article:modified_time" content="2021-09-23T08:12:17.957Z">
 <meta property="article:author" content="吕小医">
 <meta property="article:tag" content="分布式锁">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://typora-lvxiaoyi.oss-cn-beijing.aliyuncs.com/typora-img/image-20210901220545870.png">
+<meta name="twitter:image" content="https://img.lvxiaoyi.top/typora-img/image-20210901220545870.png">
 
 
 
@@ -538,7 +538,7 @@ var _hmt = _hmt || [];
 <li>geteway（本地部署）轮询负载均衡</li>
 <li>zookeeper做分布式锁（本地单机）</li>
 </ul>
-<p><img src="https://typora-lvxiaoyi.oss-cn-beijing.aliyuncs.com/typora-img/image-20210901220545870.png" alt="image-20210901220545870"></p>
+<p><img src="https://img.lvxiaoyi.top/typora-img/image-20210901220545870.png" alt="image-20210901220545870"></p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 第一台服务</span></span><br><span class="line">扣减库存成功，剩余库存：<span class="number">1</span>         卖出数量为：<span class="number">67</span></span><br><span class="line">扣减库存失败，库存不足</span><br><span class="line"><span class="comment">// 第二台服务</span></span><br><span class="line">扣减库存成功，剩余库存：<span class="number">0</span>         卖出数量为：<span class="number">67</span></span><br><span class="line">扣减库存失败，库存不足</span><br><span class="line"><span class="comment">// 第三台服务</span></span><br><span class="line">扣减库存成功，剩余库存：<span class="number">2</span>         卖出数量为：<span class="number">66</span></span><br><span class="line">扣减库存失败，库存不足</span><br><span class="line"><span class="comment">//总卖出数量为：67+67+66=200</span></span><br></pre></td></tr></table></figure>
 
 

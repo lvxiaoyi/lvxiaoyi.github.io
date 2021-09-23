@@ -139,20 +139,20 @@
 <meta property="og:site_name" content="吕小医&amp;BLOG">
 <meta property="og:description" content="知识点计算机组成">
 <meta property="og:locale">
-<meta property="og:image" content="https://typora-lvxiaoyi.oss-cn-beijing.aliyuncs.com/typora-img/image-20210827154138917.png">
-<meta property="og:image" content="https://typora-lvxiaoyi.oss-cn-beijing.aliyuncs.com/typora-img/image-20210827154320590.png">
+<meta property="og:image" content="https://img.lvxiaoyi.top/typora-img/image-20210827154138917.png">
+<meta property="og:image" content="https://img.lvxiaoyi.top/typora-img/image-20210827154320590.png">
 <meta property="og:image" content="c:/Users/Think/AppData/Roaming/Typora/typora-user-images/image-20210826203900185.png">
 <meta property="og:image" content="c:/Users/Think/AppData/Roaming/Typora/typora-user-images/image-20210826204905874.png">
 <meta property="og:image" content="https://img-blog.csdnimg.cn/20200615155252495.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzIyMDc1OTEz,size_16,color_FFFFFF,t_70">
-<meta property="og:image" content="https://typora-lvxiaoyi.oss-cn-beijing.aliyuncs.com/typora-img/20200615160905272.png">
-<meta property="og:image" content="https://typora-lvxiaoyi.oss-cn-beijing.aliyuncs.com/typora-img/20200615142955206.png">
+<meta property="og:image" content="https://img.lvxiaoyi.top/typora-img/20200615160905272.png">
+<meta property="og:image" content="https://img.lvxiaoyi.top/typora-img/20200615142955206.png">
 <meta property="og:image" content="https://img-blog.csdnimg.cn/20200615161340679.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzIyMDc1OTEz,size_16,color_FFFFFF,t_70">
 <meta property="article:published_time" content="2021-09-05T10:41:50.965Z">
-<meta property="article:modified_time" content="2021-09-12T10:24:13.773Z">
+<meta property="article:modified_time" content="2021-09-23T08:12:18.137Z">
 <meta property="article:author" content="吕小医">
 <meta property="article:tag" content="多线程">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://typora-lvxiaoyi.oss-cn-beijing.aliyuncs.com/typora-img/image-20210827154138917.png">
+<meta name="twitter:image" content="https://img.lvxiaoyi.top/typora-img/image-20210827154138917.png">
 
 
 
@@ -507,12 +507,12 @@ var _hmt = _hmt || [];
       
 
       
-        <h1 id="知识点"><a href="#知识点" class="headerlink" title="知识点"></a>知识点</h1><h2 id="计算机组成"><a href="#计算机组成" class="headerlink" title="计算机组成"></a>计算机组成</h2><p><img src="https://typora-lvxiaoyi.oss-cn-beijing.aliyuncs.com/typora-img/image-20210827154138917.png" alt="image-20210827154138917"><span id="more"></span></p>
+        <h1 id="知识点"><a href="#知识点" class="headerlink" title="知识点"></a>知识点</h1><h2 id="计算机组成"><a href="#计算机组成" class="headerlink" title="计算机组成"></a>计算机组成</h2><p><img src="https://img.lvxiaoyi.top/typora-img/image-20210827154138917.png" alt="image-20210827154138917"><span id="more"></span></p>
 <h2 id="cpu读取数据"><a href="#cpu读取数据" class="headerlink" title="cpu读取数据"></a>cpu读取数据</h2><ol>
 <li><p>三级缓存</p>
 </li>
 <li><p>cpu读取数据的时候，先从寄存器中读取数据，如果没有然后从L1（一级缓存）中读取数据，如果没有然后从L2（二级缓存总读取数据），如果没有然后从L3中读取数据，L3中没有，从内存中读取数据，内存中还没有从磁盘中读取数据，拿到数据后在一级一级放回（L3到L2到L1到寄存器）</p>
-<p><img src="https://typora-lvxiaoyi.oss-cn-beijing.aliyuncs.com/typora-img/image-20210827154320590.png" alt="image-20210827154320590"></p>
+<p><img src="https://img.lvxiaoyi.top/typora-img/image-20210827154320590.png" alt="image-20210827154320590"></p>
 </li>
 </ol>
 <h2 id="cpu线程切换"><a href="#cpu线程切换" class="headerlink" title="cpu线程切换"></a>cpu线程切换</h2><ol>
@@ -564,8 +564,8 @@ var _hmt = _hmt || [];
 </ol>
 <h2 id="可见性"><a href="#可见性" class="headerlink" title="可见性"></a>可见性</h2><p><strong>volatile 是怎么实现共享变量在多个线程之间工作内存的可见性的呢?</strong></p>
 <h3 id="JMM的8种数据原子操作："><a href="#JMM的8种数据原子操作：" class="headerlink" title="JMM的8种数据原子操作："></a>JMM的8种数据原子操作：</h3><p>read 读取，作用于主内存把变量从主内存中读取到本本地内存。<br>load 加载，把从主内存中读取的变量加载到本地内存的变量副本中<br>use 使用，把工作内存中的一个变量值传递给执行引擎，每当虚拟机遇到一个<br>需要使用变量的值的字节码指令时将会执行这个操作。、<br>assign 赋值 它把一个从执行引擎接收到的值赋值给工作内存的变量，<br>每当虚拟机遇到一个给变量赋值的字节码指令时执行这个操作。<br>store 存储 ，把工作内存中的一个变量的值传送到主内存中，以便随后的write的操作。<br>write 写入 ，它把store操作从工作内存中一个变量的值传送到主内存的变量中。<br>lock 锁定 ：作用于主内存的变量，把一个变量标识为一条线程独占状态。<br>unlock 解锁：作用于主内存变量，把一个处于锁定状态的变量释放出来，释放后的变量才可以被其他线程锁定。</p>
-<p><img src="https://typora-lvxiaoyi.oss-cn-beijing.aliyuncs.com/typora-img/20200615160905272.png" alt="在这里插入图片描述"></p>
-<p><img src="https://typora-lvxiaoyi.oss-cn-beijing.aliyuncs.com/typora-img/20200615142955206.png" alt="在这里插入图片描述"></p>
+<p><img src="https://img.lvxiaoyi.top/typora-img/20200615160905272.png" alt="在这里插入图片描述"></p>
+<p><img src="https://img.lvxiaoyi.top/typora-img/20200615142955206.png" alt="在这里插入图片描述"></p>
 <p>线程1：先把initFlag变量read读取出来，再load载入工作内存，use使用线程1执行代码!initFlag<br>线程2：先把initFlag变量read读取出来，再load载入工作内存，use使用线程2执行代码initFlag=true，<br>再assign重新赋值，store存储并写入主内存，write写入到主内存中的变量。(线程2对缓存行lock加锁，<br>write写入主内存后会解锁unlock，防止initFlag还未write写入主内存就被线程1读取为false）。<br>线程1：因为initFlag被volatile修饰，使用MESI缓存一致性协议，线程1cpu总线嗅探机制监听到了<br>initFlag值的修改，线程1中initFlag=false失效变为true退出循环继续执行，<br>体现了多线程同步运行共享变量副本的可见性。如果initFlag没有被volatile修饰，<br>线程1将感知不到initFlag的变化，一直循环下去停止不了。</p>
 <p><img src="https://img-blog.csdnimg.cn/20200615161340679.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzIyMDc1OTEz,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"></p>
 <h3 id="jmm缓存不一致的问题解决办法"><a href="#jmm缓存不一致的问题解决办法" class="headerlink" title="jmm缓存不一致的问题解决办法"></a>jmm缓存不一致的问题解决办法</h3><h4 id="总线加锁-性能太低-："><a href="#总线加锁-性能太低-：" class="headerlink" title="总线加锁(性能太低)："></a>总线加锁(性能太低)：</h4><p>cpu从主内存读取数据到高速缓存，会在总线对这个数据加锁，这样其它cpu没法去读或写这个数据，直到这个cpu使用完数据释放锁之后其它cpu才能读取该数据，导致结果：改并行为串行。</p>

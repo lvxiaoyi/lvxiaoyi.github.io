@@ -139,18 +139,18 @@
 <meta property="og:site_name" content="吕小医&amp;BLOG">
 <meta property="og:description" content="排序类型 平均情况 最好情况 最坏情况 辅助空间 稳定性    冒泡排序 O(n²) O(n) O(n²) O(1) 稳定   选择排序 O(n²) O(n²) O(n²) O(1) 不稳定   直接插入排序 O(n²) O(n) O(n²) O(1) 稳定   折半插入排序 O(n²) O(n) O(n²) O(1) 稳定   希尔排序 O(n^1.3) O(nlogn) O(n²) O(">
 <meta property="og:locale">
-<meta property="og:image" content="https://typora-lvxiaoyi.oss-cn-beijing.aliyuncs.com/typora-img/java-interview/bubble.gif">
-<meta property="og:image" content="https://typora-lvxiaoyi.oss-cn-beijing.aliyuncs.com/typora-img/java-interview/28749720-90304278-7503-11e7-9bc8-e3b56539d8bf.gif">
-<meta property="og:image" content="https://typora-lvxiaoyi.oss-cn-beijing.aliyuncs.com/typora-img/java-interview/28749729-ca072084-7503-11e7-881c-92aa915ce369.gif">
-<meta property="og:image" content="https://typora-lvxiaoyi.oss-cn-beijing.aliyuncs.com/typora-img/image-20210803112615693.png">
-<meta property="og:image" content="https://typora-lvxiaoyi.oss-cn-beijing.aliyuncs.com/typora-img/image-20210803143429250.png">
-<meta property="og:image" content="https://typora-lvxiaoyi.oss-cn-beijing.aliyuncs.com/typora-img/image-20210803143828200.png">
+<meta property="og:image" content="https://img.lvxiaoyi.top/typora-img/java-interview/bubble.gif">
+<meta property="og:image" content="https://img.lvxiaoyi.top/typora-img/java-interview/28749720-90304278-7503-11e7-9bc8-e3b56539d8bf.gif">
+<meta property="og:image" content="https://img.lvxiaoyi.top/typora-img/java-interview/28749729-ca072084-7503-11e7-881c-92aa915ce369.gif">
+<meta property="og:image" content="https://img.lvxiaoyi.top/typora-img/image-20210803112615693.png">
+<meta property="og:image" content="https://img.lvxiaoyi.top/typora-img/image-20210803143429250.png">
+<meta property="og:image" content="https://img.lvxiaoyi.top/typora-img/image-20210803143828200.png">
 <meta property="article:published_time" content="2021-09-05T10:41:50.865Z">
-<meta property="article:modified_time" content="2021-09-05T10:41:50.865Z">
+<meta property="article:modified_time" content="2021-09-23T08:12:17.855Z">
 <meta property="article:author" content="吕小医">
 <meta property="article:tag" content="算法">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://typora-lvxiaoyi.oss-cn-beijing.aliyuncs.com/typora-img/java-interview/bubble.gif">
+<meta name="twitter:image" content="https://img.lvxiaoyi.top/typora-img/java-interview/bubble.gif">
 
 
 
@@ -620,7 +620,7 @@ var _hmt = _hmt || [];
 <h3 id="优化冒泡排序"><a href="#优化冒泡排序" class="headerlink" title="优化冒泡排序"></a>优化冒泡排序</h3><p>当数组中已经是有序数据，或者经过冒泡后已经使上面的数据变得有序，那么上面的程序还是会继续进行下去，进行无意义的比较</p>
 <p>当一个数组变的有序的时候，那么在第二次比较的过程中一定不会发生交换，而数组无序的时候，在进行冒泡的时候一定会发生至少一次比较交换。</p>
 <p>可以设置一个变量，来标记当前数组是否已经有序。</p>
-<p><img src="https://typora-lvxiaoyi.oss-cn-beijing.aliyuncs.com/typora-img/java-interview/bubble.gif" alt="img"></p>
+<p><img src="https://img.lvxiaoyi.top/typora-img/java-interview/bubble.gif" alt="img"></p>
 <p>实现：</p>
 <ol>
 <li><p>在冒泡排序的基础上，添加一个标志位flag</p>
@@ -636,7 +636,7 @@ var _hmt = _hmt || [];
 <p>必须把flag=true放到第一次for循环内部，在没一轮冒泡前都要对flag进行一次初始化，因为可能经过上一轮数组已经变得有序，此时发生了交换flag = false，如果不对flag进行初始化，那么在下一轮之后一直都是false，就算已经排序好了未发生交换也不能跳出循环。</p>
 <hr>
 <h2 id="选择排序"><a href="#选择排序" class="headerlink" title="选择排序"></a>选择排序</h2><p>原理：选择一轮中最小的那个数据，然后把最小的数据放到最开始的位置，这样在每一轮循环完毕后数组前面的数一定是本次循环中最小的那个数。</p>
-<p><img src="https://typora-lvxiaoyi.oss-cn-beijing.aliyuncs.com/typora-img/java-interview/28749720-90304278-7503-11e7-9bc8-e3b56539d8bf.gif" alt="img"></p>
+<p><img src="https://img.lvxiaoyi.top/typora-img/java-interview/28749720-90304278-7503-11e7-9bc8-e3b56539d8bf.gif" alt="img"></p>
 <p>实现：</p>
 <ol>
 <li>定义本轮循环开始的初始位置下标min（因为min个前面数字一定是最小的且已经是有序的）</li>
@@ -678,7 +678,7 @@ var _hmt = _hmt || [];
 </tbody></table>
 <hr>
 <h2 id="插入排序"><a href="#插入排序" class="headerlink" title="插入排序"></a>插入排序</h2><p>原理：从第i个数开始，对前面的数进行比较，如果前面的数比arr[i]大则前面的数后移（或交换位置），继续和前面的数比较，直到前面的一位数小于arr[i]，这样保证了每一轮前i个数是从小到大有序的，只需要给i这个数选择一个合适的位置</p>
-<p><img src="https://typora-lvxiaoyi.oss-cn-beijing.aliyuncs.com/typora-img/java-interview/28749729-ca072084-7503-11e7-881c-92aa915ce369.gif" alt="img"></p>
+<p><img src="https://img.lvxiaoyi.top/typora-img/java-interview/28749729-ca072084-7503-11e7-881c-92aa915ce369.gif" alt="img"></p>
 <p>实现：</p>
 <ol>
 <li>for循环从1开始到length，（如果发生比较次数都为lentth-1，无论是从0开始还是从1开始都可以实现算法，以为是和前面的发生比较，所以从1开始更好，如果和后面的发生比较，从0开始更好）</li>
@@ -761,17 +761,17 @@ var _hmt = _hmt || [];
 </ol>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> Lvzixin</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@date</span> 2021/6/28 22:11</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">radixSort</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span>[] arr = &#123;<span class="number">8</span>, <span class="number">5</span>, <span class="number">3</span>, <span class="number">2</span>, <span class="number">1</span>, <span class="number">4</span>, <span class="number">9</span>, <span class="number">20</span>, <span class="number">362</span>&#125;;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">int</span>[] sort = sort(arr);</span><br><span class="line">        System.out.println(Arrays.toString(sort));</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">int</span>[] sort(<span class="keyword">int</span>[] arr) &#123;</span><br><span class="line">        <span class="keyword">if</span> (arr.length &lt;= <span class="number">1</span>) &#123;</span><br><span class="line">            <span class="keyword">return</span> arr;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">int</span> max = arr[<span class="number">0</span>];</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt; arr.length; i++) &#123;</span><br><span class="line">            <span class="keyword">if</span> (arr[i] &gt; max) &#123;</span><br><span class="line">                max = arr[i];</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">int</span> maxDigit = <span class="number">1</span>;</span><br><span class="line">        <span class="keyword">while</span> ((max /= <span class="number">10</span>) &gt; <span class="number">0</span>) &#123;</span><br><span class="line">            maxDigit++;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">int</span>[][] buckets = <span class="keyword">new</span> <span class="keyword">int</span>[<span class="number">10</span>][arr.length];</span><br><span class="line">        <span class="keyword">int</span>[] bktLen = <span class="keyword">new</span> <span class="keyword">int</span>[<span class="number">10</span>];<span class="comment">//存储桶中存放的数量</span></span><br><span class="line">        <span class="keyword">int</span> base = <span class="number">1</span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; maxDigit; i++) &#123;</span><br><span class="line">            bktLen = <span class="keyword">new</span> <span class="keyword">int</span>[<span class="number">10</span>];</span><br><span class="line"></span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> value : arr) &#123;</span><br><span class="line">                <span class="keyword">int</span> bktValue = (value / base) % <span class="number">10</span>;</span><br><span class="line">                buckets[bktValue][bktLen[bktValue]++] = value;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">int</span> index = <span class="number">0</span>;</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; buckets.length; j++) &#123;</span><br><span class="line">                <span class="keyword">for</span> (<span class="keyword">int</span> k = <span class="number">0</span>; k &lt; bktLen[j]; k++) &#123;</span><br><span class="line">                    arr[index++] = buckets[j][k];</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">            base *= <span class="number">10</span>;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> arr;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
 
-<h2 id="计数排序"><a href="#计数排序" class="headerlink" title="计数排序"></a>计数排序</h2><h2 id="桶排序"><a href="#桶排序" class="headerlink" title="桶排序"></a>桶排序</h2><h2 id="java中arrys-sort的实现"><a href="#java中arrys-sort的实现" class="headerlink" title="java中arrys.sort的实现"></a>java中arrys.sort的实现</h2><img src="https://typora-lvxiaoyi.oss-cn-beijing.aliyuncs.com/typora-img/image-20210803112615693.png" alt="image-20210803112615693" style="zoom: 50%;" />
+<h2 id="计数排序"><a href="#计数排序" class="headerlink" title="计数排序"></a>计数排序</h2><h2 id="桶排序"><a href="#桶排序" class="headerlink" title="桶排序"></a>桶排序</h2><h2 id="java中arrys-sort的实现"><a href="#java中arrys-sort的实现" class="headerlink" title="java中arrys.sort的实现"></a>java中arrys.sort的实现</h2><img src="https://img.lvxiaoyi.top/typora-img/image-20210803112615693.png" alt="image-20210803112615693" style="zoom: 50%;" />
 
 
 
 
 
-<img src="https://typora-lvxiaoyi.oss-cn-beijing.aliyuncs.com/typora-img/image-20210803143429250.png" alt="image-20210803143429250" style="zoom: 67%;" />
+<img src="https://img.lvxiaoyi.top/typora-img/image-20210803143429250.png" alt="image-20210803143429250" style="zoom: 67%;" />
 
 <p>核心算法是由插入排序算法完成了，如果长度大于32则将数组拆分为小的连续序列，然后对连续序列进行合并</p>
 <p>在小规模的数据排序算法中，O(n^2)的排序算法并不一定比O（nlogn）的排序算法执行时间长。对于小数据量的排序，选择了比较简单，不需要递归的插入排序算法。</p>
-<p><img src="https://typora-lvxiaoyi.oss-cn-beijing.aliyuncs.com/typora-img/image-20210803143828200.png" alt="image-20210803143828200"></p>
+<p><img src="https://img.lvxiaoyi.top/typora-img/image-20210803143828200.png" alt="image-20210803143828200"></p>
 <h2 id="说一个常用的稳定的排序算法和适用场景"><a href="#说一个常用的稳定的排序算法和适用场景" class="headerlink" title="说一个常用的稳定的排序算法和适用场景"></a>说一个常用的稳定的排序算法和适用场景</h2><p>稳定的排序算法：冒泡排序、插入排序、归并排序、基数排序</p>
 <p>基数排序适用于对时间、字符串这些数据（能够分割出独立的位，而且位之间具有明显的递进关系，且位之间的范围不是太大）</p>
 <h2 id="时间复杂度为nlog2n的排序算法有哪些"><a href="#时间复杂度为nlog2n的排序算法有哪些" class="headerlink" title="时间复杂度为nlog2n的排序算法有哪些"></a>时间复杂度为nlog2n的排序算法有哪些</h2><p>归并、快排、堆排</p>

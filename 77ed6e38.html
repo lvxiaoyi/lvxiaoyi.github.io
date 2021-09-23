@@ -139,16 +139,16 @@
 <meta property="og:site_name" content="吕小医&amp;BLOG">
 <meta property="og:description" content="在项目中发现偏向锁并不是立即生效的，而是有着一个默认延迟，下面深入探究一下，为什么偏向锁有着四秒延迟，以及怎么调优">
 <meta property="og:locale">
-<meta property="og:image" content="https://typora-lvxiaoyi.oss-cn-beijing.aliyuncs.com/typora-img/image-20210826172322380.png">
-<meta property="og:image" content="https://typora-lvxiaoyi.oss-cn-beijing.aliyuncs.com/typora-img/image-20210826172904965.png">
-<meta property="og:image" content="https://typora-lvxiaoyi.oss-cn-beijing.aliyuncs.com/typora-img/image-20210826173209886.png">
-<meta property="og:image" content="https://typora-lvxiaoyi.oss-cn-beijing.aliyuncs.com/typora-img/image-20210826173301227.png">
+<meta property="og:image" content="https://img.lvxiaoyi.top/typora-img/image-20210826172322380.png">
+<meta property="og:image" content="https://img.lvxiaoyi.top/typora-img/image-20210826172904965.png">
+<meta property="og:image" content="https://img.lvxiaoyi.top/typora-img/image-20210826173209886.png">
+<meta property="og:image" content="https://img.lvxiaoyi.top/typora-img/image-20210826173301227.png">
 <meta property="article:published_time" content="2021-09-05T10:41:50.975Z">
-<meta property="article:modified_time" content="2021-09-12T10:24:04.940Z">
+<meta property="article:modified_time" content="2021-09-23T08:12:18.146Z">
 <meta property="article:author" content="吕小医">
 <meta property="article:tag" content="多线程">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://typora-lvxiaoyi.oss-cn-beijing.aliyuncs.com/typora-img/image-20210826172322380.png">
+<meta name="twitter:image" content="https://img.lvxiaoyi.top/typora-img/image-20210826172322380.png">
 
 
 
@@ -512,7 +512,7 @@ var _hmt = _hmt || [];
 <figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">java.lang.Object object internals:</span><br><span class="line"> OFFSET  SIZE   TYPE DESCRIPTION                               VALUE</span><br><span class="line">      0     4        (object header)                           01 00 00 00 (00000001 00000000 00000000 00000000) (1)</span><br><span class="line">      4     4        (object header)                           00 00 00 00 (00000000 00000000 00000000 00000000) (0)</span><br><span class="line">      8     4        (object header)                           e5 01 00 f8 (11100101 00000001 00000000 11111000) (-134217243)</span><br><span class="line">     12     4        (loss due to the next object alignment)</span><br><span class="line">Instance size: 16 bytes</span><br><span class="line">Space losses: 0 bytes internal + 4 bytes external = 4 bytes total</span><br><span class="line"></span><br><span class="line">java.lang.Object object internals:</span><br><span class="line"> OFFSET  SIZE   TYPE DESCRIPTION                               VALUE</span><br><span class="line">      0     4        (object header)                           28 f2 5a 03 (00101000 11110010 01011010 00000011) (56291880)</span><br><span class="line">      4     4        (object header)                           00 00 00 00 (00000000 00000000 00000000 00000000) (0)</span><br><span class="line">      8     4        (object header)                           e5 01 00 f8 (11100101 00000001 00000000 11111000) (-134217243)</span><br><span class="line">     12     4        (loss due to the next object alignment)</span><br><span class="line">Instance size: 16 bytes</span><br><span class="line">Space losses: 0 bytes internal + 4 bytes external = 4 bytes total</span><br></pre></td></tr></table></figure>
 
 <p>然后我们发现，我们明明添加了synchronized，为什么第二次的打印信息为00</p>
-<p><img src="https://typora-lvxiaoyi.oss-cn-beijing.aliyuncs.com/typora-img/image-20210826172322380.png" alt="image-20210826172322380"></p>
+<p><img src="https://img.lvxiaoyi.top/typora-img/image-20210826172322380.png" alt="image-20210826172322380"></p>
 <p>不应该是01吗，开始jvm是使用的偏向锁，偏向锁是101啊</p>
 <h1 id="探究"><a href="#探究" class="headerlink" title="探究"></a>探究</h1><p>原因：</p>
 <p>创建一个对象后，jvm偏向锁的启动是有4秒延时的（默认），这个时候为匿名偏向，因为在开始创建的过程中肯定有大量的线程参与竞争（内存分配的竞争等等），这个时候如果立即打开偏向锁的话，肯定是有性能浪费的（锁竞争过程、锁撤掉），所以打开偏向锁的效率不是一定会提升效率。</p>
@@ -520,17 +520,17 @@ var _hmt = _hmt || [];
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> Lvzixin</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@date</span> 2021/8/26 17:00</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">JOL</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            Thread.sleep(<span class="number">5000</span>);</span><br><span class="line">        &#125; <span class="keyword">catch</span> (InterruptedException e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line">        Object o = <span class="keyword">new</span> Object();</span><br><span class="line">        System.out.println(ClassLayout.parseInstance(o).toPrintable());</span><br><span class="line"></span><br><span class="line">        <span class="keyword">synchronized</span> (o)&#123;</span><br><span class="line">            System.out.println(ClassLayout.parseInstance(o).toPrintable());</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <p>打印：</p>
-<p><img src="https://typora-lvxiaoyi.oss-cn-beijing.aliyuncs.com/typora-img/image-20210826172904965.png" alt="image-20210826172904965"></p>
+<p><img src="https://img.lvxiaoyi.top/typora-img/image-20210826172904965.png" alt="image-20210826172904965"></p>
 <p>这个时候状态为101，才升级为偏向锁</p>
 <h2 id="调整默认参数"><a href="#调整默认参数" class="headerlink" title="调整默认参数"></a>调整默认参数</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">jvm中设置立即打开偏向锁</span></span><br><span class="line">-XX:BiasedLockingStartupDelay=0</span><br></pre></td></tr></table></figure>
 
 
 
-<img src="https://typora-lvxiaoyi.oss-cn-beijing.aliyuncs.com/typora-img/image-20210826173209886.png" alt="image-20210826173209886" style="zoom:67%;" />
+<img src="https://img.lvxiaoyi.top/typora-img/image-20210826173209886.png" alt="image-20210826173209886" style="zoom:67%;" />
 
 <p>然后注释掉睡眠5秒钟</p>
 <p>打印：</p>
-<p><img src="https://typora-lvxiaoyi.oss-cn-beijing.aliyuncs.com/typora-img/image-20210826173301227.png" alt="image-20210826173301227"></p>
+<p><img src="https://img.lvxiaoyi.top/typora-img/image-20210826173301227.png" alt="image-20210826173301227"></p>
 
       
     </div>

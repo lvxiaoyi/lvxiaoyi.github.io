@@ -139,20 +139,20 @@
 <meta property="og:site_name" content="吕小医&amp;BLOG">
 <meta property="og:description" content="redis核心问题redis线程，高并发下的缓存穿透、击穿、血崩、缓存淘汰策略、持久化机制，redis的分布式锁">
 <meta property="og:locale">
-<meta property="og:image" content="https://typora-lvxiaoyi.oss-cn-beijing.aliyuncs.com/typora-img/image-20210309122215735.png">
-<meta property="og:image" content="https://typora-lvxiaoyi.oss-cn-beijing.aliyuncs.com/typora-img/image-20210309123037436.png">
-<meta property="og:image" content="https://typora-lvxiaoyi.oss-cn-beijing.aliyuncs.com/typora-img/image-20210309132305485.png">
-<meta property="og:image" content="https://typora-lvxiaoyi.oss-cn-beijing.aliyuncs.com/typora-img/image-20210309133256790.png">
-<meta property="og:image" content="https://typora-lvxiaoyi.oss-cn-beijing.aliyuncs.com/typora-img/image-20210309133911287.png">
-<meta property="og:image" content="https://typora-lvxiaoyi.oss-cn-beijing.aliyuncs.com/typora-img/image-20210309134226303.png">
-<meta property="og:image" content="https://typora-lvxiaoyi.oss-cn-beijing.aliyuncs.com/typora-img/image-20210309134154406.png">
-<meta property="og:image" content="https://typora-lvxiaoyi.oss-cn-beijing.aliyuncs.com/typora-img/image-20210308195931941.png">
+<meta property="og:image" content="https://img.lvxiaoyi.top/typora-img/image-20210309122215735.png">
+<meta property="og:image" content="https://img.lvxiaoyi.top/typora-img/image-20210309123037436.png">
+<meta property="og:image" content="https://img.lvxiaoyi.top/typora-img/image-20210309132305485.png">
+<meta property="og:image" content="https://img.lvxiaoyi.top/typora-img/image-20210309133256790.png">
+<meta property="og:image" content="https://img.lvxiaoyi.top/typora-img/image-20210309133911287.png">
+<meta property="og:image" content="https://img.lvxiaoyi.top/typora-img/image-20210309134226303.png">
+<meta property="og:image" content="https://img.lvxiaoyi.top/typora-img/image-20210309134154406.png">
+<meta property="og:image" content="https://img.lvxiaoyi.top/typora-img/image-20210308195931941.png">
 <meta property="article:published_time" content="2021-09-05T10:41:50.883Z">
-<meta property="article:modified_time" content="2021-09-16T09:13:38.503Z">
+<meta property="article:modified_time" content="2021-09-23T08:12:17.950Z">
 <meta property="article:author" content="吕小医">
 <meta property="article:tag" content="redis">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://typora-lvxiaoyi.oss-cn-beijing.aliyuncs.com/typora-img/image-20210309122215735.png">
+<meta name="twitter:image" content="https://img.lvxiaoyi.top/typora-img/image-20210309122215735.png">
 
 
 
@@ -522,28 +522,28 @@ var _hmt = _hmt || [];
 <p>5,单线程,满足redis的串行原子,只不过IO多线程后,把输入/输出放到更多的线程里去并行,好处如下: 1,执行时间短,更快; 2,更好的压榨系统及硬件的资源(网卡能够高效的使用);</p>
 <p>*,客户端被读取的顺序不能被保障<br>哪个顺序是可以被保障的: 在一个连接里,socket里</p>
 <p>6.x以前</p>
-<p><img src="https://typora-lvxiaoyi.oss-cn-beijing.aliyuncs.com/typora-img/image-20210309122215735.png" alt="6.x以前" style="zoom: 67%;" />缓存不严谨,尽量去分片</p>
+<p><img src="https://img.lvxiaoyi.top/typora-img/image-20210309122215735.png" alt="6.x以前" style="zoom: 67%;" />缓存不严谨,尽量去分片</p>
 <p> 6.x以后</p>
-<img src="https://typora-lvxiaoyi.oss-cn-beijing.aliyuncs.com/typora-img/image-20210309123037436.png" alt=" 6.x以后" style="zoom:67%;" />
+<img src="https://img.lvxiaoyi.top/typora-img/image-20210309123037436.png" alt=" 6.x以后" style="zoom:67%;" />
 
 <h2 id="03-redis存在线程安全的问题么"><a href="#03-redis存在线程安全的问题么" class="headerlink" title="03.redis存在线程安全的问题么"></a>03.redis存在线程安全的问题么</h2><p>重复2中的单线程串行</p>
 <p>redis可以保障内部串行</p>
 <p>外界使用的时候要保障,业务上要自行保障顺序~!</p>
-<h2 id="04-遇到过缓存穿透么"><a href="#04-遇到过缓存穿透么" class="headerlink" title="04.遇到过缓存穿透么"></a>04.遇到过缓存穿透么</h2><img src="https://typora-lvxiaoyi.oss-cn-beijing.aliyuncs.com/typora-img/image-20210309132305485.png" alt="image-20210309132305485" style="zoom:67%;" />
+<h2 id="04-遇到过缓存穿透么"><a href="#04-遇到过缓存穿透么" class="headerlink" title="04.遇到过缓存穿透么"></a>04.遇到过缓存穿透么</h2><img src="https://img.lvxiaoyi.top/typora-img/image-20210309132305485.png" alt="image-20210309132305485" style="zoom:67%;" />
 
-<h2 id="05-遇到过缓存击穿么"><a href="#05-遇到过缓存击穿么" class="headerlink" title="05.遇到过缓存击穿么"></a>05.遇到过缓存击穿么</h2><img src="https://typora-lvxiaoyi.oss-cn-beijing.aliyuncs.com/typora-img/image-20210309133256790.png" alt="image-20210309133256790" style="zoom:67%;" />
+<h2 id="05-遇到过缓存击穿么"><a href="#05-遇到过缓存击穿么" class="headerlink" title="05.遇到过缓存击穿么"></a>05.遇到过缓存击穿么</h2><img src="https://img.lvxiaoyi.top/typora-img/image-20210309133256790.png" alt="image-20210309133256790" style="zoom:67%;" />
 
 <h2 id="06-如何避免缓存雪崩"><a href="#06-如何避免缓存雪崩" class="headerlink" title="06.如何避免缓存雪崩"></a>06.如何避免缓存雪崩</h2><p>以上问题,核心就是避免DB无效/重复请求,结合图去理解</p>
 <p>涉及一些架构思想上的提升</p>
-<img src="https://typora-lvxiaoyi.oss-cn-beijing.aliyuncs.com/typora-img/image-20210309133911287.png" alt="image-20210309133911287" style="zoom:67%;" />
+<img src="https://img.lvxiaoyi.top/typora-img/image-20210309133911287.png" alt="image-20210309133911287" style="zoom:67%;" />
 
 
 
-<img src="https://typora-lvxiaoyi.oss-cn-beijing.aliyuncs.com/typora-img/image-20210309134226303.png" alt="image-20210309134226303" style="zoom:67%;" />
+<img src="https://img.lvxiaoyi.top/typora-img/image-20210309134226303.png" alt="image-20210309134226303" style="zoom:67%;" />
 
 
 
-<img src="https://typora-lvxiaoyi.oss-cn-beijing.aliyuncs.com/typora-img/image-20210309134154406.png" alt="image-20210309134154406" style="zoom:67%;" />
+<img src="https://img.lvxiaoyi.top/typora-img/image-20210309134154406.png" alt="image-20210309134154406" style="zoom:67%;" />
 
 <h2 id="07-缓存课后解答"><a href="#07-缓存课后解答" class="headerlink" title="07.缓存课后解答"></a>07.缓存课后解答</h2><ol>
 <li><p>如果查询的key缓存也没有DB也没有,访问的量又比较大会怎么样?</p>
@@ -580,7 +580,7 @@ var _hmt = _hmt || [];
 <p>2.1,体积变大,重复无效指令    重写,后台用线程把内存的kv生成指令写个新的aof</p>
 <p>2.2,4.x 新</p>
 <h2 id="15-Redis也打不住了-万级流量回答到DB上-该怎么处理"><a href="#15-Redis也打不住了-万级流量回答到DB上-该怎么处理" class="headerlink" title="15.Redis也打不住了,万级流量回答到DB上,该怎么处理?"></a>15.Redis也打不住了,万级流量回答到DB上,该怎么处理?</h2><p>见456</p>
-<h2 id="16-redis中的事务三条指令是什么-第三条指令到达后执行失败了-怎么处理"><a href="#16-redis中的事务三条指令是什么-第三条指令到达后执行失败了-怎么处理" class="headerlink" title="16.redis中的事务三条指令是什么,第三条指令到达后执行失败了,怎么处理"></a>16.redis中的事务三条指令是什么,第三条指令到达后执行失败了,怎么处理</h2><img src="https://typora-lvxiaoyi.oss-cn-beijing.aliyuncs.com/typora-img/image-20210308195931941.png" alt="image-20210308195931941" style="zoom:67%;" />
+<h2 id="16-redis中的事务三条指令是什么-第三条指令到达后执行失败了-怎么处理"><a href="#16-redis中的事务三条指令是什么-第三条指令到达后执行失败了-怎么处理" class="headerlink" title="16.redis中的事务三条指令是什么,第三条指令到达后执行失败了,怎么处理"></a>16.redis中的事务三条指令是什么,第三条指令到达后执行失败了,怎么处理</h2><img src="https://img.lvxiaoyi.top/typora-img/image-20210308195931941.png" alt="image-20210308195931941" style="zoom:67%;" />
 
 <h2 id="17-为什么使用setnx-redis实现分布式锁的指令"><a href="#17-为什么使用setnx-redis实现分布式锁的指令" class="headerlink" title="17.为什么使用setnx(redis实现分布式锁的指令)"></a>17.为什么使用setnx(redis实现分布式锁的指令)</h2><p>1,好东西,原子    (不存在的情况下完成创建)</p>
 <p>1,如果要做分布式锁,就要用set k v nx ex    (不存在,过期时间,避免死锁)</p>

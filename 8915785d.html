@@ -139,13 +139,13 @@
 <meta property="og:site_name" content="吕小医&amp;BLOG">
 <meta property="og:description" content="剑指 Offer 13. 机器人的运动范围题目12345678910111213141516地上有一个m行n列的方格，从坐标 [0,0] 到坐标 [m-1,n-1] 。一个机器人从坐标 [0, 0] 的格子开始移动，它每次可以向左、右、上、下移动一格（不能移动到方格外），也不能进入行坐标和列坐标的数位之和大于k的格子。例如，当k为18时，机器人能够进入方格 [35, 37] ，因为3+5+3+7&#x3D;">
 <meta property="og:locale">
-<meta property="og:image" content="https://typora-lvxiaoyi.oss-cn-beijing.aliyuncs.com/typora-img/1603026306-OdpwLi-Picture1.png">
+<meta property="og:image" content="https://img.lvxiaoyi.top/typora-img/1603026306-OdpwLi-Picture1.png">
 <meta property="article:published_time" content="2021-09-06T09:16:01.074Z">
-<meta property="article:modified_time" content="2021-09-10T09:30:03.419Z">
+<meta property="article:modified_time" content="2021-09-23T08:12:17.842Z">
 <meta property="article:author" content="吕小医">
 <meta property="article:tag" content="剑指offer">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://typora-lvxiaoyi.oss-cn-beijing.aliyuncs.com/typora-img/1603026306-OdpwLi-Picture1.png">
+<meta name="twitter:image" content="https://img.lvxiaoyi.top/typora-img/1603026306-OdpwLi-Picture1.png">
 
 
 
@@ -509,7 +509,7 @@ var _hmt = _hmt || [];
 <h2 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h2><p>我第一次想到这个题首先想到的是暴力破解，它不是让寻找次数吗，这样我用暴力破解不是效率最快的吗？</p>
 <p>两个for循环遍历，然后在一个if判断，这样不是直接就能找到了。</p>
 <p>结果发现，我少了一个重要的条件，就是可达性。机器人是一个坐标一个坐标移动的，如果中间有的坐标到不了，那么后面的一部分坐标也都到达不了。</p>
-<p><img src="https://typora-lvxiaoyi.oss-cn-beijing.aliyuncs.com/typora-img/1603026306-OdpwLi-Picture1.png" alt="img"></p>
+<p><img src="https://img.lvxiaoyi.top/typora-img/1603026306-OdpwLi-Picture1.png" alt="img"></p>
 <p>例如：这张图片里面，黄色的位置都是理论上可以到达，但是实际上到达不了的。</p>
 <p>如果是用的for循环，肯定会计算错误而且浪费性能。</p>
 <p>因为只需要判断这一个点是否满足，所以不需要回溯。</p>

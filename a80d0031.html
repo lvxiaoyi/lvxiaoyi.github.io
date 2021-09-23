@@ -139,17 +139,17 @@
 <meta property="og:site_name" content="吕小医&amp;BLOG">
 <meta property="og:description" content="动态规划动态规划题目的特点 计数 求最大最小值 求存在性  最后都是得出一个最优值，而不是所有的可能性。 动态规划解题思路有2，5，7三种类型的硬币，求用这三种硬币拼出来的总量为27，但是用的硬币个数最小。 组成部分一：确定状态也就是说，在解动态规划问题的时候需要开一个数组，数组的每个元素f[i]或者f[i][j]代表什么 确定状态需要两个意识： 最后一步也就是最后存在的解 例如： 这个题一定存在">
 <meta property="og:locale">
-<meta property="og:image" content="https://typora-lvxiaoyi.oss-cn-beijing.aliyuncs.com/typora-img/image-20210908143107655.png">
-<meta property="og:image" content="https://typora-lvxiaoyi.oss-cn-beijing.aliyuncs.com/typora-img/image-20210908145455699.png">
-<meta property="og:image" content="https://typora-lvxiaoyi.oss-cn-beijing.aliyuncs.com/typora-img/20200711131243857.png">
-<meta property="og:image" content="https://typora-lvxiaoyi.oss-cn-beijing.aliyuncs.com/typora-img/20200711131552928.png">
-<meta property="og:image" content="https://typora-lvxiaoyi.oss-cn-beijing.aliyuncs.com/typora-img/image-20210908150944543.png">
+<meta property="og:image" content="https://img.lvxiaoyi.top/typora-img/image-20210908143107655.png">
+<meta property="og:image" content="https://img.lvxiaoyi.top/typora-img/image-20210908145455699.png">
+<meta property="og:image" content="https://img.lvxiaoyi.top/typora-img/20200711131243857.png">
+<meta property="og:image" content="https://img.lvxiaoyi.top/typora-img/20200711131552928.png">
+<meta property="og:image" content="https://img.lvxiaoyi.top/typora-img/image-20210908150944543.png">
 <meta property="article:published_time" content="2021-09-08T06:18:20.682Z">
-<meta property="article:modified_time" content="2021-09-10T09:30:03.424Z">
+<meta property="article:modified_time" content="2021-09-23T08:12:17.863Z">
 <meta property="article:author" content="吕小医">
 <meta property="article:tag" content="算法思想">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://typora-lvxiaoyi.oss-cn-beijing.aliyuncs.com/typora-img/image-20210908143107655.png">
+<meta name="twitter:image" content="https://img.lvxiaoyi.top/typora-img/image-20210908143107655.png">
 
 
 
@@ -517,23 +517,23 @@ var _hmt = _hmt || [];
 <p>例如：</p>
 <p>这个题一定存在一个解，即<code>K</code>枚硬币组合在一起达到了总量为27</p>
 <h5 id="关键点1"><a href="#关键点1" class="headerlink" title="关键点1"></a>关键点1</h5><p>我们不关心前面的<code>k-1</code>枚硬币是怎么拼出来<code>27-aK</code>的（可能有一种拼法，可能有100种拼法），而且我们现在甚至还不知道<code>ak</code>和<code>K</code>，但是我们确定前面的硬币拼出了<code>27-ak</code></p>
-<img src="https://typora-lvxiaoyi.oss-cn-beijing.aliyuncs.com/typora-img/image-20210908143107655.png" alt="image-20210908143107655" style="zoom:67%;" />
+<img src="https://img.lvxiaoyi.top/typora-img/image-20210908143107655.png" alt="image-20210908143107655" style="zoom:67%;" />
 
 <pre><code>    ##### 关键点2
 </code></pre>
 <p>因为是最优策略，所以拼出<code>27-ak</code>的硬币数量一定要最小，否则这就不是最优策略了</p>
 <p>需要最小的硬币数，所以：</p>
-<p><img src="https://typora-lvxiaoyi.oss-cn-beijing.aliyuncs.com/typora-img/image-20210908145455699.png" alt="image-20210908145455699"></p>
+<p><img src="https://img.lvxiaoyi.top/typora-img/image-20210908145455699.png" alt="image-20210908145455699"></p>
 <p>这个时候，我们可以用递归方法解题</p>
-<p><img src="https://typora-lvxiaoyi.oss-cn-beijing.aliyuncs.com/typora-img/20200711131243857.png" alt="在这里插入图片描述"></p>
+<p><img src="https://img.lvxiaoyi.top/typora-img/20200711131243857.png" alt="在这里插入图片描述"></p>
 <p>但是有一个问题，递归是从上到下进行计算的，这样的话会产生大量的重复运算</p>
-<p><img src="https://typora-lvxiaoyi.oss-cn-beijing.aliyuncs.com/typora-img/20200711131552928.png" alt="在这里插入图片描述"></p>
+<p><img src="https://img.lvxiaoyi.top/typora-img/20200711131552928.png" alt="在这里插入图片描述"></p>
 <p>所以说，这不是一个好的解法，解决方法就是将计算结果保存下来，改变计算顺序</p>
 <p><strong>看到这里是不是感觉好像记忆化递归的逆序，没错！这就是动态规划！</strong></p>
 <p>总结：首先思路是递归方法，但是这里面有着大量的重复计算，然后我们进阶为了记忆化递归，但是记忆化递归太过于占据内存，所以有了动态规划。</p>
 <h3 id="组成部分二：转移方程"><a href="#组成部分二：转移方程" class="headerlink" title="组成部分二：转移方程"></a>组成部分二：转移方程</h3><p>设状态<code>F[X] =最少用多少枚硬币拼出X</code> </p>
 <p>对于任意X，</p>
-<p><img src="https://typora-lvxiaoyi.oss-cn-beijing.aliyuncs.com/typora-img/image-20210908150944543.png" alt="image-20210908150944543"></p>
+<p><img src="https://img.lvxiaoyi.top/typora-img/image-20210908150944543.png" alt="image-20210908150944543"></p>
 <h3 id="组成部分三：初始条件和边界条件"><a href="#组成部分三：初始条件和边界条件" class="headerlink" title="组成部分三：初始条件和边界条件"></a>组成部分三：初始条件和边界条件</h3><p>两个问题：<code>X-2</code>，<code>X-5</code>，<code>X-7</code>小于0怎么办？什么时候停下来？</p>
 <p>所以定义初始条件：</p>
 <p>那么什么时候定义初始条件，那就是用转移方程计算不出来的，这个时候就需要定义初始条件</p>
