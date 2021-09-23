@@ -1828,7 +1828,7 @@ pre .javascript .function {
   width: 4px;
   height: 4px;
   border-radius: 50%;
-  background: #ffffd5;
+  background: #99b44f;
 }
 .links-of-blogroll {
   font-size: 13px;
@@ -3039,7 +3039,7 @@ header.post-header {
 }
 @media (min-width: 1000px) {
   body {
-    background: url("/images/bg.jpg");
+    background: url("https://typora-lvxiaoyi.oss-cn-beijing.aliyuncs.com/typora-img/bg.jpg");
     background-size: cover;
     background-repeat: no-repeat;
     background-attachment: fixed;
