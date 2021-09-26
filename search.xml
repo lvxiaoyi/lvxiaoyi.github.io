@@ -1099,11 +1099,9 @@
       </tags>
   </entry>
   <entry>
-    <title></title>
-    <url>/0.html</url>
-    <content><![CDATA[<hr>
-<hr>
-<h1 id="第-3-章-内存管理"><a href="#第-3-章-内存管理" class="headerlink" title="第 3 章 内存管理"></a>第 3 章 内存管理</h1><h2 id="3-1-内存管理的概念"><a href="#3-1-内存管理的概念" class="headerlink" title="3.1 内存管理的概念"></a>3.1 内存管理的概念</h2><h3 id="3-1-1-什么是内存？进程的基本原理，深入指令理解其过程"><a href="#3-1-1-什么是内存？进程的基本原理，深入指令理解其过程" class="headerlink" title="3.1.1 什么是内存？进程的基本原理，深入指令理解其过程"></a>3.1.1 什么是内存？进程的基本原理，深入指令理解其过程</h3><h4 id="0-思维导图"><a href="#0-思维导图" class="headerlink" title="0.思维导图"></a>0.思维导图</h4><p><img src="https://img-blog.csdnimg.cn/20200421170005542.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80MzkxNDYwNA==,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"></p>
+    <title>操作系统基础2</title>
+    <url>/b6a41d79.html</url>
+    <content><![CDATA[<h1 id="第-3-章-内存管理"><a href="#第-3-章-内存管理" class="headerlink" title="第 3 章 内存管理"></a>第 3 章 内存管理</h1><h2 id="3-1-内存管理的概念"><a href="#3-1-内存管理的概念" class="headerlink" title="3.1 内存管理的概念"></a>3.1 内存管理的概念</h2><h3 id="3-1-1-什么是内存？进程的基本原理，深入指令理解其过程"><a href="#3-1-1-什么是内存？进程的基本原理，深入指令理解其过程" class="headerlink" title="3.1.1 什么是内存？进程的基本原理，深入指令理解其过程"></a>3.1.1 什么是内存？进程的基本原理，深入指令理解其过程</h3><h4 id="0-思维导图"><a href="#0-思维导图" class="headerlink" title="0.思维导图"></a>0.思维导图</h4><p><img src="https://img-blog.csdnimg.cn/20200421170005542.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80MzkxNDYwNA==,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"></p>
 <h4 id="1-什么是内存？有何作用？"><a href="#1-什么是内存？有何作用？" class="headerlink" title="1.什么是内存？有何作用？"></a>1.什么是内存？有何作用？</h4><p><img src="https://img-blog.csdnimg.cn/20200421170213774.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80MzkxNDYwNA==,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"></p>
 <h5 id="（1）存储单元"><a href="#（1）存储单元" class="headerlink" title="（1）存储单元"></a>（1）存储单元</h5><ul>
 <li>关于存储单元有关内容在我写的组成原理笔记中有提到：<a href="https://blog.csdn.net/weixin_43914604/article/details/104099953">存储单元</a><br><img src="https://img-blog.csdnimg.cn/20200421170913619.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80MzkxNDYwNA==,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"></li>
@@ -1337,13 +1335,17 @@
 <h4 id="2-引导块"><a href="#2-引导块" class="headerlink" title="2.引导块"></a>2.引导块</h4><p><img src="https://img-blog.csdnimg.cn/20200527215217181.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80MzkxNDYwNA==,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br><img src="https://img-blog.csdnimg.cn/20200527215508634.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80MzkxNDYwNA==,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"></p>
 <h4 id="3-坏块的管理"><a href="#3-坏块的管理" class="headerlink" title="3.坏块的管理"></a>3.坏块的管理</h4><p><img src="https://img-blog.csdnimg.cn/20200527220014555.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80MzkxNDYwNA==,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"></p>
 ]]></content>
+      <categories>
+        <category>操作系统</category>
+      </categories>
+      <tags>
+        <tag>操作系统</tag>
+      </tags>
   </entry>
   <entry>
-    <title></title>
-    <url>/0.html</url>
-    <content><![CDATA[<hr>
-<hr>
-<h1 id="第-5-章-I-O管理"><a href="#第-5-章-I-O管理" class="headerlink" title="第 5 章 I/O管理"></a>第 5 章 I/O管理</h1><h2 id="5-1-I-O管理概述"><a href="#5-1-I-O管理概述" class="headerlink" title="5.1 I/O管理概述"></a>5.1 I/O管理概述</h2><h3 id="5-1-1-什么是I-O设备？有几类I-O设备？"><a href="#5-1-1-什么是I-O设备？有几类I-O设备？" class="headerlink" title="5.1.1 什么是I/O设备？有几类I/O设备？"></a>5.1.1 什么是I/O设备？有几类I/O设备？</h3><h4 id="0-思维导图"><a href="#0-思维导图" class="headerlink" title="0.思维导图"></a>0.思维导图</h4><p><img src="https://img-blog.csdnimg.cn/20200515102227914.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80MzkxNDYwNA==,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"></p>
+    <title>操作系统基础3</title>
+    <url>/c1a32def.html</url>
+    <content><![CDATA[<h1 id="第-5-章-I-O管理"><a href="#第-5-章-I-O管理" class="headerlink" title="第 5 章 I/O管理"></a>第 5 章 I/O管理</h1><h2 id="5-1-I-O管理概述"><a href="#5-1-I-O管理概述" class="headerlink" title="5.1 I/O管理概述"></a>5.1 I/O管理概述</h2><h3 id="5-1-1-什么是I-O设备？有几类I-O设备？"><a href="#5-1-1-什么是I-O设备？有几类I-O设备？" class="headerlink" title="5.1.1 什么是I/O设备？有几类I/O设备？"></a>5.1.1 什么是I/O设备？有几类I/O设备？</h3><h4 id="0-思维导图"><a href="#0-思维导图" class="headerlink" title="0.思维导图"></a>0.思维导图</h4><p><img src="https://img-blog.csdnimg.cn/20200515102227914.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80MzkxNDYwNA==,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"></p>
 <h4 id="1-什么是I-O设备？"><a href="#1-什么是I-O设备？" class="headerlink" title="1.什么是I/O设备？"></a>1.什么是I/O设备？</h4><p><img src="https://img-blog.csdnimg.cn/2020051510273677.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80MzkxNDYwNA==,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"></p>
 <p><img src="https://img-blog.csdnimg.cn/20200515102805882.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80MzkxNDYwNA==,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"></p>
 <h4 id="2-I-O设备的分类"><a href="#2-I-O设备的分类" class="headerlink" title="2.I/O设备的分类"></a>2.I/O设备的分类</h4><h5 id="（1）按使用特性分类"><a href="#（1）按使用特性分类" class="headerlink" title="（1）按使用特性分类"></a>（1）按使用特性分类</h5><p><img src="https://img-blog.csdnimg.cn/20200515103035186.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80MzkxNDYwNA==,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"></p>
@@ -1426,13 +1428,19 @@
 <h4 id="5-循环缓冲区"><a href="#5-循环缓冲区" class="headerlink" title="5.循环缓冲区"></a>5.循环缓冲区</h4><p><img src="https://img-blog.csdnimg.cn/20200522110906592.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80MzkxNDYwNA==,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"></p>
 <h4 id="6-缓冲池"><a href="#6-缓冲池" class="headerlink" title="6.缓冲池"></a>6.缓冲池</h4><p><img src="https://img-blog.csdnimg.cn/20200522111159604.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80MzkxNDYwNA==,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br><img src="https://img-blog.csdnimg.cn/20200522111222254.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80MzkxNDYwNA==,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br><img src="https://img-blog.csdnimg.cn/20200522111342591.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80MzkxNDYwNA==,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br><img src="https://img-blog.csdnimg.cn/20200522111517161.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80MzkxNDYwNA==,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br><img src="https://img-blog.csdnimg.cn/20200522111623908.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80MzkxNDYwNA==,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"></p>
 ]]></content>
+      <categories>
+        <category>操作系统</category>
+      </categories>
+      <tags>
+        <tag>操作系统</tag>
+      </tags>
   </entry>
   <entry>
-    <title></title>
-    <url>/0.html</url>
-    <content><![CDATA[<hr>
-<hr>
-<h1 id="第-1-章-计算机系统概述"><a href="#第-1-章-计算机系统概述" class="headerlink" title="第 1 章 计算机系统概述"></a>第 1 章 计算机系统概述</h1><h2 id="1-1-操作系统的基本概念"><a href="#1-1-操作系统的基本概念" class="headerlink" title="1.1 操作系统的基本概念"></a>1.1 操作系统的基本概念</h2><h3 id="1-1-1-操作系统的概念、功能和目标（系统资源的管理者、提供接口、作为扩充机器、虚拟机）"><a href="#1-1-1-操作系统的概念、功能和目标（系统资源的管理者、提供接口、作为扩充机器、虚拟机）" class="headerlink" title="1.1.1 操作系统的概念、功能和目标（系统资源的管理者、提供接口、作为扩充机器、虚拟机）"></a>1.1.1 操作系统的概念、功能和目标（系统资源的管理者、提供接口、作为扩充机器、虚拟机）</h3><h4 id="1-熟悉的操作系统举例"><a href="#1-熟悉的操作系统举例" class="headerlink" title="1.熟悉的操作系统举例"></a>1.熟悉的操作系统举例</h4><p><img src="https://img-blog.csdnimg.cn/2020022012313767.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80MzkxNDYwNA==,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"></p>
+    <title>操作系统基础1</title>
+    <url>/2fad4cc3.html</url>
+    <content><![CDATA[<h1 id="第-1-章-计算机系统概述"><a href="#第-1-章-计算机系统概述" class="headerlink" title="第 1 章 计算机系统概述"></a>第 1 章 计算机系统概述</h1><h2 id="1-1-操作系统的基本概念"><a href="#1-1-操作系统的基本概念" class="headerlink" title="1.1 操作系统的基本概念"></a>1.1 操作系统的基本概念</h2><h3 id="1-1-1-操作系统的概念、功能和目标（系统资源的管理者、提供接口、作为扩充机器、虚拟机）"><a href="#1-1-1-操作系统的概念、功能和目标（系统资源的管理者、提供接口、作为扩充机器、虚拟机）" class="headerlink" title="1.1.1 操作系统的概念、功能和目标（系统资源的管理者、提供接口、作为扩充机器、虚拟机）"></a>1.1.1 操作系统的概念、功能和目标（系统资源的管理者、提供接口、作为扩充机器、虚拟机）</h3><h4 id="1-熟悉的操作系统举例"><a href="#1-熟悉的操作系统举例" class="headerlink" title="1.熟悉的操作系统举例"></a>1.熟悉的操作系统举例</h4><p><img src="https://img-blog.csdnimg.cn/2020022012313767.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80MzkxNDYwNA==,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"></p>
+<span id="more"></span>
+
 <h4 id="2-操作系统的层次结构"><a href="#2-操作系统的层次结构" class="headerlink" title="2.操作系统的层次结构"></a>2.操作系统的层次结构</h4><p><img src="https://img-blog.csdnimg.cn/20200220125305234.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80MzkxNDYwNA==,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"></p>
 <h4 id="3-操作系统的概念"><a href="#3-操作系统的概念" class="headerlink" title="3.操作系统的概念"></a>3.操作系统的概念</h4><ul>
 <li>是系统最基本最核心的软件，属于系统软件</li>
@@ -1800,6 +1808,12 @@ PCB的作用是使一个在多道程序环境下不能独立运行的程序（�
 </ul>
 <h6 id="②-死锁的解除"><a href="#②-死锁的解除" class="headerlink" title="② 死锁的解除"></a>② 死锁的解除</h6><p><img src="https://img-blog.csdnimg.cn/20200410221433883.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80MzkxNDYwNA==,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"></p>
 ]]></content>
+      <categories>
+        <category>操作系统</category>
+      </categories>
+      <tags>
+        <tag>操作系统</tag>
+      </tags>
   </entry>
   <entry>
     <title>操作系统常见面试题</title>
@@ -7245,7 +7259,7 @@ PCB的作用是使一个在多道程序环境下不能独立运行的程序（�
 
 
 <h2 id="ClassLoader源码解析"><a href="#ClassLoader源码解析" class="headerlink" title="ClassLoader源码解析"></a>ClassLoader源码解析</h2><p><strong>ClassLoader与现有类加载器的关系：</strong></p>
-<p><img src="https://img.lvxiaoyi.top/typora-img/00148a792adcf05932114dff408f82b5.png" alt="image-20210501173110637"></p>
+<p><img src="https://img.lvxiaoyi.top/typora-img/00148a792adcf05932114dff408f82b5.png" alt="image-20210501173110637">d</p>
 <p>除了以上虚拟机自带的加载器外，用户还可以定制自己的类加载器。Java提供了抽象类java.lang.ClassLoader，所有用户自定义的类加载器都应该继承ClassLoader类。</p>
 <h3 id="ClassLoader的主要方法"><a href="#ClassLoader的主要方法" class="headerlink" title="ClassLoader的主要方法"></a>ClassLoader的主要方法</h3><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">final</span> ClassLoader <span class="title">getParent</span><span class="params">()</span></span></span><br></pre></td></tr></table></figure>
 
@@ -7306,14 +7320,14 @@ PCB的作用是使一个在多道程序环境下不能独立运行的程序（�
 <li><p>Class.forName()：是一个静态方法，最常用的是Class.forName(String className);</p>
 </li>
 <li><p>根据传入的类的全限定名返回一个Class对象。该方法在将Class文件加载到内存的同时，会执行类的初始化。</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">Class.forName(<span class="string">&quot;com.atguigu.java.Helloworld&quot;</span>);</span><br></pre></td></tr></table></figure></li>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">Class.forName(<span class="string">&quot;top.lvxioayi.java.Helloworld&quot;</span>);</span><br></pre></td></tr></table></figure></li>
 </ul>
 <p><strong>ClassLoader.loadClass()</strong></p>
 <ul>
 <li><p>ClassLoader.loadClass()：这是一个实例方法，需要一个ClassLoader对象来调用该方法。</p>
 </li>
 <li><p>该方法将Class文件加载到内存时，并不会执行类的初始化，直到这个类第一次使用时才进行初始化。该方法因为需要得到一个ClassLoader对象，所以可以根据需要指定使用哪个类加载器。</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">Classloader cl = ......; cl.loadClass(<span class="string">&quot;com.atguigu.java.Helloworld&quot;</span>);</span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">Classloader cl = ......; cl.loadClass(<span class="string">&quot;top.lvxioayi.java.Helloworld&quot;</span>);</span><br></pre></td></tr></table></figure>
 
 <hr>
 </li>
@@ -7328,7 +7342,7 @@ PCB的作用是使一个在多道程序环境下不能独立运行的程序（�
 <h3 id="优势与劣势"><a href="#优势与劣势" class="headerlink" title="优势与劣势"></a>优势与劣势</h3><p><strong>双亲委派机制优势</strong></p>
 <ul>
 <li><p>避免类的重复加载，确保一个类的全局唯一性</p>
-<p>Java类随着它的类加载器一起具备了一种带有优先级的层次关系，通过这种层级关可以避免类的重复加载，当父亲已经加载了该类时，就没有必要子ClassLoader再加载一次。Java类随着它的类加载器一起具备了一种带有优先级的层次关系，通过这种层级关可以避免类的重复加载，当父亲已经加载了该类时，就没有必要子ClassLoader再加载一次。</p>
+<p><strong>Java类随着它的类加载器一起具备了一种带有优先级的层次关系，通过这种层级关可以避免类的重复加载</strong>，当父亲已经加载了该类时，就没有必要子ClassLoader再加载一次。</p>
 </li>
 <li><p>保护程序安全，防止核心API被随意篡改</p>
 </li>
