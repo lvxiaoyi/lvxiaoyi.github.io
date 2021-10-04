@@ -1,0 +1,366 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>吕小医のBLOG - good good study</title><meta name="keywords" content="java 后端 面试 spring"><meta name="author" content="吕小医"><meta name="copyright" content="吕小医"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="IT小白的健身小白">
+<meta property="og:type" content="website">
+<meta property="og:title" content="吕小医のBLOG">
+<meta property="og:url" content="https://lvxiaoyi.top/index.html">
+<meta property="og:site_name" content="吕小医のBLOG">
+<meta property="og:description" content="IT小白的健身小白">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://lvxiaoyi.top/img/avatar.png">
+<meta property="article:author" content="吕小医">
+<meta property="article:tag" content="java 后端 面试 spring">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://lvxiaoyi.top/img/avatar.png"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="https://lvxiaoyi.top/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//hm.baidu.com"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><meta name="baidu-site-verification" content="mYXynU9QQlT9I4Vp"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><script>var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?a4e78d5856251a207552f0ad0b8c65e9";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    jQuery: 'https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js',
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/js/jquery.justifiedGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/css/justifiedGallery.min.css'
+    },
+    fancybox: {
+      js: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isanchor: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '吕小医のBLOG',
+  isPost: false,
+  isHome: true,
+  isHighlightShrink: false,
+  isToc: false,
+  postUpdate: '2021-10-04 17:05:05'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if (GLOBAL_CONFIG_SITE.isHome && /iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><link rel="stylesheet" href="/css/lvxiaoyi.css"><meta name="generator" content="Hexo 5.4.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="/img/avatar.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data"><div class="data-item is-center"><div class="data-item-link"><a href="/archives/"><div class="headline">文章</div><div class="length-num">61</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/tags/"><div class="headline">标签</div><div class="length-num">21</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/categories/"><div class="headline">分类</div><div class="length-num">35</div></a></div></div></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 吕小医</span></a></div></div></div></div><div class="page" id="body-wrap"><header class="full_page" id="page-header" style="background-image: url('https://img.lvxiaoyi.top/typora-img/bg.jpg')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">吕小医のBLOG</a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 吕小医</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="site-info"><h1 id="site-title">吕小医のBLOG</h1><div id="site-subtitle"><span id="subtitle"></span></div></div><div id="scroll-down"><i class="fas fa-angle-down scroll-down-effects"></i></div></header><main class="layout" id="content-inner"><div class="recent-posts" id="recent-posts"><div class="recent-post-item"><div class="post_cover left_radius"><a href="/2109f677.html" title="计算机网络常见面试题">     <img class="post_bg" src="https://img.lvxiaoyi.top/typora-img/bg.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="计算机网络常见面试题"></a></div><div class="recent-post-info"><a class="article-title" href="/2109f677.html" title="计算机网络常见面试题">计算机网络常见面试题</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2021-10-04T03:52:45.744Z" title="发表于 2021-10-04 11:52:45">2021-10-04</time></span><span class="article-meta"><span class="article-meta__separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/">计算机网络</a><i class="fas fa-angle-right"></i><a class="article-meta__categories" href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E5%9F%BA%E7%A1%80/">计算机网络基础</a></span></div><div class="content">                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     ...</div></div></div><div class="recent-post-item"><div class="post_cover right_radius"><a href="/dec4a27c.html" title="netty基础-3">     <img class="post_bg" src="https://img.lvxiaoyi.top/typora-img/bg.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="netty基础-3"></a></div><div class="recent-post-info"><a class="article-title" href="/dec4a27c.html" title="netty基础-3">netty基础-3</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2021-10-04T03:52:45.718Z" title="发表于 2021-10-04 11:52:45">2021-10-04</time></span><span class="article-meta"><span class="article-meta__separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/">计算机网络</a><i class="fas fa-angle-right"></i><a class="article-meta__categories" href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/netty/">netty</a></span></div><div class="content">Google Protobuf编码和解码的基本介绍
+编写网络应用程序时，因为数据在网络中传输的都是二进制字节码数据，在发送数据时就需要编码，接收数据时就需要解码[示意图]
+codec（编解码器）的组成部分有两个：decoder（解码器）和 encoder（编码器）。encoder 负责把业务数据转换成字节码数据，decoder 负责把字节码数据转换成业务数据
+
+
+
+
+Netty 本身的编码解码的机制和问题分析
+Netty 自身提供了一些 codec(编解码器)
+
+Netty提供的编码器
+
+StringEncoder：对字符串数据进行编码。
+ObjectEncoder：对Java对象进行编码。
+
+
+Netty提供的解码器
+
+StringDecoder,对字符串数据进行解码
+ObjectDecoder，对 Java 对象进行解码
+
+
+Netty本身自带的ObjectDecoder和ObjectEncoder可以用来实现POJO对象或各种业务对象的编码和解码，底层使用的仍是Java序列化技术,而Java序列化技术本身效率就不高，存在如下问题
+
+无法跨语言
+序列化后的体积太大，是二进制编码的5 ...</div></div></div><div class="recent-post-item"><div class="post_cover left_radius"><a href="/a9c392ea.html" title="netty基础-2">     <img class="post_bg" src="https://img.lvxiaoyi.top/typora-img/bg.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="netty基础-2"></a></div><div class="recent-post-info"><a class="article-title" href="/a9c392ea.html" title="netty基础-2">netty基础-2</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2021-10-04T03:52:45.685Z" title="发表于 2021-10-04 11:52:45">2021-10-04</time></span><span class="article-meta"><span class="article-meta__separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/">计算机网络</a><i class="fas fa-angle-right"></i><a class="article-meta__categories" href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/netty/">netty</a></span></div><div class="content">Netty 概述原生 NIO 存在的问题
+NIO 的类库和 API 繁杂，使用麻烦：需要熟练掌握 Selector、ServerSocketChannel、SocketChannel、ByteBuffer等。
+需要具备其他的额外技能：要熟悉 Java 多线程编程，因为 NIO 编程涉及到 Reactor 模式，你必须对多线程和网络编程非常熟悉，才能编写出高质量的 NIO 程序。
+开发工作量和难度都非常大：例如客户端面临断连重连、网络闪断、半包读写、失败缓存、网络拥塞和异常流的处理等等。
+JDK NIO 的 Bug：例如臭名昭著的 Epoll Bug，它会导致 Selector 空轮询，最终导致 CPU100%。直到 JDK1.7 版本该问题仍旧存在，没有被根本解决。
+
+
+
+Netty 官网说明官网：https://netty.io/
+Netty is an asynchronous event-driven network application framework for rapid development of maintainable high performance proto ...</div></div></div><div class="recent-post-item"><div class="post_cover right_radius"><a href="/30cac350.html" title="netty基础-1">     <img class="post_bg" src="https://img.lvxiaoyi.top/typora-img/bg.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="netty基础-1"></a></div><div class="recent-post-info"><a class="article-title" href="/30cac350.html" title="netty基础-1">netty基础-1</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2021-10-04T03:52:45.656Z" title="发表于 2021-10-04 11:52:45">2021-10-04</time></span><span class="article-meta"><span class="article-meta__separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/">计算机网络</a><i class="fas fa-angle-right"></i><a class="article-meta__categories" href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/netty/">netty</a></span></div><div class="content">Netty简介Netty 的介绍
+Netty 是由 JBOSS 提供的一个 Java 开源框架，现为 Github 上的独立项目。
+Netty 是一个异步的、基于事件驱动的网络应用框架，用以快速开发高性能、高可靠性的网络 IO 程序。
+Netty 主要针对在 TCP 协议下，面向 Client 端的高并发应用，或者 Peer-to-Peer 场景下的大量数据持续传输的应用。
+Netty 本质是一个 NIO 框架，适用于服务器通讯相关的多种应用场景。
+要透彻理解 Netty，需要先学习 NIO，这样我们才能阅读 Netty 的源码。
+
+
+
+相对简单的一个体系图
+
+Netty 的应用场景互联网行业
+互联网行业：在分布式系统中，各个节点之间需要远程服务调用，高性能的 RPC 框架必不可少，Netty 作为异步高性能的通信框架，往往作为基础通信组件被这些 RPC 框架使用。
+典型的应用有：阿里分布式服务框架 Dubbo 的 RPC 框 架使用 Dubbo 协议进行节点间通信，Dubbo 协议默认使用 Netty 作为基础通信组件，用于实现各进程节点之间的内部通信。
+
+游戏行业
+无论是手游服务端 ...</div></div></div><div class="recent-post-item"><div class="post_cover left_radius"><a href="/f1601c3e.html" title="单例模式">     <img class="post_bg" src="https://img.lvxiaoyi.top/typora-img/bg.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="单例模式"></a></div><div class="recent-post-info"><a class="article-title" href="/f1601c3e.html" title="单例模式">单例模式</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2021-10-04T03:52:45.604Z" title="发表于 2021-10-04 11:52:45">2021-10-04</time></span><span class="article-meta"><span class="article-meta__separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/">设计模式</a></span></div><div class="content">什么是单例模式单例模式是一种常用的软件设计模式，其定义是单例对象的类只能允许一个实例存在。
+许多时候整个系统只需要拥有一个的全局对象，这样有利于我们协调系统整体的行为。比如在某个服务器程序中，该服务器的配置信息存放在一个文件中，这些配置数据由一个单例对象统一读取，然后服务进程中的其他对象再通过这个单例对象获取这些配置信息。这种方式简化了在复杂环境下的配置管理。
+
+
+
+单例模式应用场景举一个小例子，在我们的windows桌面上，我们打开了一个回收站，当我们试图再次打开一个新的回收站时，Windows系统并不会为你弹出一个新的回收站窗口。，也就是说在整个系统运行的过程中，系统只维护一个回收站的实例。这就是一个典型的单例模式运用。
+ 继续说回收站，我们在实际使用中并不存在需要同时打开两个回收站窗口的必要性。假如我每次创建回收站时都需要消耗大量的资源，而每个回收站之间资源是共享的，那么在没有必要多次重复创建该实例的情况下，创建了多个实例，这样做就会给系统造成不必要的负担，造成资源浪费。
+ 再举一个例子，网站的计数器，一般也是采用单例模式实现，如果你存在多个计数器，每一个用户的访问都刷新计数器的 ...</div></div></div><div class="recent-post-item"><div class="post_cover right_radius"><a href="/333cd4b5.html" title="训练计划tips">     <img class="post_bg" src="https://img.lvxiaoyi.top/typora-img/%E5%81%A5%E8%BA%AB.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="训练计划tips"></a></div><div class="recent-post-info"><a class="article-title" href="/333cd4b5.html" title="训练计划tips">训练计划tips</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2021-10-04T03:52:45.578Z" title="发表于 2021-10-04 11:52:45">2021-10-04</time></span><span class="article-meta"><span class="article-meta__separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/%E5%81%A5%E8%BA%AB/">健身</a></span></div><div class="content">
+
+推（较弱）:
+
+平板卧推 4 X 6 – 8   
+坐姿肩上推举 4 X 8-12 
+上斜哑铃推举 3 X 8 – 12 
+俯卧撑 3 X 10 
+哑铃侧平举 3 X 10 -15 
+绳索三头下压 3 X 10-15 
+
+
+有氧
+
+拉（较弱）：
+
+辅助引体向上 4×8-12
+俯身杠铃划船 4×6-8
+窄握绳索下拉 3×8-12
+绳索面拉 3×10-15
+杠铃弯举 3×8-12
+绳索垂式弯举 3×10-15
+
+
+有氧
+
+腿
+
+深蹲 4×6-8
+
+罗马尼亚深蹲 4×8-12
+
+史密斯臀推 3×6-8
+
+俯身腿弯举 3×8-12
+
+坐姿腿屈伸 3×8-15
+
+负重提踵 3×10-15
+
+
+
+
+</div></div></div><div class="recent-post-item"><div class="post_cover left_radius"><a href="/60bbc03b.html" title="Jmeter基础一">     <img class="post_bg" src="https://img.lvxiaoyi.top/typora-img/apachejmeter_0.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Jmeter基础一"></a></div><div class="recent-post-info"><a class="article-title" href="/60bbc03b.html" title="Jmeter基础一">Jmeter基础一</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2021-10-04T03:52:45.566Z" title="发表于 2021-10-04 11:52:45">2021-10-04</time></span><span class="article-meta"><span class="article-meta__separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/%E6%B5%8B%E8%AF%95/">测试</a><i class="fas fa-angle-right"></i><a class="article-meta__categories" href="/categories/%E6%B5%8B%E8%AF%95/Jmeter/">Jmeter</a></span></div><div class="content">Jmeter介绍
+Jmeter入门</div></div></div><div class="recent-post-item"><div class="post_cover right_radius"><a href="/c1a32def.html" title="操作系统基础3">     <img class="post_bg" src="https://img.lvxiaoyi.top/typora-img/OIP.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="操作系统基础3"></a></div><div class="recent-post-info"><a class="article-title" href="/c1a32def.html" title="操作系统基础3">操作系统基础3</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2021-10-04T03:52:45.540Z" title="发表于 2021-10-04 11:52:45">2021-10-04</time></span><span class="article-meta"><span class="article-meta__separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/">操作系统</a></span></div><div class="content">第 5 章 I/O管理5.1 I/O管理概述5.1.1 什么是I/O设备？有几类I/O设备？0.思维导图
+1.什么是I/O设备？
+
+2.I/O设备的分类（1）按使用特性分类
+（2）按传输速率分类
+（3）按信息交换单位分类
+5.1.2 控制I/O设备的I/O控制器0.思维导图
+1.I/O设备的组成
+（1）机械部件
+（2）电子部件—I/O控制器的功能
+2.I/O控制器的组成注意：
+3.I/O控制器的两种寄存器编址方式内存映像—独立编址
+5.1.3 控制I/O设备的几种方式？(程序直接控制方式、中断驱动方式、DMA、通道控制)0.思维导图
+1.程序直接控制方式key word : 轮询
+
+完成一次读/写操作的流程图(以读操作为例)下面以C语言代码和流程图来剖析，程序直接控制方式分析一下在思维导图中提到的几个问题：
+
+2.中断驱动方式
+由于程序直接控制方式CPU利用率低，忙等，所以提出了中断驱动方式。
+
+分析一下在思维导图中提到的几个问题：
+
+3.DMA方式
+虽然中断驱动方式解决了程序直接控制方式的问题，但是每一次只能读/写一个字，导致CPU频繁切换，耗费了很多时间。于是人们又发明了DMA方式 ...</div></div></div><div class="recent-post-item"><div class="post_cover left_radius"><a href="/b6a41d79.html" title="操作系统基础2">     <img class="post_bg" src="https://img.lvxiaoyi.top/typora-img/OIP.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="操作系统基础2"></a></div><div class="recent-post-info"><a class="article-title" href="/b6a41d79.html" title="操作系统基础2">操作系统基础2</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2021-10-04T03:52:45.501Z" title="发表于 2021-10-04 11:52:45">2021-10-04</time></span><span class="article-meta"><span class="article-meta__separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/">操作系统</a></span></div><div class="content">第 3 章 内存管理3.1 内存管理的概念3.1.1 什么是内存？进程的基本原理，深入指令理解其过程0.思维导图
+1.什么是内存？有何作用？
+（1）存储单元
+关于存储单元有关内容在我写的组成原理笔记中有提到：存储单元
+
+（2）几个常用数量单位&amp;内存地址
+2.进程运行的基本原理（1）指令的工作原理—操作码+若干参数（可能包含地址参数）
+从X=X+1大致看一下指令的执行过程
+
+（2）逻辑地址（相对地址）vs物理地址（绝对地址）
+（3）从写程序到程序运行—编译、链接、装入
+（4）装入模块装入内存不修改装入模块中的指令地址就直接装入内存的话：
+（5）装入的三种方式①绝对装入
+②静态重定位
+③ 动态重定位
+（6）链接的三种方式① 静态链接
+②装入时动态链接
+③运行时动态链接
+3.1.2 内存管理管些什么？0.思维导图
+1.内存空间的分配与回收
+2.内存空间的扩展（实现虚拟性）
+3.地址转换
+三种方式
+4.内存保护
+两种方式
+3.1.3 覆盖技术与交换技术的思想0.思维导图
+1.覆盖技术
+3.交换技术
+
+回忆复习一下进程调度
+
+3.1.4 内存的分配与回收0.思维导图
+1.单一连续分配
+2 ...</div></div></div><div class="recent-post-item"><div class="post_cover right_radius"><a href="/2fad4cc3.html" title="操作系统基础1">     <img class="post_bg" src="https://img.lvxiaoyi.top/typora-img/OIP.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="操作系统基础1"></a></div><div class="recent-post-info"><a class="article-title" href="/2fad4cc3.html" title="操作系统基础1">操作系统基础1</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2021-10-04T03:52:45.474Z" title="发表于 2021-10-04 11:52:45">2021-10-04</time></span><span class="article-meta"><span class="article-meta__separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/">操作系统</a></span></div><div class="content">第 1 章 计算机系统概述1.1 操作系统的基本概念1.1.1 操作系统的概念、功能和目标（系统资源的管理者、提供接口、作为扩充机器、虚拟机）1.熟悉的操作系统举例
+
+
+2.操作系统的层次结构
+3.操作系统的概念
+是系统最基本最核心的软件，属于系统软件
+控制和管理整个计算机的硬件和软件资源
+合理的组织、调度计算机的工作与资源的分配
+为用户和其它软件提供方便的接口和环境
+
+4.操作系统的功能和目标
+先放一张思维导图，大致知道操作系统的具体功能和目标，然后再一一展开叙述。
+用一个直观的例子来理解上述图中操作系统的功能：
+
+
+
+我们假设：用户是雇主，操作系统是工人（用来操作机器），计算机是机器（由处理机(CPU)、存储器、设备、文件几个部件构成）
+工人有熟练的技能去控制和协调各个部件的工作，这就是操作系统对资源的管理
+同时，工人必须接受雇主的命令，这就是“接口”
+有了工人，机器就能发挥更大的作用，因此工人就成了“扩充机器”
+工人操作机器、机器有了更大的作用比如GUI界面，于是工人便成了扩充机器，去扩充GUI界面等功能
+
+
+（1）作为计算机系统资源的管理者
+管理软硬件资源、合理的组织、调度计算 ...</div></div></div><nav id="pagination"><div class="pagination"><span class="page-number current">1</span><a class="page-number" href="/page/2/#content-inner">2</a><span class="space">&hellip;</span><a class="page-number" href="/page/7/#content-inner">7</a><a class="extend next" rel="next" href="/page/2/#content-inner"><i class="fas fa-chevron-right fa-fw"></i></a></div></nav></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="/img/avatar.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">吕小医</div><div class="author-info__description">IT小白的健身小白</div></div><div class="card-info-data"><div class="card-info-data-item is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">61</div></a></div><div class="card-info-data-item is-center"><a href="/tags/"><div class="headline">标签</div><div class="length-num">21</div></a></div><div class="card-info-data-item is-center"><a href="/categories/"><div class="headline">分类</div><div class="length-num">35</div></a></div></div><a class="button--animated" id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/lvxiaoyi"><i class="fab fa-github"></i><span>Follow Me</span></a></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn card-announcement-animation"></i><span>公告</span></div><div class="announcement_content">welcome my blog</div></div><div class="sticky_layout"><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2109f677.html" title="计算机网络常见面试题"><img src="https://img.lvxiaoyi.top/typora-img/bg.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="计算机网络常见面试题"/></a><div class="content"><a class="title" href="/2109f677.html" title="计算机网络常见面试题">计算机网络常见面试题</a><time datetime="2021-10-04T03:52:45.744Z" title="发表于 2021-10-04 11:52:45">2021-10-04</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/dec4a27c.html" title="netty基础-3"><img src="https://img.lvxiaoyi.top/typora-img/bg.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="netty基础-3"/></a><div class="content"><a class="title" href="/dec4a27c.html" title="netty基础-3">netty基础-3</a><time datetime="2021-10-04T03:52:45.718Z" title="发表于 2021-10-04 11:52:45">2021-10-04</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/a9c392ea.html" title="netty基础-2"><img src="https://img.lvxiaoyi.top/typora-img/bg.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="netty基础-2"/></a><div class="content"><a class="title" href="/a9c392ea.html" title="netty基础-2">netty基础-2</a><time datetime="2021-10-04T03:52:45.685Z" title="发表于 2021-10-04 11:52:45">2021-10-04</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/30cac350.html" title="netty基础-1"><img src="https://img.lvxiaoyi.top/typora-img/bg.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="netty基础-1"/></a><div class="content"><a class="title" href="/30cac350.html" title="netty基础-1">netty基础-1</a><time datetime="2021-10-04T03:52:45.656Z" title="发表于 2021-10-04 11:52:45">2021-10-04</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/f1601c3e.html" title="单例模式"><img src="https://img.lvxiaoyi.top/typora-img/bg.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="单例模式"/></a><div class="content"><a class="title" href="/f1601c3e.html" title="单例模式">单例模式</a><time datetime="2021-10-04T03:52:45.604Z" title="发表于 2021-10-04 11:52:45">2021-10-04</time></div></div></div></div><div class="card-widget card-categories"><div class="item-headline">
+            <i class="fas fa-folder-open"></i>
+            <span>分类</span>
+            <a class="card-more-btn" href="/categories/" title="查看更多">
+    <i class="fas fa-angle-right"></i></a>
+            </div>
+            <ul class="card-category-list" id="aside-cat-list">
+            <li class="card-category-list-item "><a class="card-category-list-link" href="/categories/MySQL/"><span class="card-category-list-name">MySQL</span><span class="card-category-list-count">2</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/Spring/"><span class="card-category-list-name">Spring</span><span class="card-category-list-count">2</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/elasticsearch/"><span class="card-category-list-name">elasticsearch</span><span class="card-category-list-count">1</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/jvm/"><span class="card-category-list-name">jvm</span><span class="card-category-list-count">6</span></a><ul class="card-category-list child"><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/jvm/jvm%E6%9D%82%E7%AF%87/"><span class="card-category-list-name">jvm杂篇</span><span class="card-category-list-count">1</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/jvm/jvm%E7%90%86%E8%AE%BA/"><span class="card-category-list-name">jvm理论</span><span class="card-category-list-count">4</span></a></li></ul></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/linux/"><span class="card-category-list-name">linux</span><span class="card-category-list-count">1</span></a><ul class="card-category-list child"><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/linux/%E6%9D%82%E7%AF%87/"><span class="card-category-list-name">杂篇</span><span class="card-category-list-count">1</span></a></li></ul></li>
+            </ul></div><div class="card-widget card-tags"><div class="item-headline"><i class="fas fa-tags"></i><span>标签</span></div><div class="card-tag-cloud"><a href="/tags/%E5%88%86%E5%B8%83%E5%BC%8F/" style="font-size: 1.25em; color: rgb(68, 71, 199)">分布式</a><a href="/tags/jvm/" style="font-size: 1.35em; color: rgb(29, 167, 121)">jvm</a><a href="/tags/linux/" style="font-size: 1.15em; color: rgb(200, 77, 139)">linux</a><a href="/tags/lua/" style="font-size: 1.2em; color: rgb(96, 170, 138)">lua</a><a href="/tags/%E5%81%A5%E8%BA%AB/" style="font-size: 1.15em; color: rgb(175, 122, 47)">健身</a><a href="/tags/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/" style="font-size: 1.3em; color: rgb(15, 194, 1)">操作系统</a><a href="/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" style="font-size: 1.15em; color: rgb(80, 190, 104)">设计模式</a><a href="/tags/%E5%89%91%E6%8C%87offer/" style="font-size: 1.45em; color: rgb(80, 119, 14)">剑指offer</a><a href="/tags/%E7%AE%97%E6%B3%95%E6%80%9D%E6%83%B3/" style="font-size: 1.15em; color: rgb(17, 171, 131)">算法思想</a><a href="/tags/LeetCode/" style="font-size: 1.2em; color: rgb(102, 19, 91)">LeetCode</a><a href="/tags/redis%E9%9B%86%E7%BE%A4/" style="font-size: 1.15em; color: rgb(108, 105, 167)">redis集群</a><a href="/tags/zookeeper/" style="font-size: 1.15em; color: rgb(85, 135, 50)">zookeeper</a><a href="/tags/redis/" style="font-size: 1.15em; color: rgb(44, 146, 142)">redis</a><a href="/tags/%E5%88%86%E5%B8%83%E5%BC%8F%E9%94%81/" style="font-size: 1.2em; color: rgb(115, 176, 144)">分布式锁</a><a href="/tags/%E5%A4%9A%E7%BA%BF%E7%A8%8B/" style="font-size: 1.4em; color: rgb(29, 55, 41)">多线程</a><a href="/tags/%E6%B5%8B%E8%AF%95/" style="font-size: 1.15em; color: rgb(124, 96, 63)">测试</a><a href="/tags/%E7%AE%97%E6%B3%95/" style="font-size: 1.15em; color: rgb(199, 97, 0)">算法</a><a href="/tags/Spring/" style="font-size: 1.2em; color: rgb(46, 110, 161)">Spring</a><a href="/tags/%E5%A4%9A%E7%BA%BF%E7%A8%8B%E5%AE%9E%E6%88%98/" style="font-size: 1.15em; color: rgb(158, 79, 198)">多线程实战</a><a href="/tags/MySQL/" style="font-size: 1.2em; color: rgb(2, 78, 164)">MySQL</a><a href="/tags/elasticsearch/" style="font-size: 1.15em; color: rgb(56, 60, 0)">elasticsearch</a></div></div><div class="card-widget card-archives"><div class="item-headline"><i class="fas fa-archive"></i><span>归档</span></div><ul class="card-archive-list"><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2021/10/"><span class="card-archive-list-date">十月 2021</span><span class="card-archive-list-count">61</span></a></li></ul></div><div class="card-widget card-webinfo"><div class="item-headline"><i class="fas fa-chart-line"></i><span>网站资讯</span></div><div class="webinfo"><div class="webinfo-item"><div class="item-name">文章数目 :</div><div class="item-count">61</div></div><div class="webinfo-item"><div class="item-name">本站访客数 :</div><div class="item-count" id="busuanzi_value_site_uv"></div></div><div class="webinfo-item"><div class="item-name">本站总访问量 :</div><div class="item-count" id="busuanzi_value_site_pv"></div></div><div class="webinfo-item"><div class="item-name">最后更新时间 :</div><div class="item-count" id="last-push-date" data-lastPushDate="2021-10-04T09:05:03.948Z"></div></div></div></div></div></div></main><footer id="footer" style="background-image: url('https://img.lvxiaoyi.top/typora-img/bg.jpg')"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2021 By 吕小医</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><div class="js-pjax"><script>function subtitleType () {
+  if (true) { 
+    var typed = new Typed("#subtitle", {
+      strings: "IT小白的健身小白".split(","),
+      startDelay: 300,
+      typeSpeed: 150,
+      loop: true,
+      backSpeed: 50
+    })
+  } else {
+    document.getElementById("subtitle").innerHTML = 'I'
+  }
+}
+
+if (true) {
+  if (typeof Typed === 'function') {
+    subtitleType()
+  } else {
+    getScript('https://cdn.jsdelivr.net/npm/typed.js/lib/typed.min.js').then(subtitleType)
+  }
+} else {
+  subtitleType()
+}</script></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
