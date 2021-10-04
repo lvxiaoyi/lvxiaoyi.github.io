@@ -1,5 +1,5 @@
 /* 博主昵称颜色 */
-.author-info__name {
+.author-info__name{
     color: #ff7242;
 }
 /* a标签默认颜色 */
@@ -47,4 +47,7 @@ a {
 ::-moz-selection {
     color: #fff;
     background-color: #e58a8a;
+}
+.layout {
+	max-width: 1290px;
 }
