@@ -1,0 +1,552 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>吕小医のBLOG - good good study</title><meta name="keywords" content="java 后端 面试 spring"><meta name="author" content="吕小医"><meta name="copyright" content="吕小医"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="IT小白的健身小白">
+<meta property="og:type" content="website">
+<meta property="og:title" content="吕小医のBLOG">
+<meta property="og:url" content="https://lvxiaoyi.top/page/4/index.html">
+<meta property="og:site_name" content="吕小医のBLOG">
+<meta property="og:description" content="IT小白的健身小白">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://lvxiaoyi.top/img/avatar.png">
+<meta property="article:author" content="吕小医">
+<meta property="article:tag" content="java 后端 面试 spring">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://lvxiaoyi.top/img/avatar.png"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="https://lvxiaoyi.top/page/4/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//hm.baidu.com"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><meta name="baidu-site-verification" content="mYXynU9QQlT9I4Vp"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><script>var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?a4e78d5856251a207552f0ad0b8c65e9";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    jQuery: 'https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js',
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/js/jquery.justifiedGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/css/justifiedGallery.min.css'
+    },
+    fancybox: {
+      js: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isanchor: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '吕小医のBLOG',
+  isPost: false,
+  isHome: true,
+  isHighlightShrink: false,
+  isToc: false,
+  postUpdate: '2021-11-01 15:10:37'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if (GLOBAL_CONFIG_SITE.isHome && /iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    document.addEventListener('pjax:complete', detectApple)})(window)</script><link rel="stylesheet" href="/css/lvxiaoyi.css"><meta name="generator" content="Hexo 5.4.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="/img/avatar.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data"><div class="data-item is-center"><div class="data-item-link"><a href="/archives/"><div class="headline">文章</div><div class="length-num">83</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/tags/"><div class="headline">标签</div><div class="length-num">24</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/categories/"><div class="headline">分类</div><div class="length-num">38</div></a></div></div></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/music/"><i class="fa-fw fas fa-music"></i><span> 音乐</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 吕小医</span></a></div></div></div></div><div class="page" id="body-wrap"><header class="full_page" id="page-header" style="background-image: url('https://img.lvxiaoyi.top/typora-img/bg.jpg/lvxiaoyi')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">吕小医のBLOG</a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/music/"><i class="fa-fw fas fa-music"></i><span> 音乐</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 吕小医</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="site-info"><h1 id="site-title">吕小医のBLOG</h1><div id="site-subtitle"><span id="subtitle"></span></div></div><div id="scroll-down"><i class="fas fa-angle-down scroll-down-effects"></i></div></header><main class="layout" id="content-inner"><div class="recent-posts" id="recent-posts"><div class="recent-post-item"><div class="post_cover left_radius"><a href="/88815d0a.html" title="zookeeper基础">     <img class="post_bg" src="https://img.lvxiaoyi.top/typora-img/bg.jpg/lvxiaoyi" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="zookeeper基础"></a></div><div class="recent-post-info"><a class="article-title" href="/88815d0a.html" title="zookeeper基础">zookeeper基础</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2021-11-01T07:04:01.807Z" title="发表于 2021-11-01 15:04:01">2021-11-01</time></span><span class="article-meta"><span class="article-meta__separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/%E5%88%86%E5%B8%83%E5%BC%8F/">分布式</a><i class="fas fa-angle-right"></i><a class="article-meta__categories" href="/categories/%E5%88%86%E5%B8%83%E5%BC%8F/zookeeper/">zookeeper</a></span></div><div class="content">什么是zookeeperzookeeper是一个分布式协调框架，主要用来解决分布式应用中经常遇到的一些数据管理问题，如：统一命名服务、状态同步服务、集群管理、分布式应用配置项的管理等。
+
+
+核心概念
+每个子目录如NameService都被称为zNode（目录节点），和文件系统一样，我们能够自由的增减、删除zNode，在一个znode下增加、删除子znode，唯一的不同在于znode是可以存储数据的。
+事件监听机制有四种类型的znode：
+
+PERSISTENT(持久化目录节点)
+客户端与zookeeper断开连接后，该节点依旧存在
+
+
+PERSISTENT_SEQUENTIAL(持久化顺序编号目录节点)
+客户端与zookeeper断开连接后，该节点依旧存在，只是Zookeeper给该节点名称进行顺序编号
+
+
+EPHEMERAL-临时目录节点
+客户端与zookeeper断开连接后，该节点被删除
+
+
+EPHEMERAL_SEQUENTIAL-临时顺序编号目录节点
+客户端与zookeeper断开连接后，该节点被删除，只是Zookeeper给该节点名称进行顺序编号
+
+
+
+ 参考：
+https: ...</div></div></div><div class="recent-post-item"><div class="post_cover right_radius"><a href="/ecd467f2.html" title="zookeeper分布式锁">     <img class="post_bg" src="https://img.lvxiaoyi.top/typora-img/bg.jpg/lvxiaoyi" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="zookeeper分布式锁"></a></div><div class="recent-post-info"><a class="article-title" href="/ecd467f2.html" title="zookeeper分布式锁">zookeeper分布式锁</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2021-11-01T07:04:01.802Z" title="发表于 2021-11-01 15:04:01">2021-11-01</time></span><span class="article-meta"><span class="article-meta__separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/%E5%88%86%E5%B8%83%E5%BC%8F/">分布式</a><i class="fas fa-angle-right"></i><a class="article-meta__categories" href="/categories/%E5%88%86%E5%B8%83%E5%BC%8F/%E5%88%86%E5%B8%83%E5%BC%8F%E9%94%81/">分布式锁</a></span></div><div class="content">背景为了保证数据的一致性，在一些业务处理中都会选择加锁来保证数据的一致性。在单机模式下我们通常选择使用synchronized等这种JAVA提供好的jvm锁来实现，但是在集群和分布式情况下，这种jvm级别的锁式无法满足我们的需求，因为一个服务部署在多台服务器上，这些服务器上的jvm是无法通讯的，所以我们需要一种方案来解决分布式情况下数据一致性。
+在互联网公司，基本上企业内部都会有自己的一套分布式锁开发框架
+前言分布式锁一般有三种实现方式：
+
+数据库乐观锁
+基于redis实现分布式锁
+基于zooKeeper实习哪分布式锁
+
+本次讲着重介绍zooKeeper实现分布式锁，和与数据库和redis实习分布式锁的对比。
+核心zookeeper的分布式锁主要是依据临时节点和事件监听机制来完成的
+curator框架实现zookeeper分布式锁前提：需要搭建起zookeeper基础架构，并且使用gateway网关做负载均衡
+12345&lt;dependency&gt;    &lt;groupId&gt;org.apache.curator&lt;/groupId&gt;    &lt;artif ...</div></div></div><div class="recent-post-item"><div class="post_cover left_radius"><a href="/undefined.html" title="分布式项目监控Sleuth与Zipkin">     <img class="post_bg" src="https://img.lvxiaoyi.top/typora-img/bg.jpg/lvxiaoyi" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="分布式项目监控Sleuth与Zipkin"></a></div><div class="recent-post-info"><a class="article-title" href="/undefined.html" title="分布式项目监控Sleuth与Zipkin">分布式项目监控Sleuth与Zipkin</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2021-11-01T07:04:01.794Z" title="发表于 2021-11-01 15:04:01">2021-11-01</time></span><span class="article-meta"><span class="article-meta__separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/%E5%88%86%E5%B8%83%E5%BC%8F/">分布式</a><i class="fas fa-angle-right"></i><a class="article-meta__categories" href="/categories/%E5%88%86%E5%B8%83%E5%BC%8F/%E5%88%86%E5%B8%83%E5%BC%8F%E6%A0%B8%E5%BF%83/">分布式核心</a></span></div><div class="content"></div></div></div><div class="recent-post-item"><div class="post_cover right_radius"><a href="/d56bbc9.html" title="分布式id的生成方案">     <img class="post_bg" src="https://img.lvxiaoyi.top/typora-img/202111011401213.jpeg/lvxiaoyi" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="分布式id的生成方案"></a></div><div class="recent-post-info"><a class="article-title" href="/d56bbc9.html" title="分布式id的生成方案">分布式id的生成方案</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2021-11-01T07:04:01.790Z" title="发表于 2021-11-01 15:04:01">2021-11-01</time></span><span class="article-meta"><span class="article-meta__separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/%E5%88%86%E5%B8%83%E5%BC%8F/">分布式</a><i class="fas fa-angle-right"></i><a class="article-meta__categories" href="/categories/%E5%88%86%E5%B8%83%E5%BC%8F/%E5%88%86%E5%B8%83%E5%BC%8FID/">分布式ID</a></span></div><div class="content">分布式id的生成方案ID是数据的唯一标识，传统的做法是利用UUID和数据库的自增ID，在互联网企业中，大部分公司使用的都是Mysql，并且因为需要事务支持，所以通常会使用Innodb存储引擎，UUID太长以及无序，所以并不适合在Innodb中来作为主键，自增ID比较合适，但是随着公司的业务发展，数据量将越来越大，需要对数据进行分表，而分表后，每个表中的数据都会按自己的节奏进行自增，很有可能出现ID冲突。这时就需要一个单独的机制来负责生成唯一ID，生成出来的ID也可以叫做分布式ID，或全局ID。下面来分析各个生成分布式ID的机制。
+
+
+
+这篇文章并不会分析的特别详细，主要是做一些总结，以后再出一些详细某个方案的文章。
+数据库自增ID第一种方案仍然还是基于数据库的自增ID，需要单独使用一个数据库实例，在这个实例中新建一个单独的表：
+表结构如下：
+12345678CREATE DATABASE `SEQID`;CREATE TABLE SEQID.SEQUENCE_ID (	id bigint(20) unsigned NOT NULL auto_increment, 	stub char( ...</div></div></div><div class="recent-post-item"><div class="post_cover left_radius"><a href="/3f9bb49b.html" title="分布式核心">     <img class="post_bg" src="https://img.lvxiaoyi.top/typora-img/bg.jpg/lvxiaoyi" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="分布式核心"></a></div><div class="recent-post-info"><a class="article-title" href="/3f9bb49b.html" title="分布式核心">分布式核心</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2021-11-01T07:04:01.786Z" title="发表于 2021-11-01 15:04:01">2021-11-01</time></span><span class="article-meta"><span class="article-meta__separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/%E5%88%86%E5%B8%83%E5%BC%8F/">分布式</a><i class="fas fa-angle-right"></i><a class="article-meta__categories" href="/categories/%E5%88%86%E5%B8%83%E5%BC%8F/%E5%88%86%E5%B8%83%E5%BC%8F%E6%A0%B8%E5%BF%83/">分布式核心</a></span></div><div class="content">微服务中核心问题解决方案分布式id，分布式锁，鉴权，事务等等
+
+
+
+
+
+
+分布式id生成方案有哪些？UUID,数据库主键自增，Redis自增ID，雪花算法。
+
+
+
+
+描述
+优点
+缺点
+
+
+
+数据库主键自增
+MySQL数据库设置主键且主键自动增长
+1. INT和BIGINT类型占用空间较小；2. 主键自动增长，IO写入连续性好；3. 数字类型查询速度优于字符串
+1. 并发性能不高，受限于数据库性能；2. 分库分表，需要改造，复杂；3. 自增：数据和数据量泄露
+
+
+UUID
+UUID是通用唯一标识码的缩写，其目的是让分布式系统中的所有元素都有唯一的辨识信息，而不需要通过中央控制器来指定唯一标识。
+1. 降低全局节点的压力，使得主键生成速度更快；2. 生成的主键全局唯一；3. 跨服务器合并数据方便。
+1. UUID占用16个字符，空间占用较多；2. 不是递增有序的数字，数据写入IO随机性很大，且索引效率下降（mysql的B+树索引机制）
+
+
+号段模式
+量获取多个ID并缓存在本地，集群中每个mysql使用不同的自增步长
+1. 不依赖数据库，即使数据库挂了，还能坚持一段时间2.
+1. 重启后，会 ...</div></div></div><div class="recent-post-item"><div class="post_cover right_radius"><a href="/e1fa6938.html" title="redis核心问题">     <img class="post_bg" src="https://img.lvxiaoyi.top/typora-img/202111011400668.png/lvxiaoyi" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="redis核心问题"></a></div><div class="recent-post-info"><a class="article-title" href="/e1fa6938.html" title="redis核心问题">redis核心问题</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2021-11-01T07:04:01.778Z" title="发表于 2021-11-01 15:04:01">2021-11-01</time></span><span class="article-meta"><span class="article-meta__separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/redis/">redis</a><i class="fas fa-angle-right"></i><a class="article-meta__categories" href="/categories/redis/redis%E6%A0%B8%E5%BF%83%E9%97%AE%E9%A2%98/">redis核心问题</a></span></div><div class="content">redis核心问题redis线程，高并发下的缓存穿透、击穿、血崩、缓存淘汰策略、持久化机制，redis的分布式锁
+
+
+01.说一下在你项目中的redis的应用场景1,5大value类型 :根据我的redis课有场景的介绍
+2,基本上就是缓存~!
+3,为的是服务无状态,延申思考,看你的项目有哪些数据结构或对象,再单机里需要单机锁,在多机需要分布式锁,抽出来放入redis中;
+4,无锁化
+02.redis是单线程还是多线程1, 无论什么版本,工作线程就是一个
+2, 6.x高版本出现了IO多线程
+3,使用上来说,没有变化
+
+4, [去学一下系统IO课],你要真正的理解面向IO模型编程的时候,有内核的事,从内核把数据搬运到程序里这是第一步,然后,搬运回来的数据做的计算是第二步,netty
+5,单线程,满足redis的串行原子,只不过IO多线程后,把输入/输出放到更多的线程里去并行,好处如下: 1,执行时间短,更快; 2,更好的压榨系统及硬件的资源(网卡能够高效的使用);
+*,客户端被读取的顺序不能被保障哪个顺序是可以被保障的: 在一个连接里,socket里
+6.x以前
+缓存不严谨,尽量去分片
+ ...</div></div></div><div class="recent-post-item"><div class="post_cover left_radius"><a href="/e2ee4148.html" title="redis分布式锁">     <img class="post_bg" src="https://img.lvxiaoyi.top/typora-img/202111011400668.png/lvxiaoyi" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="redis分布式锁"></a></div><div class="recent-post-info"><a class="article-title" href="/e2ee4148.html" title="redis分布式锁">redis分布式锁</a><div class="article-meta-wrap"><span class="article-meta"><i class="fas fa-thumbtack sticky"></i><span class="sticky">置顶</span><span class="article-meta__separator">|</span></span><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2021-11-01T07:04:01.775Z" title="发表于 2021-11-01 15:04:01">2021-11-01</time></span><span class="article-meta"><span class="article-meta__separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/%E5%88%86%E5%B8%83%E5%BC%8F/">分布式</a><i class="fas fa-angle-right"></i><a class="article-meta__categories" href="/categories/%E5%88%86%E5%B8%83%E5%BC%8F/%E5%88%86%E5%B8%83%E5%BC%8F%E9%94%81/">分布式锁</a></span></div><div class="content">背景为了保证数据的一致性，在一些业务处理中都会选择加锁来保证数据的一致性。在单机模式下我们通常选择使用synchronized等这种JAVA提供好的jvm锁来实现，但是在集群和分布式情况下，这种jvm级别的锁式无法满足我们的需求，因为一个服务部署在多台服务器上，这些服务器上的jvm是无法通讯的，所以我们需要一种方案来解决分布式情况下数据一致性。
+在互联网公司，基本上企业内部都会有自己的一套分布式锁开发框架
+前言分布式锁一般有三种实现方式：
+
+数据库乐观锁
+基于redis实现分布式锁
+基于zooKeeper实习哪分布式锁
+
+本次讲着重介绍redis实现分布式锁，和与数据库和zooKeeper实习分布式锁的对比。
+可靠性为了保证分布式锁的可用，我们至少要保证锁的实现同时满足以下四个条件：
+
+互斥性。在任意时刻，只能有一个客户端持有锁
+不会发生死锁。即使有一个客户端在持有锁的期间崩溃而没有主动解锁，也能保证后续其他客户端能加锁
+具有容错性。只要大部分的redis节点正常运行，客户端就可以加锁和解锁
+解铃还须系铃人。加锁和解锁的对象必须是同一个客户端，客户端不能把别人加的锁给解了。
+
+redi ...</div></div></div><div class="recent-post-item"><div class="post_cover right_radius"><a href="/a988d1a2.html" title="docker安装redis集群">     <img class="post_bg" src="https://img.lvxiaoyi.top/typora-img/202111011400668.png/lvxiaoyi" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="docker安装redis集群"></a></div><div class="recent-post-info"><a class="article-title" href="/a988d1a2.html" title="docker安装redis集群">docker安装redis集群</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2021-11-01T07:04:01.771Z" title="发表于 2021-11-01 15:04:01">2021-11-01</time></span><span class="article-meta"><span class="article-meta__separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/redis/">redis</a><i class="fas fa-angle-right"></i><a class="article-meta__categories" href="/categories/redis/redis%E9%9B%86%E7%BE%A4/">redis集群</a></span></div><div class="content">拉取镜像1docker  pull  redis:5.0.5
+
+
+创建redis容器创建三个 redis 容器：
+
+redis-node1：6380
+redis-node2：6381
+redis-node3：6382
+
+12345docker create --name redis-node1 --net host -v /data/redis-data/node1:/data redis:5.0.5 --cluster-enabled yes --cluster-config-file nodes-node-1.conf --port 6380docker create --name redis-node2 --net host -v /data/redis-data/node2:/data redis:5.0.5 --cluster-enabled yes --cluster-config-file nodes-node-2.conf --port 6381docker create --name redis-node3 --net host -v /data/redis-data ...</div></div></div><div class="recent-post-item"><div class="post_cover left_radius"><a href="/353ffb0.html" title="MySQL进阶部分">     <img class="post_bg" src="https://img.lvxiaoyi.top/typora-img/202111011358345.png/lvxiaoyi" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="MySQL进阶部分"></a></div><div class="recent-post-info"><a class="article-title" href="/353ffb0.html" title="MySQL进阶部分">MySQL进阶部分</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2021-11-01T07:04:01.762Z" title="发表于 2021-11-01 15:04:01">2021-11-01</time></span><span class="article-meta"><span class="article-meta__separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/MySQL/">MySQL</a></span></div><div class="content">一、MySQL的架构介绍1.MySql简介​        概述：
+2.MySQL逻辑架构介绍​        
+​    
+1.Connectors指的是不同语言中与SQL的交互
+2 Management Serveices &amp; Utilities：系统管理和控制工具
+3 Connection Pool: 连接池管理缓冲用户连接，线程处理等需要缓存的需求。负责监听对 MySQL Server 的各种请求，接收连接请求，转发所有连接请求到线程管理模块。每一个连接上 MySQL Server 的客户端请求都会被分配（或创建）一个连接线程为其单独服务。而连接线程的主要工作就是负责 MySQL Server 与客户端的通信，接受客户端的命令请求，传递 Server 端的结果信息等。线程管理模块则负责管理维护这些连接线程。包括线程的创建，线程的 cache 等。
+4 SQL Interface: SQL接口。接受用户的SQL命令，并且返回用户需要查询的结果。比如select from就是调用SQL Interface
+5 Parser: 解析器。SQL命令传递到解析器的时候会被解析器验 ...</div></div></div><div class="recent-post-item"><div class="post_cover right_radius"><a href="/220c1acb.html" title="MySQL基础部分">     <img class="post_bg" src="https://img.lvxiaoyi.top/typora-img/202111011358345.png/lvxiaoyi" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="MySQL基础部分"></a></div><div class="recent-post-info"><a class="article-title" href="/220c1acb.html" title="MySQL基础部分">MySQL基础部分</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2021-11-01T07:04:01.758Z" title="发表于 2021-11-01 15:04:01">2021-11-01</time></span><span class="article-meta"><span class="article-meta__separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/MySQL/">MySQL</a></span></div><div class="content">一、为什么要学习数据库数据库的好处    1.持久化数据到本地    2.可以实现结构化查询，方便管理
+二、数据库的相关概念​    1、DB：数据库，保存一组有组织的数据的容器​    2、DBMS：数据库管理系统，又称为数据库软件（产品），用于管理DB中的数据​    3、SQL:结构化查询语言，用于和DBMS通信的语言
+三、数据库存储数据的特点​    1、将数据放到表中，表再放到库中​    2、一个数据库中可以有多个表，每个表都有一个的名字，用来标识自己。表名具有唯一性。​    3、表具有一些特性，这些特性定义了数据在表中如何存储，类似java中 “类”的设计。​    4、表由列组成，我们也称为字段。所有表都是由一个或多个列组成的，每一列类似java 中的”属性”​    5、表中的数据是按行存储的，每一行类似于java中的“对象”。
+四、初始MySQLMySQL产品的介绍MySQL产品的安装MySQL服务的启动和停止​    方式一：计算机——右击管理——服务​    方式二：通过管理员身份运行​    net start 服务名（启动服务）​    net stop  ...</div></div></div><div class="recent-post-item"><div class="post_cover left_radius"><a href="/4e3adf74.html" title="Elasticsearch概述">     <img class="post_bg" src="https://img.lvxiaoyi.top/typora-img/202111011357454.png/lvxiaoyi" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Elasticsearch概述"></a></div><div class="recent-post-info"><a class="article-title" href="/4e3adf74.html" title="Elasticsearch概述">Elasticsearch概述</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2021-11-01T07:04:01.747Z" title="发表于 2021-11-01 15:04:01">2021-11-01</time></span><span class="article-meta"><span class="article-meta__separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/elasticsearch/">elasticsearch</a></span></div><div class="content">第1章 Elasticsearch概述01-开篇教学视频
+结构化数据
+
+非结构化数据
+
+半结构化数据
+
+02-技术选型Elasticsearch 是什么The Elastic Stack, 包括 Elasticsearch、 Kibana、 Beats 和 Logstash（也称为 ELK Stack）。能够安全可靠地获取任何来源、任何格式的数据，然后实时地对数据进行搜索、分析和可视化。
+Elaticsearch，简称为 ES， ES 是一个开源的高扩展的分布式全文搜索引擎， 是整个 ElasticStack 技术栈的核心。
+它可以近乎实时的存储、检索数据；本身扩展性很好，可以扩展到上百台服务器，处理 PB 级别的数据。
+
+elastic英 [ɪˈlæstɪk] 美 [ɪˈlæstɪk]n. 橡皮圈(或带);松紧带adj. 橡皮圈(或带)的;有弹性的;有弹力的;灵活的;可改变的;可伸缩的
+
+全文搜索引擎Google，百度类的网站搜索，它们都是根据网页中的关键字生成索引，我们在搜索的时候输入关键字，它们会将该关键字即索引匹配到的所有网页返回；还有常见的项目中应用日志的搜索等等。对于这些非 ...</div></div></div><div class="recent-post-item"><div class="post_cover right_radius"><a href="/undefined.html" title="面试之算法1">     <img class="post_bg" src="https://img.lvxiaoyi.top/typora-img/bg.jpg/lvxiaoyi" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="面试之算法1"></a></div><div class="recent-post-info"><a class="article-title" href="/undefined.html" title="面试之算法1">面试之算法1</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2021-11-01T07:04:01.733Z" title="发表于 2021-11-01 15:04:01">2021-11-01</time></span><span class="article-meta"><span class="article-meta__separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/%E7%AE%97%E6%B3%95/">算法</a><i class="fas fa-angle-right"></i><a class="article-meta__categories" href="/categories/%E7%AE%97%E6%B3%95/%E9%9D%A2%E8%AF%95/">面试</a></span></div><div class="content">题目原题目：
+12Given two array A, B, in all the indexes o array A elements which are also n array B. For example a = [5，3，1，5，4],b =[5，3],and the resutis [0，1，3]
+
+
+
+翻译后：给定两个数组A、B，找出两个数组中重复的A的索引下标
+思路思路1：双重for循环暴力破解i，时间复杂度O（n^2^），然后用一个list存放结果
+思路2：先把一个数组放入hashmap中，然后再把一个数组放入hashmap，如果有重复那么就不能放入，然后把下标放入list队列，时间复杂度O（N）
+思路3：因为hashmap是Api，所以如果这不考虑移除且数组中的数是正整数，那么可以考虑使用一个数组，把值当做索引存入，时间复杂度O（N）
+实现暴力破解</div></div></div><div class="recent-post-item"><div class="post_cover left_radius"><a href="/a80d0031.html" title="动态规划">     <img class="post_bg" src="https://img.lvxiaoyi.top/typora-img/202111011353883.png/lvxiaoyi" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="动态规划"></a></div><div class="recent-post-info"><a class="article-title" href="/a80d0031.html" title="动态规划">动态规划</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2021-11-01T07:04:01.724Z" title="发表于 2021-11-01 15:04:01">2021-11-01</time></span><span class="article-meta"><span class="article-meta__separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/%E7%AE%97%E6%B3%95/">算法</a><i class="fas fa-angle-right"></i><a class="article-meta__categories" href="/categories/%E7%AE%97%E6%B3%95/%E7%AE%97%E6%B3%95%E6%80%9D%E6%83%B3/">算法思想</a></span></div><div class="content">动态规划动态规划题目的特点
+计数
+求最大最小值
+求存在性
+
+最后都是得出一个最优值，而不是所有的可能性。
+动态规划解题思路有2，5，7三种类型的硬币，求用这三种硬币拼出来的总量为27，但是用的硬币个数最小。
+组成部分一：确定状态也就是说，在解动态规划问题的时候需要开一个数组，数组的每个元素f[i]或者f[i][j]代表什么
+确定状态需要两个意识：
+最后一步也就是最后存在的解
+例如：
+这个题一定存在一个解，即K枚硬币组合在一起达到了总量为27
+关键点1我们不关心前面的k-1枚硬币是怎么拼出来27-aK的（可能有一种拼法，可能有100种拼法），而且我们现在甚至还不知道ak和K，但是我们确定前面的硬币拼出了27-ak
+
+
+    ##### 关键点2
+
+因为是最优策略，所以拼出27-ak的硬币数量一定要最小，否则这就不是最优策略了
+需要最小的硬币数，所以：
+
+这个时候，我们可以用递归方法解题
+
+但是有一个问题，递归是从上到下进行计算的，这样的话会产生大量的重复运算
+
+所以说，这不是一个好的解法，解决方法就是将计算结果保存下来，改变计算顺序
+看到这里是不是感觉好像记忆化递归的逆序，没错！这就是 ...</div></div></div><div class="recent-post-item"><div class="post_cover right_radius"><a href="/981a96f7.html" title="基本排序算法">     <img class="post_bg" src="https://img.lvxiaoyi.top/typora-img/202111011348649.png/lvxiaoyi" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="基本排序算法"></a></div><div class="recent-post-info"><a class="article-title" href="/981a96f7.html" title="基本排序算法">基本排序算法</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2021-11-01T07:04:01.714Z" title="发表于 2021-11-01 15:04:01">2021-11-01</time></span><span class="article-meta"><span class="article-meta__separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/%E7%AE%97%E6%B3%95/">算法</a><i class="fas fa-angle-right"></i><a class="article-meta__categories" href="/categories/%E7%AE%97%E6%B3%95/%E5%9F%BA%E6%9C%AC%E6%8E%92%E5%BA%8F%E7%AE%97%E6%B3%95/">基本排序算法</a></span></div><div class="content">
+
+
+排序类型
+平均情况
+最好情况
+最坏情况
+辅助空间
+稳定性
+
+
+
+冒泡排序
+O(n²)
+O(n)
+O(n²)
+O(1)
+稳定
+
+
+选择排序
+O(n²)
+O(n²)
+O(n²)
+O(1)
+不稳定
+
+
+直接插入排序
+O(n²)
+O(n)
+O(n²)
+O(1)
+稳定
+
+
+折半插入排序
+O(n²)
+O(n)
+O(n²)
+O(1)
+稳定
+
+
+希尔排序
+O(n^1.3)
+O(nlogn)
+O(n²)
+O(1)
+不稳定
+
+
+归并排序
+O(nlog₂n)
+O(nlog₂n)
+O(nlog₂n)
+O(n)
+稳定
+
+
+快速排序
+O(nlog₂n)
+O(nlog₂n)
+O(n²)
+O(nlog₂n)
+不稳定
+
+
+堆排序
+O(nlog₂n)
+O(nlog₂n)
+O(nlog₂n)
+O(1)
+不稳定
+
+
+计数排序
+O(n+k)
+O(n+k)
+O(n+k)
+O(k)
+稳定
+
+
+桶排序
+O(n+k)
+O(n+k)
+O(n²)
+O(n+k)
+(不)稳定
+
+
+基数排序
+O(d(n+k))
+O(d(n+k))
+O(d(n+kd))
+O(n+kd)
+稳定
+
+
+
+
+推荐文章：https://www.cnblogs.com ...</div></div></div><div class="recent-post-item"><div class="post_cover left_radius"><a href="/undefined.html" title="剑指 Offer II 099. 最小路径之和">     <img class="post_bg" src="https://img.lvxiaoyi.top/typora-img/202111011345626.jpg/lvxiaoyi" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="剑指 Offer II 099. 最小路径之和"></a></div><div class="recent-post-info"><a class="article-title" href="/undefined.html" title="剑指 Offer II 099. 最小路径之和">剑指 Offer II 099. 最小路径之和</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2021-11-01T07:04:01.704Z" title="发表于 2021-11-01 15:04:01">2021-11-01</time></span><span class="article-meta"><span class="article-meta__separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/%E7%AE%97%E6%B3%95/">算法</a><i class="fas fa-angle-right"></i><a class="article-meta__categories" href="/categories/%E7%AE%97%E6%B3%95/%E5%89%91%E6%8C%87offer/">剑指offer</a></span></div><div class="content">剑指 Offer II 099. 最小路径之和题目
+12345678910111213141516171819202122给定一个包含非负整数的 m x n 网格 grid ，请找出一条从左上角到右下角的路径，使得路径上的数字总和为最小。说明：一个机器人每次只能向下或者向右移动一步。示例 1：输入：grid = [[1,3,1],[1,5,1],[4,2,1]]输出：7解释：因为路径 1→3→1→1→1 的总和最小。示例 2：输入：grid = [[1,2,3],[4,5,6]]输出：12 提示：m == grid.lengthn == grid[i].length1 &lt;= m, n &lt;= 2000 &lt;= grid[i][j] &lt;= 100
+
+
+
+
+
+</div></div></div><nav id="pagination"><div class="pagination"><a class="extend prev" rel="prev" href="/page/3/#content-inner"><i class="fas fa-chevron-left fa-fw"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/3/#content-inner">3</a><span class="page-number current">4</span><a class="page-number" href="/page/5/#content-inner">5</a><a class="page-number" href="/page/6/#content-inner">6</a><a class="extend next" rel="next" href="/page/5/#content-inner"><i class="fas fa-chevron-right fa-fw"></i></a></div></nav></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="/img/avatar.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">吕小医</div><div class="author-info__description">IT小白的健身小白</div></div><div class="card-info-data"><div class="card-info-data-item is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">83</div></a></div><div class="card-info-data-item is-center"><a href="/tags/"><div class="headline">标签</div><div class="length-num">24</div></a></div><div class="card-info-data-item is-center"><a href="/categories/"><div class="headline">分类</div><div class="length-num">38</div></a></div></div><a class="button--animated" id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/lvxiaoyi"><i class="fab fa-github"></i><span>Follow Me</span></a></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn card-announcement-animation"></i><span>公告</span></div><div class="announcement_content">welcome my blog</div></div><div class="sticky_layout"><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/undefined.html" title="设计模式基础-1"><img src="https://img.lvxiaoyi.top/typora-img/image-20211012093705433.png/lvxiaoyi" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="设计模式基础-1"/></a><div class="content"><a class="title" href="/undefined.html" title="设计模式基础-1">设计模式基础-1</a><time datetime="2021-11-01T07:04:02.115Z" title="发表于 2021-11-01 15:04:02">2021-11-01</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/f1601c3e.html" title="单例模式"><img src="https://img.lvxiaoyi.top/typora-img/1002892-20180912131026735-781767905.png/lvxiaoyi" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="单例模式"/></a><div class="content"><a class="title" href="/f1601c3e.html" title="单例模式">单例模式</a><time datetime="2021-11-01T07:04:02.112Z" title="发表于 2021-11-01 15:04:02">2021-11-01</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2109f677.html" title="计算机网络常见面试题"><img src="https://img.lvxiaoyi.top/typora-img/java-interview/1.png/lvxiaoyi" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="计算机网络常见面试题"/></a><div class="content"><a class="title" href="/2109f677.html" title="计算机网络常见面试题">计算机网络常见面试题</a><time datetime="2021-11-01T07:04:02.103Z" title="发表于 2021-11-01 15:04:02">2021-11-01</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/dec4a27c.html" title="netty基础-3"><img src="https://img.lvxiaoyi.top/typora-img/netty-3.jpg/lvxiaoyi" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="netty基础-3"/></a><div class="content"><a class="title" href="/dec4a27c.html" title="netty基础-3">netty基础-3</a><time datetime="2021-11-01T07:04:02.097Z" title="发表于 2021-11-01 15:04:02">2021-11-01</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/a9c392ea.html" title="netty基础-2"><img src="https://img.lvxiaoyi.top/typora-img/netty-2.jpg/lvxiaoyi" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="netty基础-2"/></a><div class="content"><a class="title" href="/a9c392ea.html" title="netty基础-2">netty基础-2</a><time datetime="2021-11-01T07:04:02.093Z" title="发表于 2021-11-01 15:04:02">2021-11-01</time></div></div></div></div><div class="card-widget card-categories"><div class="item-headline">
+            <i class="fas fa-folder-open"></i>
+            <span>分类</span>
+            <a class="card-more-btn" href="/categories/" title="查看更多">
+    <i class="fas fa-angle-right"></i></a>
+            </div>
+            <ul class="card-category-list" id="aside-cat-list">
+            <li class="card-category-list-item "><a class="card-category-list-link" href="/categories/MySQL/"><span class="card-category-list-name">MySQL</span><span class="card-category-list-count">2</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/Spring/"><span class="card-category-list-name">Spring</span><span class="card-category-list-count">5</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/elasticsearch/"><span class="card-category-list-name">elasticsearch</span><span class="card-category-list-count">1</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/java/"><span class="card-category-list-name">java</span><span class="card-category-list-count">2</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/jvm/"><span class="card-category-list-name">jvm</span><span class="card-category-list-count">6</span></a><ul class="card-category-list child"><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/jvm/jvm%E6%9D%82%E7%AF%87/"><span class="card-category-list-name">jvm杂篇</span><span class="card-category-list-count">1</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/jvm/jvm%E7%90%86%E8%AE%BA/"><span class="card-category-list-name">jvm理论</span><span class="card-category-list-count">4</span></a></li></ul></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/linux/"><span class="card-category-list-name">linux</span><span class="card-category-list-count">1</span></a></li>
+            </ul></div><div class="card-widget card-tags"><div class="item-headline"><i class="fas fa-tags"></i><span>标签</span></div><div class="card-tag-cloud"><a href="/tags/%E5%88%86%E5%B8%83%E5%BC%8F/" style="font-size: 1.25em; color: rgb(130, 20, 95)">分布式</a><a href="/tags/jvm/" style="font-size: 1.35em; color: rgb(164, 38, 113)">jvm</a><a href="/tags/%E5%81%A5%E8%BA%AB/" style="font-size: 1.15em; color: rgb(15, 189, 98)">健身</a><a href="/tags/lua/" style="font-size: 1.2em; color: rgb(21, 140, 21)">lua</a><a href="/tags/linux/" style="font-size: 1.15em; color: rgb(146, 190, 113)">linux</a><a href="/tags/%E5%A4%A7%E6%95%B0%E6%8D%AE/" style="font-size: 1.3em; color: rgb(36, 86, 151)">大数据</a><a href="/tags/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/" style="font-size: 1.3em; color: rgb(168, 11, 105)">操作系统</a><a href="/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" style="font-size: 1.2em; color: rgb(42, 16, 117)">设计模式</a><a href="/tags/%E7%AE%97%E6%B3%95%E6%80%9D%E6%83%B3/" style="font-size: 1.15em; color: rgb(112, 86, 100)">算法思想</a><a href="/tags/LeetCode/" style="font-size: 1.3em; color: rgb(111, 109, 50)">LeetCode</a><a href="/tags/%E9%9D%A2%E8%AF%95/" style="font-size: 1.15em; color: rgb(36, 183, 170)">面试</a><a href="/tags/%E5%89%91%E6%8C%87offer/" style="font-size: 1.45em; color: rgb(177, 82, 24)">剑指offer</a><a href="/tags/redis%E9%9B%86%E7%BE%A4/" style="font-size: 1.15em; color: rgb(143, 102, 64)">redis集群</a><a href="/tags/redis/" style="font-size: 1.15em; color: rgb(36, 34, 117)">redis</a><a href="/tags/%E5%88%86%E5%B8%83%E5%BC%8F%E9%94%81/" style="font-size: 1.2em; color: rgb(16, 114, 132)">分布式锁</a><a href="/tags/zookeeper/" style="font-size: 1.15em; color: rgb(113, 96, 157)">zookeeper</a><a href="/tags/%E5%A4%9A%E7%BA%BF%E7%A8%8B/" style="font-size: 1.4em; color: rgb(133, 181, 114)">多线程</a><a href="/tags/%E6%B5%8B%E8%AF%95/" style="font-size: 1.15em; color: rgb(24, 187, 104)">测试</a><a href="/tags/Spring/" style="font-size: 1.3em; color: rgb(84, 90, 145)">Spring</a><a href="/tags/java/" style="font-size: 1.2em; color: rgb(114, 103, 135)">java</a><a href="/tags/%E7%AE%97%E6%B3%95/" style="font-size: 1.15em; color: rgb(90, 138, 189)">算法</a><a href="/tags/%E5%A4%9A%E7%BA%BF%E7%A8%8B%E5%AE%9E%E6%88%98/" style="font-size: 1.15em; color: rgb(118, 99, 20)">多线程实战</a><a href="/tags/MySQL/" style="font-size: 1.2em; color: rgb(167, 67, 2)">MySQL</a><a href="/tags/elasticsearch/" style="font-size: 1.15em; color: rgb(88, 90, 37)">elasticsearch</a></div></div><div class="card-widget card-archives"><div class="item-headline"><i class="fas fa-archive"></i><span>归档</span></div><ul class="card-archive-list"><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2021/11/"><span class="card-archive-list-date">十一月 2021</span><span class="card-archive-list-count">83</span></a></li></ul></div><div class="card-widget card-webinfo"><div class="item-headline"><i class="fas fa-chart-line"></i><span>网站资讯</span></div><div class="webinfo"><div class="webinfo-item"><div class="item-name">文章数目 :</div><div class="item-count">83</div></div><div class="webinfo-item"><div class="item-name">本站访客数 :</div><div class="item-count" id="busuanzi_value_site_uv"></div></div><div class="webinfo-item"><div class="item-name">本站总访问量 :</div><div class="item-count" id="busuanzi_value_site_pv"></div></div><div class="webinfo-item"><div class="item-name">最后更新时间 :</div><div class="item-count" id="last-push-date" data-lastPushDate="2021-11-01T07:10:35.954Z"></div></div></div></div></div></div></main><footer id="footer" style="background-image: url('https://img.lvxiaoyi.top/typora-img/bg.jpg/lvxiaoyi')"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2021 By 吕小医</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><div class="js-pjax"><script>function subtitleType () {
+  if (true) { 
+    var typed = new Typed("#subtitle", {
+      strings: "IT小白的健身小白  冲鸭！".split(","),
+      startDelay: 300,
+      typeSpeed: 150,
+      loop: true,
+      backSpeed: 50
+    })
+  } else {
+    document.getElementById("subtitle").innerHTML = 'I'
+  }
+}
+
+if (true) {
+  if (typeof Typed === 'function') {
+    subtitleType()
+  } else {
+    getScript('https://cdn.jsdelivr.net/npm/typed.js/lib/typed.min.js').then(subtitleType)
+  }
+} else {
+  subtitleType()
+}</script></div><div class="aplayer no-destroy" data-id="7679522918" data-server="tencent" data-type="playlist" data-fixed="true" data-mini="true" data-listFolded="false" data-order="random" data-preload="none" data-autoplay="true" muted></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.js"></script><script src="https://cdn.jsdelivr.net/gh/metowolf/MetingJS@1.2/dist/Meting.min.js"></script><script src="https://cdn.jsdelivr.net/npm/pjax/pjax.min.js"></script><script>let pjaxSelectors = [
+  'title',
+  '#config-diff',
+  '#body-wrap',
+  '#rightside-config-hide',
+  '#rightside-config-show',
+  '.js-pjax'
+]
+
+if (false) {
+  pjaxSelectors.unshift('meta[property="og:image"]', 'meta[property="og:title"]', 'meta[property="og:url"]')
+}
+
+var pjax = new Pjax({
+  elements: 'a:not([target="_blank"])',
+  selectors: pjaxSelectors,
+  cacheBust: false,
+  analytics: false,
+  scrollRestoration: false
+})
+
+document.addEventListener('pjax:send', function () {
+
+  // removeEventListener scroll 
+  window.removeEventListener('scroll', window.tocScrollFn)
+  window.removeEventListener('scroll', scrollCollect)
+
+  typeof preloader === 'object' && preloader.initLoading()
+  
+  if (window.aplayers) {
+    for (let i = 0; i < window.aplayers.length; i++) {
+      if (!window.aplayers[i].options.fixed) {
+        window.aplayers[i].destroy()
+      }
+    }
+  }
+
+  typeof typed === 'object' && typed.destroy()
+
+  //reset readmode
+  const $bodyClassList = document.body.classList
+  $bodyClassList.contains('read-mode') && $bodyClassList.remove('read-mode')
+
+})
+
+document.addEventListener('pjax:complete', function () {
+  window.refreshFn()
+
+  document.querySelectorAll('script[data-pjax]').forEach(item => {
+    const newScript = document.createElement('script')
+    const content = item.text || item.textContent || item.innerHTML || ""
+    Array.from(item.attributes).forEach(attr => newScript.setAttribute(attr.name, attr.value))
+    newScript.appendChild(document.createTextNode(content))
+    item.parentNode.replaceChild(newScript, item)
+  })
+
+  GLOBAL_CONFIG.islazyload && window.lazyLoadInstance.update()
+
+  typeof chatBtnFn === 'function' && chatBtnFn()
+  typeof panguInit === 'function' && panguInit()
+
+  // google analytics
+  typeof gtag === 'function' && gtag('config', '', {'page_path': window.location.pathname});
+
+  // baidu analytics
+  typeof _hmt === 'object' && _hmt.push(['_trackPageview',window.location.pathname]);
+
+  typeof loadMeting === 'function' && document.getElementsByClassName('aplayer').length && loadMeting()
+
+  // Analytics
+  if (false) {
+    MtaH5.pgv()
+  }
+
+  // prismjs
+  typeof Prism === 'object' && Prism.highlightAll()
+
+  typeof preloader === 'object' && preloader.endLoading()
+})
+
+document.addEventListener('pjax:error', (e) => {
+  if (e.request.status === 404) {
+    pjax.loadUrl('/404.html')
+  }
+})</script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
