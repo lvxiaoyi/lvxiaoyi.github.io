@@ -1,0 +1,422 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>HBase基础 | 吕小医のBLOG</title><meta name="keywords" content="大数据"><meta name="author" content="吕小医"><meta name="copyright" content="吕小医"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="HBase基础一、HBase简介1.1 HBase定义HBase是一种分布式、可扩展、支持海量数据存储的NoSQL数据库。利用HBase技术可在廉价PC Server上搭建起大规模结构化存储集群。HBase的目标是存储并处理大型的数据，更具体来说是仅需使用普通的硬件配置，就能够处理由成千上万的行和列所组成的大型数据。 1.2 HBase特点 海量存储HBase适合存储PB级别的海量数据，在PB级别">
+<meta property="og:type" content="article">
+<meta property="og:title" content="HBase基础">
+<meta property="og:url" content="https://lvxiaoyi.top/bc13a2ae.html">
+<meta property="og:site_name" content="吕小医のBLOG">
+<meta property="og:description" content="HBase基础一、HBase简介1.1 HBase定义HBase是一种分布式、可扩展、支持海量数据存储的NoSQL数据库。利用HBase技术可在廉价PC Server上搭建起大规模结构化存储集群。HBase的目标是存储并处理大型的数据，更具体来说是仅需使用普通的硬件配置，就能够处理由成千上万的行和列所组成的大型数据。 1.2 HBase特点 海量存储HBase适合存储PB级别的海量数据，在PB级别">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://img.lvxiaoyi.top/typora-img/image-20211028174657424.png/lvxiaoyi">
+<meta property="article:published_time" content="2021-11-08T08:11:36.101Z">
+<meta property="article:modified_time" content="2021-11-08T08:12:24.744Z">
+<meta property="article:author" content="吕小医">
+<meta property="article:tag" content="大数据">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://img.lvxiaoyi.top/typora-img/image-20211028174657424.png/lvxiaoyi"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="https://lvxiaoyi.top/bc13a2ae"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//hm.baidu.com"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><meta name="baidu-site-verification" content="mYXynU9QQlT9I4Vp"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><script>var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?a4e78d5856251a207552f0ad0b8c65e9";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    jQuery: 'https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js',
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/js/jquery.justifiedGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/css/justifiedGallery.min.css'
+    },
+    fancybox: {
+      js: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isanchor: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'HBase基础',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2021-11-08 16:12:24'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if (GLOBAL_CONFIG_SITE.isHome && /iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    document.addEventListener('pjax:complete', detectApple)})(window)</script><link rel="stylesheet" href="/css/lvxiaoyi.css"><meta name="generator" content="Hexo 5.4.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="/img/avatar.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data"><div class="data-item is-center"><div class="data-item-link"><a href="/archives/"><div class="headline">文章</div><div class="length-num">122</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/tags/"><div class="headline">标签</div><div class="length-num">25</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/categories/"><div class="headline">分类</div><div class="length-num">44</div></a></div></div></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/music/"><i class="fa-fw fas fa-music"></i><span> 音乐</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 吕小医</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://img.lvxiaoyi.top/typora-img/image-20211028174657424.png/lvxiaoyi')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">吕小医のBLOG</a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/music/"><i class="fa-fw fas fa-music"></i><span> 音乐</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 吕小医</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">HBase基础</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2021-11-08T08:11:36.101Z" title="发表于 2021-11-08 16:11:36">2021-11-08</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2021-11-08T08:12:24.744Z" title="更新于 2021-11-08 16:12:24">2021-11-08</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E5%A4%A7%E6%95%B0%E6%8D%AE/">大数据</a><i class="fas fa-angle-right post-meta-separator"></i><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E5%A4%A7%E6%95%B0%E6%8D%AE/hadoop/">hadoop</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="HBase基础"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h1 id="HBase基础"><a href="#HBase基础" class="headerlink" title="HBase基础"></a>HBase基础</h1><h1 id="一、HBase简介"><a href="#一、HBase简介" class="headerlink" title="一、HBase简介"></a>一、HBase简介</h1><h2 id="1-1-HBase定义"><a href="#1-1-HBase定义" class="headerlink" title="1.1 HBase定义"></a>1.1 HBase定义</h2><p><code>HBase</code>是一种分布式、可扩展、支持海量数据存储的<code>NoSQL</code>数据库。利用<code>HBase</code>技术可在廉价<code>PC Server</code>上搭建起大规模结构化存储集群。<code>HBase</code>的目标是存储并处理大型的数据，更具体来说是仅需使用普通的硬件配置，就能够处理由成千上万的行和列所组成的大型数据。</p>
+<h2 id="1-2-HBase特点"><a href="#1-2-HBase特点" class="headerlink" title="1.2 HBase特点"></a>1.2 HBase特点</h2><ol>
+<li><strong>海量存储</strong><br><code>HBase</code>适合存储<code>PB</code>级别的海量数据，在PB级别的数据以及采用廉价<code>PC</code>存储的情况下，能在几十到百毫秒内返回数据。这与<code>HBase</code>的极易扩展性息息相关。正式因为<code>HBase</code>良好的扩展性，才为海量数据的存储提供了便利。</li>
+<li><strong>列式存储</strong><br>这里的列式存储其实说的是列族（<code>ColumnFamily</code>）存储，<code>HBase</code>是根据列族来存储数据的。列族下面可以有非常多的列，列族在创建表的时候就必须指定。</li>
+<li><strong>极易扩展</strong><br><code>HBase</code>的扩展性主要体现在两个方面，一个是基于上层处理能力（<code>RegionServer</code>）的扩展，一个是基于存储的扩展（<code>HDFS</code>）。通过横向添加<code>RegionSever</code>的机器，进行水平扩展，提升<code>HBase</code>上层的处理能力，提升<code>HBase</code>服务更多<code>Region</code>的能力。</li>
+<li><strong>高并发（多核）</strong><br>由于目前大部分使用<code>HBase</code>的架构，都是采用的廉价<code>PC</code>，因此单个<code>IO</code>的延迟其实并不小，一般在几十到上百<code>ms</code>之间。这里说的高并发，主要是在并发的情况下，<code>HBase</code>的单个<code>IO</code>延迟下降并不多。能获得高并发、低延迟的服务。</li>
+<li><strong>稀疏</strong><br>稀疏主要是针对<code>HBase</code>列的灵活性，在列族中，你可以指定任意多的列，在列数据为空的情况下，是不会占用存储空间的。</li>
+</ol>
+<h2 id="1-3-HBase数据模型"><a href="#1-3-HBase数据模型" class="headerlink" title="1.3 HBase数据模型"></a>1.3 HBase数据模型</h2><p>逻辑上，<code>HBase</code>的数据模型同关系型数据库很类似，数据存储在一张表中，有行有列。但从<code>HBase</code>的底层物理存储结构(<code>K-V</code>) 来看，<code>HBase</code>更像是一个<code>multi-dimensional map</code>。</p>
+<p><strong>①HBase逻辑结构</strong><br><img src="https://img-blog.csdnimg.cn/20200622165210627.png" alt="在这里插入图片描述"></p>
+<ul>
+<li><strong>列族</strong>：<code>Hbase</code>是根据列族来存储数据的。列族下面可以有非常多的列，列族在创建表的时候就必须指定，不同的列族数据存储在不同的位置。通过列族可以将宽表进行拆分。</li>
+<li><strong>Region</strong>：<code>Region</code>类似于分区，将同一张的数据进行拆分。通过<code>Region</code>可以将高表进行拆分。</li>
+<li><strong>Row key</strong>：类似于索引，<code>Row key</code>是有序的，根据字典顺序进行排序。</li>
+<li><strong>列</strong>：纵向数据</li>
+<li><strong>store</strong>：数据存储在<code>store</code>中，一个<code>store</code>对应<code>HBase</code>表中的一个列族</li>
+</ul>
+<p><strong>②HBase物理存储结构</strong><br><img src="https://img-blog.csdnimg.cn/20200622172926842.png" alt="在这里插入图片描述"><br><strong>③数据模型</strong></p>
+<ol>
+<li><strong>Name Space</strong><br>命名空间类似于关系型数据库的<code>database</code>概念，每个命名空间下有多个表。<code>Hbase</code>有两个自带的命名空间，分别是<code>hbase</code>和<code>default</code>，<code>hbase</code>中存放的是<code>HBase</code>内置的表，<code>default</code>表是用户默认使用的命名空间。</li>
+<li><strong>Region</strong><br>类似于关系型数据库的表概念。不同的是，<code>HBase</code>定义表时只需要声明列族即可，不需要声明具体的列。这意味着，往<code>HBase</code>写入数据时，字段可以动态、按需指定。因此，和关系型数据库相比，<code>HBase</code>能够轻松应对字段变更的场景。</li>
+<li><strong>Row</strong><br><code>HBase</code>表中的每行数据都由一一个<code>RowKey</code>和多个<code>Column</code> (列)组成，数据是按照<code>RowKey</code>的字典顺序存储的，并且查询数据时只能根据<code>RowKey</code>进行检索，所以<code>RowKey</code>的设计十分重要。</li>
+<li><strong>Column</strong><br><code>HBase</code>中的每个列都由<code>Column Family</code> (列族)和<code>Column Qualifier</code>(列限定符)进行限定，例如<code>info: name</code>， <code>info: age</code>。建表时，只需指明列族，而列限定符无需预先定义。。</li>
+<li><strong>Time Stamp</strong><br>用于标识数据的不同版本(<code>version</code>) ，每条数据写入时，如果不指定时间戳，系统会自动为其加上该字段，其值为写入<code>HBase</code>的时间。</li>
+<li><strong>Cell</strong><br>由<code>&#123;rowkey, column Family: column Qualifier, time Stamp&#125;</code>唯一确定的单元。<code>cell</code>中的数据是没有类型的，全部是字节码形式存贮。</li>
+</ol>
+<h2 id="1-4-HBase基本架构"><a href="#1-4-HBase基本架构" class="headerlink" title="1.4 HBase基本架构"></a>1.4 HBase基本架构</h2><p>不完整版：<br><img src="https://img-blog.csdnimg.cn/2020062219332835.png" alt="在这里插入图片描述"><br><strong>RegionServer的作用</strong></p>
+<ul>
+<li><code>Data</code>（数据级别）：<code>get</code>，<code>put</code>，<code>delete</code></li>
+<li><code>Region</code>：<code>splitRegion</code>（切）， <code>compactRegion</code>（合）</li>
+</ul>
+<p><strong>Master的作用</strong></p>
+<ul>
+<li><code>Table</code>（表级别）：<code>create</code>，<code>delete</code>，<code>alter</code></li>
+<li><code>RegionServer</code>：分配<code>regions</code>到每 个<code>RegionServer</code>，监控每个<code>RegionServer</code>的状态。</li>
+</ul>
+<h2 id="1-5-HBase完整架构"><a href="#1-5-HBase完整架构" class="headerlink" title="1.5 HBase完整架构"></a>1.5 HBase完整架构</h2><p><img src="https://img-blog.csdnimg.cn/20200623110746892.png" alt="在这里插入图片描述"><br>从图中可以看出<code>HBase</code>是由<code>Client</code>、<code>Zookeeper</code>、<code>Master</code>、<code>HRegionServer</code>、<code>HDFS</code>等几个组件组成，下面来介绍一下几个组件的相关功能：</p>
+<p><strong>①Client</strong></p>
+<p><code>Client</code>包含了访问<code>HBase</code>的接口，另外<code>Client</code>还维护了对应的<code>cache</code>来加速<code>HBase</code>的访问，比如<code>cache</code>的<code>.META</code>元数据的信息。</p>
+<p><strong>②Zookeeper</strong></p>
+<p><code>HBase</code>通过<code>Zookeeper</code>来做<code>master</code>的高可用、<code>RegionServer</code>的监控、元数据的入口以及集群配置的维护等工作。具体工作如下：</p>
+<ul>
+<li>通过<code>Zookeeper</code>来保证集群中只有1个<code>master</code>在运行，如果<code>master</code>异常，会通过竞争机制产生新的<code>master</code>提供服务</li>
+<li>通过<code>Zookeeper</code>来监控<code>RegionServer</code>的状态，当<code>RegionServer</code>有异常的时候，通过回调的形式通知<code>master</code>、<code>RegionServer</code>上下线的信息</li>
+<li>通过<code>Zookeeper</code>存储元数据的统一入口地址</li>
+</ul>
+<p><strong>③HMaster（类似NameNode）</strong></p>
+<p><code>master</code>节点的主要职责如下：</p>
+<ul>
+<li>为<code>RegionServer</code>分配<code>Region</code></li>
+<li>维护整个集群的负载均衡</li>
+<li>维护集群的元数据信息</li>
+<li>发现失效的<code>Region</code>，并将失效的<code>Region</code>分配到正常的<code>RegionServer</code>上</li>
+<li>当<code>RegionServer</code>失效的时候，协调对应<code>Hlog</code>的拆分</li>
+</ul>
+<p><strong>④HregionServer（类似DataNode）</strong></p>
+<p><code>HregionServer</code>直接对接用户的读写请求，是真正的“干活”的节点。它的功能概括如下：</p>
+<ul>
+<li>管理<code>master</code>为其分配的<code>Region</code></li>
+<li>处理来自客户端的读写请求</li>
+<li>负责和底层<code>HDFS</code>的交互，存储数据到<code>HDFS</code></li>
+<li>负责<code>Region</code>变大以后的拆分</li>
+<li>负责<code>Storefile</code>的合并工作</li>
+</ul>
+<p><strong>⑤HDFS</strong></p>
+<p><code>HDFS</code>为<code>HBase</code>提供最终的底层数据存储服务，同时为<code>HBase</code>提供高可用（<code>Hlog</code>存储在<code>HDFS</code>）的支持，具体功能概括如下：</p>
+<ul>
+<li>提供元数据和表数据的底层分布式存储服务</li>
+<li>数据多副本，保证的高可靠和高可用性</li>
+</ul>
+<p><strong>⑥Region</strong></p>
+<p><code>HBase</code>表的分片，<code>HBase</code>表会根据<code>RowKey</code>值被切分成不同的region存储在<code>RegionServer</code>中，在一个<code>RegionServer</code>中可以有多个不同的<code>Region</code>。</p>
+<p><strong>⑦HFile</strong></p>
+<p>这是在磁盘上保存原始数据的实际的物理文件，是实际的存储文件。<code>StoreFile</code>是以<code>HFile</code>的形式存储在<code>HDFS</code>的。</p>
+<p><strong>⑧Store</strong></p>
+<p><code>HFile</code>存储在<code>Store</code>中，一个<code>Store</code>对应<code>HBase</code>表中的一个列族。</p>
+<p><strong>⑨MemStore</strong></p>
+<p>内存存储存当前的数据操作，所以当数据保存在<code>WAL</code>中之后，<code>RegsionServer</code>会在内存中存储键值对。</p>
+<p><strong>⑩WAL（Write-Ahead logs）</strong></p>
+<p>当对<code>HBase</code>读写数据的时候，数据不是直接写进磁盘，它会在内存中保留一段时间（时间以及数据量阈值可以设定）。但把数据保存在内存中可能有更高的概率引起数据丢失，为了解决这个问题，数据会先写在一个叫做<code>Write-Ahead logfile</code>的文件中，然后再写入内存中。所以在系统出现故障的时候，数据可以通过这个日志文件重建。</p>
+<h2 id="1-6-HBase-Meta表"><a href="#1-6-HBase-Meta表" class="headerlink" title="1.6 HBase Meta表"></a>1.6 HBase Meta表</h2><p><code>HBase</code>有一个叫做<code>Meta</code>的特殊的目录表，用于保存集群中<code>Regions</code>的位置信息（<code>Region</code>列表）。<code>ZooKeeper</code>存储着<code>Meta</code>表的位置。<br><img src="https://img-blog.csdnimg.cn/20200623151002967.png" alt="在这里插入图片描述"></p>
+<h1 id="二、HBase安装"><a href="#二、HBase安装" class="headerlink" title="二、HBase安装"></a>二、HBase安装</h1><p><strong>前提</strong>：<code>Hadoop</code>集群和<code>ZooKeeper</code>集群的正常启动。</p>
+<p>①<code>HBase</code>的解压</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[root@hadoop100 software]# tar -zxvf hbase-1.3.1-bin.tar.gz -C /opt/module</span><br></pre></td></tr></table></figure>
+
+<p>②修改<code>hbase-env.sh</code></p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">export</span> JAVA_HOME=/opt/module/jdk1.8.0_144</span><br><span class="line"><span class="built_in">export</span> HBASE_MANAGES_ZK=<span class="literal">false</span></span><br></pre></td></tr></table></figure>
+
+<p>③修改<code>hbase-site.xml</code></p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">property</span>&gt;</span>     </span><br><span class="line">	<span class="tag">&lt;<span class="name">name</span>&gt;</span>hbase.rootdir<span class="tag">&lt;/<span class="name">name</span>&gt;</span>     </span><br><span class="line">	<span class="tag">&lt;<span class="name">value</span>&gt;</span>hdfs://hadoop100:9000/hbase<span class="tag">&lt;/<span class="name">value</span>&gt;</span>   </span><br><span class="line"><span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">property</span>&gt;</span>   </span><br><span class="line">	<span class="tag">&lt;<span class="name">name</span>&gt;</span>hbase.cluster.distributed<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">value</span>&gt;</span>true<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line"></span><br><span class="line">  <span class="comment">&lt;!-- 0.98后的新变动，之前版本没有.port,默认端口为60000 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">name</span>&gt;</span>hbase.master.port<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">value</span>&gt;</span>16000<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">property</span>&gt;</span>   </span><br><span class="line">	<span class="tag">&lt;<span class="name">name</span>&gt;</span>hbase.zookeeper.quorum<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">     <span class="tag">&lt;<span class="name">value</span>&gt;</span>hadoop100:2181,hadoop101:2181,hadoop102:2181<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">property</span>&gt;</span>   </span><br><span class="line">	<span class="tag">&lt;<span class="name">name</span>&gt;</span>hbase.zookeeper.property.dataDir<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">     <span class="tag">&lt;<span class="name">value</span>&gt;</span>/opt/module/zookeeper-3.4.10/zkData<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>④修改<code>regionservers</code></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">hadoop100</span><br><span class="line">hadoop101</span><br><span class="line">hadoop102</span><br></pre></td></tr></table></figure>
+
+<p>⑤软连接<code>hadoop</code>配置文件到<code>hbase</code></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">[root@hadoop100 module]# ln -s /opt/module/hadoop-2.7.2/etc/hadoop/core-site.xml </span><br><span class="line">/opt/module/hbase-1.3.1/conf/core-site.xml</span><br><span class="line"></span><br><span class="line">[root@hadoop100 module]# ln -s /opt/module/hadoop-2.7.2/etc/hadoop/hdfs-site.xml </span><br><span class="line">/opt/module/hbase-1.3.1/conf/hdfs-site.xml</span><br></pre></td></tr></table></figure>
+
+<p>⑥分发<code>HBase</code></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[root@hadoop100 module]# xsync hbase-1.3.1</span><br></pre></td></tr></table></figure>
+
+<p>⑦<code>HBase</code>服务的启动</p>
+<p><strong>启动方式1：</strong></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[root@hadoop100 module]# bin/hbase-daemon.sh start master</span><br><span class="line">[root@hadoop100 module]# bin/hbase-daemon.sh start regionserver</span><br></pre></td></tr></table></figure>
+
+<p><strong>启动方式2：</strong></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[root@hadoop100 hbase-1.3.1]$ bin/start-hbase.sh</span><br></pre></td></tr></table></figure>
+
+<p>停止：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[root@hadoop100 hbase-1.3.1]$ bin/stop-hbase.sh</span><br></pre></td></tr></table></figure>
+
+<p>提示：如果集群之间的节点时间不同步，会导致<code>regionserver</code>无法启动，抛出<code>ClockOutOfSyncException</code>异常。</p>
+<p>解决①(推荐)：集群内时间同步：参考<code>https://hucheng.blog.csdn.net/article/details/106266688</code></p>
+<p>解决②：<code>hbase-site.xml</code>中属性：<code>hbase.master.maxclockskew</code>设置更大的值</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">name</span>&gt;</span>hbase.master.maxclockskew<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">value</span>&gt;</span>180000<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">description</span>&gt;</span>Time difference of regionserver from master<span class="tag">&lt;/<span class="name">description</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>启动成功后，访问<code>http://hadoop102:16010</code>进入<code>HBase</code>管理页面：<br><img src="https://img-blog.csdnimg.cn/20200622204619467.png" alt="在这里插入图片描述"></p>
+<h1 id="三、HBase进阶原理"><a href="#三、HBase进阶原理" class="headerlink" title="三、HBase进阶原理"></a>三、HBase进阶原理</h1><h2 id="3-1-写流程"><a href="#3-1-写流程" class="headerlink" title="3.1 写流程"></a>3.1 写流程</h2><p><img src="https://img-blog.csdnimg.cn/20200623145846353.png" alt="在这里插入图片描述"></p>
+<ol>
+<li><code>Client</code>先访问<code>ZooKeeper</code>，获取<code>hbase:meta</code>表位于哪个<code>RegionServer</code>；</li>
+<li>访问对应的<code>RegionServer</code>，获取<code>hbase:meta</code>表，根据读请求的<code>namespace:table/rowkey</code>，查询出目标数据位于哪个<code>Region Server</code>中的哪个<code>Region</code>中。并将该<code>table</code>的<code>region</code>信息以及<code>meta</code>表的位置信息缓存在客户端的<code>meta cache</code>，方便下次访问；</li>
+<li>与目标<code>RegionServer</code>进行通讯；</li>
+<li>将数据顺序写入(追加)到<code>WAL</code>；</li>
+<li>将数据写入对应的<code>MemStore</code>，数据会在<code>MemStore</code>进行排序；</li>
+<li>向客户端发送<code>ack</code>；</li>
+<li>等达到<code>MemStore</code>的刷写时机后，将数据刷写到<code>HFile</code>。</li>
+</ol>
+<h2 id="3-2-读流程"><a href="#3-2-读流程" class="headerlink" title="3.2 读流程"></a>3.2 读流程</h2><p><img src="https://img-blog.csdnimg.cn/2020062320173658.png" alt="在这里插入图片描述"></p>
+<ol>
+<li><code>Client</code>先访问<code>ZooKeeper</code>，获取<code>hbase:meta</code>表位于哪个<code>RegionServer</code>；</li>
+<li>访问对应的<code>RegionServer</code>，获取<code>hbase:meta</code>表，根据读请求的<code>namespace:table/rowkey</code>，查询出目标数据位于哪个<code>Region Server</code>中的哪个<code>Region</code>中。并将该<code>table</code>的<code>region</code>信息以及<code>meta</code>表的位置信息缓存在客户端的<code>meta cache</code>，方便下次访问；</li>
+<li>查询数据，如果<code>Block Cache</code>没有对应数据，同时读取内存（<code>MemStore</code>）和磁盘（<code>StoreFile</code>）中的数据（并将磁盘的数据缓存到<code>Block Cache</code>，<code>LRU</code>算法），比较时间戳返回对应的数据。</li>
+<li>如果<code>Block Cache</code>有对应数据，直接比较和<code>MemStore</code>中数据的最大时间戳，返回该数据。</li>
+</ol>
+<h2 id="3-3-MemStore-Flush"><a href="#3-3-MemStore-Flush" class="headerlink" title="3.3 MemStore Flush"></a>3.3 MemStore Flush</h2><p><img src="https://img-blog.csdnimg.cn/20200623162136308.png" alt="在这里插入图片描述"><br><code>MemStore</code>数据达到阈值，将数据刷到硬盘。将内存中的数据删除，同时删除<code>HLog</code>中的历史数据。</p>
+<p><code>MemStore</code>刷写时机：</p>
+<ol>
+<li>当某个<code>MemStore</code>的大小达到了<code>hbase.hregion.memstore.flush.size</code> (默认值128<code>M</code>），其所在<code>Region</code>的所有<code>MemStore</code>都会刷写。</li>
+<li><code>RegionServer</code>中的<code>MemStore</code>大小超过<code>hbase.regionserver.global.memstore.size</code>（默认大小为堆大小的40%）</li>
+<li>到达自动刷写的时间也会触发<code>MemStore</code> <code>Flush</code>，自动刷新的时间间隔由该属性进行配置<code>hbase.regionserver.optionalcacheflushinterval</code> (默认1小时)。</li>
+</ol>
+<h2 id="3-4-StoreFile-Compaction"><a href="#3-4-StoreFile-Compaction" class="headerlink" title="3.4 StoreFile Compaction"></a>3.4 StoreFile Compaction</h2><p><img src="https://img-blog.csdnimg.cn/20200624103629192.png" alt="在这里插入图片描述"><br>由于<code>MemStore</code>每次刷写都会生成一个新的<code>HFile</code>，且同一个字段的不同版本(<code>timestamp</code>)和不同类型(<code>Put</code>/<code>Delete</code>)有可能会分布在不同的<code>HFile</code>中，因此查询时需要遍历所有的<code>HFile</code>。为了减少<code>HFile</code>的个数，以及清理掉过期和删除的数据，会进行<code>StoreFile Compaction</code>。</p>
+<p><code>Compaction</code>分为两种，分别是<code>Minor Compaction</code>和<code>Major Compaction</code>。<code>Minor Compaction</code>会将临近的若干个较小的<code>HFile</code>合并成一个较大的<code>HFile</code>，但不会清理过期和删除的数据。<code>Major Compaction</code>会将一个<code>Store</code>下的所有的<code>HFile</code>合并成一个大<code>HFile</code>，并且会清理掉过期和删除的数据。</p>
+<p><code>StoreFile Compaction</code>触发时机：当数据块达到 4 块，<code>Hmaster</code>触发合并操作，<code>Region</code>将数据块加载到本地，进行合并；当合并的数据超过 256<code>M</code>，进行拆分，将拆分后的<code>Region</code>分配给不同的<code>HRegionServer</code>管理（一个表中的<code>Region</code>就会被不同的<code>HRegionServer</code>管理，分布式存储，高可用容灾）； 当 <code>HRegionServer</code>宕机后，将 <code>HRegionServer</code>上的<code>HLog</code>拆分，然后分配给不同的<code>HRegionServer</code>加载，修改<code>.META.</code>；</p>
+<h2 id="3-5-Region-Split"><a href="#3-5-Region-Split" class="headerlink" title="3.5 Region Split"></a>3.5 Region Split</h2><p>默认情况下，每个<code>Table</code>起初只有一个<code>Region</code>，随着数据的不断写入，<code>Region</code>会自动进行拆分。刚拆分时，两个子<code>Region</code>都位于当前的<code>Region Server</code>，但处于负载均衡的考虑，<code>HMaster</code>有可能会将某个<code>Region</code>转移给其他的<code>RegionServer</code>。<br><img src="https://img-blog.csdnimg.cn/20200624110145489.png" alt="在这里插入图片描述"><br><code>Region Split</code>时机：</p>
+<ol>
+<li>当1个<code>Region</code>中的某个<code>Store</code>下所有<code>StoreFile</code>的总大小超过<code>hbase.hregion.max.filesize</code>，该<code>Region</code>就会进行拆分(0.94 版本之前)。</li>
+<li>当1个<code>Region</code>中的某个<code>Store</code>下所有<code>StoreFile</code>的总大小超过<code>Min(R^2 * &quot;hbase.hregion.memstore.flush.size&quot;,hbase.hregion.max.filesize&quot;)</code>，该<code>Region</code>就会进行拆分，其中<code>R</code>为当前<code>Region Server</code>中属于该<code>Table</code>的个数(0.94 版本之后)。</li>
+</ol>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="mailto:undefined">吕小医</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="https://lvxiaoyi.top/bc13a2ae.html">https://lvxiaoyi.top/bc13a2ae.html</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://lvxiaoyi.top" target="_blank">吕小医のBLOG</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/%E5%A4%A7%E6%95%B0%E6%8D%AE/">大数据</a></div><div class="post_share"><div class="social-share" data-image="https://img.lvxiaoyi.top/typora-img/image-20211028174657424.png/lvxiaoyi" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/social-share.js/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/ec5abdd4.html"><img class="prev-cover" src="https://img.lvxiaoyi.top/typora-img/202111081621419.png/lvxiaoyi" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">Spark基础-1SparkCore</div></div></a></div><div class="next-post pull-right"><a href="/9cbb2d93.html"><img class="next-cover" src="https://img.lvxiaoyi.top/typora-img/image-20211028174657424.png/lvxiaoyi" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">hive基础-2</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><div><a href="/5eb2dc8b.html" title="hadoop基础-3Yarn"><img class="cover" src="https://img.lvxiaoyi.top/typora-img/image-20211028174657424.png/lvxiaoyi" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-11-01</div><div class="title">hadoop基础-3Yarn</div></div></a></div><div><a href="/7d0492f0.html" title="大数据栈简介"><img class="cover" src="https://img.lvxiaoyi.top/typora-img/image-20211028174657424.png/lvxiaoyi" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-11-01</div><div class="title">大数据栈简介</div></div></a></div><div><a href="/136e7b9b.html" title="hadoop基础-1"><img class="cover" src="https://img.lvxiaoyi.top/typora-img/image-20211028174657424.png/lvxiaoyi" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-11-01</div><div class="title">hadoop基础-1</div></div></a></div><div><a href="/56b3fe2c.html" title="hadoop基础-2HDFS"><img class="cover" src="https://img.lvxiaoyi.top/typora-img/image-20211028174657424.png/lvxiaoyi" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-11-01</div><div class="title">hadoop基础-2HDFS</div></div></a></div><div><a href="/b0191bc6.html" title="hadoop基础-2MapReduce"><img class="cover" src="https://img.lvxiaoyi.top/typora-img/image-20211028174657424.png/lvxiaoyi" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-11-01</div><div class="title">hadoop基础-2MapReduce</div></div></a></div><div><a href="/932a1be1.html" title="Spark基础-2SparkSQL"><img class="cover" src="https://img.lvxiaoyi.top/typora-img/202111082049932.png/lvxiaoyi" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-11-08</div><div class="title">Spark基础-2SparkSQL</div></div></a></div></div></div><hr/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div></div><div class="comment-wrap"><div><div class="vcomment" id="vcomment"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="/img/avatar.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">吕小医</div><div class="author-info__description">IT小白的健身小白</div></div><div class="card-info-data"><div class="card-info-data-item is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">122</div></a></div><div class="card-info-data-item is-center"><a href="/tags/"><div class="headline">标签</div><div class="length-num">25</div></a></div><div class="card-info-data-item is-center"><a href="/categories/"><div class="headline">分类</div><div class="length-num">44</div></a></div></div><a class="button--animated" id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/lvxiaoyi"><i class="fab fa-github"></i><span>Follow Me</span></a></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn card-announcement-animation"></i><span>公告</span></div><div class="announcement_content">welcome my blog</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#HBase%E5%9F%BA%E7%A1%80"><span class="toc-number">1.</span> <span class="toc-text">HBase基础</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%B8%80%E3%80%81HBase%E7%AE%80%E4%BB%8B"><span class="toc-number">2.</span> <span class="toc-text">一、HBase简介</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-1-HBase%E5%AE%9A%E4%B9%89"><span class="toc-number">2.1.</span> <span class="toc-text">1.1 HBase定义</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1-2-HBase%E7%89%B9%E7%82%B9"><span class="toc-number">2.2.</span> <span class="toc-text">1.2 HBase特点</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1-3-HBase%E6%95%B0%E6%8D%AE%E6%A8%A1%E5%9E%8B"><span class="toc-number">2.3.</span> <span class="toc-text">1.3 HBase数据模型</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1-4-HBase%E5%9F%BA%E6%9C%AC%E6%9E%B6%E6%9E%84"><span class="toc-number">2.4.</span> <span class="toc-text">1.4 HBase基本架构</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1-5-HBase%E5%AE%8C%E6%95%B4%E6%9E%B6%E6%9E%84"><span class="toc-number">2.5.</span> <span class="toc-text">1.5 HBase完整架构</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1-6-HBase-Meta%E8%A1%A8"><span class="toc-number">2.6.</span> <span class="toc-text">1.6 HBase Meta表</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%BA%8C%E3%80%81HBase%E5%AE%89%E8%A3%85"><span class="toc-number">3.</span> <span class="toc-text">二、HBase安装</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%B8%89%E3%80%81HBase%E8%BF%9B%E9%98%B6%E5%8E%9F%E7%90%86"><span class="toc-number">4.</span> <span class="toc-text">三、HBase进阶原理</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#3-1-%E5%86%99%E6%B5%81%E7%A8%8B"><span class="toc-number">4.1.</span> <span class="toc-text">3.1 写流程</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-2-%E8%AF%BB%E6%B5%81%E7%A8%8B"><span class="toc-number">4.2.</span> <span class="toc-text">3.2 读流程</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-3-MemStore-Flush"><span class="toc-number">4.3.</span> <span class="toc-text">3.3 MemStore Flush</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-4-StoreFile-Compaction"><span class="toc-number">4.4.</span> <span class="toc-text">3.4 StoreFile Compaction</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-5-Region-Split"><span class="toc-number">4.5.</span> <span class="toc-text">3.5 Region Split</span></a></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/5830f7f2.html" title="387.字符串中的第一个唯一字符"><img src="https://img.lvxiaoyi.top/typora-img/202111011355394.png/lvxiaoyi" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="387.字符串中的第一个唯一字符"/></a><div class="content"><a class="title" href="/5830f7f2.html" title="387.字符串中的第一个唯一字符">387.字符串中的第一个唯一字符</a><time datetime="2021-11-19T11:39:12.344Z" title="发表于 2021-11-19 19:39:12">2021-11-19</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/48c72403.html" title="java基础-3集合面试题"><img src="https://img.lvxiaoyi.top/typora-img/202111191025146.png/lvxiaoyi" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="java基础-3集合面试题"/></a><div class="content"><a class="title" href="/48c72403.html" title="java基础-3集合面试题">java基础-3集合面试题</a><time datetime="2021-11-19T02:20:41.028Z" title="发表于 2021-11-19 10:20:41">2021-11-19</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/aca24504.html" title="剑指 Offer 33. 二叉搜索树的后序遍历序列"><img src="https://img.lvxiaoyi.top/typora-img/202111011345626.jpg/lvxiaoyi" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="剑指 Offer 33. 二叉搜索树的后序遍历序列"/></a><div class="content"><a class="title" href="/aca24504.html" title="剑指 Offer 33. 二叉搜索树的后序遍历序列">剑指 Offer 33. 二叉搜索树的后序遍历序列</a><time datetime="2021-11-18T13:46:39.369Z" title="发表于 2021-11-18 21:46:39">2021-11-18</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/de9cdaf9.html" title="剑指 Offer 32 - III. 从上到下打印二叉树 III"><img src="https://img.lvxiaoyi.top/typora-img/202111011345626.jpg/lvxiaoyi" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="剑指 Offer 32 - III. 从上到下打印二叉树 III"/></a><div class="content"><a class="title" href="/de9cdaf9.html" title="剑指 Offer 32 - III. 从上到下打印二叉树 III">剑指 Offer 32 - III. 从上到下打印二叉树 III</a><time datetime="2021-11-18T13:24:47.085Z" title="发表于 2021-11-18 21:24:47">2021-11-18</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/6dc2c421.html" title="剑指 Offer 32 - II. 从上到下打印二叉树 II"><img src="https://img.lvxiaoyi.top/typora-img/202111011345626.jpg/lvxiaoyi" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="剑指 Offer 32 - II. 从上到下打印二叉树 II"/></a><div class="content"><a class="title" href="/6dc2c421.html" title="剑指 Offer 32 - II. 从上到下打印二叉树 II">剑指 Offer 32 - II. 从上到下打印二叉树 II</a><time datetime="2021-11-18T13:04:31.798Z" title="发表于 2021-11-18 21:04:31">2021-11-18</time></div></div></div></div></div></div></main><footer id="footer" style="background-image: url('https://img.lvxiaoyi.top/typora-img/image-20211028174657424.png/lvxiaoyi')"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2021 By 吕小医</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><a id="to_comment" href="#post-comment" title="直达评论"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><div class="js-pjax"><script>function loadValine () {
+  function initValine () {
+    const valine = new Valine(Object.assign({
+      el: '#vcomment',
+      appId: 'wYdoyrxV6cLIOnz10ctzDfn2-gzGzoHsz',
+      appKey: 'Y838eJTTLB74wwVo0wgBInXn',
+      placeholder: '昵称填写qq可以显示qq头像和昵称哦~',
+      avatar: 'monsterid',
+      meta: 'nick,mail,link'.split(','),
+      pageSize: '10',
+      lang: 'zh-CN',
+      recordIP: true,
+      serverURLs: '',
+      emojiCDN: '',
+      emojiMaps: "",
+      enableQQ: true,
+      path: window.location.pathname,
+      requiredFields: ["nick,mail"],
+      visitor: false
+    }, null))
+  }
+
+  if (typeof Valine === 'function') initValine() 
+  else getScript('https://cdn.jsdelivr.net/npm/valine/dist/Valine.min.js').then(initValine)
+}
+
+if ('Valine' === 'Valine' || !false) {
+  if (false) btf.loadComment(document.getElementById('vcomment'),loadValine)
+  else setTimeout(loadValine, 0)
+} else {
+  function loadOtherComment () {
+    loadValine()
+  }
+}</script></div><div class="aplayer no-destroy" data-id="7679522918" data-server="tencent" data-type="playlist" data-fixed="true" data-mini="true" data-listFolded="false" data-order="random" data-preload="none" data-autoplay="true" muted></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.js"></script><script src="https://cdn.jsdelivr.net/gh/metowolf/MetingJS@1.2/dist/Meting.min.js"></script><script src="https://cdn.jsdelivr.net/npm/pjax/pjax.min.js"></script><script>let pjaxSelectors = [
+  'title',
+  '#config-diff',
+  '#body-wrap',
+  '#rightside-config-hide',
+  '#rightside-config-show',
+  '.js-pjax'
+]
+
+if (false) {
+  pjaxSelectors.unshift('meta[property="og:image"]', 'meta[property="og:title"]', 'meta[property="og:url"]')
+}
+
+var pjax = new Pjax({
+  elements: 'a:not([target="_blank"])',
+  selectors: pjaxSelectors,
+  cacheBust: false,
+  analytics: false,
+  scrollRestoration: false
+})
+
+document.addEventListener('pjax:send', function () {
+
+  // removeEventListener scroll 
+  window.removeEventListener('scroll', window.tocScrollFn)
+  window.removeEventListener('scroll', scrollCollect)
+
+  typeof preloader === 'object' && preloader.initLoading()
+  
+  if (window.aplayers) {
+    for (let i = 0; i < window.aplayers.length; i++) {
+      if (!window.aplayers[i].options.fixed) {
+        window.aplayers[i].destroy()
+      }
+    }
+  }
+
+  typeof typed === 'object' && typed.destroy()
+
+  //reset readmode
+  const $bodyClassList = document.body.classList
+  $bodyClassList.contains('read-mode') && $bodyClassList.remove('read-mode')
+
+})
+
+document.addEventListener('pjax:complete', function () {
+  window.refreshFn()
+
+  document.querySelectorAll('script[data-pjax]').forEach(item => {
+    const newScript = document.createElement('script')
+    const content = item.text || item.textContent || item.innerHTML || ""
+    Array.from(item.attributes).forEach(attr => newScript.setAttribute(attr.name, attr.value))
+    newScript.appendChild(document.createTextNode(content))
+    item.parentNode.replaceChild(newScript, item)
+  })
+
+  GLOBAL_CONFIG.islazyload && window.lazyLoadInstance.update()
+
+  typeof chatBtnFn === 'function' && chatBtnFn()
+  typeof panguInit === 'function' && panguInit()
+
+  // google analytics
+  typeof gtag === 'function' && gtag('config', '', {'page_path': window.location.pathname});
+
+  // baidu analytics
+  typeof _hmt === 'object' && _hmt.push(['_trackPageview',window.location.pathname]);
+
+  typeof loadMeting === 'function' && document.getElementsByClassName('aplayer').length && loadMeting()
+
+  // Analytics
+  if (false) {
+    MtaH5.pgv()
+  }
+
+  // prismjs
+  typeof Prism === 'object' && Prism.highlightAll()
+
+  typeof preloader === 'object' && preloader.endLoading()
+})
+
+document.addEventListener('pjax:error', (e) => {
+  if (e.request.status === 404) {
+    pjax.loadUrl('/404.html')
+  }
+})</script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
