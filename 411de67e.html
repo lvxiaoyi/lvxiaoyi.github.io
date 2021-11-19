@@ -1,0 +1,358 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Mockito单元测试 | 吕小医のBLOG</title><meta name="keywords" content="测试"><meta name="author" content="吕小医"><meta name="copyright" content="吕小医"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="https:&#x2F;&#x2F;www.it1352.com&#x2F;OnLineTutorial&#x2F;mockito&#x2F;mockito_overview.html https:&#x2F;&#x2F;www.cnblogs.com&#x2F;zishi&#x2F;p&#x2F;10537967.html 概述什么是Mocking？模拟是一种独立测试类功能的方法.模拟不需要数据库连接或属性文件读取或文件服务器读取来测试功能.模拟对象可以模拟真实服务.模拟对象返回与传递给它的一">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Mockito单元测试">
+<meta property="og:url" content="https://lvxiaoyi.top/411de67e.html">
+<meta property="og:site_name" content="吕小医のBLOG">
+<meta property="og:description" content="https:&#x2F;&#x2F;www.it1352.com&#x2F;OnLineTutorial&#x2F;mockito&#x2F;mockito_overview.html https:&#x2F;&#x2F;www.cnblogs.com&#x2F;zishi&#x2F;p&#x2F;10537967.html 概述什么是Mocking？模拟是一种独立测试类功能的方法.模拟不需要数据库连接或属性文件读取或文件服务器读取来测试功能.模拟对象可以模拟真实服务.模拟对象返回与传递给它的一">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://img.lvxiaoyi.top/typora-img/bg.jpg/lvxiaoyi">
+<meta property="article:published_time" content="2021-11-18T02:59:24.043Z">
+<meta property="article:modified_time" content="2021-11-19T14:04:11.423Z">
+<meta property="article:author" content="吕小医">
+<meta property="article:tag" content="测试">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://img.lvxiaoyi.top/typora-img/bg.jpg/lvxiaoyi"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="https://lvxiaoyi.top/411de67e"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//hm.baidu.com"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><meta name="baidu-site-verification" content="mYXynU9QQlT9I4Vp"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><script>var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?a4e78d5856251a207552f0ad0b8c65e9";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    jQuery: 'https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js',
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/js/jquery.justifiedGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/css/justifiedGallery.min.css'
+    },
+    fancybox: {
+      js: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isanchor: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'Mockito单元测试',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2021-11-19 22:04:11'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if (GLOBAL_CONFIG_SITE.isHome && /iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    document.addEventListener('pjax:complete', detectApple)})(window)</script><link rel="stylesheet" href="/css/lvxiaoyi.css"><meta name="generator" content="Hexo 5.4.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="/img/avatar.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data"><div class="data-item is-center"><div class="data-item-link"><a href="/archives/"><div class="headline">文章</div><div class="length-num">126</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/tags/"><div class="headline">标签</div><div class="length-num">25</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/categories/"><div class="headline">分类</div><div class="length-num">47</div></a></div></div></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/music/"><i class="fa-fw fas fa-music"></i><span> 音乐</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 吕小医</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://img.lvxiaoyi.top/typora-img/bg.jpg/lvxiaoyi')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">吕小医のBLOG</a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/music/"><i class="fa-fw fas fa-music"></i><span> 音乐</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 吕小医</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">Mockito单元测试</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2021-11-18T02:59:24.043Z" title="发表于 2021-11-18 10:59:24">2021-11-18</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2021-11-19T14:04:11.423Z" title="更新于 2021-11-19 22:04:11">2021-11-19</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E6%B5%8B%E8%AF%95/">测试</a><i class="fas fa-angle-right post-meta-separator"></i><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E6%B5%8B%E8%AF%95/mockito/">mockito</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="Mockito单元测试"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><p><a target="_blank" rel="noopener" href="https://www.it1352.com/OnLineTutorial/mockito/mockito_overview.html">https://www.it1352.com/OnLineTutorial/mockito/mockito_overview.html</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/zishi/p/10537967.html">https://www.cnblogs.com/zishi/p/10537967.html</a></p>
+<h1 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h1><h2 id="什么是Mocking？"><a href="#什么是Mocking？" class="headerlink" title="什么是Mocking？"></a>什么是Mocking？</h2><p>模拟是一种独立测试类功能的方法.模拟不需要数据库连接或属性文件读取或文件服务器读取来测试功能.模拟对象可以模拟真实服务.模拟对象返回与传递给它的一些虚拟输入相对应的虚拟数据.</p>
+<h2 id="为什么要有Mockito"><a href="#为什么要有Mockito" class="headerlink" title="为什么要有Mockito"></a>为什么要有Mockito</h2><p>我们项目一般都是 MVC 分层的，而单元测试主要是在 Dao 层和 Service 层上进行编写。从项目结构上来说，Service 层是依赖 Dao 层的，但是从单元测试角度，对某个 Service 进行单元的时候，他所有依赖的类都应该进行Mock。而 Dao 层单元测试就比较简单了，只依赖数据库中的数据。对于大量这样的mock数据，我们使用mockito可以方便我们的开发。</p>
+<h2 id="Mockito"><a href="#Mockito" class="headerlink" title="Mockito"></a>Mockito</h2><p>Mockito有助于无缝地创建模拟对象.它使用Java Reflection为给定接口创建<br>模拟对象.模拟对象只不过是实际实现的代理.</p>
+<p>考虑一个股票服务案例，它返回股票的价格细节.在开发过程中，<br>实际库存服务不能用于获取实时数据.所以我们需要一个虚拟的股票服务实现. Mockito可以很容易地做到这一点，顾名思义.</p>
+<h2 id="Mockito的好处"><a href="#Mockito的好处" class="headerlink" title="Mockito的好处"></a>Mockito的好处</h2><ul>
+<li><strong>无手写</strong> : 无需自己编写模拟对象.</li>
+<li><strong>重构安全</strong> : 重命名接口方法名称或重新排序参数不会破坏测试代码，因为Mocks是在运行时创建的.</li>
+<li><strong>返回值支持</strong> : 支持返回值.</li>
+<li><strong>异常支持</strong> : 支持例外.</li>
+<li><strong>订单检查支持</strong> : 支持检查方法调用的顺序.</li>
+<li><strong>注释支持</strong> : 支持使用注释创建模拟.</li>
+</ul>
+<p>请考虑以下代码片段.</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.it1352.mock; </span><br><span class="line"><span class="keyword">import</span> java.util.ArrayList;</span><br><span class="line"><span class="keyword">import</span> java.util.List;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> <span class="keyword">static</span> org.mockito.Mockito.*;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">PortfolioTester</span> </span>&#123;</span><br><span class="line">   <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span></span>&#123;</span><br><span class="line"></span><br><span class="line">      <span class="comment">//Create a portfolio object which is to be tested		</span></span><br><span class="line">      Portfolio portfolio = <span class="keyword">new</span> Portfolio();</span><br><span class="line"></span><br><span class="line">      <span class="comment">//Creates a list of stocks to be added to the portfolio</span></span><br><span class="line">      List&lt;Stock&gt; stocks = <span class="keyword">new</span> ArrayList&lt;Stock&gt;();</span><br><span class="line">      Stock googleStock = <span class="keyword">new</span> Stock(<span class="string">&quot;1&quot;</span>,<span class="string">&quot;Google&quot;</span>, <span class="number">10</span>);</span><br><span class="line">      Stock microsoftStock = <span class="keyword">new</span> Stock(<span class="string">&quot;2&quot;</span>,<span class="string">&quot;Microsoft&quot;</span>,<span class="number">100</span>);</span><br><span class="line"></span><br><span class="line">      stocks.add(googleStock);</span><br><span class="line">      stocks.add(microsoftStock);		</span><br><span class="line"></span><br><span class="line">      <span class="comment">//Create the mock object of stock service</span></span><br><span class="line">      StockService stockServiceMock = mock(StockService.class);</span><br><span class="line"></span><br><span class="line">      <span class="comment">// mock the behavior of stock service to return the value of various stocks</span></span><br><span class="line">      when(stockServiceMock.getPrice(googleStock)).thenReturn(<span class="number">50.00</span>);</span><br><span class="line">      when(stockServiceMock.getPrice(microsoftStock)).thenReturn(<span class="number">1000.00</span>);</span><br><span class="line"></span><br><span class="line">      <span class="comment">//add stocks to the portfolio</span></span><br><span class="line">      portfolio.setStocks(stocks);</span><br><span class="line"></span><br><span class="line">      <span class="comment">//set the stockService to the portfolio</span></span><br><span class="line">      portfolio.setStockService(stockServiceMock);</span><br><span class="line"></span><br><span class="line">      <span class="keyword">double</span> marketValue = portfolio.getMarketValue();</span><br><span class="line"></span><br><span class="line">      <span class="comment">//verify the market value to be </span></span><br><span class="line">      <span class="comment">//10*50.00 + 100* 1000.00 = 500.00 + 100000.00 = 100500</span></span><br><span class="line">      System.out.println(<span class="string">&quot;Market value of the portfolio: &quot;</span>+ marketValue);</span><br><span class="line">   &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<p>让我们了解上述程序的重要概念.完整的代码可在 <em><strong>第一次申请</strong></em> 一章中找到.</p>
+<ul>
+<li><strong>投资组合</strong> : 一个对象，用于携带股票清单并获得使用股票价格和库存数量计算的市场价值.</li>
+<li><strong>股票</strong> : 用于携带股票详细信息的对象，例如其ID，名称，数量等.</li>
+<li><strong>StockService</strong> : 股票服务返回股票的当前价格.</li>
+<li><strong>mock(…)</strong> :  Mockito创建了一个模拟股票服务.</li>
+<li><strong>当(…).thenReturn(…)</strong> : 模拟执行stockService接口的getPrice方法.对于googleStock，请返回50.00作为价格.</li>
+<li><strong>portfolio.setStocks(…)</strong> : 该投资组合现在包含两个股票的清单.</li>
+<li><strong>portfolio.setStockService(…)</strong> : 将stockService Mock对象分配给投资组合.</li>
+<li><strong>portfolio.getMarketValue()</strong> : 投资组合使用模拟股票服务基于其股票返回市场价值.</li>
+</ul>
+<h1 id="Mockito使用"><a href="#Mockito使用" class="headerlink" title="Mockito使用"></a>Mockito使用</h1><h2 id="下载依赖"><a href="#下载依赖" class="headerlink" title="下载依赖"></a>下载依赖</h2><p>Mockito需要Junit配合使用</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependencies</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>junit<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>junit<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">version</span>&gt;</span>4.12<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">scope</span>&gt;</span>test<span class="tag">&lt;/<span class="name">scope</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line">    </span><br><span class="line">    <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.mockito<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>mockito-core<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">version</span>&gt;</span>2.7.19<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">scope</span>&gt;</span>test<span class="tag">&lt;/<span class="name">scope</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependencies</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>然后为了使代码更简洁，最好在测试类中导入静态资源，还有为了使用常用的junit关键字，也要引入junit的两个类Before和Test：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">import static org.mockito.Mockito.*;</span><br><span class="line">import static org.junit.Assert.*;</span><br><span class="line">import org.junit.Before;</span><br><span class="line">import org.junit.Test;</span><br></pre></td></tr></table></figure>
+
+<h2 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h2><h3 id="模拟对象"><a href="#模拟对象" class="headerlink" title="模拟对象"></a>模拟对象</h3><p>创建 Mock 对象的语法为 mock(class or interface)。</p>
+<p>Mock 对象的创建</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">mock(Class classToMock);</span><br><span class="line">mock(Class classToMock, String name)</span><br><span class="line">mock(Class classToMock, Answer defaultAnswer)</span><br><span class="line">mock(Class classToMock, MockSettings mockSettings)</span><br><span class="line">mock(Class classToMock, ReturnValues returnValues)</span><br></pre></td></tr></table></figure>
+
+<p>可以对类和接口进行mock对象的创建，创建时可以为mock对象命名。对mock对象命名的好处是调试的时候容易辨认mock对象。</p>
+<p>Mock对象的期望行为和返回值设定</p>
+<p>假设我们创建了LinkedList类的mock对象：</p>
+<p> LinkedList mockedList = mock(LinkedList.class);</p>
+<h3 id="设置对象调用的预期返回值"><a href="#设置对象调用的预期返回值" class="headerlink" title="设置对象调用的预期返回值"></a>设置对象调用的预期返回值</h3><p>注意，Mockito的Stubbing有两种语法，并支持迭代。</p>
+<h4 id="1-Stubbing对方法设定返回值"><a href="#1-Stubbing对方法设定返回值" class="headerlink" title="(1)Stubbing对方法设定返回值"></a>(1)Stubbing对方法设定返回值</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">when(mock.someMethod()).thenReturn(value1).thenReturn(value2);  </span><br><span class="line">when(mock.someMethod()).thenReturn(value1, value2);  </span><br><span class="line">123</span><br></pre></td></tr></table></figure>
+
+<p>上面两种方式等同于</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">when(mock.someMethod()).thenReturn(value1);  </span><br><span class="line">when(mock.someMethod()).thenReturn(value2);  </span><br><span class="line">123</span><br></pre></td></tr></table></figure>
+
+<p>另一种风格doReturn，主要用于spy对象的情况下。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">doReturn(value1).doReturn(value2).when(mock).someMethod();  1</span><br></pre></td></tr></table></figure>
+
+<p>对 void 方法进行方法预期设定</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">doNothing().when(mock).someMethod();  1</span><br></pre></td></tr></table></figure>
+
+<h4 id="2-对方法设定返回异常"><a href="#2-对方法设定返回异常" class="headerlink" title="(2)对方法设定返回异常"></a>(2)对方法设定返回异常</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">when(mock.someMethod()).thenThrow(new RuntimeException());  </span><br></pre></td></tr></table></figure>
+
+<h3 id="Mock对象的行为验证"><a href="#Mock对象的行为验证" class="headerlink" title="Mock对象的行为验证"></a>Mock对象的行为验证</h3><p>看一下下面的例子</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Test</span>  </span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">verifyTestTest</span><span class="params">()</span> </span>&#123;  </span><br><span class="line">    List&lt;String&gt; mock = mock(List.class);  </span><br><span class="line">    List&lt;String&gt; mock2 = mock(List.class);  </span><br><span class="line">    when(mock.get(<span class="number">0</span>)).thenReturn(<span class="string">&quot;Hello&quot;</span>);  </span><br><span class="line">    when(mock.get(<span class="number">1</span>)).thenReturn(<span class="string">&quot;World&quot;</span>);  </span><br><span class="line">    mock.get(<span class="number">0</span>);  </span><br><span class="line">    mock.get(<span class="number">1</span>);  </span><br><span class="line">    <span class="comment">// 验证指定方法被调用一次  </span></span><br><span class="line">    verify(mock).get(<span class="number">0</span>);  </span><br><span class="line">    <span class="comment">// 验证指定方法没有被调用  </span></span><br><span class="line">    verify(mock, never()).get(<span class="number">3</span>);  </span><br><span class="line">    <span class="comment">// 验证get方法在100毫秒内被调用两次  </span></span><br><span class="line">    verify(mock, timeout(<span class="number">100</span>).times(<span class="number">2</span>)).get(anyInt());  </span><br><span class="line"></span><br><span class="line">    <span class="comment">// 通过验证方法的执行顺序  </span></span><br><span class="line">    InOrder inOrder = inOrder(mock, mock2);  </span><br><span class="line">    inOrder.verify(mock).get(<span class="number">0</span>);  </span><br><span class="line">    inOrder.verify(mock).get(<span class="number">1</span>);  </span><br><span class="line">    inOrder.verify(mock2, never()).get(<span class="number">1</span>);  </span><br><span class="line"></span><br><span class="line">    <span class="comment">// 查询多余的方法调用 mock所有调用的方法都已经被验证  </span></span><br><span class="line">    verifyNoMoreInteractions(mock);  </span><br><span class="line">    <span class="comment">// 查询没有交互的mock对象  </span></span><br><span class="line">    verifyZeroInteractions(mock2);  </span><br><span class="line"></span><br><span class="line">    <span class="comment">// 创建ArgumentCaptor（参数捕获器）用于捕获方法参数进行验证  </span></span><br><span class="line">    ArgumentCaptor&lt;Integer&gt; argument = ArgumentCaptor.forClass(Integer.class);  </span><br><span class="line">    <span class="comment">// 该方法被调用多次 只能捕捉到最后一次参数  </span></span><br><span class="line">    verify(mock, times(<span class="number">2</span>)).get(argument.capture());  </span><br><span class="line">    assertThat(argument.getValue()).isEqualTo(<span class="number">1</span>);  </span><br><span class="line">&#125;  </span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h4 id="1-验证方法的调用次数"><a href="#1-验证方法的调用次数" class="headerlink" title="(1)验证方法的调用次数"></a>(1)验证方法的调用次数</h4><p>通过 verify(mock,times(?)).someMethod()验证方法的调用次数，是常用的验证方式，包括可以验证指定明确的方法被调用次数、某方法未被调用。或一个方法总体被调用次数。</p>
+<p>Mockito除了提供times(N)方法供我们调用外，还提供了很多可选的方法：<br>never() 没有被调用，相当于times(0)<br>atLeast(N) 至少被调用N次<br>atLeastOnce() 相当于atLeast(1)<br>atMost(N) 最多被调用N次</p>
+<h4 id="2-超时验证"><a href="#2-超时验证" class="headerlink" title="(2) 超时验证"></a>(2) 超时验证</h4><p>通过timeout，并制定毫秒数验证超时。注意，如果被调用多次，times还是需要的。</p>
+<h4 id="3-方法调用顺序"><a href="#3-方法调用顺序" class="headerlink" title="(3) 方法调用顺序"></a>(3) 方法调用顺序</h4><p>通过InOrder对象，验证方法的执行顺序，如上例子中，如果mock的get(0)和get(1)方法反过来则测试不通过。这里mock2其实没有被调用过。所以不需要些。</p>
+<h4 id="4-verifyNoMoreInteractions"><a href="#4-verifyNoMoreInteractions" class="headerlink" title="(4) verifyNoMoreInteractions"></a>(4) verifyNoMoreInteractions</h4><p>查询是否存在被调用，但未被验证的方法，如果存在则抛出异常。这里因为验证了get(anyInt())，相当于所有的get方法被验证，所以通过。</p>
+<h4 id="5-verifyZeroInteractions"><a href="#5-verifyZeroInteractions" class="headerlink" title="(5) verifyZeroInteractions"></a>(5) verifyZeroInteractions</h4><p>查询对象是否未产生交互，如果传入的mock对象的方法被调用过，则抛出异常。这里mock2的方法没有被调用过，所有通过。</p>
+<h4 id="6-利用ArgumentCaptor（参数捕获器）捕获方法"><a href="#6-利用ArgumentCaptor（参数捕获器）捕获方法" class="headerlink" title="(6) 利用ArgumentCaptor（参数捕获器）捕获方法"></a>(6) 利用ArgumentCaptor（参数捕获器）捕获方法</h4><p>参数进行验证通过 ArgumentCaptor 对象的forClass(Class clazz)方法来构建ArgumentCaptor对象。然后便可在验证时对方法的参数进行捕获，最后验证捕获的参数值。如果方法有多个参数都要捕获验证，那就需要创建多个ArgumentCaptor对象处理。</p>
+<p>当某个对象进行了多次调用后，比如mock对象。这时调用argument.getValue()获取到的是最后一次调用的参数。如果要获取所有的参数值可以调用argument.getAllValues()，它将返回参数值的List。</p>
+<h3 id="Spy-对象的监视"><a href="#Spy-对象的监视" class="headerlink" title="Spy-对象的监视"></a>Spy-对象的监视</h3><p>Mock 对象只能调用stubbed 方法，调用不了它真实的方法。但Mockito 可以监视一个真实的对象，这时对它进行方法调用时它将调用真实的方法，同时也可以stubbing 这个对象的方法让它返回我们的期望值。另外不论是否是真实的方法调用都可以进行verify验证。和创建mock对象一样，对于final类、匿名类和Java的基本类型是无法进行spy的。</p>
+<h4 id="监视对象"><a href="#监视对象" class="headerlink" title="监视对象"></a>监视对象</h4><p>监视一个对象需要调用spy(T object)方法，如下面的代码中spy变量就在监视LinkedList实例。</p>
+<p>List spy = spy(new LinkedList()); 监视对象的Stubbing</p>
+<p>stubbing 被监视对象的方法时要慎用when(Object)。比如下面的代码：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">List spy = spy(<span class="keyword">new</span> LinkedList());  </span><br><span class="line"><span class="comment">// IndexOutOfBoundsException (the list is yet empty)  </span></span><br><span class="line">when(spy.get(<span class="number">0</span>)).thenReturn(<span class="string">&quot;foo&quot;</span>);  </span><br><span class="line"><span class="comment">// You have to use doReturn() for stubbing  </span></span><br><span class="line">doReturn(<span class="string">&quot;foo&quot;</span>).when(spy).get(<span class="number">0</span>);  <span class="number">12345</span></span><br></pre></td></tr></table></figure>
+
+<p>这时，when方法参数中spy.get(0)，调用的是真实list对象的get(0)，这会产生IndexOutOfBoundsException异常，所以这时需要用到doReturn方法来设置返回值。</p>
+<p>下面是一个官方给出的例子，仅供参考：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Test</span>  </span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">spyTest</span><span class="params">()</span> </span>&#123;  </span><br><span class="line">    List list = <span class="keyword">new</span> LinkedList();  </span><br><span class="line">    List spy = spy(list);  </span><br><span class="line">    <span class="comment">// optionally, you can stub out some methods:  </span></span><br><span class="line">    when(spy.size()).thenReturn(<span class="number">100</span>);  </span><br><span class="line">    <span class="comment">// using the spy calls real methods  </span></span><br><span class="line">    spy.add(<span class="string">&quot;one&quot;</span>);  </span><br><span class="line">    spy.add(<span class="string">&quot;two&quot;</span>);  </span><br><span class="line">    <span class="comment">// prints &quot;one&quot; - the first element of a list  </span></span><br><span class="line">    System.out.println(spy.get(<span class="number">0</span>));  </span><br><span class="line">    <span class="comment">// size() method was stubbed - 100 is printed  </span></span><br><span class="line">    System.out.println(spy.size());  </span><br><span class="line">    <span class="comment">// optionally, you can verify  </span></span><br><span class="line">    verify(spy).add(<span class="string">&quot;one&quot;</span>);  </span><br><span class="line">    verify(spy).add(<span class="string">&quot;two&quot;</span>);  </span><br><span class="line">&#125;  </span><br><span class="line"><span class="number">123456789101112131415161718</span></span><br></pre></td></tr></table></figure>
+
+<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>最后，根据最开始的userService给出两个基于mockito测试方法来体现上述提到过的知识点。仅用来展示用法。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Test</span>  </span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">save</span><span class="params">()</span> </span>&#123;  </span><br><span class="line">    User user = <span class="keyword">new</span> User();  </span><br><span class="line">    user.setLoginName(<span class="string">&quot;admin&quot;</span>);  </span><br><span class="line">    <span class="comment">// 第一次调用findUserByLoginName返回user 第二次调用返回null  </span></span><br><span class="line">    when(mockUserDao.findUserByLoginName(anyString())).thenReturn(user).thenReturn(<span class="keyword">null</span>);  </span><br><span class="line">    <span class="keyword">try</span> &#123;  </span><br><span class="line">        <span class="comment">// 测试如果重名会抛出异常  </span></span><br><span class="line">        userService.save(user);  </span><br><span class="line">        <span class="comment">// 如果没有抛出异常测试不通过  </span></span><br><span class="line">        failBecauseExceptionWasNotThrown(RuntimeException.class);  </span><br><span class="line">    &#125; <span class="keyword">catch</span> (ServiceException se) &#123;  </span><br><span class="line">    &#125;  </span><br><span class="line">    verify(mockUserDao).findUserByLoginName(<span class="string">&quot;admin&quot;</span>);  </span><br><span class="line"></span><br><span class="line">    <span class="comment">// userService.save(user);  </span></span><br><span class="line">    user.setPassword(<span class="string">&quot;123456&quot;</span>);  </span><br><span class="line">    String userId = userService.save(user);  </span><br><span class="line">    <span class="comment">// 断言返回结果  </span></span><br><span class="line">    assertThat(userId).isNotEmpty().hasSize(<span class="number">32</span>);  </span><br><span class="line"></span><br><span class="line">    verify(mockUserDao, times(<span class="number">2</span>)).findUserByLoginName(anyString());  </span><br><span class="line">    verify(mockUserDao).save(any(User.class));  </span><br><span class="line">&#125;  </span><br><span class="line"></span><br><span class="line"><span class="meta">@Test</span>  </span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">save2</span><span class="params">()</span> </span>&#123;  </span><br><span class="line">    User user = <span class="keyword">new</span> User();  </span><br><span class="line">    user.setLoginName(<span class="string">&quot;admin&quot;</span>);  </span><br><span class="line">    user.setPassword(<span class="string">&quot;123456&quot;</span>);  </span><br><span class="line">    userService.save(user);  </span><br><span class="line"></span><br><span class="line">    <span class="comment">// 通过ArgumentCaptor(参数捕获器) 对传入参数进行验证  </span></span><br><span class="line">    ArgumentCaptor&lt;User&gt; argument = ArgumentCaptor.forClass(User.class);  </span><br><span class="line">    verify(mockUserDao).save(argument.capture());  </span><br><span class="line">    assertThat(<span class="string">&quot;admin&quot;</span>).isEqualTo(argument.getValue().getLoginName());  </span><br><span class="line"></span><br><span class="line">    <span class="comment">// stub 调用save方法时抛出异常  </span></span><br><span class="line">    doThrow(<span class="keyword">new</span> ServiceException(<span class="string">&quot;测试抛出异常&quot;</span>)).when(mockUserDao).save(any(User.class));  </span><br><span class="line">    <span class="keyword">try</span> &#123;  </span><br><span class="line">        userService.save(user);  </span><br><span class="line">        failBecauseExceptionWasNotThrown(RuntimeException.class);  </span><br><span class="line">    &#125; <span class="keyword">catch</span> (ServiceException se) &#123;  </span><br><span class="line">    &#125;  </span><br><span class="line">&#125;  </span><br></pre></td></tr></table></figure>
+
+<h1 id="单元测试与覆盖率"><a href="#单元测试与覆盖率" class="headerlink" title="单元测试与覆盖率"></a>单元测试与覆盖率</h1><p>在我们的idea中，运行ALLTest后，就会出现一大测试覆盖率</p>
+<p>写的方法，和通过test验证的方法的占比</p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="mailto:undefined">吕小医</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="https://lvxiaoyi.top/411de67e.html">https://lvxiaoyi.top/411de67e.html</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://lvxiaoyi.top" target="_blank">吕小医のBLOG</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/%E6%B5%8B%E8%AF%95/">测试</a></div><div class="post_share"><div class="social-share" data-image="https://img.lvxiaoyi.top/typora-img/bg.jpg/lvxiaoyi" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/social-share.js/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/670548a8.html"><img class="prev-cover" src="https://guide-blog-images.oss-cn-shenzhen.aliyuncs.com/2020-8/1*DjWCgTFm-xqbhbNQVsaWQw.png" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">java代理模式值proxy和cglib</div></div></a></div><div class="next-post pull-right"><a href="/ea652ff.html"><img class="next-cover" src="https://img.lvxiaoyi.top/typora-img/202111191025146.png/lvxiaoyi" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">java基础-1</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><div><a href="/60bbc03b.html" title="Jmeter基础一"><img class="cover" src="https://img.lvxiaoyi.top/typora-img/apachejmeter_0.jpg/lvxiaoyi" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-11-01</div><div class="title">Jmeter基础一</div></div></a></div></div></div><hr/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div></div><div class="comment-wrap"><div><div class="vcomment" id="vcomment"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="/img/avatar.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">吕小医</div><div class="author-info__description">IT小白的健身小白</div></div><div class="card-info-data"><div class="card-info-data-item is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">126</div></a></div><div class="card-info-data-item is-center"><a href="/tags/"><div class="headline">标签</div><div class="length-num">25</div></a></div><div class="card-info-data-item is-center"><a href="/categories/"><div class="headline">分类</div><div class="length-num">47</div></a></div></div><a class="button--animated" id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/lvxiaoyi"><i class="fab fa-github"></i><span>Follow Me</span></a></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn card-announcement-animation"></i><span>公告</span></div><div class="announcement_content">welcome my blog</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%A6%82%E8%BF%B0"><span class="toc-number">1.</span> <span class="toc-text">概述</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BB%80%E4%B9%88%E6%98%AFMocking%EF%BC%9F"><span class="toc-number">1.1.</span> <span class="toc-text">什么是Mocking？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E8%A6%81%E6%9C%89Mockito"><span class="toc-number">1.2.</span> <span class="toc-text">为什么要有Mockito</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Mockito"><span class="toc-number">1.3.</span> <span class="toc-text">Mockito</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Mockito%E7%9A%84%E5%A5%BD%E5%A4%84"><span class="toc-number">1.4.</span> <span class="toc-text">Mockito的好处</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Mockito%E4%BD%BF%E7%94%A8"><span class="toc-number">2.</span> <span class="toc-text">Mockito使用</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%8B%E8%BD%BD%E4%BE%9D%E8%B5%96"><span class="toc-number">2.1.</span> <span class="toc-text">下载依赖</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8"><span class="toc-number">2.2.</span> <span class="toc-text">使用</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%A8%A1%E6%8B%9F%E5%AF%B9%E8%B1%A1"><span class="toc-number">2.2.1.</span> <span class="toc-text">模拟对象</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%AE%BE%E7%BD%AE%E5%AF%B9%E8%B1%A1%E8%B0%83%E7%94%A8%E7%9A%84%E9%A2%84%E6%9C%9F%E8%BF%94%E5%9B%9E%E5%80%BC"><span class="toc-number">2.2.2.</span> <span class="toc-text">设置对象调用的预期返回值</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-Stubbing%E5%AF%B9%E6%96%B9%E6%B3%95%E8%AE%BE%E5%AE%9A%E8%BF%94%E5%9B%9E%E5%80%BC"><span class="toc-number">2.2.2.1.</span> <span class="toc-text">(1)Stubbing对方法设定返回值</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-%E5%AF%B9%E6%96%B9%E6%B3%95%E8%AE%BE%E5%AE%9A%E8%BF%94%E5%9B%9E%E5%BC%82%E5%B8%B8"><span class="toc-number">2.2.2.2.</span> <span class="toc-text">(2)对方法设定返回异常</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Mock%E5%AF%B9%E8%B1%A1%E7%9A%84%E8%A1%8C%E4%B8%BA%E9%AA%8C%E8%AF%81"><span class="toc-number">2.2.3.</span> <span class="toc-text">Mock对象的行为验证</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-%E9%AA%8C%E8%AF%81%E6%96%B9%E6%B3%95%E7%9A%84%E8%B0%83%E7%94%A8%E6%AC%A1%E6%95%B0"><span class="toc-number">2.2.3.1.</span> <span class="toc-text">(1)验证方法的调用次数</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-%E8%B6%85%E6%97%B6%E9%AA%8C%E8%AF%81"><span class="toc-number">2.2.3.2.</span> <span class="toc-text">(2) 超时验证</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-%E6%96%B9%E6%B3%95%E8%B0%83%E7%94%A8%E9%A1%BA%E5%BA%8F"><span class="toc-number">2.2.3.3.</span> <span class="toc-text">(3) 方法调用顺序</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#4-verifyNoMoreInteractions"><span class="toc-number">2.2.3.4.</span> <span class="toc-text">(4) verifyNoMoreInteractions</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#5-verifyZeroInteractions"><span class="toc-number">2.2.3.5.</span> <span class="toc-text">(5) verifyZeroInteractions</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#6-%E5%88%A9%E7%94%A8ArgumentCaptor%EF%BC%88%E5%8F%82%E6%95%B0%E6%8D%95%E8%8E%B7%E5%99%A8%EF%BC%89%E6%8D%95%E8%8E%B7%E6%96%B9%E6%B3%95"><span class="toc-number">2.2.3.6.</span> <span class="toc-text">(6) 利用ArgumentCaptor（参数捕获器）捕获方法</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Spy-%E5%AF%B9%E8%B1%A1%E7%9A%84%E7%9B%91%E8%A7%86"><span class="toc-number">2.2.4.</span> <span class="toc-text">Spy-对象的监视</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%9B%91%E8%A7%86%E5%AF%B9%E8%B1%A1"><span class="toc-number">2.2.4.1.</span> <span class="toc-text">监视对象</span></a></li></ol></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%80%BB%E7%BB%93"><span class="toc-number">3.</span> <span class="toc-text">总结</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%8D%95%E5%85%83%E6%B5%8B%E8%AF%95%E4%B8%8E%E8%A6%86%E7%9B%96%E7%8E%87"><span class="toc-number">4.</span> <span class="toc-text">单元测试与覆盖率</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/5830f7f2.html" title="387.字符串中的第一个唯一字符"><img src="https://img.lvxiaoyi.top/typora-img/202111011355394.png/lvxiaoyi" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="387.字符串中的第一个唯一字符"/></a><div class="content"><a class="title" href="/5830f7f2.html" title="387.字符串中的第一个唯一字符">387.字符串中的第一个唯一字符</a><time datetime="2021-11-19T11:39:12.344Z" title="发表于 2021-11-19 19:39:12">2021-11-19</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/48c72403.html" title="java基础-3集合面试题"><img src="https://img.lvxiaoyi.top/typora-img/202111191025146.png/lvxiaoyi" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="java基础-3集合面试题"/></a><div class="content"><a class="title" href="/48c72403.html" title="java基础-3集合面试题">java基础-3集合面试题</a><time datetime="2021-11-19T02:20:41.028Z" title="发表于 2021-11-19 10:20:41">2021-11-19</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/c2758a5a.html" title="java基础-4之集合深入"><img src="https://img.lvxiaoyi.top/typora-img/202111191025146.png/lvxiaoyi" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="java基础-4之集合深入"/></a><div class="content"><a class="title" href="/c2758a5a.html" title="java基础-4之集合深入">java基础-4之集合深入</a><time datetime="2021-11-19T02:16:51.692Z" title="发表于 2021-11-19 10:16:51">2021-11-19</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/aca24504.html" title="剑指 Offer 33. 二叉搜索树的后序遍历序列"><img src="https://img.lvxiaoyi.top/typora-img/202111011345626.jpg/lvxiaoyi" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="剑指 Offer 33. 二叉搜索树的后序遍历序列"/></a><div class="content"><a class="title" href="/aca24504.html" title="剑指 Offer 33. 二叉搜索树的后序遍历序列">剑指 Offer 33. 二叉搜索树的后序遍历序列</a><time datetime="2021-11-18T13:46:39.369Z" title="发表于 2021-11-18 21:46:39">2021-11-18</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/de9cdaf9.html" title="剑指 Offer 32 - III. 从上到下打印二叉树 III"><img src="https://img.lvxiaoyi.top/typora-img/202111011345626.jpg/lvxiaoyi" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="剑指 Offer 32 - III. 从上到下打印二叉树 III"/></a><div class="content"><a class="title" href="/de9cdaf9.html" title="剑指 Offer 32 - III. 从上到下打印二叉树 III">剑指 Offer 32 - III. 从上到下打印二叉树 III</a><time datetime="2021-11-18T13:24:47.085Z" title="发表于 2021-11-18 21:24:47">2021-11-18</time></div></div></div></div></div></div></main><footer id="footer" style="background-image: url('https://img.lvxiaoyi.top/typora-img/bg.jpg/lvxiaoyi')"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2021 By 吕小医</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><a id="to_comment" href="#post-comment" title="直达评论"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><div class="js-pjax"><script>function loadValine () {
+  function initValine () {
+    const valine = new Valine(Object.assign({
+      el: '#vcomment',
+      appId: 'wYdoyrxV6cLIOnz10ctzDfn2-gzGzoHsz',
+      appKey: 'Y838eJTTLB74wwVo0wgBInXn',
+      placeholder: '昵称填写qq可以显示qq头像和昵称哦~',
+      avatar: 'monsterid',
+      meta: 'nick,mail,link'.split(','),
+      pageSize: '10',
+      lang: 'zh-CN',
+      recordIP: true,
+      serverURLs: '',
+      emojiCDN: '',
+      emojiMaps: "",
+      enableQQ: true,
+      path: window.location.pathname,
+      requiredFields: ["nick,mail"],
+      visitor: false
+    }, null))
+  }
+
+  if (typeof Valine === 'function') initValine() 
+  else getScript('https://cdn.jsdelivr.net/npm/valine/dist/Valine.min.js').then(initValine)
+}
+
+if ('Valine' === 'Valine' || !false) {
+  if (false) btf.loadComment(document.getElementById('vcomment'),loadValine)
+  else setTimeout(loadValine, 0)
+} else {
+  function loadOtherComment () {
+    loadValine()
+  }
+}</script></div><div class="aplayer no-destroy" data-id="7679522918" data-server="tencent" data-type="playlist" data-fixed="true" data-mini="true" data-listFolded="false" data-order="random" data-preload="none" data-autoplay="true" muted></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.js"></script><script src="https://cdn.jsdelivr.net/gh/metowolf/MetingJS@1.2/dist/Meting.min.js"></script><script src="https://cdn.jsdelivr.net/npm/pjax/pjax.min.js"></script><script>let pjaxSelectors = [
+  'title',
+  '#config-diff',
+  '#body-wrap',
+  '#rightside-config-hide',
+  '#rightside-config-show',
+  '.js-pjax'
+]
+
+if (false) {
+  pjaxSelectors.unshift('meta[property="og:image"]', 'meta[property="og:title"]', 'meta[property="og:url"]')
+}
+
+var pjax = new Pjax({
+  elements: 'a:not([target="_blank"])',
+  selectors: pjaxSelectors,
+  cacheBust: false,
+  analytics: false,
+  scrollRestoration: false
+})
+
+document.addEventListener('pjax:send', function () {
+
+  // removeEventListener scroll 
+  window.removeEventListener('scroll', window.tocScrollFn)
+  window.removeEventListener('scroll', scrollCollect)
+
+  typeof preloader === 'object' && preloader.initLoading()
+  
+  if (window.aplayers) {
+    for (let i = 0; i < window.aplayers.length; i++) {
+      if (!window.aplayers[i].options.fixed) {
+        window.aplayers[i].destroy()
+      }
+    }
+  }
+
+  typeof typed === 'object' && typed.destroy()
+
+  //reset readmode
+  const $bodyClassList = document.body.classList
+  $bodyClassList.contains('read-mode') && $bodyClassList.remove('read-mode')
+
+})
+
+document.addEventListener('pjax:complete', function () {
+  window.refreshFn()
+
+  document.querySelectorAll('script[data-pjax]').forEach(item => {
+    const newScript = document.createElement('script')
+    const content = item.text || item.textContent || item.innerHTML || ""
+    Array.from(item.attributes).forEach(attr => newScript.setAttribute(attr.name, attr.value))
+    newScript.appendChild(document.createTextNode(content))
+    item.parentNode.replaceChild(newScript, item)
+  })
+
+  GLOBAL_CONFIG.islazyload && window.lazyLoadInstance.update()
+
+  typeof chatBtnFn === 'function' && chatBtnFn()
+  typeof panguInit === 'function' && panguInit()
+
+  // google analytics
+  typeof gtag === 'function' && gtag('config', '', {'page_path': window.location.pathname});
+
+  // baidu analytics
+  typeof _hmt === 'object' && _hmt.push(['_trackPageview',window.location.pathname]);
+
+  typeof loadMeting === 'function' && document.getElementsByClassName('aplayer').length && loadMeting()
+
+  // Analytics
+  if (false) {
+    MtaH5.pgv()
+  }
+
+  // prismjs
+  typeof Prism === 'object' && Prism.highlightAll()
+
+  typeof preloader === 'object' && preloader.endLoading()
+})
+
+document.addEventListener('pjax:error', (e) => {
+  if (e.request.status === 404) {
+    pjax.loadUrl('/404.html')
+  }
+})</script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
