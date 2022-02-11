@@ -63,7 +63,7 @@
   isHome: true,
   isHighlightShrink: false,
   isToc: false,
-  postUpdate: '2021-11-19 22:05:35'
+  postUpdate: '2022-02-11 18:26:34'
 }</script><noscript><style type="text/css">
   #nav {
     opacity: 1
@@ -152,302 +152,118 @@
       }
     }
     detectApple()
-    document.addEventListener('pjax:complete', detectApple)})(window)</script><link rel="stylesheet" href="/css/lvxiaoyi.css"><meta name="generator" content="Hexo 5.4.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="/img/avatar.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data"><div class="data-item is-center"><div class="data-item-link"><a href="/archives/"><div class="headline">文章</div><div class="length-num">126</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/tags/"><div class="headline">标签</div><div class="length-num">25</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/categories/"><div class="headline">分类</div><div class="length-num">47</div></a></div></div></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/music/"><i class="fa-fw fas fa-music"></i><span> 音乐</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 吕小医</span></a></div></div></div></div><div class="page" id="body-wrap"><header class="full_page" id="page-header" style="background-image: url('https://img.lvxiaoyi.top/typora-img/bg.jpg/lvxiaoyi')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">吕小医のBLOG</a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/music/"><i class="fa-fw fas fa-music"></i><span> 音乐</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 吕小医</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="site-info"><h1 id="site-title">吕小医のBLOG</h1><div id="site-subtitle"><span id="subtitle"></span></div></div><div id="scroll-down"><i class="fas fa-angle-down scroll-down-effects"></i></div></header><main class="layout" id="content-inner"><div class="recent-posts" id="recent-posts"><div class="recent-post-item"><div class="post_cover left_radius"><a href="/561c47f9.html" title="jvm中对象的内存布局">     <img class="post_bg" src="https://img.lvxiaoyi.top/typora-img/202111011413329.png/lvxiaoyi" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="jvm中对象的内存布局"></a></div><div class="recent-post-info"><a class="article-title" href="/561c47f9.html" title="jvm中对象的内存布局">jvm中对象的内存布局</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2021-11-01T07:04:01.900Z" title="发表于 2021-11-01 15:04:01">2021-11-01</time></span><span class="article-meta"><span class="article-meta__separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/jvm/">jvm</a></span></div><div class="content">对象的创建、内存布局和访问定位1. 对象创建
-在开发使用时，创建 Java 对象仅仅只是是通过关键字new：
+    document.addEventListener('pjax:complete', detectApple)})(window)</script><link rel="stylesheet" href="/css/lvxiaoyi.css"><meta name="generator" content="Hexo 5.4.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="/img/avatar.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data"><div class="data-item is-center"><div class="data-item-link"><a href="/archives/"><div class="headline">文章</div><div class="length-num">202</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/tags/"><div class="headline">标签</div><div class="length-num">26</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/categories/"><div class="headline">分类</div><div class="length-num">49</div></a></div></div></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/music/"><i class="fa-fw fas fa-music"></i><span> 音乐</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 吕小医</span></a></div></div></div></div><div class="page" id="body-wrap"><header class="full_page" id="page-header" style="background-image: url('https://img.lvxiaoyi.top/typora-img/bg.jpg/lvxiaoyi')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">吕小医のBLOG</a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/music/"><i class="fa-fw fas fa-music"></i><span> 音乐</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 吕小医</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="site-info"><h1 id="site-title">吕小医のBLOG</h1><div id="site-subtitle"><span id="subtitle"></span></div></div><div id="scroll-down"><i class="fas fa-angle-down scroll-down-effects"></i></div></header><main class="layout" id="content-inner"><div class="recent-posts" id="recent-posts"><div class="recent-post-item"><div class="post_cover left_radius"><a href="/cd598d8d.html" title="AQS详解">     <img class="post_bg" src="https://img.lvxiaoyi.top/typora-img/thread-2-img/285763-20200617223221933-644434653.png/lvxiaoyi" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="AQS详解"></a></div><div class="recent-post-info"><a class="article-title" href="/cd598d8d.html" title="AQS详解">AQS详解</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2021-11-20T01:51:22.791Z" title="发表于 2021-11-20 09:51:22">2021-11-20</time></span><span class="article-meta"><span class="article-meta__separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/%E5%A4%9A%E7%BA%BF%E7%A8%8B/">多线程</a><i class="fas fa-angle-right"></i><a class="article-meta__categories" href="/categories/%E5%A4%9A%E7%BA%BF%E7%A8%8B/%E5%A4%9A%E7%BA%BF%E7%A8%8B%E7%90%86%E8%AE%BA%E7%AF%87/">多线程理论篇</a></span></div><div class="content">AQS 对资源的共享方式AQS 定义两种资源共享方式
+1)Exclusive（独占）
+只有一个线程能执行，如 ReentrantLock。又可分为公平锁和非公平锁，ReentrantLock 同时支持两种锁，下面以 ReentrantLock 对这两种锁的定义做介绍：
 
+公平锁 ：按照线程在队列中的排队顺序，先到者先拿到锁
+非公平锁 ：当线程要获取锁时，先通过两次 CAS 操作去抢锁，如果没抢到，当前线程再加入到队列中等待唤醒。
 
 
-1A a = new A()；
+说明：下面这部分关于 ReentrantLock 源代码内容节选自：https://www.javadoop.com/post/AbstractQueuedSynchronizer-2 ，这是一篇很不错文章，推荐阅读。
 
+下面来看 ReentrantLock 中相关的源代码：
+ReentrantLock 默认采用非公平锁，因为考虑获得更好的性能，通过 boolean 来决定是否用公平锁（传入 true 用公平锁）。
+123456789/** Synchronizer providing all implementation mechanics */priv ...</div></div></div><div class="recent-post-item"><div class="post_cover right_radius"><a href="/5830f7f2.html" title="700. 二叉搜索树中的搜索">     <img class="post_bg" src="https://img.lvxiaoyi.top/typora-img/202111011355394.png/lvxiaoyi" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="700. 二叉搜索树中的搜索"></a></div><div class="recent-post-info"><a class="article-title" href="/5830f7f2.html" title="700. 二叉搜索树中的搜索">700. 二叉搜索树中的搜索</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2021-11-19T11:39:12.344Z" title="发表于 2021-11-19 19:39:12">2021-11-19</time></span><span class="article-meta"><span class="article-meta__separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/%E7%AE%97%E6%B3%95/">算法</a><i class="fas fa-angle-right"></i><a class="article-meta__categories" href="/categories/%E7%AE%97%E6%B3%95/LeetCode/">LeetCode</a></span></div><div class="content">700. 二叉搜索树中的搜索题目12345678910111213141516171819给定二叉搜索树（BST）的根节点和一个值。 你需要在BST中找到节点值等于给定值的节点。 返回以该节点为根的子树。 如果节点不存在，则返回 NULL。例如，给定二叉搜索树:        4       / \      2   7     / \    1   3和值: 2你应该返回如下子树:      2          / \       1   3在上述示例中，如果要找的值是 5，但因为没有节点值为 5，我们应该返回 NULL。
 
-可是 Java对象在虚拟机中创建则是相对复杂。今天，我将详解Java对象在虚拟机中的创建过程
 
 
-限于普通对象，不包括数组和Class对象等
+思路什么是二叉搜索树二叉搜索树二叉搜索树是一棵二叉树，每个节点都有以下特性：
 
-1.1 创建过程当遇到关键字new指令时，Java对象创建过程便开始，整个过程如下：
+大于左子树上任意一个节点的值，
+小于右子树上任意一个节点的值。
 
+也就是比根节点小的值放左边，比根节点大的值放右边
+一个二叉搜索树的例子：
 
-Java对象创建过程
-下面我将对每个步骤进行讲解。
-步骤1：类加载检查
-检查 该new指令的参数 是否能在 常量池中 定位到一个类的符号引用
-检查 该类符号引用 代表的类是否已被加载、解析和初始化过
 
+二叉搜索树中复杂度为对数时间的操作：
 
-如果没有，需要先执行相应的类加载过程
+查找。
+插入。
+删除。
 
-关于类加载请看文章：
-步骤2：为对象分配内存
-虚拟机将为对象分配内存，即把一块确定大小的内存从 Java 堆中划分出来
+实现递归123456789101112131415private static class Solution &#123;    public TreeNode sear ...</div></div></div><div class="recent-post-item"><div class="post_cover left_radius"><a href="/48c72403.html" title="java基础-3集合面试题">     <img class="post_bg" src="https://img.lvxiaoyi.top/typora-img/202111191025146.png/lvxiaoyi" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="java基础-3集合面试题"></a></div><div class="recent-post-info"><a class="article-title" href="/48c72403.html" title="java基础-3集合面试题">java基础-3集合面试题</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2021-11-19T02:20:41.028Z" title="发表于 2021-11-19 10:20:41">2021-11-19</time></span><span class="article-meta"><span class="article-meta__separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/java/">java</a><i class="fas fa-angle-right"></i><a class="article-meta__categories" href="/categories/java/java%E5%9F%BA%E7%A1%80/">java基础</a></span></div><div class="content">Java集合框架基础知识&amp;面试题总结集合概述Java 集合概览Java 集合， 也叫作容器，主要是由两大接口派生而来：一个是 Collecton接口，主要用于存放单一元素；另一个是 Map 接口，主要用于存放键值对。对于Collection 接口，下面又有三个主要的子接口：List、Set 和 Queue。
+Java 集合框架如下图所示：
 
+注：图中只列举了主要的继承派生关系，并没有列举所有关系。比方省略了AbstractList, NavigableSet等抽象类以及其他的一些辅助类，如想深入了解，可自行查看源码。
+说说 List, Set, Queue, Map 四者的区别？
+List(对付顺序的好帮手): 存储的元素是有序的、可重复的。
+Set(注重独一无二的性质): 存储的元素是无序的、不可重复的。
+Queue(实现排队功能的叫号机): 按特定的排队规则来确定先后顺序，存储的元素是有序的、可重复的。
+Map(用 key 来搜索的专家): 使用键值对（key-value）存储，类似于数学上的函数 y=f(x)，”x” 代表 key，”y” 代表 value，key 是无序 ...</div></div></div><div class="recent-post-item"><div class="post_cover right_radius"><a href="/c2758a5a.html" title="java基础-4之集合深入">     <img class="post_bg" src="https://img.lvxiaoyi.top/typora-img/202111191025146.png/lvxiaoyi" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="java基础-4之集合深入"></a></div><div class="recent-post-info"><a class="article-title" href="/c2758a5a.html" title="java基础-4之集合深入">java基础-4之集合深入</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2021-11-19T02:16:51.692Z" title="发表于 2021-11-19 10:16:51">2021-11-19</time></span><span class="article-meta"><span class="article-meta__separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/java/">java</a><i class="fas fa-angle-right"></i><a class="article-meta__categories" href="/categories/java/java%E5%9F%BA%E7%A1%80/">java基础</a></span></div><div class="content">ArrayList1. ArrayList 简介ArrayList 的底层是数组队列，相当于动态数组。与 Java 中的数组相比，它的容量能动态增长。在添加大量元素前，应用程序可以使用ensureCapacity操作来增加 ArrayList 实例的容量。这可以减少递增式再分配的数量。
+ArrayList继承于 AbstractList ，实现了 List, RandomAccess, Cloneable, java.io.Serializable 这些接口。
+1234public class ArrayList&lt;E&gt; extends AbstractList&lt;E&gt;        implements List&lt;E&gt;, RandomAccess, Cloneable, java.io.Serializable&#123;  &#125;
 
-对象所需内存的大小在类加载完成后便可完全确定
 
+RandomAccess 是一个标志接口，表明实现这个这个接口的 List 集合是支持快速随机访问的。在 ArrayList 中，我们即可以通过元素的序号快速获取元素对象，这就是快速随机访问。
+ArrayList ...</div></div></div><div class="recent-post-item"><div class="post_cover left_radius"><a href="/aca24504.html" title="剑指 Offer 33. 二叉搜索树的后序遍历序列">     <img class="post_bg" src="https://img.lvxiaoyi.top/typora-img/202111011345626.jpg/lvxiaoyi" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="剑指 Offer 33. 二叉搜索树的后序遍历序列"></a></div><div class="recent-post-info"><a class="article-title" href="/aca24504.html" title="剑指 Offer 33. 二叉搜索树的后序遍历序列">剑指 Offer 33. 二叉搜索树的后序遍历序列</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2021-11-18T13:46:39.369Z" title="发表于 2021-11-18 21:46:39">2021-11-18</time></span><span class="article-meta"><span class="article-meta__separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/%E7%AE%97%E6%B3%95/">算法</a><i class="fas fa-angle-right"></i><a class="article-meta__categories" href="/categories/%E7%AE%97%E6%B3%95/%E5%89%91%E6%8C%87offer/">剑指offer</a></span></div><div class="content">剑指 Offer 33. 二叉搜索树的后序遍历序列题目12345678910111213141516171819202122输入一个整数数组，判断该数组是不是某二叉搜索树的后序遍历结果。如果是则返回 true，否则返回 false。假设输入的数组的任意两个数字都互不相同。参考以下这颗二叉搜索树：     5    / \   2   6  / \ 1   3示例 1：输入: [1,6,3,2,5]输出: false示例 2：输入: [1,3,2,6,5]输出: true 提示：数组长度 &lt;= 1000
 
-关于分配内存，此处主要讲解内存分配方式
-内存分配 根据 Java堆内存是否绝对规整 分为两种方式：指针碰撞 &amp; 空闲列表
 
 
+思路因为为后续遍历，所以一定满足，最后的节点一定是根节点，所以我们找到了根节点，然后因为这个树为二叉搜索树，所以根节点的左边的值一定小于根节点，右边的值一定大于根节点，所以我们在前面的数组中一定能找到left和right，如果这个数组不满足这个条件那么就一定不能构建成搜索树。
+这样我们找到了left和right后依次类推，我们逐个判断left和right是不是二叉搜索树。
+和剑指offer第七题类似，也是通过指针和前序中序后序遍历确定根节点
+实现123456789101112 ...</div></div></div><div class="recent-post-item"><div class="post_cover right_radius"><a href="/de9cdaf9.html" title="剑指 Offer 32 - III. 从上到下打印二叉树 III">     <img class="post_bg" src="https://img.lvxiaoyi.top/typora-img/202111011345626.jpg/lvxiaoyi" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="剑指 Offer 32 - III. 从上到下打印二叉树 III"></a></div><div class="recent-post-info"><a class="article-title" href="/de9cdaf9.html" title="剑指 Offer 32 - III. 从上到下打印二叉树 III">剑指 Offer 32 - III. 从上到下打印二叉树 III</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2021-11-18T13:24:47.085Z" title="发表于 2021-11-18 21:24:47">2021-11-18</time></span><span class="article-meta"><span class="article-meta__separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/%E7%AE%97%E6%B3%95/">算法</a><i class="fas fa-angle-right"></i><a class="article-meta__categories" href="/categories/%E7%AE%97%E6%B3%95/%E5%89%91%E6%8C%87offer/">剑指offer</a></span></div><div class="content">剑指 Offer 32 - III. 从上到下打印二叉树 III题目123456789101112131415161718192021请实现一个函数按照之字形顺序打印二叉树，即第一行按照从左到右的顺序打印，第二层按照从右到左的顺序打印，第三行再按照从左到右的顺序打印，其他行以此类推。例如:给定二叉树: [3,9,20,null,null,15,7],    3   / \  9  20    /  \   15   7返回其层次遍历结果：[  [3],  [20,9],  [15,7]] 提示：节点总数 &lt;= 1000
 
-Java堆内存 规整：已使用的内存在一边，未使用内存在另一边 ...</div></div></div><div class="recent-post-item"><div class="post_cover right_radius"><a href="/dd88deb1.html" title="前端编译器和后端编译器">     <img class="post_bg" src="https://img.lvxiaoyi.top/typora-img/bg.jpg/lvxiaoyi" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="前端编译器和后端编译器"></a></div><div class="recent-post-info"><a class="article-title" href="/dd88deb1.html" title="前端编译器和后端编译器">前端编译器和后端编译器</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2021-11-01T07:04:01.895Z" title="发表于 2021-11-01 15:04:01">2021-11-01</time></span><span class="article-meta"><span class="article-meta__separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/jvm/">jvm</a><i class="fas fa-angle-right"></i><a class="article-meta__categories" href="/categories/jvm/jvm%E7%90%86%E8%AE%BA/">jvm理论</a></span></div><div class="content">本文章转载于：https://blog.csdn.net/qq_20009015/article/details/105190415
-前端编译器：将java文件编译成class文件的编译器。java很多提高效率和友好度的语法糖都是依赖前端编译器实现的。javac就是一个典型的前端编译器。
-执行过程如下：
-准备阶段：初始化插入式注解处理器
 
-解析与填充符号表阶段：词法 语法分析，将源代码转变为标记集合，构建抽象语法树填充符号表，产生符号地址和符号信息。
 
-插入式注解处理器的执行阶段：会影响javac的行为，比如说添加一些编译期的校验等。
+思路在逐层打印的基础上加一个index%2；
+实现123456789101112131415161718192021222324252627282930313233343536private static class Solution &#123;    public List&lt;List&lt;Integer&gt;&gt; levelOrder(TreeNode root) &#123;        if (root == null) &#123; ...</div></div></div><div class="recent-post-item"><div class="post_cover left_radius"><a href="/6dc2c421.html" title="剑指 Offer 32 - II. 从上到下打印二叉树 II">     <img class="post_bg" src="https://img.lvxiaoyi.top/typora-img/202111011345626.jpg/lvxiaoyi" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="剑指 Offer 32 - II. 从上到下打印二叉树 II"></a></div><div class="recent-post-info"><a class="article-title" href="/6dc2c421.html" title="剑指 Offer 32 - II. 从上到下打印二叉树 II">剑指 Offer 32 - II. 从上到下打印二叉树 II</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2021-11-18T13:04:31.798Z" title="发表于 2021-11-18 21:04:31">2021-11-18</time></span><span class="article-meta"><span class="article-meta__separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/%E7%AE%97%E6%B3%95/">算法</a><i class="fas fa-angle-right"></i><a class="article-meta__categories" href="/categories/%E7%AE%97%E6%B3%95/%E5%89%91%E6%8C%87offer/">剑指offer</a></span></div><div class="content">剑指 Offer 32 - II. 从上到下打印二叉树 II题目12345678910111213141516171819从上到下按层打印二叉树，同一层的节点按从左到右的顺序打印，每一层打印到一行。 例如:给定二叉树: [3,9,20,null,null,15,7],    3   / \  9  20    /  \   15   7返回其层次遍历结果：[  [3],  [9,20],  [15,7]]
 
-分析与字节码的生成：检查静态信息，数据流检查，解语法糖，字节码生成
+思路还是bfs，但是这个我们要知道这一层要打印的数量，因为我们是使用的队列存放的我们要打印的数据，而下一次也是在我们遍历这一层的时候才加入队列的，所以我们是不是可以在加入下一层的的节点的时候，直接把这一层的node全部都遍历
+实现</div></div></div><div class="recent-post-item"><div class="post_cover right_radius"><a href="/c84737a.html" title="剑指 Offer 32 - I. 从上到下打印二叉树">     <img class="post_bg" src="https://img.lvxiaoyi.top/typora-img/202111011345626.jpg/lvxiaoyi" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="剑指 Offer 32 - I. 从上到下打印二叉树"></a></div><div class="recent-post-info"><a class="article-title" href="/c84737a.html" title="剑指 Offer 32 - I. 从上到下打印二叉树">剑指 Offer 32 - I. 从上到下打印二叉树</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2021-11-18T12:37:27.725Z" title="发表于 2021-11-18 20:37:27">2021-11-18</time></span><span class="article-meta"><span class="article-meta__separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/%E7%AE%97%E6%B3%95/">算法</a><i class="fas fa-angle-right"></i><a class="article-meta__categories" href="/categories/%E7%AE%97%E6%B3%95/%E5%89%91%E6%8C%87offer/">剑指offer</a></span></div><div class="content">剑指 Offer 32 - I. 从上到下打印二叉树题目123456789101112131415从上到下打印出二叉树的每个节点，同一层的节点按照从左到右的顺序打印。例如:给定二叉树: [3,9,20,null,null,15,7],    3   / \  9  20    /  \   15   7返回：[3,9,20,15,7]提示：节点总数 &lt;= 1000
 
+思路就是数的广度遍历，但是这个使用int数据接收的，我们可以先用一个list接收，然后最后把list放入数组中，这里可以使用for循环遍历也可以stream流
+实现123456789101112131415161718192021222324private static class Solution &#123;    public int[] levelOrder(TreeNode root) &#123;        if (root == null) &#123;            return new int[0];        &#125;        Deque&lt;TreeNode&gt;  ...</div></div></div><div class="recent-post-item"><div class="post_cover left_radius"><a href="/a76fa13.html" title="剑指 Offer 31. 栈的压入、弹出序列">     <img class="post_bg" src="https://img.lvxiaoyi.top/typora-img/202111011345626.jpg/lvxiaoyi" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="剑指 Offer 31. 栈的压入、弹出序列"></a></div><div class="recent-post-info"><a class="article-title" href="/a76fa13.html" title="剑指 Offer 31. 栈的压入、弹出序列">剑指 Offer 31. 栈的压入、弹出序列</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2021-11-18T12:21:23.384Z" title="发表于 2021-11-18 20:21:23">2021-11-18</time></span><span class="article-meta"><span class="article-meta__separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/%E7%AE%97%E6%B3%95/">算法</a><i class="fas fa-angle-right"></i><a class="article-meta__categories" href="/categories/%E7%AE%97%E6%B3%95/%E5%89%91%E6%8C%87offer/">剑指offer</a></span></div><div class="content">剑指 Offer 31. 栈的压入、弹出序列题目123456789101112131415161718192021输入两个整数序列，第一个序列表示栈的压入顺序，请判断第二个序列是否为该栈的弹出顺序。假设压入栈的所有数字均不相等。例如，序列 &#123;1,2,3,4,5&#125; 是某栈的压栈序列，序列 &#123;4,5,3,2,1&#125; 是该压栈序列对应的一个弹出序列，但 &#123;4,3,5,1,2&#125; 就不可能是该压栈序列的弹出序列。示例 1：输入：pushed = [1,2,3,4,5], popped = [4,5,3,2,1]输出：true解释：我们可以按以下顺序执行：push(1), push(2), push(3), push(4), pop() -&gt; 4,push(5), pop() -&gt; 5, pop() -&gt; 3, pop() -&gt; 2, pop() -&gt; 1示例 2：输入：pushed = [1,2,3,4,5], popped = [4,3,5,1,2]输出：false解释：1 不能在 2 之前弹出。 提示：0 ...</div></div></div><div class="recent-post-item"><div class="post_cover right_radius"><a href="/c833387c.html" title="剑指 Offer 30. 包含min函数的栈">     <img class="post_bg" src="https://img.lvxiaoyi.top/typora-img/202111011345626.jpg/lvxiaoyi" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="剑指 Offer 30. 包含min函数的栈"></a></div><div class="recent-post-info"><a class="article-title" href="/c833387c.html" title="剑指 Offer 30. 包含min函数的栈">剑指 Offer 30. 包含min函数的栈</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2021-11-18T11:45:27.687Z" title="发表于 2021-11-18 19:45:27">2021-11-18</time></span><span class="article-meta"><span class="article-meta__separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/%E7%AE%97%E6%B3%95/">算法</a><i class="fas fa-angle-right"></i><a class="article-meta__categories" href="/categories/%E7%AE%97%E6%B3%95/%E5%89%91%E6%8C%87offer/">剑指offer</a></span></div><div class="content">剑指 Offer 30. 包含min函数的栈题目123456789101112131415161718定义栈的数据结构，请在该类型中实现一个能够得到栈的最小元素的 min 函数在该栈中，调用 min、push 及 pop 的时间复杂度都是 O(1)。示例:MinStack minStack = new MinStack();minStack.push(-2);minStack.push(0);minStack.push(-3);minStack.min();   --&gt; 返回 -3.minStack.pop();minStack.top();      --&gt; 返回 0.minStack.min();   --&gt; 返回 -2. 提示：各函数的调用总次数不超过 20000 次
 
-词法解析：将源代码的字符流转为标记(token)集合的过程，token是编译时的最小单位，关键字 变量名 运算符等都可以作为标记。
-语法分析：根据标记序列构造抽象语法树，抽象语法树是一种描述程序代码语法结构的树形表示，树的每一个节点代表程序代码中的一个语法结构，比如说包，类型，修饰符，运算符等。
-生成语法树之后，后续的操作都是对语法树进行操作。
-填充符号表：符号表是一组符号地址和符 ...</div></div></div><div class="recent-post-item"><div class="post_cover left_radius"><a href="/6197d47a.html" title="jvm基础3之性能监控与调优篇">     <img class="post_bg" src="https://img.lvxiaoyi.top/typora-img/202111011421399.jpeg/lvxiaoyi" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="jvm基础3之性能监控与调优篇"></a></div><div class="recent-post-info"><a class="article-title" href="/6197d47a.html" title="jvm基础3之性能监控与调优篇">jvm基础3之性能监控与调优篇</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2021-11-01T07:04:01.889Z" title="发表于 2021-11-01 15:04:01">2021-11-01</time></span><span class="article-meta"><span class="article-meta__separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/jvm/">jvm</a><i class="fas fa-angle-right"></i><a class="article-meta__categories" href="/categories/jvm/jvm%E7%90%86%E8%AE%BA/">jvm理论</a></span></div><div class="content">jvm基础3之性能监控与调优篇
+思路这道题需要注意的是：
+min方法：获取栈中的最小数但是这个数不会弹出栈
+top方法：获取栈顶元素，这个数不会弹出栈
+push方法：向栈中放入元素
+pop方法：弹出栈顶元素
+关键就是min方法，因为要min方法为O(1)，所以我们必须存放min的那个数据结构，我们另外使用一个栈存放这个min， ...</div></div></div><div class="recent-post-item"><div class="post_cover left_radius"><a href="/411de67e.html" title="Junit单元测试">     <img class="post_bg" src="https://img.lvxiaoyi.top/typora-img/bg.jpg/lvxiaoyi" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Junit单元测试"></a></div><div class="recent-post-info"><a class="article-title" href="/411de67e.html" title="Junit单元测试">Junit单元测试</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2021-11-18T07:24:08.250Z" title="发表于 2021-11-18 15:24:08">2021-11-18</time></span><span class="article-meta"><span class="article-meta__separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/%E6%B5%8B%E8%AF%95/">测试</a><i class="fas fa-angle-right"></i><a class="article-meta__categories" href="/categories/%E6%B5%8B%E8%AF%95/junit/">junit</a></span></div><div class="content">Junit单元测试一、什么是单元测试？
+在计算机编程中，单元测试（英语：Unit Testing）又称为模块测试, 是针对程序模块（软件设计的最小单位）来进行正确性检验的测试工作。 程序单元是应用的最小可测试部件。简单来说，就是测试数据的稳定性是否达到程序的预期。
 
-概述篇大厂面试题
-支付宝：
-支付宝三面：JVM 性能调优都做了什么？
-小米：
-有做过 JVM 内存优化吗？
-从 SQL、JVM、架构、数据库四个方面讲讲优化思路
-蚂蚁金服：
-JVM 的编译优化
-jvm 性能调优都做了什么
-JVM 诊断调优工具用过哪些？
-二面：jvm 怎样调优，堆内存、栈空间设置多少合适
-三面：JVM 相关的分析工具使用过的有哪些？具体的性能调优步骤如何
-阿里：
-如何进行 JVM 调优？有哪些方法？
-如何理解内存泄漏问题？有哪些情况会导致内存泄漏？如何解决？
-字节跳动：
-三面：JVM 如何调优、参数怎么调？
-拼多多：
-从 SQL、JVM、架构、数据库四个方面讲讲优化思路
-京东：
-JVM 诊断调优工具用过哪些？
-每秒几十万并发的秒杀系统为什么会频繁发生 GC？
-日均百万级交易系统如何优化 JVM？
-线上生产系统 OOM 如何监控及定位与解决？
-高并发系统如何基于 G1 垃圾回收器优化性能？
+二、单元测试的重要性
+谈到测试，我们为什么要对程序进行测试呢？测试会为程序带来什么好处呢？
 
-背景说明生产环境中的问题
-生产环境发生了内存溢出该如何处理？
-生产环境应该给服务器分配多少内存合适？
-如何对垃圾回收器的性能进行调优？
-生产环境 C ...</div></div></div><div class="recent-post-item"><div class="post_cover right_radius"><a href="/9f1e208e.html" title="jvm基础2之字节码与类的加载篇">     <img class="post_bg" src="https://img.lvxiaoyi.top/typora-img/202111011421399.jpeg/lvxiaoyi" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="jvm基础2之字节码与类的加载篇"></a></div><div class="recent-post-info"><a class="article-title" href="/9f1e208e.html" title="jvm基础2之字节码与类的加载篇">jvm基础2之字节码与类的加载篇</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2021-11-01T07:04:01.884Z" title="发表于 2021-11-01 15:04:01">2021-11-01</time></span><span class="article-meta"><span class="article-meta__separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/jvm/">jvm</a><i class="fas fa-angle-right"></i><a class="article-meta__categories" href="/categories/jvm/jvm%E7%90%86%E8%AE%BA/">jvm理论</a></span></div><div class="content">jvm基础2概述字节码文件的跨平台性Java语言：跨平台的语言（write once，run anywhere
-当Java源代码成功编译成字节码后，如果想在不同的平台上运行，则无须再次编译
-这个优势现在不在那么吸引人
-Python、PHP、Perl、Ruby、LISP等都有强大的解释器
+首先，我们每个人都会犯错误。毕竟人嘛，没有完美的谁谁谁。在程序中犯错误就像生活中犯错一样，错误不是一天两天而形成的。当需要改的时候，也不是能花少的时间而改掉的。这里我谈到的程序中的错误，就是著名的Bug。
+我们可能在不经意间写错，如果你到了最后阶段去检验项目成果时，发现会有错误，这时候我们很难找到Bug的源头在哪里。我们都知道，有可能一处出错会导致步步错的情况。
+然而，测试就在我们的上述说法中，显得尤为重要。有了测试的概念，这时候当我们做完项目的一个小模块，我们先去测试一下这个小模块是否正确或达到预期，如果错误或者没有达到预期就需要反复修改，直到正确或达到预期。这里所说的也就是使用了单元测试。
+当我们一块一块的做完并一块一块的测试 ...</div></div></div><div class="recent-post-item"><div class="post_cover right_radius"><a href="/97af0345.html" title="java基础-2">     <img class="post_bg" src="https://img.lvxiaoyi.top/typora-img/202111191025146.png/lvxiaoyi" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="java基础-2"></a></div><div class="recent-post-info"><a class="article-title" href="/97af0345.html" title="java基础-2">java基础-2</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2021-11-18T03:32:56.830Z" title="发表于 2021-11-18 11:32:56">2021-11-18</time></span><span class="article-meta"><span class="article-meta__separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/java/">java</a><i class="fas fa-angle-right"></i><a class="article-meta__categories" href="/categories/java/java%E5%9F%BA%E7%A1%80/">java基础</a></span></div><div class="content">BigDecimalBigDecimal 介绍BigDecimal 可以实现对浮点数的运算，不会造成精度丢失。
+那为什么浮点数 float 或 double 运算的时候会有精度丢失的风险呢？
+这是因为计算机是二进制的，浮点数没有办法用二进制精确表示。
+BigDecimal 的用处《阿里巴巴Java开发手册》中提到：浮点数之间的等值判断，基本数据类型不能用==来比较，包装数据类型不能用 equals 来判断。 具体原理和浮点数的编码方式有关，这里就不多提了，我们下面直接上实例：
+12345float a = 1.0f - 0.9f;float b = 0.9f - 0.8f;System.out.println(a);// 0.100000024System.out.println(b);// 0.099999964System.out.println(a == b);// false
 
+具有基本数学知识的我们很清楚的知道输出并不是我们想要的结果（精度丢失），我们如何解决这个问题呢？一种很常用的方法是：使用 BigDecimal 来定义浮点数的值，再进行浮点数的运算操作。
+1234567 ...</div></div></div><div class="recent-post-item"><div class="post_cover left_radius"><a href="/670548a8.html" title="java代理模式值proxy和cglib">     <img class="post_bg" src="https://guide-blog-images.oss-cn-shenzhen.aliyuncs.com/2020-8/1*DjWCgTFm-xqbhbNQVsaWQw.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="java代理模式值proxy和cglib"></a></div><div class="recent-post-info"><a class="article-title" href="/670548a8.html" title="java代理模式值proxy和cglib">java代理模式值proxy和cglib</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2021-11-18T03:31:12.681Z" title="发表于 2021-11-18 11:31:12">2021-11-18</time></span><span class="article-meta"><span class="article-meta__separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/java/">java</a><i class="fas fa-angle-right"></i><a class="article-meta__categories" href="/categories/java/%E4%BB%A3%E7%90%86%E6%A8%A1%E5%BC%8F/">代理模式</a></span></div><div class="content">1. 代理模式代理模式是一种比较好理解的设计模式。简单来说就是 我们使用代理对象来代替对真实对象(real object)的访问，这样就可以在不修改原目标对象的前提下，提供额外的功能操作，扩展目标对象的功能。
+代理模式的主要作用是扩展目标对象的功能，比如说在目标对象的某个方法执行前后你可以增加一些自定义的操作。
+举个例子：你找了小红来帮你问话，小红就可以看作是代理你的代理对象，代理的行为（方法）是问话。
 
-跨平台似乎快成为了一门语言必选的特性。
+https://medium.com/@mithunsasidharan/understanding-the-proxy-design-pattern-5e63fe38052a
 
-Java虚拟机：跨语言的平台
-
-Java虚拟机不和包括Java在内的任何语言绑定，它只和“class文件”这种特点的二进制文件格式所关联。无论使用何种语言进行软件开发，只要能将源文件编译成正确的Class文件，那么这种语言就可以在Java虚拟机上运行。可以说，统一而强大的Class文件结构，就是Java虚拟机的基石、桥梁。
-
-java文档说明：https://docs.oracle.com/javase/specs/index.html
-
-
-
-
-我们主要是查看java8：
-https://docs.oracle.com/javase/specs/jls/se8/html/index.html
-https://docs.oracle.com/javase/sp ...</div></div></div><div class="recent-post-item"><div class="post_cover left_radius"><a href="/539b1196.html" title="jvm基础1之内存与垃圾回收篇">     <img class="post_bg" src="https://img.lvxiaoyi.top/typora-img/202111011421399.jpeg/lvxiaoyi" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="jvm基础1之内存与垃圾回收篇"></a></div><div class="recent-post-info"><a class="article-title" href="/539b1196.html" title="jvm基础1之内存与垃圾回收篇">jvm基础1之内存与垃圾回收篇</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2021-11-01T07:04:01.880Z" title="发表于 2021-11-01 15:04:01">2021-11-01</time></span><span class="article-meta"><span class="article-meta__separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/jvm/">jvm</a><i class="fas fa-angle-right"></i><a class="article-meta__categories" href="/categories/jvm/jvm%E7%90%86%E8%AE%BA/">jvm理论</a></span></div><div class="content">jvm基础1为什么要学习jvm
-面试
-
-系统调优
-
-
-JVM与Java体系结构前言作为Java工程师的你曾被伤害过吗？你是否也遇到过这些问题？
-运行着的线上系统突然卡死，系统无法访问，甚至直接OOMM！
-
-想解决线上JVM GC问题，但却无从下手。
-新项目上线，对各种JVM参数设置一脸茫然，直接默认吧然后就gg了
-每次面试之前都要重新背一遍JVM的一些原理概念性的东西，然而面试官却经常问你在实际项目中如何调优VM参数，如何解决GC、OOM等问题，一脸懵逼。
-
-
-大部分Java开发人员，除会在项目中使用到与Java平台相关的各种高精尖技术，对于Java技术的核心Java虚拟机了解甚少。
-一些有一定工作经验的开发人员，打心眼儿里觉得SSM、微服务等上层技术才是重点，基础技术并不重要，这其实是一种本末倒置的“病态”。如果我们把核心类库的API比做数学公式的话，那么Java虚拟机的知识就好比公式的推导过程。
-计算机系统体系对我们来说越来越远，在不了解底层实现方式的前提下，通过高级语言很容易编写程序代码。但事实上计算机并不认识高级语言
-
-
-架构师每天都在思考什么？
-应该如何让我的系统更快？
-如何 ...</div></div></div><div class="recent-post-item"><div class="post_cover right_radius"><a href="/94dda12b.html" title="Spring源码分析-2">     <img class="post_bg" src="https://img.lvxiaoyi.top/typora-img/bg.jpg/lvxiaoyi" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Spring源码分析-2"></a></div><div class="recent-post-info"><a class="article-title" href="/94dda12b.html" title="Spring源码分析-2">Spring源码分析-2</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2021-11-01T07:04:01.867Z" title="发表于 2021-11-01 15:04:01">2021-11-01</time></span><span class="article-meta"><span class="article-meta__separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/Spring/">Spring</a></span></div><div class="content">参考文章：https://blog.csdn.net/weixin_48033662/article/details/120000961
-核心注解
-
-
-注解
-功能
-
-
-
-@Bean
-容器中注册组件
-
-
-@Primary
-同类组件如果有多个，标注主组件
-
-
-@DependsOn
-组件之间声明依赖关系
-
-
-@Lazy
-组件懒加载（最后使用的时候才创建）
-
-
-@Scope
-声明组件的作用范围(SCOPE_PROTOTYPE,SCOPE_SINGLETON)
-
-
-@Configuration
-声明这是一个配置类，替换以前配置文件
-
-
-@Component
-@Controller、@Service、@Repository
-
-
-@Indexed
-加速注解，所有标注了 @Indexed 的组件，直接会启动快速加载
-
-
-@Order
-数字越小优先级越高，越先工作
-
-
-@ComponentScan
-包扫描
-
-
-@Conditional
-条件注入
-
-
-@Import
-导入第三方jar包中的组件，或定制批量导入组件逻辑
-
-
-@ImportResource
-导入以前的xml配置文件，让其生效
-
-
-@Profi ...</div></div></div><div class="recent-post-item"><div class="post_cover left_radius"><a href="/dd4f091.html" title="Spring源码分析-1">     <img class="post_bg" src="https://img.lvxiaoyi.top/typora-img/bg.jpg/lvxiaoyi" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Spring源码分析-1"></a></div><div class="recent-post-info"><a class="article-title" href="/dd4f091.html" title="Spring源码分析-1">Spring源码分析-1</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2021-11-01T07:04:01.864Z" title="发表于 2021-11-01 15:04:01">2021-11-01</time></span><span class="article-meta"><span class="article-meta__separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/Spring/">Spring</a></span></div><div class="content">Spring源码环境搭建下载gradleSpring版本用的Gradle（类似于maven但是比maven强大）进行执行和编译，所以需要下载gradle环境
-https://gradle.org/releases/
-本篇文章使用的6.82版本
-https://downloads.gradle-dn.com/distributions/gradle-6.8.2-all.zip
-配置环境变量下载完成后解压，就和配置java环境变量一样，配置系统环境变量
-需要配置：GRADLE_HOME、PATH、GRADLE_USER_HOME
-
-系统变量（s）中添加：
-
-1GRADLE_HOME    D:\Program Files (x86)\gradle-6.8.2
-
-
-系统变量（s）中添加：
-这里面的变量内容执行你想要存放gradle包的路径，我的是放到了d盘的一个文件夹下
-1GRADLE_USER_HOME
-
-
-系统变量（s）的path中添加：
-
-
-1%GRADLE_HOME%/bin
-
-
-配置下载加速
-在gradle文件的init.d文件夹下添加init.gradle文件
-内容为：
-1234 ...</div></div></div><div class="recent-post-item"><div class="post_cover right_radius"><a href="/542a9813.html" title="Spring注解驱动开发">     <img class="post_bg" src="https://img.lvxiaoyi.top/typora-img/1624169818945-9e746934-e261-4bae-a8ca-a1800838e3df.png/lvxiaoyi" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Spring注解驱动开发"></a></div><div class="recent-post-info"><a class="article-title" href="/542a9813.html" title="Spring注解驱动开发">Spring注解驱动开发</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2021-11-01T07:04:01.854Z" title="发表于 2021-11-01 15:04:01">2021-11-01</time></span><span class="article-meta"><span class="article-meta__separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/Spring/">Spring</a></span></div><div class="content">Spring注解驱动开发转载博客：https://blog.csdn.net/weixin_48033662/article/details/120000961
-
-</div></div></div><div class="recent-post-item"><div class="post_cover left_radius"><a href="/de7e93c2.html" title="spring核心知识点">     <img class="post_bg" src="https://img.lvxiaoyi.top/typora-img/image-20210819214343270.png/lvxiaoyi" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="spring核心知识点"></a></div><div class="recent-post-info"><a class="article-title" href="/de7e93c2.html" title="spring核心知识点">spring核心知识点</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2021-11-01T07:04:01.845Z" title="发表于 2021-11-01 15:04:01">2021-11-01</time></span><span class="article-meta"><span class="article-meta__separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/Spring/">Spring</a></span></div><div class="content">说一下spring ioc的理解，原理和实现总ioc：控制反转。原来的对象是由使用者来控制的，有了spring，就直接把整个对象交给spring来帮我们管理。
-​    DI：依赖注入。把对应的属性的值注入到具体的对象中，@autowired，populatebean完成属性值得注入
-容器：存储对象，使用map结构存储，在spring中一般存在三级缓存，singletonOBjects存放文章的bean对象，在整个bean的生命周期中，从创建到使用到销毁都是由容器来管理的。
-
-
-分IOC和DI举一个例子：有车，底盘，轮胎，在没有spring之前，我们相对这样的整体架构进行设计，一个常用的方法就是通过构造器注入，我们在创建一个底盘的时候，需要new一个轮子的对象，把这个对象的尺寸，材料设置好后，通过底盘的构造器放入底盘中。同样，我们在最终创建一个车的时候，需要先创建一个轮胎对象，在创建一个底盘对象，最后才能创建出我们想要的车的对象。然后spring就帮我解决了这样的而问题，你可以直接去创建一个车的对象，而具体的底盘和轮胎的对象注入，由spring自己来进行，你只需要在开始创建这样的bea ...</div></div></div><div class="recent-post-item"><div class="post_cover right_radius"><a href="/440fb577.html" title="深究Spring中Bean的生命周期">     <img class="post_bg" src="https://img.lvxiaoyi.top/typora-img/image-20210819214343270.png/lvxiaoyi" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="深究Spring中Bean的生命周期"></a></div><div class="recent-post-info"><a class="article-title" href="/440fb577.html" title="深究Spring中Bean的生命周期">深究Spring中Bean的生命周期</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2021-11-01T07:04:01.842Z" title="发表于 2021-11-01 15:04:01">2021-11-01</time></span><span class="article-meta"><span class="article-meta__separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/Spring/">Spring</a></span></div><div class="content">深究Spring中Bean的生命周期前言这其实是一道面试题，是我在面试百度的时候被问到的，当时没有答出来(因为自己真的很菜)，后来在网上寻找答案，看到也是一头雾水，直到看到了《Spring in action》这本书，书上有对Bean声明周期的大致解释，但是没有代码分析，所以就自己上网寻找资料，一定要把这个Bean生命周期弄明白！
-网上大部分都是验证的Bean 在面试问的生命周期，其实查阅JDK还有一个完整的Bean生命周期，这同时也验证了书是具有片面性的，最fresh 的资料还是查阅原始JDK!!!
-
-一、Bean 的完整生命周期在传统的Java应用中，bean的生命周期很简单，使用Java关键字 new 进行Bean 的实例化，然后该Bean 就能够使用了。一旦bean不再被使用，则由Java自动进行垃圾回收。
-相比之下，Spring管理Bean的生命周期就复杂多了，正确理解Bean 的生命周期非常重要，因为Spring对Bean的管理可扩展性非常强，下面展示了一个Bean的构造过程
-
-Bean 的生命周期
-如上图所示，Bean 的生命周期还是比较复杂的，下面来对上图每一个步骤做文 ...</div></div></div><div class="recent-post-item"><div class="post_cover left_radius"><a href="/db2811aa.html" title="java深拷贝与浅拷贝">     <img class="post_bg" src="https://img.lvxiaoyi.top/typora-img/202111191025146.png/lvxiaoyi" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="java深拷贝与浅拷贝"></a></div><div class="recent-post-info"><a class="article-title" href="/db2811aa.html" title="java深拷贝与浅拷贝">java深拷贝与浅拷贝</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2021-11-01T07:04:01.829Z" title="发表于 2021-11-01 15:04:01">2021-11-01</time></span><span class="article-meta"><span class="article-meta__separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/java/">java</a><i class="fas fa-angle-right"></i><a class="article-meta__categories" href="/categories/java/java%E5%9F%BA%E7%A1%80/">java基础</a></span></div><div class="content">Java中的对象拷贝(Object Copy)指的是将一个对象的所有属性（成员变量）拷贝到另一个有着相同类类型的对象中去。举例说明：比如，对象A和对象B都属于类S，具有属性a和b。那么对对象A进行拷贝操作赋值给对象B就是：B.a=A.a; B.b=A.b;
-在程序中拷贝对象是很常见的，主要是为了在新的上下文环境中复用现有对象的部分或全部 数据。
-Java中的对象拷贝主要分为：浅拷贝(Shallow Copy)、深拷贝(Deep Copy)。
-先介绍一点铺垫知识：Java中的数据类型分为基本数据类型和引用数据类型。对于这两种数据类型，在进行赋值操作、用作方法参数或返回值时，会有值传递和引用（地址）传递的差别。
-浅拷贝（Shallow Copy）：①对于数据类型是基本数据类型的成员变量，浅拷贝会直接进行值传递，也就是将该属性值复制一份给新的对象。因为是两份不同的数据，所以对其中一个对象的该成员变量值进行修改，不会影响另一个对象拷贝得到的数据。②对于数据类型是引用数据类型的成员变量，比如说成员变量是某个数组、某个类的对象等，那么浅拷贝会进行引用传递，也就是只是将该成员变量的引用值（内存地址） ...</div></div></div><div class="recent-post-item"><div class="post_cover right_radius"><a href="/965cea79.html" title="java安全管理器SecurityManager">     <img class="post_bg" src="https://img.lvxiaoyi.top/typora-img/202111191025146.png/lvxiaoyi" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="java安全管理器SecurityManager"></a></div><div class="recent-post-info"><a class="article-title" href="/965cea79.html" title="java安全管理器SecurityManager">java安全管理器SecurityManager</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2021-11-01T07:04:01.825Z" title="发表于 2021-11-01 15:04:01">2021-11-01</time></span><span class="article-meta"><span class="article-meta__separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/java/">java</a></span></div><div class="content">java安全管理器SecurityManager一、文章的目的这是一篇对Java安全管理器入门的文章，目的是简单了解什么是SecurityManager，对管理器进行简单配置，解决简单问题。
-比如在阅读源码的时候，发现这样的代码，想了解是做什么的：
-1234SecurityManager security = System.getSecurityManager();if (security != null) &#123;    security.checkWrite(name);&#125;
-
-　　亦或者在本机运行正常，在服务器运行报错，想解决问题：
-1234567Exception in thread &quot;main&quot; java.security.AccessControlException: access denied (java.lang.RuntimePermission createSecurityManager)    at java.security.AccessControlContext.checkPermission(AccessControlCon ...</div></div></div><div class="recent-post-item"><div class="post_cover left_radius"><a href="/f507c2a0.html" title="分布式事务之seata">     <img class="post_bg" src="https://img.lvxiaoyi.top/typora-img/bg.jpg/lvxiaoyi" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="分布式事务之seata"></a></div><div class="recent-post-info"><a class="article-title" href="/f507c2a0.html" title="分布式事务之seata">分布式事务之seata</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2021-11-01T07:04:01.816Z" title="发表于 2021-11-01 15:04:01">2021-11-01</time></span><span class="article-meta"><span class="article-meta__separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/%E5%88%86%E5%B8%83%E5%BC%8F/">分布式</a><i class="fas fa-angle-right"></i><a class="article-meta__categories" href="/categories/%E5%88%86%E5%B8%83%E5%BC%8F/%E5%88%86%E5%B8%83%E5%BC%8F%E4%BA%8B%E5%8A%A1%E4%B9%8Bseata/">分布式事务之seata</a></span></div><div class="content">分布式事务之seata分布式事务基础事务概念事务指的就是一个操作单元，在这个操作单元中的所有操作最终要保持一致的行为，要么所有操作都被撤销。
-事务可以看做是一次大的操作，它由不同的小操作组成，这些操作要么全部成功，要么全部失败。
-
-例如
-转账：包含转出和转入操作
-网购：包含下单、扣减库存、支付操作
-
-
-
-四个特性
-
-原子性（Atomicity）：操作这些指令时，要么全部执行成功，要么全部不执行。只要其中一个指令执行失败，所有的指令都执行失败，数据进行回滚，回到执行指令前的数据状态。要么全部执行，要么全部不执行
-一致性（Consistency）：事务的执行使数据从一个状态转换为另一个状态，数据库的完整性约束没有被破坏。能量守恒，总量不变
-
-eg： 拿转账来说，假设用户A和用户B两者的钱加起来一共是2000，那么不管A和B之间如何转账，转几次账，事务结束后两个用户的钱相加起来应该还得是2000，这就是事务的一致性。
-
-隔离性（Isolation）：隔离性是当多个用户并发访问数据库时，比如操作同一张表时，数据库为每一个用户开启的事务，不能被其他事务的操作所干扰，多个并发事务之间要相互隔离。信 ...</div></div></div><div class="recent-post-item"><div class="post_cover right_radius"><a href="/88815d0a.html" title="zookeeper基础">     <img class="post_bg" src="https://img.lvxiaoyi.top/typora-img/bg.jpg/lvxiaoyi" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="zookeeper基础"></a></div><div class="recent-post-info"><a class="article-title" href="/88815d0a.html" title="zookeeper基础">zookeeper基础</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2021-11-01T07:04:01.807Z" title="发表于 2021-11-01 15:04:01">2021-11-01</time></span><span class="article-meta"><span class="article-meta__separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/%E5%88%86%E5%B8%83%E5%BC%8F/">分布式</a><i class="fas fa-angle-right"></i><a class="article-meta__categories" href="/categories/%E5%88%86%E5%B8%83%E5%BC%8F/zookeeper/">zookeeper</a></span></div><div class="content">什么是zookeeperzookeeper是一个分布式协调框架，主要用来解决分布式应用中经常遇到的一些数据管理问题，如：统一命名服务、状态同步服务、集群管理、分布式应用配置项的管理等。
-
-
-核心概念
-每个子目录如NameService都被称为zNode（目录节点），和文件系统一样，我们能够自由的增减、删除zNode，在一个znode下增加、删除子znode，唯一的不同在于znode是可以存储数据的。
-事件监听机制有四种类型的znode：
-
-PERSISTENT(持久化目录节点)
-客户端与zookeeper断开连接后，该节点依旧存在
-
-
-PERSISTENT_SEQUENTIAL(持久化顺序编号目录节点)
-客户端与zookeeper断开连接后，该节点依旧存在，只是Zookeeper给该节点名称进行顺序编号
-
-
-EPHEMERAL-临时目录节点
-客户端与zookeeper断开连接后，该节点被删除
-
-
-EPHEMERAL_SEQUENTIAL-临时顺序编号目录节点
-客户端与zookeeper断开连接后，该节点被删除，只是Zookeeper给该节点名称进行顺序编号
-
-
-
- 参考：
-https: ...</div></div></div><div class="recent-post-item"><div class="post_cover left_radius"><a href="/ecd467f2.html" title="zookeeper分布式锁">     <img class="post_bg" src="https://img.lvxiaoyi.top/typora-img/bg.jpg/lvxiaoyi" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="zookeeper分布式锁"></a></div><div class="recent-post-info"><a class="article-title" href="/ecd467f2.html" title="zookeeper分布式锁">zookeeper分布式锁</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2021-11-01T07:04:01.802Z" title="发表于 2021-11-01 15:04:01">2021-11-01</time></span><span class="article-meta"><span class="article-meta__separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/%E5%88%86%E5%B8%83%E5%BC%8F/">分布式</a><i class="fas fa-angle-right"></i><a class="article-meta__categories" href="/categories/%E5%88%86%E5%B8%83%E5%BC%8F/%E5%88%86%E5%B8%83%E5%BC%8F%E9%94%81/">分布式锁</a></span></div><div class="content">背景为了保证数据的一致性，在一些业务处理中都会选择加锁来保证数据的一致性。在单机模式下我们通常选择使用synchronized等这种JAVA提供好的jvm锁来实现，但是在集群和分布式情况下，这种jvm级别的锁式无法满足我们的需求，因为一个服务部署在多台服务器上，这些服务器上的jvm是无法通讯的，所以我们需要一种方案来解决分布式情况下数据一致性。
-在互联网公司，基本上企业内部都会有自己的一套分布式锁开发框架
-前言分布式锁一般有三种实现方式：
-
-数据库乐观锁
-基于redis实现分布式锁
-基于zooKeeper实习哪分布式锁
-
-本次讲着重介绍zooKeeper实现分布式锁，和与数据库和redis实习分布式锁的对比。
-核心zookeeper的分布式锁主要是依据临时节点和事件监听机制来完成的
-curator框架实现zookeeper分布式锁前提：需要搭建起zookeeper基础架构，并且使用gateway网关做负载均衡
-12345&lt;dependency&gt;    &lt;groupId&gt;org.apache.curator&lt;/groupId&gt;    &lt;artif ...</div></div></div><nav id="pagination"><div class="pagination"><a class="extend prev" rel="prev" href="/page/5/#content-inner"><i class="fas fa-chevron-left fa-fw"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/5/#content-inner">5</a><span class="page-number current">6</span><a class="page-number" href="/page/7/#content-inner">7</a><span class="space">&hellip;</span><a class="page-number" href="/page/9/#content-inner">9</a><a class="extend next" rel="next" href="/page/7/#content-inner"><i class="fas fa-chevron-right fa-fw"></i></a></div></nav></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="/img/avatar.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">吕小医</div><div class="author-info__description">IT小白的健身小白</div></div><div class="card-info-data"><div class="card-info-data-item is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">126</div></a></div><div class="card-info-data-item is-center"><a href="/tags/"><div class="headline">标签</div><div class="length-num">25</div></a></div><div class="card-info-data-item is-center"><a href="/categories/"><div class="headline">分类</div><div class="length-num">47</div></a></div></div><a class="button--animated" id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/lvxiaoyi"><i class="fab fa-github"></i><span>Follow Me</span></a></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn card-announcement-animation"></i><span>公告</span></div><div class="announcement_content">welcome my blog</div></div><div class="sticky_layout"><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/5830f7f2.html" title="387.字符串中的第一个唯一字符"><img src="https://img.lvxiaoyi.top/typora-img/202111011355394.png/lvxiaoyi" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="387.字符串中的第一个唯一字符"/></a><div class="content"><a class="title" href="/5830f7f2.html" title="387.字符串中的第一个唯一字符">387.字符串中的第一个唯一字符</a><time datetime="2021-11-19T11:39:12.344Z" title="发表于 2021-11-19 19:39:12">2021-11-19</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/48c72403.html" title="java基础-3集合面试题"><img src="https://img.lvxiaoyi.top/typora-img/202111191025146.png/lvxiaoyi" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="java基础-3集合面试题"/></a><div class="content"><a class="title" href="/48c72403.html" title="java基础-3集合面试题">java基础-3集合面试题</a><time datetime="2021-11-19T02:20:41.028Z" title="发表于 2021-11-19 10:20:41">2021-11-19</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/c2758a5a.html" title="java基础-4之集合深入"><img src="https://img.lvxiaoyi.top/typora-img/202111191025146.png/lvxiaoyi" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="java基础-4之集合深入"/></a><div class="content"><a class="title" href="/c2758a5a.html" title="java基础-4之集合深入">java基础-4之集合深入</a><time datetime="2021-11-19T02:16:51.692Z" title="发表于 2021-11-19 10:16:51">2021-11-19</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/aca24504.html" title="剑指 Offer 33. 二叉搜索树的后序遍历序列"><img src="https://img.lvxiaoyi.top/typora-img/202111011345626.jpg/lvxiaoyi" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="剑指 Offer 33. 二叉搜索树的后序遍历序列"/></a><div class="content"><a class="title" href="/aca24504.html" title="剑指 Offer 33. 二叉搜索树的后序遍历序列">剑指 Offer 33. 二叉搜索树的后序遍历序列</a><time datetime="2021-11-18T13:46:39.369Z" title="发表于 2021-11-18 21:46:39">2021-11-18</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/de9cdaf9.html" title="剑指 Offer 32 - III. 从上到下打印二叉树 III"><img src="https://img.lvxiaoyi.top/typora-img/202111011345626.jpg/lvxiaoyi" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="剑指 Offer 32 - III. 从上到下打印二叉树 III"/></a><div class="content"><a class="title" href="/de9cdaf9.html" title="剑指 Offer 32 - III. 从上到下打印二叉树 III">剑指 Offer 32 - III. 从上到下打印二叉树 III</a><time datetime="2021-11-18T13:24:47.085Z" title="发表于 2021-11-18 21:24:47">2021-11-18</time></div></div></div></div><div class="card-widget card-categories"><div class="item-headline">
+代理模式有静态代理和动态代理两种实现方式，我们 先来看一下静态代理模式的实现。
+2. 静态代理静态代理中，我们对目标对象的每个方法的增强都是手动完成的（_后面会具体演示代码_），非常不灵活（_比如接口一旦新增加方法，目标对象和代理对象都要进行修改_）且麻烦(需要对每个目标类都单独写一个代理类)。 实际应用场景非常非常少，日常开发几乎看不到使用静态代理的场景。
+上面我们是从实现和应用角度来说的静态代理，从 J ...</div></div></div><div class="recent-post-item"><div class="post_cover right_radius"><a href="/411de67e.html" title="Mockito单元测试">     <img class="post_bg" src="https://img.lvxiaoyi.top/typora-img/bg.jpg/lvxiaoyi" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Mockito单元测试"></a></div><div class="recent-post-info"><a class="article-title" href="/411de67e.html" title="Mockito单元测试">Mockito单元测试</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2021-11-18T02:59:24.043Z" title="发表于 2021-11-18 10:59:24">2021-11-18</time></span><span class="article-meta"><span class="article-meta__separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/%E6%B5%8B%E8%AF%95/">测试</a><i class="fas fa-angle-right"></i><a class="article-meta__categories" href="/categories/%E6%B5%8B%E8%AF%95/mockito/">mockito</a></span></div><div class="content">https://www.it1352.com/OnLineTutorial/mockito/mockito_overview.html
+https://www.cnblogs.com/zishi/p/10537967.html
+概述什么是Mocking？模拟是一种独立测试类功能的方法.模拟不需要数据库连接或属性文件读取或文件服务器读取来测试功能.模拟对象可以模拟真实服务.模拟对象返回与传递给它的一些虚拟输入相对应的虚拟数据.
+为什么要有Mockito我们项目一般都是 MVC 分层的，而单元测试主要是在 Dao 层和 Service 层上进行编写。从项目结构上来说，Service 层是依赖 Dao 层的，但是从单元测试角度，对某个 Service 进行单元的时候，他所有依赖的类都应该进行Mock。而 Dao 层单元测试就比较简单了，只依赖数据库中的数据。对于大量这样的mock数据，我们使用mockito可以方便我们的开发。
+MockitoMockito有助于无缝地创建模拟对象.它使用Java Reflection为给定接口创建模拟对象.模拟对象只不过是实际实现的代理.
+考虑一个股票服务案 ...</div></div></div><div class="recent-post-item"><div class="post_cover left_radius"><a href="/ea652ff.html" title="java基础-1">     <img class="post_bg" src="https://img.lvxiaoyi.top/typora-img/202111191025146.png/lvxiaoyi" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="java基础-1"></a></div><div class="recent-post-info"><a class="article-title" href="/ea652ff.html" title="java基础-1">java基础-1</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2021-11-18T02:21:33.675Z" title="发表于 2021-11-18 10:21:33">2021-11-18</time></span><span class="article-meta"><span class="article-meta__separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/java/">java</a><i class="fas fa-angle-right"></i><a class="article-meta__categories" href="/categories/java/java%E5%9F%BA%E7%A1%80/">java基础</a></span></div><div class="content">概述Java 反射机制可以让我们在编译期(Compile Time)之外的运行期(Runtime)检查类，接口，变量以及方法的信息。反射还可以让我们在运行期实例化对象，调用方法，通过调用 get/set 方法获取变量的值。
+Java 反射机制功能强大而且非常实用。目前在互联网上已经有不胜枚举的 Java 反射指南，然而大多数的指南包括 Sun 公司所发布的反射指南中都仅仅只是介绍了一些反射的表面内容以及它的潜能。
+在这个系列的文章中，我们会比其他指南更深入的去理解 Java 反射机制，它会阐述 Java 反射机制的基本原理包括如何去使用数组，注解，泛型以及动态代理还有类的动态加载以及类的重载的实现。同时也会向你展示如何实现一些比较有特性的功能，比如从一个类中读取所有的 get/set 方法，或者访问一个类的私有变量以及私有方法。
+在这个系列的指南中同时也会说明一些非反射相关的但是令人困惑的问题，比如哪些泛型信息在运行时是有效的，一些人声称所有的泛型信息在运行期都会消失，其实这是不对的。
+类使用 Java 反射机制可以在运行时期检查 Java 类的信息，检查 Java 类的信息往往是你在 ...</div></div></div><nav id="pagination"><div class="pagination"><a class="extend prev" rel="prev" href="/page/5/#content-inner"><i class="fas fa-chevron-left fa-fw"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/5/#content-inner">5</a><span class="page-number current">6</span><a class="page-number" href="/page/7/#content-inner">7</a><span class="space">&hellip;</span><a class="page-number" href="/page/14/#content-inner">14</a><a class="extend next" rel="next" href="/page/7/#content-inner"><i class="fas fa-chevron-right fa-fw"></i></a></div></nav></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="/img/avatar.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">吕小医</div><div class="author-info__description">IT小白的健身小白</div></div><div class="card-info-data"><div class="card-info-data-item is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">202</div></a></div><div class="card-info-data-item is-center"><a href="/tags/"><div class="headline">标签</div><div class="length-num">26</div></a></div><div class="card-info-data-item is-center"><a href="/categories/"><div class="headline">分类</div><div class="length-num">49</div></a></div></div><a class="button--animated" id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/lvxiaoyi"><i class="fab fa-github"></i><span>Follow Me</span></a></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn card-announcement-animation"></i><span>公告</span></div><div class="announcement_content">welcome my blog</div></div><div class="sticky_layout"><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/e3da91bd.html" title="Spring源码分析-3"><img src="https://img.lvxiaoyi.top/typora-img/bg.jpg/lvxiaoyi" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Spring源码分析-3"/></a><div class="content"><a class="title" href="/e3da91bd.html" title="Spring源码分析-3">Spring源码分析-3</a><time datetime="2022-01-17T09:40:58.209Z" title="发表于 2022-01-17 17:40:58">2022-01-17</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/b6e7cff2.html" title="LeetCode 31. 下一个排列"><img src="https://img.lvxiaoyi.top/typora-img/202111011355394.png/lvxiaoyi" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="LeetCode 31. 下一个排列"/></a><div class="content"><a class="title" href="/b6e7cff2.html" title="LeetCode 31. 下一个排列">LeetCode 31. 下一个排列</a><time datetime="2022-01-10T12:04:03.914Z" title="发表于 2022-01-10 20:04:03">2022-01-10</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/e9d7ca54.html" title="LeetCode 76. 最小覆盖子串"><img src="https://img.lvxiaoyi.top/typora-img/202111011355394.png/lvxiaoyi" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="LeetCode 76. 最小覆盖子串"/></a><div class="content"><a class="title" href="/e9d7ca54.html" title="LeetCode 76. 最小覆盖子串">LeetCode 76. 最小覆盖子串</a><time datetime="2022-01-10T11:48:40.318Z" title="发表于 2022-01-10 19:48:40">2022-01-10</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/ebd710d7.html" title="LeetCode 151. 翻转字符串里的单词"><img src="https://img.lvxiaoyi.top/typora-img/202111011355394.png/lvxiaoyi" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="LeetCode 151. 翻转字符串里的单词"/></a><div class="content"><a class="title" href="/ebd710d7.html" title="LeetCode 151. 翻转字符串里的单词">LeetCode 151. 翻转字符串里的单词</a><time datetime="2022-01-08T14:27:06.221Z" title="发表于 2022-01-08 22:27:06">2022-01-08</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/4cb77bf3.html" title="LeetCode 105. 从前序与中序遍历序列构造二叉树"><img src="https://img.lvxiaoyi.top/typora-img/202111011355394.png/lvxiaoyi" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="LeetCode 105. 从前序与中序遍历序列构造二叉树"/></a><div class="content"><a class="title" href="/4cb77bf3.html" title="LeetCode 105. 从前序与中序遍历序列构造二叉树">LeetCode 105. 从前序与中序遍历序列构造二叉树</a><time datetime="2022-01-08T12:47:48.107Z" title="发表于 2022-01-08 20:47:48">2022-01-08</time></div></div></div></div><div class="card-widget card-categories"><div class="item-headline">
             <i class="fas fa-folder-open"></i>
             <span>分类</span>
             <a class="card-more-btn" href="/categories/" title="查看更多">
     <i class="fas fa-angle-right"></i></a>
             </div>
             <ul class="card-category-list" id="aside-cat-list">
-            <li class="card-category-list-item "><a class="card-category-list-link" href="/categories/MySQL/"><span class="card-category-list-name">MySQL</span><span class="card-category-list-count">2</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/Spring/"><span class="card-category-list-name">Spring</span><span class="card-category-list-count">5</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/elasticsearch/"><span class="card-category-list-name">elasticsearch</span><span class="card-category-list-count">1</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/java/"><span class="card-category-list-name">java</span><span class="card-category-list-count">8</span></a><ul class="card-category-list child"><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/java/java%E5%9F%BA%E7%A1%80/"><span class="card-category-list-name">java基础</span><span class="card-category-list-count">6</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/java/%E4%BB%A3%E7%90%86%E6%A8%A1%E5%BC%8F/"><span class="card-category-list-name">代理模式</span><span class="card-category-list-count">1</span></a></li></ul></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/jvm/"><span class="card-category-list-name">jvm</span><span class="card-category-list-count">6</span></a><ul class="card-category-list child"><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/jvm/jvm%E6%9D%82%E7%AF%87/"><span class="card-category-list-name">jvm杂篇</span><span class="card-category-list-count">1</span></a></li></ul></li>
-            </ul></div><div class="card-widget card-tags"><div class="item-headline"><i class="fas fa-tags"></i><span>标签</span></div><div class="card-tag-cloud"><a href="/tags/%E5%88%86%E5%B8%83%E5%BC%8F/" style="font-size: 1.24em; color: rgb(87, 154, 42)">分布式</a><a href="/tags/jvm/" style="font-size: 1.3em; color: rgb(17, 133, 103)">jvm</a><a href="/tags/linux/" style="font-size: 1.15em; color: rgb(144, 123, 188)">linux</a><a href="/tags/lua/" style="font-size: 1.18em; color: rgb(112, 139, 182)">lua</a><a href="/tags/%E5%81%A5%E8%BA%AB/" style="font-size: 1.15em; color: rgb(70, 1, 157)">健身</a><a href="/tags/%E5%A4%A7%E6%95%B0%E6%8D%AE/" style="font-size: 1.42em; color: rgb(95, 141, 130)">大数据</a><a href="/tags/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/" style="font-size: 1.27em; color: rgb(140, 73, 148)">操作系统</a><a href="/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" style="font-size: 1.18em; color: rgb(161, 77, 165)">设计模式</a><a href="/tags/LeetCode/" style="font-size: 1.39em; color: rgb(59, 24, 13)">LeetCode</a><a href="/tags/%E5%89%91%E6%8C%87offer/" style="font-size: 1.45em; color: rgb(199, 145, 156)">剑指offer</a><a href="/tags/%E7%AE%97%E6%B3%95%E6%80%9D%E6%83%B3/" style="font-size: 1.15em; color: rgb(193, 67, 158)">算法思想</a><a href="/tags/%E9%9D%A2%E8%AF%95/" style="font-size: 1.15em; color: rgb(101, 130, 157)">面试</a><a href="/tags/redis%E9%9B%86%E7%BE%A4/" style="font-size: 1.15em; color: rgb(200, 83, 121)">redis集群</a><a href="/tags/redis/" style="font-size: 1.21em; color: rgb(28, 78, 65)">redis</a><a href="/tags/%E5%88%86%E5%B8%83%E5%BC%8F%E9%94%81/" style="font-size: 1.18em; color: rgb(7, 42, 130)">分布式锁</a><a href="/tags/zookeeper/" style="font-size: 1.15em; color: rgb(61, 117, 14)">zookeeper</a><a href="/tags/%E5%A4%9A%E7%BA%BF%E7%A8%8B/" style="font-size: 1.36em; color: rgb(155, 88, 94)">多线程</a><a href="/tags/%E6%B5%8B%E8%AF%95/" style="font-size: 1.21em; color: rgb(151, 65, 37)">测试</a><a href="/tags/Spring/" style="font-size: 1.27em; color: rgb(92, 162, 194)">Spring</a><a href="/tags/java/" style="font-size: 1.33em; color: rgb(167, 162, 200)">java</a><a href="/tags/%E7%AE%97%E6%B3%95/" style="font-size: 1.15em; color: rgb(196, 44, 103)">算法</a><a href="/tags/%E5%A4%9A%E7%BA%BF%E7%A8%8B%E5%AE%9E%E6%88%98/" style="font-size: 1.15em; color: rgb(64, 22, 35)">多线程实战</a><a href="/tags/MySQL/" style="font-size: 1.18em; color: rgb(171, 35, 123)">MySQL</a><a href="/tags/elasticsearch/" style="font-size: 1.15em; color: rgb(190, 103, 110)">elasticsearch</a><a href="/tags/markdown/" style="font-size: 1.15em; color: rgb(8, 137, 178)">markdown</a></div></div><div class="card-widget card-archives"><div class="item-headline"><i class="fas fa-archive"></i><span>归档</span></div><ul class="card-archive-list"><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2021/11/"><span class="card-archive-list-date">十一月 2021</span><span class="card-archive-list-count">126</span></a></li></ul></div><div class="card-widget card-webinfo"><div class="item-headline"><i class="fas fa-chart-line"></i><span>网站资讯</span></div><div class="webinfo"><div class="webinfo-item"><div class="item-name">文章数目 :</div><div class="item-count">126</div></div><div class="webinfo-item"><div class="item-name">本站访客数 :</div><div class="item-count" id="busuanzi_value_site_uv"></div></div><div class="webinfo-item"><div class="item-name">本站总访问量 :</div><div class="item-count" id="busuanzi_value_site_pv"></div></div><div class="webinfo-item"><div class="item-name">最后更新时间 :</div><div class="item-count" id="last-push-date" data-lastPushDate="2021-11-19T14:05:32.796Z"></div></div></div></div></div></div></main><footer id="footer" style="background-image: url('https://img.lvxiaoyi.top/typora-img/bg.jpg/lvxiaoyi')"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2021 By 吕小医</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><div class="js-pjax"><script>function subtitleType () {
+            <li class="card-category-list-item "><a class="card-category-list-link" href="/categories/MySQL/"><span class="card-category-list-name">MySQL</span><span class="card-category-list-count">4</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/Spring/"><span class="card-category-list-name">Spring</span><span class="card-category-list-count">6</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/SpringMVC/"><span class="card-category-list-name">SpringMVC</span><span class="card-category-list-count">1</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/elasticsearch/"><span class="card-category-list-name">elasticsearch</span><span class="card-category-list-count">1</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/java/"><span class="card-category-list-name">java</span><span class="card-category-list-count">8</span></a><ul class="card-category-list child"><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/java/java%E5%9F%BA%E7%A1%80/"><span class="card-category-list-name">java基础</span><span class="card-category-list-count">6</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/java/%E4%BB%A3%E7%90%86%E6%A8%A1%E5%BC%8F/"><span class="card-category-list-name">代理模式</span><span class="card-category-list-count">1</span></a></li></ul></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/jvm/"><span class="card-category-list-name">jvm</span><span class="card-category-list-count">7</span></a></li>
+            </ul></div><div class="card-widget card-tags"><div class="item-headline"><i class="fas fa-tags"></i><span>标签</span></div><div class="card-tag-cloud"><a href="/tags/%E5%88%86%E5%B8%83%E5%BC%8F/" style="font-size: 1.23em; color: rgb(185, 159, 73)">分布式</a><a href="/tags/jvm/" style="font-size: 1.31em; color: rgb(92, 69, 8)">jvm</a><a href="/tags/linux/" style="font-size: 1.15em; color: rgb(33, 172, 19)">linux</a><a href="/tags/lua/" style="font-size: 1.18em; color: rgb(184, 22, 193)">lua</a><a href="/tags/%E5%81%A5%E8%BA%AB/" style="font-size: 1.15em; color: rgb(50, 194, 100)">健身</a><a href="/tags/%E5%A4%A7%E6%95%B0%E6%8D%AE/" style="font-size: 1.4em; color: rgb(119, 158, 133)">大数据</a><a href="/tags/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/" style="font-size: 1.26em; color: rgb(173, 100, 155)">操作系统</a><a href="/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" style="font-size: 1.18em; color: rgb(102, 97, 32)">设计模式</a><a href="/tags/LeetCode/" style="font-size: 1.45em; color: rgb(145, 64, 23)">LeetCode</a><a href="/tags/%E5%89%91%E6%8C%87offer/" style="font-size: 1.42em; color: rgb(174, 4, 120)">剑指offer</a><a href="/tags/%E7%AE%97%E6%B3%95%E6%80%9D%E6%83%B3/" style="font-size: 1.15em; color: rgb(75, 143, 144)">算法思想</a><a href="/tags/%E9%9D%A2%E8%AF%95/" style="font-size: 1.15em; color: rgb(107, 13, 49)">面试</a><a href="/tags/redis%E9%9B%86%E7%BE%A4/" style="font-size: 1.15em; color: rgb(153, 146, 49)">redis集群</a><a href="/tags/redis/" style="font-size: 1.2em; color: rgb(43, 186, 177)">redis</a><a href="/tags/%E5%88%86%E5%B8%83%E5%BC%8F%E9%94%81/" style="font-size: 1.18em; color: rgb(4, 181, 18)">分布式锁</a><a href="/tags/zookeeper/" style="font-size: 1.15em; color: rgb(157, 117, 150)">zookeeper</a><a href="/tags/%E5%A4%9A%E7%BA%BF%E7%A8%8B/" style="font-size: 1.37em; color: rgb(162, 91, 195)">多线程</a><a href="/tags/%E6%B5%8B%E8%AF%95/" style="font-size: 1.2em; color: rgb(38, 91, 13)">测试</a><a href="/tags/Spring/" style="font-size: 1.29em; color: rgb(33, 33, 101)">Spring</a><a href="/tags/java/" style="font-size: 1.34em; color: rgb(19, 121, 66)">java</a><a href="/tags/%E7%AE%97%E6%B3%95/" style="font-size: 1.15em; color: rgb(111, 51, 164)">算法</a><a href="/tags/%E5%A4%9A%E7%BA%BF%E7%A8%8B%E5%AE%9E%E6%88%98/" style="font-size: 1.15em; color: rgb(152, 93, 70)">多线程实战</a><a href="/tags/MySQL/" style="font-size: 1.23em; color: rgb(125, 24, 5)">MySQL</a><a href="/tags/elasticsearch/" style="font-size: 1.15em; color: rgb(111, 77, 60)">elasticsearch</a><a href="/tags/markdown/" style="font-size: 1.15em; color: rgb(164, 150, 30)">markdown</a><a href="/tags/SpringMVC/" style="font-size: 1.15em; color: rgb(88, 90, 144)">SpringMVC</a></div></div><div class="card-widget card-archives"><div class="item-headline"><i class="fas fa-archive"></i><span>归档</span></div><ul class="card-archive-list"><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2022/01/"><span class="card-archive-list-date">一月 2022</span><span class="card-archive-list-count">14</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2021/12/"><span class="card-archive-list-date">十二月 2021</span><span class="card-archive-list-count">45</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2021/11/"><span class="card-archive-list-date">十一月 2021</span><span class="card-archive-list-count">143</span></a></li></ul></div><div class="card-widget card-webinfo"><div class="item-headline"><i class="fas fa-chart-line"></i><span>网站资讯</span></div><div class="webinfo"><div class="webinfo-item"><div class="item-name">文章数目 :</div><div class="item-count">202</div></div><div class="webinfo-item"><div class="item-name">本站访客数 :</div><div class="item-count" id="busuanzi_value_site_uv"></div></div><div class="webinfo-item"><div class="item-name">本站总访问量 :</div><div class="item-count" id="busuanzi_value_site_pv"></div></div><div class="webinfo-item"><div class="item-name">最后更新时间 :</div><div class="item-count" id="last-push-date" data-lastPushDate="2022-02-11T10:26:31.330Z"></div></div></div></div></div></div></main><footer id="footer" style="background-image: url('https://img.lvxiaoyi.top/typora-img/bg.jpg/lvxiaoyi')"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2022 By 吕小医</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><div class="js-pjax"><script>function subtitleType () {
   if (true) { 
     var typed = new Typed("#subtitle", {
       strings: "IT小白的健身小白  冲鸭！".split(","),
