@@ -1,0 +1,330 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"><title>jvm中对象的内存布局 | 吕小医のBLOG</title><meta name="keywords" content="jvm"><meta name="author" content="吕小医"><meta name="copyright" content="吕小医"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="对象的创建、内存布局和访问定位1. 对象创建 在开发使用时，创建 Java 对象仅仅只是是通过关键字new：">
+<meta property="og:type" content="article">
+<meta property="og:title" content="jvm中对象的内存布局">
+<meta property="og:url" content="https://lvxiaoyi.top/561c47f9.html">
+<meta property="og:site_name" content="吕小医のBLOG">
+<meta property="og:description" content="对象的创建、内存布局和访问定位1. 对象创建 在开发使用时，创建 Java 对象仅仅只是是通过关键字new：">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://img.lvxiaoyi.top/typora-img/202111011413329.png/lvxiaoyi">
+<meta property="article:published_time" content="2022-09-12T07:22:48.761Z">
+<meta property="article:modified_time" content="2022-09-12T07:22:48.761Z">
+<meta property="article:author" content="吕小医">
+<meta property="article:tag" content="jvm">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://img.lvxiaoyi.top/typora-img/202111011413329.png/lvxiaoyi"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="https://lvxiaoyi.top/561c47f9"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'jvm中对象的内存布局',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2022-09-12 15:22:48'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><meta name="generator" content="Hexo 5.4.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">202</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">26</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">49</div></a></div><hr/></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://img.lvxiaoyi.top/typora-img/202111011413329.png/lvxiaoyi')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">吕小医のBLOG</a></span><div id="menus"><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">jvm中对象的内存布局</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2022-09-12T07:22:48.761Z" title="发表于 2022-09-12 15:22:48">2022-09-12</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2022-09-12T07:22:48.761Z" title="更新于 2022-09-12 15:22:48">2022-09-12</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/jvm/">jvm</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="jvm中对象的内存布局"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h1 id="对象的创建、内存布局和访问定位"><a href="#对象的创建、内存布局和访问定位" class="headerlink" title="对象的创建、内存布局和访问定位"></a>对象的创建、内存布局和访问定位</h1><h2 id="1-对象创建"><a href="#1-对象创建" class="headerlink" title="1. 对象创建"></a>1. 对象创建</h2><ul>
+<li>在开发使用时，创建 <code>Java</code> 对象仅仅只是是通过关键字<code>new</code>：</li>
+</ul>
+<span id="more"></span>
+
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">A a = <span class="keyword">new</span> A()；</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>可是 <code>Java</code>对象在虚拟机中创建则是相对复杂。今天，我将详解<code>Java</code>对象在虚拟机中的创建过程</li>
+</ul>
+<blockquote>
+<p>限于普通对象，不包括数组和Class对象等</p>
+</blockquote>
+<h3 id="1-1-创建过程"><a href="#1-1-创建过程" class="headerlink" title="1.1 创建过程"></a>1.1 创建过程</h3><p>当遇到关键字<code>new</code>指令时，Java对象创建过程便开始，整个过程如下：</p>
+<img src="https://upload-images.jianshu.io/upload_images/944365-2db1b11a4cb98f1b.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/290/format/webp" alt="img"  />
+
+<p>Java对象创建过程</p>
+<p>下面我将对每个步骤进行讲解。</p>
+<h3 id="步骤1：类加载检查"><a href="#步骤1：类加载检查" class="headerlink" title="步骤1：类加载检查"></a>步骤1：类加载检查</h3><ol>
+<li>检查 该<code>new</code>指令的参数 是否能在 常量池中 定位到一个类的符号引用</li>
+<li>检查 该类符号引用 代表的类是否已被加载、解析和初始化过</li>
+</ol>
+<blockquote>
+<p>如果没有，需要先执行相应的类加载过程</p>
+</blockquote>
+<h4 id="关于类加载请看文章："><a href="#关于类加载请看文章：" class="headerlink" title="关于类加载请看文章："></a>关于类加载请看文章：</h4><hr>
+<h3 id="步骤2：为对象分配内存"><a href="#步骤2：为对象分配内存" class="headerlink" title="步骤2：为对象分配内存"></a>步骤2：为对象分配内存</h3><ul>
+<li>虚拟机将为对象分配内存，即把一块确定大小的内存从 <code>Java</code> 堆中划分出来</li>
+</ul>
+<blockquote>
+<p>对象所需内存的大小在类加载完成后便可完全确定</p>
+</blockquote>
+<ul>
+<li>关于分配内存，此处主要讲解内存分配方式</li>
+<li>内存分配 根据 <strong>Java堆内存是否绝对规整</strong> 分为两种方式：指针碰撞 &amp; 空闲列表</li>
+</ul>
+<blockquote>
+<ol>
+<li><code>Java</code>堆内存 规整：已使用的内存在一边，未使用内存在另一边</li>
+<li><code>Java</code>堆内存 不规整：已使用的内存和未使用内存相互交错</li>
+</ol>
+</blockquote>
+<p><img src="https://img.lvxiaoyi.top/typora-img/944365-56bc4829fec010da.png/lvxiaoyi" alt="img"></p>
+<p>示意图</p>
+<p>方式1：指针碰撞</p>
+<ul>
+<li>假设Java堆内存绝对规整，内存分配将采用指针碰撞</li>
+<li>分配形式：已使用内存在一边，未使用内存在另一边，中间放一个作为分界点的指示器</li>
+</ul>
+<p><img src="https://upload-images.jianshu.io/upload_images/944365-139d8747844ca098.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/471/format/webp" alt="img"></p>
+<p>正常状态</p>
+<ul>
+<li>那么，分配对象内存 = 把指针向 未使用内存 移动一段 与对象大小相等的距离</li>
+</ul>
+<p><img src="https://upload-images.jianshu.io/upload_images/944365-454f011a868e66d5.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/501/format/webp" alt="img"></p>
+<p>分配内存空间</p>
+<p>方式2：空闲列表</p>
+<ul>
+<li>假设Java堆内存不规整，内存分配将采用 空闲列表</li>
+<li>分配形式：虚拟机维护着一个 记录可用内存块 的列表，在分配时从列表中找到一块足够大的空间划分给对象实例，并更新列表上的记录</li>
+</ul>
+<p>额外知识</p>
+<ul>
+<li><p>分配方式的选择 取决于 <code>Java</code>堆内存是否规整；</p>
+</li>
+<li><p>而<code>Java</code>堆是否规整 由所采用的垃圾收集器是否带有压缩整理功能决定。因此：</p>
+<ol>
+<li>使用带 <code>Compact</code> 过程的垃圾收集器时，采用指针碰撞；</li>
+</ol>
+</li>
+</ul>
+<blockquote>
+<p>如<code>Serial、ParNew</code>垃圾收集器</p>
+</blockquote>
+<ol>
+<li>使用基于 <code>Mark_sweep</code>算法的垃圾收集器时，采用空闲列表。</li>
+</ol>
+<blockquote>
+<p>如 <code>CMS</code>垃圾收集器</p>
+</blockquote>
+<p>特别注意</p>
+<ul>
+<li>对象创建在虚拟机中是非常频繁的操作，即使仅仅修改一个指针所指向的位置，在并发情况下也会引起线程不安全</li>
+</ul>
+<blockquote>
+<p>如，正在给对象A分配内存，指针还没有来得及修改，对象B又同时使用了原来的指针来分配内存</p>
+</blockquote>
+<p><strong>所以，给对象分配内存会存在线程不安全的问题。</strong></p>
+<p>解决 线程不安全 有两种方案：</p>
+<ol>
+<li>同步处理分配内存空间的行为</li>
+</ol>
+<blockquote>
+<p>虚拟机采用 <strong><code>CAS</code> + 失败重试的方式</strong> 保证更新操作的原子性</p>
+</blockquote>
+<ol>
+<li>把内存分配行为 按照线程 划分在不同的内存空间进行</li>
+</ol>
+<blockquote>
+<ol>
+<li>即每个线程在 <code>Java</code>堆中预先分配一小块内存（本地线程分配缓冲（<code>Thread Local Allocation Buffer</code> ，<code>TLAB</code>）），哪个线程要分配内存，就在哪个线程的<code>TLAB上</code>分配，只有TLAB用完并分配新的TLAB时才需要同步锁。</li>
+<li>虚拟机是否使用<code>TLAB</code>，可以通过<code>-XX:+/-UseTLAB</code>参数来设定。</li>
+</ol>
+</blockquote>
+<hr>
+<h3 id="步骤3：-将内存空间初始化为零值"><a href="#步骤3：-将内存空间初始化为零值" class="headerlink" title="步骤3： 将内存空间初始化为零值"></a>步骤3： 将内存空间初始化为零值</h3><p>内存分配完成后，虚拟机需要将分配到的内存空间初始化为零（不包括对象头）</p>
+<blockquote>
+<ol>
+<li>保证了对象的实例字段在使用时可不赋初始值就直接使用（对应值 = 0）</li>
+<li>如使用本地线程分配缓冲（TLAB），这一工作过程也可以提前至TLAB分配时进行。</li>
+</ol>
+</blockquote>
+<hr>
+<h3 id="步骤4：-对对象进行必要的设置"><a href="#步骤4：-对对象进行必要的设置" class="headerlink" title="步骤4： 对对象进行必要的设置"></a>步骤4： 对对象进行必要的设置</h3><blockquote>
+<p>如，设置 这个对象是哪个类的实例、如何才能找到类的元数据信息、对象的哈希码、对象的GC分代年龄等信息。</p>
+</blockquote>
+<p><strong>这些信息存放在对象的对象头中</strong>。</p>
+<hr>
+<ul>
+<li>至此，从 <code>Java</code> 虚拟机的角度来看，一个新的 <code>Java</code>对象创建完毕</li>
+<li>但从 <code>Java</code> 程序开发来说，对象创建才刚开始，需要进行一些初始化操作。</li>
+</ul>
+<hr>
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>下面用一张图总结 <code>Java</code>对象创建的过程</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/944365-dcaca2aa784300fc.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/892/format/webp" alt="img"></p>
+<p>示意图</p>
+<hr>
+<h2 id="2-对象的内存布局"><a href="#2-对象的内存布局" class="headerlink" title="2. 对象的内存布局"></a>2. 对象的内存布局</h2><ul>
+<li><p>问题：在 <code>Java</code> 对象创建后，到底是如何被存储在Java内存里的呢？（美团面试题）</p>
+</li>
+<li><p>答：在<code>Java</code>虚拟机（<code>HotSpot</code>）中，对象在Java<br>内存中的 存储布局 可分为三块：</p>
+<ol>
+<li>对象头 存储区域<ol>
+<li>运行时数据（<code>Mark Word</code>）</li>
+<li>对象类型指针（KP）</li>
+</ol>
+</li>
+<li>实例数据 存储区域</li>
+<li>对齐填充 存储区域</li>
+</ol>
+</li>
+</ul>
+<p><img src="https://img.lvxiaoyi.top/typora-img/202111011413329.png/lvxiaoyi"></p>
+<h3 id="2-1-对象头-区域"><a href="#2-1-对象头-区域" class="headerlink" title="2.1 对象头 区域"></a>2.1 对象头 区域</h3><p>此处存储的信息包括两部分：</p>
+<ul>
+<li>对象自身的运行时数据（<code>Mark Word</code>）</li>
+</ul>
+<blockquote>
+<ol>
+<li>如哈希码（<code>HashCode</code>）、GC分代年龄、锁状态标志、线程持有的锁、偏向线程ID、偏向时间戳等</li>
+<li>该部分数据被设计成1个 非固定的数据结构 以便在极小的空间存储尽量多的信息（会根据对象状态复用存储空间）</li>
+<li>64位默认占据8个字节</li>
+</ol>
+</blockquote>
+<ul>
+<li>对象类型指针</li>
+</ul>
+<blockquote>
+<ol>
+<li>即对象指向它的类元数据的指针</li>
+<li>虚拟机通过这个指针来确定这个对象是哪个类的实例</li>
+<li>.64位默认占据4个字节</li>
+</ol>
+</blockquote>
+<p>特别注意</p>
+<p>如果对象 是 数组，那么在对象头中还必须有一块用于记录数组长度的数据</p>
+<blockquote>
+<p>因为虚拟机可以通过普通Java对象的元数据信息确定对象的大小，但是从数组的元数据中却无法确定数组的大小。</p>
+</blockquote>
+<hr>
+<h3 id="2-2-实例数据-区域"><a href="#2-2-实例数据-区域" class="headerlink" title="2.2 实例数据 区域"></a>2.2 实例数据 区域</h3><ul>
+<li>存储的信息：对象真正有效的信息</li>
+</ul>
+<blockquote>
+<p>即代码中定义的字段内容</p>
+</blockquote>
+<p>​    注：这部分数据的存储顺序会受到虚拟机分配参数（FieldAllocationStyle）和字段在Java源码中定义顺序的影响。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// HotSpot虚拟机默认的分配策略如下：</span></span><br><span class="line">longs/doubles、ints、shorts/chars、bytes/booleans、oop(Ordinary Object Pointers)</span><br><span class="line"><span class="comment">// 从分配策略中可以看出，相同宽度的字段总是被分配到一起</span></span><br><span class="line"><span class="comment">// 在满足这个前提的条件下，父类中定义的变量会出现在子类之前</span></span><br><span class="line"> </span><br><span class="line">CompactFields = <span class="keyword">true</span>；</span><br><span class="line"><span class="comment">// 如果 CompactFields 参数值为true，那么子类之中较窄的变量也可能会插入到父类变量的空隙之中。</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>对齐：如果上面的数据长度不能被8整除，则添加一个最小的padding，使整个数据能被8整除（用于64位）</li>
+</ul>
+<p>参考文章：</p>
+<p><a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1aQ4y1P7Me?p=3&amp;spm_id_from=pageDriver">https://www.bilibili.com/video/BV1aQ4y1P7Me?p=3&amp;spm_id_from=pageDriver</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.jianshu.com/p/1952061502d0">https://www.jianshu.com/p/1952061502d0</a></p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="https://lvxiaoyi.top">吕小医</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="https://lvxiaoyi.top/561c47f9.html">https://lvxiaoyi.top/561c47f9.html</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://lvxiaoyi.top" target="_blank">吕小医のBLOG</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/jvm/">jvm</a></div><div class="post_share"><div class="social-share" data-image="https://img.lvxiaoyi.top/typora-img/202111011413329.png/lvxiaoyi" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/dd88deb1.html"><img class="prev-cover" src="/" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">前端编译器和后端编译器</div></div></a></div><div class="next-post pull-right"><a href="/b35e3780.html"><img class="next-cover" src="https://img.lvxiaoyi.top/typora-img/202111011423288.png/lvxiaoyi" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">lua基础教程1-环境安装</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><div><a href="/539b1196.html" title="jvm基础1之内存与垃圾回收篇"><img class="cover" src="https://img.lvxiaoyi.top/typora-img/202111011421399.jpeg/lvxiaoyi" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-09-12</div><div class="title">jvm基础1之内存与垃圾回收篇</div></div></a></div><div><a href="/127ae04f.html" title="Jvm基础4之案例篇"><img class="cover" src="https://img.lvxiaoyi.top/typora-img/202111011421399.jpeg/lvxiaoyi" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-09-12</div><div class="title">Jvm基础4之案例篇</div></div></a></div><div><a href="/9f1e208e.html" title="jvm基础2之字节码与类的加载篇"><img class="cover" src="https://img.lvxiaoyi.top/typora-img/202111011421399.jpeg/lvxiaoyi" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-09-12</div><div class="title">jvm基础2之字节码与类的加载篇</div></div></a></div><div><a href="/6197d47a.html" title="jvm基础3之性能监控与调优篇"><img class="cover" src="https://img.lvxiaoyi.top/typora-img/202111011421399.jpeg/lvxiaoyi" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-09-12</div><div class="title">jvm基础3之性能监控与调优篇</div></div></a></div><div><a href="/dd88deb1.html" title="前端编译器和后端编译器"><img class="cover" src="/" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-09-12</div><div class="title">前端编译器和后端编译器</div></div></a></div><div><a href="/2134a338.html" title="源码级别理解java拆箱装箱过程"><img class="cover" src="https://img.lvxiaoyi.top/typora-img/image-20210913142135732.png/lvxiaoyi" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-09-12</div><div class="title">源码级别理解java拆箱装箱过程</div></div></a></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">吕小医</div><div class="author-info__description">IT小白的健身小白</div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">202</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">26</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">49</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/xxxxxx"><i class="fab fa-github"></i><span>Follow Me</span></a></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">This is my Blog</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%AF%B9%E8%B1%A1%E7%9A%84%E5%88%9B%E5%BB%BA%E3%80%81%E5%86%85%E5%AD%98%E5%B8%83%E5%B1%80%E5%92%8C%E8%AE%BF%E9%97%AE%E5%AE%9A%E4%BD%8D"><span class="toc-number">1.</span> <span class="toc-text">对象的创建、内存布局和访问定位</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-%E5%AF%B9%E8%B1%A1%E5%88%9B%E5%BB%BA"><span class="toc-number">1.1.</span> <span class="toc-text">1. 对象创建</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-1-%E5%88%9B%E5%BB%BA%E8%BF%87%E7%A8%8B"><span class="toc-number">1.1.1.</span> <span class="toc-text">1.1 创建过程</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%AD%A5%E9%AA%A41%EF%BC%9A%E7%B1%BB%E5%8A%A0%E8%BD%BD%E6%A3%80%E6%9F%A5"><span class="toc-number">1.1.2.</span> <span class="toc-text">步骤1：类加载检查</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%85%B3%E4%BA%8E%E7%B1%BB%E5%8A%A0%E8%BD%BD%E8%AF%B7%E7%9C%8B%E6%96%87%E7%AB%A0%EF%BC%9A"><span class="toc-number">1.1.2.1.</span> <span class="toc-text">关于类加载请看文章：</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%AD%A5%E9%AA%A42%EF%BC%9A%E4%B8%BA%E5%AF%B9%E8%B1%A1%E5%88%86%E9%85%8D%E5%86%85%E5%AD%98"><span class="toc-number">1.1.3.</span> <span class="toc-text">步骤2：为对象分配内存</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%AD%A5%E9%AA%A43%EF%BC%9A-%E5%B0%86%E5%86%85%E5%AD%98%E7%A9%BA%E9%97%B4%E5%88%9D%E5%A7%8B%E5%8C%96%E4%B8%BA%E9%9B%B6%E5%80%BC"><span class="toc-number">1.1.4.</span> <span class="toc-text">步骤3： 将内存空间初始化为零值</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%AD%A5%E9%AA%A44%EF%BC%9A-%E5%AF%B9%E5%AF%B9%E8%B1%A1%E8%BF%9B%E8%A1%8C%E5%BF%85%E8%A6%81%E7%9A%84%E8%AE%BE%E7%BD%AE"><span class="toc-number">1.1.5.</span> <span class="toc-text">步骤4： 对对象进行必要的设置</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%80%BB%E7%BB%93"><span class="toc-number">1.1.6.</span> <span class="toc-text">总结</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-%E5%AF%B9%E8%B1%A1%E7%9A%84%E5%86%85%E5%AD%98%E5%B8%83%E5%B1%80"><span class="toc-number">1.2.</span> <span class="toc-text">2. 对象的内存布局</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#2-1-%E5%AF%B9%E8%B1%A1%E5%A4%B4-%E5%8C%BA%E5%9F%9F"><span class="toc-number">1.2.1.</span> <span class="toc-text">2.1 对象头 区域</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-2-%E5%AE%9E%E4%BE%8B%E6%95%B0%E6%8D%AE-%E5%8C%BA%E5%9F%9F"><span class="toc-number">1.2.2.</span> <span class="toc-text">2.2 实例数据 区域</span></a></li></ol></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/f1601c3e.html" title="单例模式"><img src="https://img.lvxiaoyi.top/typora-img/1002892-20180912131026735-781767905.png/lvxiaoyi" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="单例模式"/></a><div class="content"><a class="title" href="/f1601c3e.html" title="单例模式">单例模式</a><time datetime="2022-09-12T07:22:48.777Z" title="发表于 2022-09-12 15:22:48">2022-09-12</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/b15f0f1b.html" title="设计模式基础-1"><img src="https://img.lvxiaoyi.top/typora-img/image-20211012093705433.png/lvxiaoyi" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="设计模式基础-1"/></a><div class="content"><a class="title" href="/b15f0f1b.html" title="设计模式基础-1">设计模式基础-1</a><time datetime="2022-09-12T07:22:48.777Z" title="发表于 2022-09-12 15:22:48">2022-09-12</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2109f677.html" title="计算机网络常见面试题"><img src="https://img.lvxiaoyi.top/typora-img/java-interview/1.png/lvxiaoyi" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="计算机网络常见面试题"/></a><div class="content"><a class="title" href="/2109f677.html" title="计算机网络常见面试题">计算机网络常见面试题</a><time datetime="2022-09-12T07:22:48.777Z" title="发表于 2022-09-12 15:22:48">2022-09-12</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/60bbc03b.html" title="Jmeter基础一"><img src="https://img.lvxiaoyi.top/typora-img/apachejmeter_0.jpg/lvxiaoyi" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Jmeter基础一"/></a><div class="content"><a class="title" href="/60bbc03b.html" title="Jmeter基础一">Jmeter基础一</a><time datetime="2022-09-12T07:22:48.775Z" title="发表于 2022-09-12 15:22:48">2022-09-12</time></div></div><div class="aside-list-item"><div class="content"><a class="title" href="/0.html" title="无题">无题</a><time datetime="2022-09-12T07:22:48.775Z" title="发表于 2022-09-12 15:22:48">2022-09-12</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2022 By 吕小医</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.umd.min.js"></script><div class="js-pjax"></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>

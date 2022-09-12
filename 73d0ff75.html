@@ -1,0 +1,188 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"><title>剑指 Offer 07. 重建二叉树 | 吕小医のBLOG</title><meta name="keywords" content="剑指offer"><meta name="author" content="吕小医"><meta name="copyright" content="吕小医"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="剑指 Offer 07. 重建二叉树题目12345678910111213141516输入某二叉树的前序遍历和中序遍历的结果，请构建该二叉树并返回其根节点。假设输入的前序遍历和中序遍历的结果中都不含重复的数字。Input: preorder &#x3D; [3,9,20,15,7], inorder &#x3D; [9,3,15,20,7]Output: [3,9,20,null,null,15,7]示例 2:Inp">
+<meta property="og:type" content="article">
+<meta property="og:title" content="剑指 Offer 07. 重建二叉树">
+<meta property="og:url" content="https://lvxiaoyi.top/73d0ff75.html">
+<meta property="og:site_name" content="吕小医のBLOG">
+<meta property="og:description" content="剑指 Offer 07. 重建二叉树题目12345678910111213141516输入某二叉树的前序遍历和中序遍历的结果，请构建该二叉树并返回其根节点。假设输入的前序遍历和中序遍历的结果中都不含重复的数字。Input: preorder &#x3D; [3,9,20,15,7], inorder &#x3D; [9,3,15,20,7]Output: [3,9,20,null,null,15,7]示例 2:Inp">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://img.lvxiaoyi.top/typora-img/202111011345626.jpg/lvxiaoyi">
+<meta property="article:published_time" content="2022-09-12T07:22:48.738Z">
+<meta property="article:modified_time" content="2022-09-12T07:22:48.738Z">
+<meta property="article:author" content="吕小医">
+<meta property="article:tag" content="剑指offer">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://img.lvxiaoyi.top/typora-img/202111011345626.jpg/lvxiaoyi"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="https://lvxiaoyi.top/73d0ff75"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '剑指 Offer 07. 重建二叉树',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2022-09-12 15:22:48'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><meta name="generator" content="Hexo 5.4.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">202</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">26</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">49</div></a></div><hr/></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://img.lvxiaoyi.top/typora-img/202111011345626.jpg/lvxiaoyi')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">吕小医のBLOG</a></span><div id="menus"><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">剑指 Offer 07. 重建二叉树</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2022-09-12T07:22:48.738Z" title="发表于 2022-09-12 15:22:48">2022-09-12</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2022-09-12T07:22:48.738Z" title="更新于 2022-09-12 15:22:48">2022-09-12</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E7%AE%97%E6%B3%95/">算法</a><i class="fas fa-angle-right post-meta-separator"></i><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E7%AE%97%E6%B3%95/%E5%89%91%E6%8C%87offer/">剑指offer</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="剑指 Offer 07. 重建二叉树"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h1 id="剑指-Offer-07-重建二叉树"><a href="#剑指-Offer-07-重建二叉树" class="headerlink" title="剑指 Offer 07. 重建二叉树"></a><a target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/zhong-jian-er-cha-shu-lcof/">剑指 Offer 07. 重建二叉树</a></h1><h2 id="题目"><a href="#题目" class="headerlink" title="题目"></a>题目</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">输入某二叉树的前序遍历和中序遍历的结果，请构建该二叉树并返回其根节点。</span><br><span class="line"></span><br><span class="line">假设输入的前序遍历和中序遍历的结果中都不含重复的数字。</span><br><span class="line"></span><br><span class="line">Input: preorder = [<span class="number">3</span>,<span class="number">9</span>,<span class="number">20</span>,<span class="number">15</span>,<span class="number">7</span>], inorder = [<span class="number">9</span>,<span class="number">3</span>,<span class="number">15</span>,<span class="number">20</span>,<span class="number">7</span>]</span><br><span class="line">Output: [<span class="number">3</span>,<span class="number">9</span>,<span class="number">20</span>,<span class="keyword">null</span>,<span class="keyword">null</span>,<span class="number">15</span>,<span class="number">7</span>]</span><br><span class="line">示例 <span class="number">2</span>:</span><br><span class="line"></span><br><span class="line">Input: preorder = [-<span class="number">1</span>], inorder = [-<span class="number">1</span>]</span><br><span class="line">Output: [-<span class="number">1</span>]</span><br><span class="line"> </span><br><span class="line"></span><br><span class="line">限制：</span><br><span class="line"></span><br><span class="line"><span class="number">0</span> &lt;= 节点个数 &lt;= <span class="number">5000</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<span id="more"></span>
+
+<p><img src="https://img.lvxiaoyi.top/typora-img/tree.jpg/lvxiaoyi" alt="img"></p>
+<h2 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h2><h3 id="先按照题目自己构建一个二叉树，不考虑代码实现"><a href="#先按照题目自己构建一个二叉树，不考虑代码实现" class="headerlink" title="先按照题目自己构建一个二叉树，不考虑代码实现"></a>先按照题目自己构建一个二叉树，不考虑代码实现</h3><p>前序遍历：preorder = [3,9,20,15,7]</p>
+<p> 中序遍历：inorder = [9,3,15,20,7]</p>
+<ol>
+<li>前序遍历一定能够确定3是根节点</li>
+<li>这样在中序遍历中，3左边的值一定是这个根节点的左子树，3右边的值一定是根的右子树</li>
+<li>3左边只有一个数9，说明这个数的左子树只有一个是9</li>
+<li>3的右子树有三个值，（15,20,7），然后在看前序遍历，前序遍历中的（20,15,7）一定是根的右子树，所以20一定是3的右孩子</li>
+<li>然后在看中序遍历，20是右孩子的根节点，那么15一定是20的左孩子，7一定是20的右孩子</li>
+<li>最后代入前序遍历验证</li>
+<li>正确</li>
+</ol>
+<p>所以一个前序一定能确定一个根，然后在结合后续一定能确定根的左右孩子，这样在去前序遍历和中序遍历中对比，那么一定能构建一个二叉树</p>
+<h2 id="实现"><a href="#实现" class="headerlink" title="实现"></a>实现</h2><p>不要看下面代码感觉挺多的，其实很简单就是一个递归的过程，只是传递的参数多，然后一行放不下了而已</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Definition for a binary tree node.</span></span><br><span class="line"><span class="comment"> * public class TreeNode &#123;</span></span><br><span class="line"><span class="comment"> *     int val;</span></span><br><span class="line"><span class="comment"> *     TreeNode left;</span></span><br><span class="line"><span class="comment"> *     TreeNode right;</span></span><br><span class="line"><span class="comment"> *     TreeNode(int x) &#123; val = x; &#125;</span></span><br><span class="line"><span class="comment"> * &#125;</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">   <span class="function"><span class="keyword">public</span> TreeNode <span class="title">buildTree</span><span class="params">(<span class="keyword">int</span>[] preorder, <span class="keyword">int</span>[] inorder)</span> </span>&#123;</span><br><span class="line">        <span class="comment">//构建map结构是因为，在每次在中序数组中中查找当前根节点都要遍历一次，这样可以避免遍历，直接拿到当前根节点的index</span></span><br><span class="line">        HashMap&lt;Integer, Integer&gt; indexMap = <span class="keyword">new</span> HashMap&lt;Integer, Integer&gt;();</span><br><span class="line">        <span class="keyword">int</span> length = inorder.length;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; length; i++) &#123;</span><br><span class="line">            indexMap.put(inorder[i], i);</span><br><span class="line">        &#125;</span><br><span class="line">        TreeNode root = buildTree(preorder, <span class="number">0</span>, length - <span class="number">1</span>, inorder, <span class="number">0</span>, length - <span class="number">1</span>, indexMap);</span><br><span class="line">        <span class="keyword">return</span> root;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> TreeNode <span class="title">buildTree</span><span class="params">(<span class="keyword">int</span>[] preorder, <span class="keyword">int</span> preorderStart, <span class="keyword">int</span> preorderEnd, <span class="keyword">int</span>[] inorder, <span class="keyword">int</span> inorderStart, <span class="keyword">int</span> inorderEnd, HashMap&lt;Integer, Integer&gt; indexMap)</span> </span>&#123;</span><br><span class="line">        <span class="comment">//递归终止条件</span></span><br><span class="line">        <span class="keyword">if</span> (preorderStart &gt; preorderEnd) &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">//先找出根节点</span></span><br><span class="line">        <span class="keyword">int</span> rootVal = preorder[preorderStart];</span><br><span class="line">        <span class="comment">//然后在中序遍历中找到根节点的位置，之前一定是根节点的左子树，之后一定是根节点的右子树</span></span><br><span class="line">        <span class="comment">//构建树的根节点</span></span><br><span class="line">        TreeNode root = <span class="keyword">new</span> TreeNode(rootVal);</span><br><span class="line">        <span class="comment">//如果左节点的长度为零，说明这个就是根节点，且没有子节点，直接返回</span></span><br><span class="line">        <span class="keyword">if</span> (preorderStart == preorderEnd) &#123;</span><br><span class="line">            <span class="keyword">return</span> root;</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="comment">//拿到根节点在中序遍历数组的索引</span></span><br><span class="line">            <span class="keyword">int</span> rootIndex = indexMap.get(rootVal);</span><br><span class="line">            <span class="comment">//拿到根节点的索引后，可以在前序遍历中拿到根节点左孩子的数量（最后一个节点的index），和右孩子的数量（）</span></span><br><span class="line">            <span class="comment">// 然后就需要对，根节点的左子树部分进行构建</span></span><br><span class="line">            <span class="comment">// 需要找到左子树中对应的前序遍历和中序遍历，分别对应的数组的位置</span></span><br><span class="line">            <span class="comment">/**</span></span><br><span class="line"><span class="comment">             * 1. 前序遍历的数组还是这个数组</span></span><br><span class="line"><span class="comment">             * 2. 左子树中在前序遍历数组的开始索引：preorderStart + 1，根节点左边的第一个节点就是左子树的第一个索引位置</span></span><br><span class="line"><span class="comment">             * 3. 左子树中在前序遍历数组结束的索引：preorderStart + (rootIndex - inorderStart)，</span></span><br><span class="line"><span class="comment">             *  根节点 + 在中序遍历中根节点距离开始节点的位置  = 根节点 + （在中序遍历中根节点的索引 - 在中序遍历中开始的索引）</span></span><br><span class="line"><span class="comment">             * 4. 中序遍历数组还是这个数组</span></span><br><span class="line"><span class="comment">             * 5. 左子树中在中序遍历数组的开始索引：inorderStart，中序遍历数组中的开始位置</span></span><br><span class="line"><span class="comment">             * 6. 左子树中在中序遍历数组结束的索引：rootIndex - 1，根节点索引位置减一</span></span><br><span class="line"><span class="comment">             *</span></span><br><span class="line"><span class="comment">             */</span></span><br><span class="line">            TreeNode leftNode = buildTree(preorder, preorderStart + <span class="number">1</span>, preorderStart + (rootIndex - inorderStart),</span><br><span class="line">                    inorder, inorderStart, rootIndex - <span class="number">1</span>, indexMap);</span><br><span class="line">            <span class="comment">//需要找到右子树中对应的前序遍历和中序遍历，分别对应的数组的位置</span></span><br><span class="line"></span><br><span class="line">            <span class="comment">/**</span></span><br><span class="line"><span class="comment">             * 1. 前序遍历的数组还是这个数组</span></span><br><span class="line"><span class="comment">             * 2. 右子树中在前序遍历数组的开始索引：preorderEnd - (inorderEnd - rootIndex) + 1，</span></span><br><span class="line"><span class="comment">             * 前序遍历数组的末尾索引 - 右子树数的数量 + 1  = 前序遍历数组的末尾索引 - （中序遍历末尾位置 - 中序遍历根节点的索引 ） + 1</span></span><br><span class="line"><span class="comment">             * 3. 右子树中在前序遍历数组结束的索引：preorderEnd，</span></span><br><span class="line"><span class="comment">             * 4. 中序遍历数组还是这个数组</span></span><br><span class="line"><span class="comment">             * 5. 右子树中在中序遍历数组的开始索引：rootIndex + 1，根节点索引位置加一</span></span><br><span class="line"><span class="comment">             * 6. 右子树中在中序遍历数组结束的索引：inorderEnd，</span></span><br><span class="line"><span class="comment">             *</span></span><br><span class="line"><span class="comment">             */</span></span><br><span class="line">            TreeNode rightNode = buildTree(preorder, preorderEnd - (inorderEnd - rootIndex) + <span class="number">1</span>, preorderEnd,</span><br><span class="line">                    inorder, rootIndex + <span class="number">1</span>, inorderEnd, indexMap);</span><br><span class="line">            root.left = leftNode;</span><br><span class="line">            root.right = rightNode;</span><br><span class="line">            <span class="keyword">return</span> root;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>重点有一个地方：</p>
+<h2 id="收获"><a href="#收获" class="headerlink" title="收获"></a>收获</h2><h3 id="二叉树的前序、中序、后序遍历"><a href="#二叉树的前序、中序、后序遍历" class="headerlink" title="二叉树的前序、中序、后序遍历"></a>二叉树的前序、中序、后序遍历</h3><h3 id="小学数学加减法"><a href="#小学数学加减法" class="headerlink" title="小学数学加减法"></a>小学数学加减法</h3><p><strong>求左子树中在前序遍历数组结束的索引</strong>和<strong>右子树中在前序遍历数组的开始索引</strong></p>
+<p>这里为什么有的地方加一，有的地方不加一，而有的地方需要减一</p>
+<p>这个是在算法中经常会遇到的问题：</p>
+<p>其实还是小学数学：</p>
+<p>请听题：</p>
+<p>一个有六棵树分别叫，0号，1号 ，2号，3号，4号，5号</p>
+<ol>
+<li><p>5号和2号<strong>间有几颗树</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">(<span class="number">5</span> - <span class="number">2</span>) - <span class="number">1</span> = <span class="number">2</span></span><br></pre></td></tr></table></figure></li>
+<li><p>2号树向右<strong>移动几次</strong>能到达5号树的位置</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">5</span> - <span class="number">2</span> = <span class="number">3</span></span><br></pre></td></tr></table></figure></li>
+<li><p>5号树向右移动两次是第几颗树</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">(<span class="number">5</span> - <span class="number">2</span>) + <span class="number">1</span> = <span class="number">4</span></span><br></pre></td></tr></table></figure>
+
+<p>因为索引是从0开始的，所以引号加1，如果索引不是从零开始的直接间就可以了</p>
+</li>
+</ol>
+<h4 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h4><ol>
+<li>两个数之间的差值，为小的数向大的数移动的次数</li>
+<li>如果要求两个数之间的数字数量，需要差值减一</li>
+</ol>
+<h1 id="博客首先发布于："><a href="#博客首先发布于：" class="headerlink" title="博客首先发布于："></a>博客首先发布于：</h1><p><a href="https://lvxiaoyi.top/">https://lvxiaoyi.top/</a></p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="https://lvxiaoyi.top">吕小医</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="https://lvxiaoyi.top/73d0ff75.html">https://lvxiaoyi.top/73d0ff75.html</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://lvxiaoyi.top" target="_blank">吕小医のBLOG</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/%E5%89%91%E6%8C%87offer/">剑指offer</a></div><div class="post_share"><div class="social-share" data-image="https://img.lvxiaoyi.top/typora-img/202111011345626.jpg/lvxiaoyi" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/cb96fafb.html"><img class="prev-cover" src="https://img.lvxiaoyi.top/typora-img/202111011345626.jpg/lvxiaoyi" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">剑指 Offer 24. 反转链表</div></div></a></div><div class="next-post pull-right"><a href="/6fda8efa.html"><img class="next-cover" src="https://img.lvxiaoyi.top/typora-img/202111011345626.jpg/lvxiaoyi" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">剑指 Offer 09. 用两个栈实现队列</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><div><a href="/aca24504.html" title="剑指 Offer 33. 二叉搜索树的后序遍历序列"><img class="cover" src="https://img.lvxiaoyi.top/typora-img/202111011345626.jpg/lvxiaoyi" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-09-12</div><div class="title">剑指 Offer 33. 二叉搜索树的后序遍历序列</div></div></a></div><div><a href="/e0856953.html" title="剑指 Offer 17. 打印从1到最大的n位数"><img class="cover" src="https://img.lvxiaoyi.top/typora-img/202111011345626.jpg/lvxiaoyi" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-09-12</div><div class="title">剑指 Offer 17. 打印从1到最大的n位数</div></div></a></div><div><a href="/96049971.html" title="剑指 Offer 19. 正则表达式匹配"><img class="cover" src="https://img.lvxiaoyi.top/typora-img/202111011345626.jpg/lvxiaoyi" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-09-12</div><div class="title">剑指 Offer 19. 正则表达式匹配</div></div></a></div><div><a href="/7e9ab8a.html" title="剑指 Offer 03. 数组中重复的数字"><img class="cover" src="https://img.lvxiaoyi.top/typora-img/202111011345626.jpg/lvxiaoyi" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-09-12</div><div class="title">剑指 Offer 03. 数组中重复的数字</div></div></a></div><div><a href="/8c70c103.html" title="剑指 Offer 06. 从尾到头打印链表"><img class="cover" src="https://img.lvxiaoyi.top/typora-img/202111011345626.jpg/lvxiaoyi" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-09-12</div><div class="title">剑指 Offer 06. 从尾到头打印链表</div></div></a></div><div><a href="/baec5e48.html" title="剑指 Offer 05. 替换空格"><img class="cover" src="https://img.lvxiaoyi.top/typora-img/202111011345626.jpg/lvxiaoyi" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-09-12</div><div class="title">剑指 Offer 05. 替换空格</div></div></a></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">吕小医</div><div class="author-info__description">IT小白的健身小白</div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">202</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">26</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">49</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/xxxxxx"><i class="fab fa-github"></i><span>Follow Me</span></a></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">This is my Blog</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%89%91%E6%8C%87-Offer-07-%E9%87%8D%E5%BB%BA%E4%BA%8C%E5%8F%89%E6%A0%91"><span class="toc-number">1.</span> <span class="toc-text">剑指 Offer 07. 重建二叉树</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%A2%98%E7%9B%AE"><span class="toc-number">1.1.</span> <span class="toc-text">题目</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%80%9D%E8%B7%AF"><span class="toc-number">1.2.</span> <span class="toc-text">思路</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%85%88%E6%8C%89%E7%85%A7%E9%A2%98%E7%9B%AE%E8%87%AA%E5%B7%B1%E6%9E%84%E5%BB%BA%E4%B8%80%E4%B8%AA%E4%BA%8C%E5%8F%89%E6%A0%91%EF%BC%8C%E4%B8%8D%E8%80%83%E8%99%91%E4%BB%A3%E7%A0%81%E5%AE%9E%E7%8E%B0"><span class="toc-number">1.2.1.</span> <span class="toc-text">先按照题目自己构建一个二叉树，不考虑代码实现</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%9E%E7%8E%B0"><span class="toc-number">1.3.</span> <span class="toc-text">实现</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%94%B6%E8%8E%B7"><span class="toc-number">1.4.</span> <span class="toc-text">收获</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BA%8C%E5%8F%89%E6%A0%91%E7%9A%84%E5%89%8D%E5%BA%8F%E3%80%81%E4%B8%AD%E5%BA%8F%E3%80%81%E5%90%8E%E5%BA%8F%E9%81%8D%E5%8E%86"><span class="toc-number">1.4.1.</span> <span class="toc-text">二叉树的前序、中序、后序遍历</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B0%8F%E5%AD%A6%E6%95%B0%E5%AD%A6%E5%8A%A0%E5%87%8F%E6%B3%95"><span class="toc-number">1.4.2.</span> <span class="toc-text">小学数学加减法</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%80%BB%E7%BB%93"><span class="toc-number">1.4.2.1.</span> <span class="toc-text">总结</span></a></li></ol></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%8D%9A%E5%AE%A2%E9%A6%96%E5%85%88%E5%8F%91%E5%B8%83%E4%BA%8E%EF%BC%9A"><span class="toc-number">2.</span> <span class="toc-text">博客首先发布于：</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/f1601c3e.html" title="单例模式"><img src="https://img.lvxiaoyi.top/typora-img/1002892-20180912131026735-781767905.png/lvxiaoyi" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="单例模式"/></a><div class="content"><a class="title" href="/f1601c3e.html" title="单例模式">单例模式</a><time datetime="2022-09-12T07:22:48.777Z" title="发表于 2022-09-12 15:22:48">2022-09-12</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/b15f0f1b.html" title="设计模式基础-1"><img src="https://img.lvxiaoyi.top/typora-img/image-20211012093705433.png/lvxiaoyi" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="设计模式基础-1"/></a><div class="content"><a class="title" href="/b15f0f1b.html" title="设计模式基础-1">设计模式基础-1</a><time datetime="2022-09-12T07:22:48.777Z" title="发表于 2022-09-12 15:22:48">2022-09-12</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2109f677.html" title="计算机网络常见面试题"><img src="https://img.lvxiaoyi.top/typora-img/java-interview/1.png/lvxiaoyi" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="计算机网络常见面试题"/></a><div class="content"><a class="title" href="/2109f677.html" title="计算机网络常见面试题">计算机网络常见面试题</a><time datetime="2022-09-12T07:22:48.777Z" title="发表于 2022-09-12 15:22:48">2022-09-12</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/60bbc03b.html" title="Jmeter基础一"><img src="https://img.lvxiaoyi.top/typora-img/apachejmeter_0.jpg/lvxiaoyi" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Jmeter基础一"/></a><div class="content"><a class="title" href="/60bbc03b.html" title="Jmeter基础一">Jmeter基础一</a><time datetime="2022-09-12T07:22:48.775Z" title="发表于 2022-09-12 15:22:48">2022-09-12</time></div></div><div class="aside-list-item"><div class="content"><a class="title" href="/0.html" title="无题">无题</a><time datetime="2022-09-12T07:22:48.775Z" title="发表于 2022-09-12 15:22:48">2022-09-12</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2022 By 吕小医</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.umd.min.js"></script><div class="js-pjax"></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>

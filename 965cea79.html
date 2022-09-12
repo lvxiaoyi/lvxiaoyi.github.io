@@ -1,0 +1,351 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"><title>java安全管理器SecurityManager | 吕小医のBLOG</title><meta name="keywords" content="java"><meta name="author" content="吕小医"><meta name="copyright" content="吕小医"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="java安全管理器SecurityManager一、文章的目的这是一篇对Java安全管理器入门的文章，目的是简单了解什么是SecurityManager，对管理器进行简单配置，解决简单问题。 比如在阅读源码的时候，发现这样的代码，想了解是做什么的： 1234SecurityManager security &#x3D; System.getSecurityManager();if (security !&#x3D;">
+<meta property="og:type" content="article">
+<meta property="og:title" content="java安全管理器SecurityManager">
+<meta property="og:url" content="https://lvxiaoyi.top/965cea79.html">
+<meta property="og:site_name" content="吕小医のBLOG">
+<meta property="og:description" content="java安全管理器SecurityManager一、文章的目的这是一篇对Java安全管理器入门的文章，目的是简单了解什么是SecurityManager，对管理器进行简单配置，解决简单问题。 比如在阅读源码的时候，发现这样的代码，想了解是做什么的： 1234SecurityManager security &#x3D; System.getSecurityManager();if (security !&#x3D;">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://img.lvxiaoyi.top/typora-img/202111191025146.png/lvxiaoyi">
+<meta property="article:published_time" content="2022-09-12T07:22:48.755Z">
+<meta property="article:modified_time" content="2022-09-12T07:22:48.755Z">
+<meta property="article:author" content="吕小医">
+<meta property="article:tag" content="java">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://img.lvxiaoyi.top/typora-img/202111191025146.png/lvxiaoyi"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="https://lvxiaoyi.top/965cea79"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'java安全管理器SecurityManager',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2022-09-12 15:22:48'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><meta name="generator" content="Hexo 5.4.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">202</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">26</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">49</div></a></div><hr/></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://img.lvxiaoyi.top/typora-img/202111191025146.png/lvxiaoyi')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">吕小医のBLOG</a></span><div id="menus"><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">java安全管理器SecurityManager</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2022-09-12T07:22:48.755Z" title="发表于 2022-09-12 15:22:48">2022-09-12</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2022-09-12T07:22:48.755Z" title="更新于 2022-09-12 15:22:48">2022-09-12</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/java/">java</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="java安全管理器SecurityManager"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h1 id="java安全管理器SecurityManager"><a href="#java安全管理器SecurityManager" class="headerlink" title="java安全管理器SecurityManager"></a>java安全管理器SecurityManager</h1><h1 id="一、文章的目的"><a href="#一、文章的目的" class="headerlink" title="一、文章的目的"></a>一、文章的目的</h1><p>这是一篇对Java安全管理器入门的文章，目的是简单了解什么是SecurityManager，对管理器进行简单配置，解决简单问题。</p>
+<p>比如在阅读源码的时候，发现这样的代码，想了解是做什么的：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">SecurityManager security = System.getSecurityManager();</span><br><span class="line"><span class="keyword">if</span> (security != <span class="keyword">null</span>) &#123;</span><br><span class="line">    security.checkWrite(name);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>　　亦或者在本机运行正常，在服务器运行报错，想解决问题：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">Exception in thread <span class="string">&quot;main&quot;</span> java.security.AccessControlException: <span class="function">access <span class="title">denied</span> <span class="params">(java.lang.RuntimePermission createSecurityManager)</span></span></span><br><span class="line"><span class="function">    at java.security.AccessControlContext.<span class="title">checkPermission</span><span class="params">(AccessControlContext.java:<span class="number">374</span>)</span></span></span><br><span class="line"><span class="function">    at java.security.AccessController.<span class="title">checkPermission</span><span class="params">(AccessController.java:<span class="number">549</span>)</span></span></span><br><span class="line"><span class="function">    at java.lang.SecurityManager.<span class="title">checkPermission</span><span class="params">(SecurityManager.java:<span class="number">532</span>)</span></span></span><br><span class="line"><span class="function">    at java.lang.SecurityManager.&lt;init&gt;<span class="params">(SecurityManager.java:<span class="number">282</span>)</span></span></span><br><span class="line"><span class="function">    at xia.study._01Thread.ThreadTest.<span class="title">creatThread1</span><span class="params">(ThreadTest.java:<span class="number">18</span>)</span></span></span><br><span class="line"><span class="function">    at xia.study._01Thread.ThreadTest.<span class="title">main</span><span class="params">(ThreadTest.java:<span class="number">13</span>)</span></span></span><br></pre></td></tr></table></figure>
+
+<p>这时候具备一些SecurityManager的基础知识还是有必要的。</p>
+<h1 id="二、SecurityManager应用场景"><a href="#二、SecurityManager应用场景" class="headerlink" title="二、SecurityManager应用场景"></a>二、SecurityManager应用场景</h1><p>　　当运行未知的Java程序的时候，该程序可能有恶意代码（删除系统文件、重启系统等），为了防止运行恶意代码对系统产生影响，需要对运行的代码的权限进行控制，这时候就要启用Java安全管理器。</p>
+<h1 id="三、管理器配置文件"><a href="#三、管理器配置文件" class="headerlink" title="三、管理器配置文件"></a>三、管理器配置文件</h1><h2 id="3-1-默认配置文件"><a href="#3-1-默认配置文件" class="headerlink" title="3.1 默认配置文件"></a>3.1 默认配置文件</h2><p>　　默认的安全管理器配置文件是 $JAVA_HOME/jre/lib/security/java.policy</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//默认的策略是$JAVA_HOME/jre/lib/security/java.policy</span></span><br><span class="line"><span class="comment">//如果策略文件没有，就临时扩大权限</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> HttpSession <span class="title">getSession</span><span class="params">(<span class="keyword">boolean</span> create)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span>( System.getSecurityManager() != <span class="keyword">null</span> ) &#123;</span><br><span class="line">        PrivilegedGetSession dp = <span class="keyword">new</span> PrivilegedGetSession(create);</span><br><span class="line">        <span class="keyword">return</span> (HttpSession)AccessController.doPrivileged(dp);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> doGetSession(create);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">protected</span> <span class="class"><span class="keyword">class</span> <span class="title">PrivilegedGetSession</span> <span class="keyword">implements</span> <span class="title">PrivilegedAction</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">boolean</span> create;</span><br><span class="line"></span><br><span class="line">    PrivilegedGetSession(<span class="keyword">boolean</span> create) &#123;</span><br><span class="line">        <span class="keyword">this</span>.create = create;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> Object <span class="title">run</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> doGetSession(create);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<p>当未指定配置文件时，将会使用该配置。内容如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Standard extensions get all permissions by default</span></span><br><span class="line"></span><br><span class="line">grant codeBase <span class="string">&quot;file:$&#123;&#123;java.ext.dirs&#125;&#125;/*&quot;</span> &#123;</span><br><span class="line">    permission java.security.AllPermission;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">// default permissions granted to all domains</span></span><br><span class="line"></span><br><span class="line">grant &#123; </span><br><span class="line">    <span class="comment">// Allows any thread to stop itself using the java.lang.Thread.stop()</span></span><br><span class="line">    <span class="comment">// method that takes no argument.</span></span><br><span class="line">    <span class="comment">// Note that this permission is granted by default only to remain</span></span><br><span class="line">    <span class="comment">// backwards compatible.</span></span><br><span class="line">    <span class="comment">// It is strongly recommended that you either remove this permission</span></span><br><span class="line">    <span class="comment">// from this policy file or further restrict it to code sources</span></span><br><span class="line">    <span class="comment">// that you specify, because Thread.stop() is potentially unsafe.</span></span><br><span class="line">    <span class="comment">// See the API specification of java.lang.Thread.stop() for more</span></span><br><span class="line">        <span class="comment">// information.</span></span><br><span class="line">    permission java.lang.RuntimePermission <span class="string">&quot;stopThread&quot;</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// allows anyone to listen on un-privileged ports</span></span><br><span class="line">    permission java.net.SocketPermission <span class="string">&quot;localhost:1024-&quot;</span>, <span class="string">&quot;listen&quot;</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// &quot;standard&quot; properies that can be read by anyone</span></span><br><span class="line"></span><br><span class="line">    permission java.util.PropertyPermission <span class="string">&quot;java.version&quot;</span>, <span class="string">&quot;read&quot;</span>;</span><br><span class="line">    permission java.util.PropertyPermission <span class="string">&quot;java.vendor&quot;</span>, <span class="string">&quot;read&quot;</span>;</span><br><span class="line">    permission java.util.PropertyPermission <span class="string">&quot;java.vendor.url&quot;</span>, <span class="string">&quot;read&quot;</span>;</span><br><span class="line">    permission java.util.PropertyPermission <span class="string">&quot;java.class.version&quot;</span>, <span class="string">&quot;read&quot;</span>;</span><br><span class="line">    permission java.util.PropertyPermission <span class="string">&quot;os.name&quot;</span>, <span class="string">&quot;read&quot;</span>;</span><br><span class="line">    permission java.util.PropertyPermission <span class="string">&quot;os.version&quot;</span>, <span class="string">&quot;read&quot;</span>;</span><br><span class="line">    permission java.util.PropertyPermission <span class="string">&quot;os.arch&quot;</span>, <span class="string">&quot;read&quot;</span>;</span><br><span class="line">    permission java.util.PropertyPermission <span class="string">&quot;file.separator&quot;</span>, <span class="string">&quot;read&quot;</span>;</span><br><span class="line">    permission java.util.PropertyPermission <span class="string">&quot;path.separator&quot;</span>, <span class="string">&quot;read&quot;</span>;</span><br><span class="line">    permission java.util.PropertyPermission <span class="string">&quot;line.separator&quot;</span>, <span class="string">&quot;read&quot;</span>;</span><br><span class="line"></span><br><span class="line">    permission java.util.PropertyPermission <span class="string">&quot;java.specification.version&quot;</span>, <span class="string">&quot;read&quot;</span>;</span><br><span class="line">    permission java.util.PropertyPermission <span class="string">&quot;java.specification.vendor&quot;</span>, <span class="string">&quot;read&quot;</span>;</span><br><span class="line">    permission java.util.PropertyPermission <span class="string">&quot;java.specification.name&quot;</span>, <span class="string">&quot;read&quot;</span>;</span><br><span class="line"></span><br><span class="line">    permission java.util.PropertyPermission <span class="string">&quot;java.vm.specification.version&quot;</span>, <span class="string">&quot;read&quot;</span>;</span><br><span class="line">    permission java.util.PropertyPermission <span class="string">&quot;java.vm.specification.vendor&quot;</span>, <span class="string">&quot;read&quot;</span>;</span><br><span class="line">    permission java.util.PropertyPermission <span class="string">&quot;java.vm.specification.name&quot;</span>, <span class="string">&quot;read&quot;</span>;</span><br><span class="line">    permission java.util.PropertyPermission <span class="string">&quot;java.vm.version&quot;</span>, <span class="string">&quot;read&quot;</span>;</span><br><span class="line">    permission java.util.PropertyPermission <span class="string">&quot;java.vm.vendor&quot;</span>, <span class="string">&quot;read&quot;</span>;</span><br><span class="line">    permission java.util.PropertyPermission <span class="string">&quot;java.vm.name&quot;</span>, <span class="string">&quot;read&quot;</span>;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<h2 id="3-2-配置文件详解"><a href="#3-2-配置文件详解" class="headerlink" title="3.2 配置文件详解"></a>3.2 配置文件详解</h2><p>　　详解见第五部分，此处知道有这个配置文件即可。</p>
+<h1 id="四、启动安全管理器"><a href="#四、启动安全管理器" class="headerlink" title="四、启动安全管理器"></a>四、启动安全管理器</h1><p>　　启动安全管理有两种方式，建议使用启动参数方式。</p>
+<h2 id="4-1-启动参数方式"><a href="#4-1-启动参数方式" class="headerlink" title="4.1 启动参数方式"></a>4.1 启动参数方式</h2><p>　　启动程序的时候通过附加参数启动安全管理器：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">-Djava.security.manager</span><br></pre></td></tr></table></figure>
+
+<p>若要同时指定配置文件的位置那么示例如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">-Djava.security.manager -Djava.security.policy=&quot;E:/java.policy&quot;</span><br></pre></td></tr></table></figure>
+
+<h2 id="4-2-编码方式启动"><a href="#4-2-编码方式启动" class="headerlink" title="4.2 编码方式启动"></a>4.2 编码方式启动</h2><p>　　也可以通过编码方式启动，不过不建议：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">System.setSecurityManager(new SecurityManager());</span><br></pre></td></tr></table></figure>
+
+<p>　　通过参数启动，本质上也是通过编码启动，不过参数启动使用灵活，项目启动源码如下（sun.misc.Launcher）：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Finally, install a security manager if requested</span></span><br><span class="line">String s = System.getProperty(<span class="string">&quot;java.security.manager&quot;</span>);</span><br><span class="line"><span class="keyword">if</span> (s != <span class="keyword">null</span>) &#123;</span><br><span class="line">    SecurityManager sm = <span class="keyword">null</span>;</span><br><span class="line">    <span class="keyword">if</span> (<span class="string">&quot;&quot;</span>.equals(s) || <span class="string">&quot;default&quot;</span>.equals(s)) &#123;</span><br><span class="line">        sm = <span class="keyword">new</span> java.lang.SecurityManager();</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            sm = (SecurityManager)loader.loadClass(s).newInstance();</span><br><span class="line">        &#125; <span class="keyword">catch</span> (IllegalAccessException e) &#123;</span><br><span class="line">        &#125; <span class="keyword">catch</span> (InstantiationException e) &#123;</span><br><span class="line">        &#125; <span class="keyword">catch</span> (ClassNotFoundException e) &#123;</span><br><span class="line">        &#125; <span class="keyword">catch</span> (ClassCastException e) &#123;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> (sm != <span class="keyword">null</span>) &#123;</span><br><span class="line">        System.setSecurityManager(sm);</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> InternalError(</span><br><span class="line">            <span class="string">&quot;Could not create SecurityManager: &quot;</span> + s);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>可以发现将会创建一个默认的SecurityManager；</p>
+<h1 id="五、配置文件简单解释"><a href="#五、配置文件简单解释" class="headerlink" title="五、配置文件简单解释"></a>五、配置文件简单解释</h1><h2 id="5-1-配置基本原则"><a href="#5-1-配置基本原则" class="headerlink" title="5.1 配置基本原则"></a>5.1 配置基本原则</h2><p>　　在启用安全管理器的时候，配置遵循以下基本原则：</p>
+<ol>
+<li>没有配置的权限表示没有。</li>
+<li>只能配置有什么权限，不能配置禁止做什么。</li>
+<li>同一种权限可多次配置，取并集。</li>
+<li>统一资源的多种权限可用逗号分割。</li>
+</ol>
+<h2 id="5-2-默认配置文件解释"><a href="#5-2-默认配置文件解释" class="headerlink" title="5.2 默认配置文件解释"></a>5.2 默认配置文件解释</h2><p>　　第一部分授权：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">grant codeBase &quot;file:$&#123;&#123;java.ext.dirs&#125;&#125;/*&quot; &#123;    permission java.security.AllPermission;&#125;;</span><br></pre></td></tr></table></figure>
+
+<p>　　授权基于路径在”file:$/*”的class和jar包，所有权限。</p>
+<p>　　第二部分授权：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">grant &#123;     permission java.lang.RuntimePermission &quot;stopThread&quot;;    ……   &#125;</span><br></pre></td></tr></table></figure>
+
+<p>　　这是细粒度的授权，对某些资源的操作进行授权。具体不再解释，可以查看javadoc。如RuntimePermission的可授权操作经查看javadoc如下：</p>
+<table>
+<thead>
+<tr>
+<th>权限目标名称</th>
+<th>权限所允许的操作</th>
+<th>允许此权限所带来的风险</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>createClassLoader</td>
+<td>创建类加载器</td>
+<td>授予该权限极其危险。能够实例化自己的类加载器的恶意应用程序可能会在系统中装载自己的恶意类。这些新加载的类可能被类加载器置于任意保护域中，从而自动将该域的权限授予这些类。</td>
+</tr>
+<tr>
+<td>getClassLoader</td>
+<td>类加载器的获取（即调用类的类加载器）</td>
+<td>这将授予攻击者得到具体类的加载器的权限。这很危险，由于攻击者能够访问类的类加载器，所以攻击者能够加载其他可用于该类加载器的类。通常攻击者不具备这些类的访问权限。</td>
+</tr>
+<tr>
+<td>setContextClassLoader</td>
+<td>线程使用的上下文类加载器的设置</td>
+<td>在需要查找可能不存在于系统类加载器中的资源时，系统代码和扩展部分会使用上下文类加载器。授予 setContextClassLoader 权限将允许代码改变特定线程（包括系统线程）使用的上下文类加载器。</td>
+</tr>
+<tr>
+<td>enableContextClassLoaderOverride</td>
+<td>线程上下文类加载器方法的子类实现</td>
+<td>在需要查找可能不存在于系统类加载器中的资源时，系统代码和扩展部分会使用上下文类加载器。授予 enableContextClassLoaderOverride 权限将允许线程的子类重写某些方法，这些方法用于得到或设置特定线程的上下文类加载器。</td>
+</tr>
+<tr>
+<td>setSecurityManager</td>
+<td>设置安全管理器（可能会替换现有的）</td>
+<td>安全管理器是允许应用程序实现安全策略的类。授予 setSecurityManager 权限将通过安装一个不同的、可能限制更少的安全管理器，来允许代码改变所用的安全管理器，因此可跳过原有安全管理器所强制执行的某些检查。</td>
+</tr>
+<tr>
+<td>createSecurityManager</td>
+<td>创建新的安全管理器</td>
+<td>授予代码对受保护的、敏感方法的访问权，可能会泄露有关其他类或执行堆栈的信息。</td>
+</tr>
+<tr>
+<td>getenv.{variable name}</td>
+<td>读取指定环境变量的值</td>
+<td>此权限允许代码读取特定环境变量的值或确定它是否存在。如果该变量含有机密数据，则这项授权是很危险的。</td>
+</tr>
+<tr>
+<td>exitVM.{exit status}</td>
+<td>暂停带有指定退出状态的 Java 虚拟机</td>
+<td>此权限允许攻击者通过自动强制暂停虚拟机来发起一次拒绝服务攻击。注意：自动为那些从应用程序类路径加载的全部代码授予 “exitVM.<em>“ 权限，从而使这些应用程序能够自行中止。此外，”exitVM” 权限等于 “exitVM.</em>“。</td>
+</tr>
+<tr>
+<td>shutdownHooks</td>
+<td>虚拟机关闭钩子 (hook) 的注册与取消</td>
+<td>此权限允许攻击者注册一个妨碍虚拟机正常关闭的恶意关闭钩子 (hook)。</td>
+</tr>
+<tr>
+<td>setFactory</td>
+<td>设置由 ServerSocket 或 Socket 使用的套接字工厂，或 URL 使用的流处理程序工厂</td>
+<td>此权限允许代码设置套接字、服务器套接字、流处理程序或 RMI 套接字工厂的实际实现。攻击者可能设置错误的实现，从而破坏数据流。</td>
+</tr>
+<tr>
+<td>setIO</td>
+<td>System.out、System.in 和 System.err 的设置</td>
+<td>此权限允许改变标准系统流的值。攻击者可以改变 System.in 来监视和窃取用户输入，或将 System.err 设置为 “null” OutputStream，从而隐藏发送到 System.err 的所有错误信息。</td>
+</tr>
+<tr>
+<td>modifyThread</td>
+<td>修改线程，例如通过调用线程的 <code>interrupt</code>、<code>stop</code>、<code>suspend</code>、<code>resume</code>、<code>setDaemon</code>、<code>setPriority</code>、<code>setName</code> 和 <code>setUncaughtExceptionHandler</code> 方法</td>
+<td>此权限允许攻击者修改系统中任意线程的行为。</td>
+</tr>
+<tr>
+<td>stopThread</td>
+<td>通过调用线程的 <code>stop</code> 方法停止线程</td>
+<td>如果系统已授予代码访问该线程的权限，则此权限允许代码停止系统中的任何线程。此权限会造成一定的危险，因为该代码可能通过中止现有的线程来破坏系统。</td>
+</tr>
+<tr>
+<td>modifyThreadGroup</td>
+<td>修改线程组，例如通过调用 ThreadGroup 的 <code>destroy</code>、<code>getParent</code>、<code>resume</code>、<code>setDaemon</code>、<code>setMaxPriority</code>、<code>stop</code> 和 <code>suspend</code> 方法</td>
+<td>此权限允许攻击者创建线程组并设置它们的运行优先级。</td>
+</tr>
+<tr>
+<td>getProtectionDomain</td>
+<td>获取类的 ProtectionDomain</td>
+<td>此权限允许代码获得特定代码源的安全策略信息。虽然获得安全策略信息并不足以危及系统安全，但这确实会给攻击者提供了能够更好地定位攻击目标的其他信息，例如本地文件名称等。</td>
+</tr>
+<tr>
+<td>getFileSystemAttributes</td>
+<td>获取文件系统属性</td>
+<td>此权限允许代码获得文件系统信息（如调用者可用的磁盘使用量或磁盘空间）。这存在潜在危险，因为它泄露了关于系统硬件配置的信息以及一些关于调用者写入文件特权的信息。</td>
+</tr>
+<tr>
+<td>readFileDescriptor</td>
+<td>读取文件描述符</td>
+<td>此权限允许代码读取与文件描述符读取相关的特定文件。如果该文件包含机密数据，则此操作非常危险。</td>
+</tr>
+<tr>
+<td>writeFileDescriptor</td>
+<td>写入文件描述符</td>
+<td>此权限允许代码写入与描述符相关的特定文件。此权限很危险，因为它可能允许恶意代码传播病毒，或者至少也会填满整个磁盘。</td>
+</tr>
+<tr>
+<td>loadLibrary.{库名}</td>
+<td>动态链接指定的库</td>
+<td>允许 applet 具有加载本机代码库的权限是危险的，因为 Java 安全架构并未设计成可以防止恶意行为，并且也无法在本机代码的级别上防止恶意行为。</td>
+</tr>
+<tr>
+<td>accessClassInPackage.{包名}</td>
+<td>当类加载器调用 SecurityManager 的<code>checkPackageAccess</code>方法时，通过类加载器的 <code>loadClass</code> 方法访问指定的包</td>
+<td>此权限允许代码访问它们通常无法访问的那些包中的类。恶意代码可能利用这些类帮助它们实现破坏系统安全的企图。</td>
+</tr>
+<tr>
+<td>defineClassInPackage.{包名}</td>
+<td>当类加载器调用 SecurityManager 的 <code>checkPackageDefinition</code> 方法时，通过类加载器的 <code>defineClass</code> 方法定义指定的包中的类。</td>
+<td>此权限允许代码在特定包中定义类。这样做很危险，因为具有此权限的恶意代码可能在受信任的包中定义恶意类，比如 <code>java.security</code>或 <code>java.lang</code>。</td>
+</tr>
+<tr>
+<td>accessDeclaredMembers</td>
+<td>访问类的已声明成员</td>
+<td>此权限允许代码查询类的公共、受保护、默认（包）访问和私有的字段和/或方法。尽管代码可以访问私有和受保护字段和方法名称，但它不能访问私有/受保护字段数据并且不能调用任何私有方法。此外，恶意代码可能使用该信息来更好地定位攻击目标。而且，它可以调用类中的任意公共方法和/或访问公共字段。如果代码不能用这些方法和字段将对象强制转换为类/接口，那么它通常无法调用这些方法和/或访问该字段，而这可能很危险。</td>
+</tr>
+<tr>
+<td>queuePrintJob</td>
+<td>打印作业请求的开始</td>
+<td>这可能向打印机输出敏感信息，或者只是浪费纸张。</td>
+</tr>
+<tr>
+<td>getStackTrace</td>
+<td>获取另一个线程的堆栈追踪信息。</td>
+<td>此权限允许获取另一个线程的堆栈追踪信息。此操作可能允许执行恶意代码监视线程并发现应用程序中的弱点。</td>
+</tr>
+<tr>
+<td>setDefaultUncaughtExceptionHandler</td>
+<td>在线程由于未捕获的异常而突然终止时，设置将要使用的默认处理程序</td>
+<td>此权限允许攻击者注册恶意的未捕获异常处理程序，可能会妨碍线程的终止</td>
+</tr>
+<tr>
+<td>Preferences</td>
+<td>表示得到 java.util.prefs.Preferences 的访问权所需的权限。java.util.prefs.Preferences 实现了用户或系统的根，这反过来又允许获取或更新 Preferences 持久内部存储中的操作。</td>
+<td>如果运行此代码的用户具有足够的读/写内部存储的 OS 特权，则此权限就允许用户读/写优先级内部存储。实际的内部存储可能位于传统的文件系统目录中或注册表中，这取决于平台 OS。</td>
+</tr>
+</tbody></table>
+<h2 id="5-3-可配置项详解"><a href="#5-3-可配置项详解" class="headerlink" title="5.3 可配置项详解"></a>5.3 可配置项详解</h2><p>　　当批量配置的时候，有三种模式：</p>
+<ul>
+<li>directory/ 表示directory目录下的所有.class文件，不包括.jar文件</li>
+<li>directory/* 表示directory目录下的所有的.class及.jar文件</li>
+<li>directory/- 表示directory目录下的所有的.class及.jar文件，包括子目录</li>
+</ul>
+<p>　　可以通过${}来引用系统属性，如：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&quot;file:$&#123;&#123;java.ext.dirs&#125;&#125;/*&quot;</span><br></pre></td></tr></table></figure>
+
+<h1 id="六、问题解决"><a href="#六、问题解决" class="headerlink" title="六、问题解决"></a>六、问题解决</h1><p>　　当出现关于安全管理的报错的时候，基本有两种方式来解决。</p>
+<h2 id="6-1-取消安全管理器"><a href="#6-1-取消安全管理器" class="headerlink" title="6.1 取消安全管理器"></a>6.1 取消安全管理器</h2><p>　　一般情况下都是无意启动安全管理器，所以这时候只需要把安全管理器进行关闭，去掉启动参数即可。</p>
+<h2 id="6-2-增加相应权限"><a href="#6-2-增加相应权限" class="headerlink" title="6.2 增加相应权限"></a>6.2 增加相应权限</h2><p>　　若因为没有权限报错，则报错信息中会有请求的权限和请求什么权限，如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Exception in thread &quot;main&quot; java.security.AccessControlException: access denied (java.io.FilePermission E:\pack\a\a.txt write)</span><br></pre></td></tr></table></figure>
+
+<p>　　上面例子，请求资源E:\pack\a\a.txt，的FilePermission的写权限没有，因此被拒绝。</p>
+<p>　　也可以开放所有权限：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">grant &#123;     permission java.security.AllPermission;&#125;;</span><br></pre></td></tr></table></figure>
+
+<p>　　这一篇简单介绍Java的安全管理器，后面会对其进行详细介绍，不过了解这些对一般应用已经足够了。</p>
+<p>转载文章：<a target="_blank" rel="noopener" href="https://www.cnblogs.com/yaowen/p/10117893.html">https://www.cnblogs.com/yaowen/p/10117893.html</a></p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="https://lvxiaoyi.top">吕小医</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="https://lvxiaoyi.top/965cea79.html">https://lvxiaoyi.top/965cea79.html</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://lvxiaoyi.top" target="_blank">吕小医のBLOG</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/java/">java</a></div><div class="post_share"><div class="social-share" data-image="https://img.lvxiaoyi.top/typora-img/202111191025146.png/lvxiaoyi" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/0.html"><img class="prev-cover" src="/" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info"></div></div></a></div><div class="next-post pull-right"><a href="/48c72403.html"><img class="next-cover" src="https://img.lvxiaoyi.top/typora-img/202111191025146.png/lvxiaoyi" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">java基础-3集合面试题</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><div><a href="/ea652ff.html" title="java基础-1"><img class="cover" src="https://img.lvxiaoyi.top/typora-img/202111191025146.png/lvxiaoyi" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-09-12</div><div class="title">java基础-1</div></div></a></div><div><a href="/97af0345.html" title="java基础-2"><img class="cover" src="https://img.lvxiaoyi.top/typora-img/202111191025146.png/lvxiaoyi" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-09-12</div><div class="title">java基础-2</div></div></a></div><div><a href="/48c72403.html" title="java基础-3集合面试题"><img class="cover" src="https://img.lvxiaoyi.top/typora-img/202111191025146.png/lvxiaoyi" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-09-12</div><div class="title">java基础-3集合面试题</div></div></a></div><div><a href="/db2811aa.html" title="java深拷贝与浅拷贝"><img class="cover" src="https://img.lvxiaoyi.top/typora-img/202111191025146.png/lvxiaoyi" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-09-12</div><div class="title">java深拷贝与浅拷贝</div></div></a></div><div><a href="/c2758a5a.html" title="java基础-4之集合深入"><img class="cover" src="https://img.lvxiaoyi.top/typora-img/202111191025146.png/lvxiaoyi" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-09-12</div><div class="title">java基础-4之集合深入</div></div></a></div><div><a href="/670548a8.html" title="java代理模式值proxy和cglib"><img class="cover" src="https://guide-blog-images.oss-cn-shenzhen.aliyuncs.com/2020-8/1*DjWCgTFm-xqbhbNQVsaWQw.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-09-12</div><div class="title">java代理模式值proxy和cglib</div></div></a></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">吕小医</div><div class="author-info__description">IT小白的健身小白</div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">202</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">26</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">49</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/xxxxxx"><i class="fab fa-github"></i><span>Follow Me</span></a></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">This is my Blog</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#java%E5%AE%89%E5%85%A8%E7%AE%A1%E7%90%86%E5%99%A8SecurityManager"><span class="toc-number">1.</span> <span class="toc-text">java安全管理器SecurityManager</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%B8%80%E3%80%81%E6%96%87%E7%AB%A0%E7%9A%84%E7%9B%AE%E7%9A%84"><span class="toc-number">2.</span> <span class="toc-text">一、文章的目的</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%BA%8C%E3%80%81SecurityManager%E5%BA%94%E7%94%A8%E5%9C%BA%E6%99%AF"><span class="toc-number">3.</span> <span class="toc-text">二、SecurityManager应用场景</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%B8%89%E3%80%81%E7%AE%A1%E7%90%86%E5%99%A8%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6"><span class="toc-number">4.</span> <span class="toc-text">三、管理器配置文件</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#3-1-%E9%BB%98%E8%AE%A4%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6"><span class="toc-number">4.1.</span> <span class="toc-text">3.1 默认配置文件</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-2-%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6%E8%AF%A6%E8%A7%A3"><span class="toc-number">4.2.</span> <span class="toc-text">3.2 配置文件详解</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%9B%9B%E3%80%81%E5%90%AF%E5%8A%A8%E5%AE%89%E5%85%A8%E7%AE%A1%E7%90%86%E5%99%A8"><span class="toc-number">5.</span> <span class="toc-text">四、启动安全管理器</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#4-1-%E5%90%AF%E5%8A%A8%E5%8F%82%E6%95%B0%E6%96%B9%E5%BC%8F"><span class="toc-number">5.1.</span> <span class="toc-text">4.1 启动参数方式</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-2-%E7%BC%96%E7%A0%81%E6%96%B9%E5%BC%8F%E5%90%AF%E5%8A%A8"><span class="toc-number">5.2.</span> <span class="toc-text">4.2 编码方式启动</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%BA%94%E3%80%81%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6%E7%AE%80%E5%8D%95%E8%A7%A3%E9%87%8A"><span class="toc-number">6.</span> <span class="toc-text">五、配置文件简单解释</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#5-1-%E9%85%8D%E7%BD%AE%E5%9F%BA%E6%9C%AC%E5%8E%9F%E5%88%99"><span class="toc-number">6.1.</span> <span class="toc-text">5.1 配置基本原则</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-2-%E9%BB%98%E8%AE%A4%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6%E8%A7%A3%E9%87%8A"><span class="toc-number">6.2.</span> <span class="toc-text">5.2 默认配置文件解释</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-3-%E5%8F%AF%E9%85%8D%E7%BD%AE%E9%A1%B9%E8%AF%A6%E8%A7%A3"><span class="toc-number">6.3.</span> <span class="toc-text">5.3 可配置项详解</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%85%AD%E3%80%81%E9%97%AE%E9%A2%98%E8%A7%A3%E5%86%B3"><span class="toc-number">7.</span> <span class="toc-text">六、问题解决</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#6-1-%E5%8F%96%E6%B6%88%E5%AE%89%E5%85%A8%E7%AE%A1%E7%90%86%E5%99%A8"><span class="toc-number">7.1.</span> <span class="toc-text">6.1 取消安全管理器</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#6-2-%E5%A2%9E%E5%8A%A0%E7%9B%B8%E5%BA%94%E6%9D%83%E9%99%90"><span class="toc-number">7.2.</span> <span class="toc-text">6.2 增加相应权限</span></a></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/f1601c3e.html" title="单例模式"><img src="https://img.lvxiaoyi.top/typora-img/1002892-20180912131026735-781767905.png/lvxiaoyi" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="单例模式"/></a><div class="content"><a class="title" href="/f1601c3e.html" title="单例模式">单例模式</a><time datetime="2022-09-12T07:22:48.777Z" title="发表于 2022-09-12 15:22:48">2022-09-12</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/b15f0f1b.html" title="设计模式基础-1"><img src="https://img.lvxiaoyi.top/typora-img/image-20211012093705433.png/lvxiaoyi" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="设计模式基础-1"/></a><div class="content"><a class="title" href="/b15f0f1b.html" title="设计模式基础-1">设计模式基础-1</a><time datetime="2022-09-12T07:22:48.777Z" title="发表于 2022-09-12 15:22:48">2022-09-12</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2109f677.html" title="计算机网络常见面试题"><img src="https://img.lvxiaoyi.top/typora-img/java-interview/1.png/lvxiaoyi" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="计算机网络常见面试题"/></a><div class="content"><a class="title" href="/2109f677.html" title="计算机网络常见面试题">计算机网络常见面试题</a><time datetime="2022-09-12T07:22:48.777Z" title="发表于 2022-09-12 15:22:48">2022-09-12</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/60bbc03b.html" title="Jmeter基础一"><img src="https://img.lvxiaoyi.top/typora-img/apachejmeter_0.jpg/lvxiaoyi" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Jmeter基础一"/></a><div class="content"><a class="title" href="/60bbc03b.html" title="Jmeter基础一">Jmeter基础一</a><time datetime="2022-09-12T07:22:48.775Z" title="发表于 2022-09-12 15:22:48">2022-09-12</time></div></div><div class="aside-list-item"><div class="content"><a class="title" href="/0.html" title="无题">无题</a><time datetime="2022-09-12T07:22:48.775Z" title="发表于 2022-09-12 15:22:48">2022-09-12</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2022 By 吕小医</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.umd.min.js"></script><div class="js-pjax"></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>

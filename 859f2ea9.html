@@ -1,0 +1,322 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"><title>百万数据快速插入数据库 | 吕小医のBLOG</title><meta name="keywords" content="多线程实战"><meta name="author" content="吕小医"><meta name="copyright" content="吕小医"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="https:&#x2F;&#x2F;blog.csdn.net&#x2F;zl1zl2zl3&#x2F;article&#x2F;details&#x2F;105007492?utm_medium&#x3D;distribute.pc_relevant.none-task-blog-2%7Edefault%7EBlogCommendFromBaidu%7Edefault-5.control&amp;depth_1-utm_source&#x3D;distribute.pc_r">
+<meta property="og:type" content="article">
+<meta property="og:title" content="百万数据快速插入数据库">
+<meta property="og:url" content="https://lvxiaoyi.top/859f2ea9.html">
+<meta property="og:site_name" content="吕小医のBLOG">
+<meta property="og:description" content="https:&#x2F;&#x2F;blog.csdn.net&#x2F;zl1zl2zl3&#x2F;article&#x2F;details&#x2F;105007492?utm_medium&#x3D;distribute.pc_relevant.none-task-blog-2%7Edefault%7EBlogCommendFromBaidu%7Edefault-5.control&amp;depth_1-utm_source&#x3D;distribute.pc_r">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png">
+<meta property="article:published_time" content="2022-09-12T07:22:48.762Z">
+<meta property="article:modified_time" content="2022-09-12T07:22:48.762Z">
+<meta property="article:author" content="吕小医">
+<meta property="article:tag" content="多线程实战">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="https://lvxiaoyi.top/859f2ea9"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '百万数据快速插入数据库',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2022-09-12 15:22:48'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><meta name="generator" content="Hexo 5.4.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">202</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">26</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">49</div></a></div><hr/></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">吕小医のBLOG</a></span><div id="menus"><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">百万数据快速插入数据库</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2022-09-12T07:22:48.762Z" title="发表于 2022-09-12 15:22:48">2022-09-12</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2022-09-12T07:22:48.762Z" title="更新于 2022-09-12 15:22:48">2022-09-12</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E5%A4%9A%E7%BA%BF%E7%A8%8B/">多线程</a><i class="fas fa-angle-right post-meta-separator"></i><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E5%A4%9A%E7%BA%BF%E7%A8%8B/%E5%A4%9A%E7%BA%BF%E7%A8%8B%E5%AE%9E%E6%88%98%E7%AF%87/">多线程实战篇</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="百万数据快速插入数据库"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><p><a target="_blank" rel="noopener" href="https://blog.csdn.net/zl1zl2zl3/article/details/105007492?utm_medium=distribute.pc_relevant.none-task-blog-2~default~BlogCommendFromBaidu~default-5.control&amp;depth_1-utm_source=distribute.pc_relevant.none-task-blog-2~default~BlogCommendFromBaidu~default-5.control">https://blog.csdn.net/zl1zl2zl3/article/details/105007492?utm_medium=distribute.pc_relevant.none-task-blog-2%7Edefault%7EBlogCommendFromBaidu%7Edefault-5.control&amp;depth_1-utm_source=distribute.pc_relevant.none-task-blog-2%7Edefault%7EBlogCommendFromBaidu%7Edefault-5.control</a></p>
+<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>一直有一种说法：<strong>批量插入大量数据到MySQL数据库，不要使用Mybatis、Hibernate之类的ORM框架</strong>，原因一般都是说<strong>性能不好</strong>，至于为什么不好好像没几个人能讲清楚的。</p>
+<p>批量插入大量数据最优的方式是什么？网上也是众说纷纭。不如自己动手测试一下吧！</p>
+<h1 id="场景介绍"><a href="#场景介绍" class="headerlink" title="场景介绍"></a>场景介绍</h1><p>前几天公司项目进行压力测试，测试某个功能在大数据量（千万级）的情况下是否能够正常运行，可是项目还没有正式上线运营，数据库里只有少量开发时用的假数据。</p>
+<p>没有数据怎么测试啊？这可愁坏测试的小姐姐们了，向我求助让我尽快往数据库中导入1000万数据给她们测试用。</p>
+<p>于是接到任务：<strong>快速往MySQL数据库中导入1000万数据</strong></p>
+<h1 id="项目配置"><a href="#项目配置" class="headerlink" title="项目配置"></a>项目配置</h1><p>啥也不说了，抓紧时间开搞！</p>
+<p><strong>首先交代一下电脑环境：</strong></p>
+<ul>
+<li>操作系统：WIN10（专业版）</li>
+<li>开发工具：IntelliJ IDEA Ultimate（2019.2.1）</li>
+<li>项目框架：Spring Boot（2.2.5.RELEASE）</li>
+<li>数据库：MySQL（5.7.27）</li>
+</ul>
+<p><strong>项目配置步骤：</strong></p>
+<p>1、使用IDEA的Spring Initializr插件新建Spring Boot的项目，打开pom.xml，添加一些必要的Maven依赖，主要是mybatis-spring-boot-starter和mysql-connector-java；</p>
+<p><img src="https://imgconvert.csdnimg.cn/aHR0cDovL3AxLnBzdGF0cC5jb20vbGFyZ2UvcGdjLWltYWdlLzI5MjlmYzEwMTU2ZjRjZTQ4MWUwOTQ1ZGFhZWVmZDJh?x-oss-process=image/format,png" alt="如何快速向数据库插1000万数据？4种方法对比，它简单却速度最快"></p>
+<p>2、MySQL中新建一张user表，为了方便演示只保留id、昵称、年龄3个字段，建表语句；</p>
+<p><img src="https://imgconvert.csdnimg.cn/aHR0cDovL3AzLnBzdGF0cC5jb20vbGFyZ2UvcGdjLWltYWdlL2VmMzhmZTE1NTE3YTQ5NTA5MDhmMzczYWNlNTMwY2Rl?x-oss-process=image/format,png" alt="如何快速向数据库插1000万数据？4种方法对比，它简单却速度最快"></p>
+<p>3、再次打开pom.xml文件，添加mybatis generator插件用于自动生成mapper映射文件；</p>
+<p><img src="https://imgconvert.csdnimg.cn/aHR0cDovL3AzLnBzdGF0cC5jb20vbGFyZ2UvcGdjLWltYWdlL2U5ZjIwZDQ3ZTljNjQwZmFiYWIxOGFhMGE2OWU3ZDhk?x-oss-process=image/format,png" alt="如何快速向数据库插1000万数据？4种方法对比，它简单却速度最快"></p>
+<p>4、上一步添加了mybatis generator插件之后还不能直接使用，还需要在项目resources目录下新建一个配置文件generatorConfig.xml，里面主要需要配置数据库连接信息、Model文件生成目录、Mapper文件生成目录、以及xml文件生成目录；</p>
+<p><img src="https://imgconvert.csdnimg.cn/aHR0cDovL3AxLnBzdGF0cC5jb20vbGFyZ2UvcGdjLWltYWdlL2U1ZDQ5MzFhOWVhMTRmYmY4MzIwYmI0MTUyNzZmNWM1?x-oss-process=image/format,png" alt="如何快速向数据库插1000万数据？4种方法对比，它简单却速度最快"></p>
+<p>5、打开resources目录下的application.properties（或是application.yml）文件，添加一下mybatis相关配置和项目数据库连接配置；</p>
+<p><img src="https://imgconvert.csdnimg.cn/aHR0cDovL3A5LnBzdGF0cC5jb20vbGFyZ2UvcGdjLWltYWdlLzJjNDI3OWRkZmRiNTQ3OTA5ZGQ3ZGI4NDFkODIxN2U0?x-oss-process=image/format,png" alt="如何快速向数据库插1000万数据？4种方法对比，它简单却速度最快"></p>
+<p>6、展示一下项目的完整结构</p>
+<p><img src="https://imgconvert.csdnimg.cn/aHR0cDovL3A5LnBzdGF0cC5jb20vbGFyZ2UvcGdjLWltYWdlLzQyMWNkMDkyNTYxNTQxYzQ5ZDNhYjcxOGI3OGZhN2Nj?x-oss-process=image/format,png" alt="如何快速向数据库插1000万数据？4种方法对比，它简单却速度最快"></p>
+<h1 id="Mybatis为什么慢？"><a href="#Mybatis为什么慢？" class="headerlink" title="Mybatis为什么慢？"></a>Mybatis为什么慢？</h1><p>首先我们用Mybatis来测试一下，看看插入1000万条数据需要多长时间。</p>
+<p><strong>实现步骤：</strong></p>
+<p>1、在UserMapper.java和UserMapper.xml文件中实现批量插入方法；</p>
+<p><img src="https://imgconvert.csdnimg.cn/aHR0cDovL3AzLnBzdGF0cC5jb20vbGFyZ2UvcGdjLWltYWdlLzMwMzU3ZmVhNmMwZTQwZTk4YTAxOGU0MWNjOTE3MzY3?x-oss-process=image/format,png" alt="如何快速向数据库插1000万数据？4种方法对比，它简单却速度最快"></p>
+<p>2、新建一个Test测试类实现随机生成1000万用户记录，并调用上步已经实现的批量插入方法将数据插入到MySQL数据库；</p>
+<p><img src="https://imgconvert.csdnimg.cn/aHR0cDovL3AxLnBzdGF0cC5jb20vbGFyZ2UvcGdjLWltYWdlLzYwNjI3OGUzY2QzYzRlNDA5YmI4ZTUyYzAzMmIxZmQ1?x-oss-process=image/format,png" alt="如何快速向数据库插1000万数据？4种方法对比，它简单却速度最快"></p>
+<p>接下来就是正式测试了，没想到中间出了不少问题，在这里说明一下并附上解决方案。</p>
+<blockquote>
+<p>问题一：Java堆内存爆了！</p>
+</blockquote>
+<p><strong>原因分析：</strong>由于要生成1000万条用户记录，需要申请大量Java的堆内存，已经超出JVM设置的最大堆内存大小，导致<strong>OutOfMemoryError</strong>报错：</p>
+<p><img src="https://imgconvert.csdnimg.cn/aHR0cDovL3AxLnBzdGF0cC5jb20vbGFyZ2UvcGdjLWltYWdlLzY3MThjYWM4YzRhMDQ0ZTY4NzFmYTYxZGNkNGNiOGZm?x-oss-process=image/format,png" alt="如何快速向数据库插1000万数据？4种方法对比，它简单却速度最快"></p>
+<p><strong>解决办法：</strong>增加堆内存。</p>
+<p>JVM设置堆内存有两个参数：</p>
+<ol>
+<li><strong>-Xms</strong> 用于设置堆内存初始值，一般建议设置为和最大值一样；</li>
+<li><strong>-Xmx</strong> 用于设置堆内存最大值，默认值为物理内存的1/4；</li>
+</ol>
+<p>因为我的电脑是32G内存，也就是说默认最大堆内存有8G，8G都不够的话，那我直接来个20G试试，IDEA菜单栏依次打开Run -&gt; Edit Configurations：</p>
+<p><strong>修改步骤：</strong></p>
+<ol>
+<li>选中我们的测试类</li>
+<li>在右边找到VM options选项，输入-Xms20480m -Xmx20480m</li>
+</ol>
+<p><img src="https://imgconvert.csdnimg.cn/aHR0cDovL3AzLnBzdGF0cC5jb20vbGFyZ2UvcGdjLWltYWdlLzZlZGQwYjQ2OGJkMzRlMGRhNzQ5NWU3YWJmMDYxMjVl?x-oss-process=image/format,png" alt="如何快速向数据库插1000万数据？4种方法对比，它简单却速度最快"></p>
+<blockquote>
+<p>问题二：MySQL报错：Packet for query is too large</p>
+</blockquote>
+<p><strong>原因分析：</strong>因为发送到MySQL的数据量过大，超出了设置的最大值，导致报错：</p>
+<p><img src="https://imgconvert.csdnimg.cn/aHR0cDovL3AxLnBzdGF0cC5jb20vbGFyZ2UvcGdjLWltYWdlL2I5YTJjZmRlZjVjNjQwYzE4MDg3MGIwMDQ2N2UyNDE3?x-oss-process=image/format,png" alt="如何快速向数据库插1000万数据？4种方法对比，它简单却速度最快"></p>
+<p><strong>解决方案：</strong>修改MySQL服务器max_allowed_packet属性。</p>
+<p><strong>修改步骤：</strong></p>
+<ol>
+<li><p>直接在MySQL安装目录下找到my.ini文件，在[mysqld]下面添加一行<strong>max_allowed_packet = 4G</strong></p>
+</li>
+<li><p>通过MySQL客户端工具修改，这里以我常用的MySQL Workbench客户端来修改，菜单栏找到Server -&gt; Options File，点击切换Networking标签：</p>
+</li>
+</ol>
+<p><img src="https://imgconvert.csdnimg.cn/aHR0cDovL3A5LnBzdGF0cC5jb20vbGFyZ2UvcGdjLWltYWdlL2M3NTI3MjU4N2Q0YTQ2OGU4MTViODdlM2QwODU0Nzc4?x-oss-process=image/format,png" alt="如何快速向数据库插1000万数据？4种方法对比，它简单却速度最快"></p>
+<blockquote>
+<p>Tip：不论哪种方式，修改完都要记得重启MySQL，否则修改不生效哦。</p>
+</blockquote>
+<p>我们来看下执行结果：</p>
+<p><img src="https://imgconvert.csdnimg.cn/aHR0cDovL3AzLnBzdGF0cC5jb20vbGFyZ2UvcGdjLWltYWdlLzFlY2Y3NWUxODU2NzQzOTY4NmQ0MmVmNDQxZjIxODU4?x-oss-process=image/format,png" alt="如何快速向数据库插1000万数据？4种方法对比，它简单却速度最快"></p>
+<p><strong>结果：</strong></p>
+<p>使用Mybatis插入1000万条数据到MySQL数据库共花费了<strong>199.8秒</strong>！</p>
+<p>这结果是快还是慢？我们来具体分析一下耗时分布情况。</p>
+<p><strong>分析：</strong></p>
+<p>方法：</p>
+<p>JDBC驱动中有一个profileSQL属性，可以跟踪记录SQL执行时间，附上官方文档介绍：</p>
+<p><img src="https://imgconvert.csdnimg.cn/aHR0cDovL3AzLnBzdGF0cC5jb20vbGFyZ2UvcGdjLWltYWdlL2FiMGNmOWVlMDBmZjQxMGRhMDIwZTExN2E1NzI2NTI4?x-oss-process=image/format,png" alt="如何快速向数据库插1000万数据？4种方法对比，它简单却速度最快"></p>
+<p>所以我们需要将数据库连接加上profileSQL=true属性。</p>
+<p>再次看下执行结果：</p>
+<p><img src="https://imgconvert.csdnimg.cn/aHR0cDovL3AxLnBzdGF0cC5jb20vbGFyZ2UvcGdjLWltYWdlLzk1Zjg3YTg1Y2M3MDQyN2E5ZjQ4NzFmZjYxNTY1NjUy?x-oss-process=image/format,png" alt="如何快速向数据库插1000万数据？4种方法对比，它简单却速度最快"></p>
+<p>其中，duration指的是SQL执行的时间，也就是说<strong>MySQL服务器执行具体SQL语句的时间其实只有82.3秒，</strong>我们上面统计到Mybatis插入1000万条数据花了近200秒的时间，那么<strong>这中间的100多秒都干嘛去了？</strong></p>
+<p>分析控制台输出的日志之后我发现了蹊跷所在：从程序调用Mybatis的批量插入方法开始，到MySQL服务器执行SQL，这中间正好差了100多秒，会是巧合吗？</p>
+<p>打断点Debug追踪到Mybatis解析SQL语句的方法：</p>
+<p><img src="https://imgconvert.csdnimg.cn/aHR0cDovL3AzLnBzdGF0cC5jb20vbGFyZ2UvcGdjLWltYWdlL2JiYjkzMTQwMjUwYTQxYmVhMzE5NWI0MTQ3YmFkOTMz?x-oss-process=image/format,png" alt="如何快速向数据库插1000万数据？4种方法对比，它简单却速度最快"></p>
+<p>这parse方法首先会读取我们xml文件里的SQL模版拿到参数及参数类型信息，拼接生成SQL语句。</p>
+<p><strong>每条数据循环一次，那1000W条数据就要循环解析1000万次，不慢才怪！</strong></p>
+<h1 id="JdbcTemplate让我眼前一亮"><a href="#JdbcTemplate让我眼前一亮" class="headerlink" title="JdbcTemplate让我眼前一亮"></a>JdbcTemplate让我眼前一亮</h1><p>接下来使用Spring框架的JdbcTemplate来测试一下。</p>
+<p><strong>实现步骤：</strong></p>
+<ol>
+<li>同样的我们新建一个测试类，并用JdbcTemplate实现一个批量插入方法；</li>
+</ol>
+<p><img src="https://imgconvert.csdnimg.cn/aHR0cDovL3AzLnBzdGF0cC5jb20vbGFyZ2UvcGdjLWltYWdlL2FmNDQyOTBkYTVjNjRjMTg4YjRhY2IzYWZiNGViMGZi?x-oss-process=image/format,png" alt="如何快速向数据库插1000万数据？4种方法对比，它简单却速度最快"></p>
+<p>接下来就可以开始测试了，果然中间又出现了了问题。</p>
+<blockquote>
+<p>问题一：调用JdbcTemplate的batchUpdate批量操作方法，结果却一条条的插数据？</p>
+</blockquote>
+<p>首先看下控制台输出日志：</p>
+<p><img src="https://imgconvert.csdnimg.cn/aHR0cDovL3AzLnBzdGF0cC5jb20vbGFyZ2UvcGdjLWltYWdlLzI0NGMzMDJkMTIzNTQ2MGViNzNlMTY1OWI2MWM4NmEw?x-oss-process=image/format,png" alt="如何快速向数据库插1000万数据？4种方法对比，它简单却速度最快"></p>
+<p>可以看到JdbcTemplate是将我们的数据一条条的发送到MySQL服务器的，每个插入耗时1毫秒，那么1秒钟可以插入1000条记录，那么1000万条数据就需要10000秒，大约需要2.78个小时。</p>
+<p><strong>原因分析：</strong>JDBC驱动默认不支持批量操作，会将SQL语句分拆再一条条发往MySQL服务器执行，打断点跟踪一下代码，看看是不是这样：</p>
+<p><img src="https://imgconvert.csdnimg.cn/aHR0cDovL3AxLnBzdGF0cC5jb20vbGFyZ2UvcGdjLWltYWdlL2U3ZjA3MGExMmZhNDRjN2I4ZmJkZWVmNDJhYTVlYzlk?x-oss-process=image/format,png" alt="如何快速向数据库插1000万数据？4种方法对比，它简单却速度最快"></p>
+<p>分析一下代码：</p>
+<ul>
+<li><p>首先执行步骤1判断rewriteBatchedStatements属性，为false的话直接执行步骤5的逻辑：串行执行SQL语句，也就是一条条顺序执行；</p>
+</li>
+<li><p>如果rewriteBatchedStatements为true，那么首先会执行步骤2：判断是否为insert语句，结果为true则会改写SQL执行批量插入操作；</p>
+</li>
+<li><p>如果不是insert语句，再继续根据JDBC驱动版本以及数据量大小判断是否需要执行批量操作；</p>
+</li>
+</ul>
+<blockquote>
+<p>Tip：对于非insert的批量操作语句，如果数据量小于3条，那也只会一条条顺序执行，不会进行合并批量执行。</p>
+</blockquote>
+<p>附上rewriteBatchedStatements官方文档：</p>
+<p><img src="https://imgconvert.csdnimg.cn/aHR0cDovL3AxLnBzdGF0cC5jb20vbGFyZ2UvcGdjLWltYWdlL2VjZGRiMTBlYzA3ZjRiZWI5MTQwY2NiZGY0ZTEwYzM2?x-oss-process=image/format,png" alt="如何快速向数据库插1000万数据？4种方法对比，它简单却速度最快"></p>
+<p>大概看了一下，跟我们上面分析的一样，标示是否让JDBC驱动使用批量模式去改写SQL语句。</p>
+<p><strong>解决方案：</strong>数据库连接上加上rewriteBatchedStatements=true属性，开启批量操作支持。</p>
+<p>再次看下执行结果：</p>
+<p><img src="https://imgconvert.csdnimg.cn/aHR0cDovL3AzLnBzdGF0cC5jb20vbGFyZ2UvcGdjLWltYWdlLzIxNzNhMjU2ODkyNDQyNjhiNjEyZGQyNWJkY2ZkYWZi?x-oss-process=image/format,png" alt="如何快速向数据库插1000万数据？4种方法对比，它简单却速度最快"></p>
+<p><strong>结果：</strong></p>
+<p>使用JdbcTemplate插入1000万条数据到MySQL数据库共花费了<strong>80.1秒</strong>！</p>
+<p><strong>分析：</strong></p>
+<p>一开始由于没有开启批量操作支持，所以导致MySQL只能一条条插入数据，原因在于我对JDBC驱动不够了解，看来以后还得加强学习。</p>
+<p>开启批量操作支持后，通过日志可以观察到真正的SQL执行时间只有67.9秒，但整个插入操作用了80.1秒，中间差的10多秒中应该就是消耗在了改写SQL语句上了。</p>
+<p>总得来说，JdbcTemplate批量插入大量数据的效率还不错，让我有眼前一亮的感觉。</p>
+<h1 id="原生JDBC就是快啊！"><a href="#原生JDBC就是快啊！" class="headerlink" title="原生JDBC就是快啊！"></a>原生JDBC就是快啊！</h1><p>早有耳闻批量插入大量数据必须使用原生JDBC，百闻不如一见，接下来我就使用原生JDBC的方式来测试一下。</p>
+<p><strong>实现步骤：</strong></p>
+<ol>
+<li>同样的，我们新建一个测试类，并使用原生JDBC的方式实现一个批量插入方法；</li>
+</ol>
+<p><img src="https://imgconvert.csdnimg.cn/aHR0cDovL3AxLnBzdGF0cC5jb20vbGFyZ2UvcGdjLWltYWdlL2U0ZDgzODg2ZGVhMTRjYmViNWE2NDY2YjJjOTkzYWE0?x-oss-process=image/format,png" alt="如何快速向数据库插1000万数据？4种方法对比，它简单却速度最快"></p>
+<p>接下来就可以测试了，别担心，这次肯定不会再出问题了。</p>
+<p>来看下执行结果：</p>
+<p><img src="https://imgconvert.csdnimg.cn/aHR0cDovL3A5LnBzdGF0cC5jb20vbGFyZ2UvcGdjLWltYWdlLzYyYjdmM2E4NDI5ZDQ1MmFiYzM3OGNmOWJhZTZjZjNi?x-oss-process=image/format,png" alt="如何快速向数据库插1000万数据？4种方法对比，它简单却速度最快"></p>
+<p><strong>结果：</strong>使用原生JDBC的方式插入1000万条数据到MySQL数据库共花费了<strong>58.9秒</strong>！</p>
+<p><strong>分析：</strong></p>
+<p>原生JDBC写起来还是既简单又舒适啊，都多少年没写过了，但是<strong>越是简单的东西它越好用。</strong></p>
+<p>通过输出日志，我们可以看到整个方法执行时间为58.9秒，而SQL真正的执行时间为46.8秒，中间同样相差了10多秒，同样也是花在了改写SQL语句上，这一结果正好与上面JdbcTemplate的执行结果互相佐证，证明了我们的分析是正确的。</p>
+<h1 id="存储过程行不行？"><a href="#存储过程行不行？" class="headerlink" title="存储过程行不行？"></a>存储过程行不行？</h1><p>最后使用存储过程的方式来试一下，说实话工作以来很少写存储过程，只好临时恶补了一波知识。</p>
+<p><strong>实现步骤：</strong></p>
+<ol>
+<li>首先编写批量插入的存储过程，功能其实很简单，接收一个外部传入的表示循环次数的参数，进行循环插入数据；</li>
+</ol>
+<p><img src="https://imgconvert.csdnimg.cn/aHR0cDovL3AxLnBzdGF0cC5jb20vbGFyZ2UvcGdjLWltYWdlL2Y1YWJjYzQ2ZTBkZDQwYWI5MmI0M2U1NTQwMzFiMjZi?x-oss-process=image/format,png" alt="如何快速向数据库插1000万数据？4种方法对比，它简单却速度最快"></p>
+<p>接下来我们调用存储过程，执行命令：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">CALL batchInsert(10000000);</span><br></pre></td></tr></table></figure>
+
+<p>等待执行完成，看下耗时情况：</p>
+<p><img src="https://imgconvert.csdnimg.cn/aHR0cDovL3AzLnBzdGF0cC5jb20vbGFyZ2UvcGdjLWltYWdlLzZmMjg2NTRlNTQwMDQzZjRiZmFiZjE2YWZhOGYxMzNi?x-oss-process=image/format,png" alt="如何快速向数据库插1000万数据？4种方法对比，它简单却速度最快"></p>
+<p><strong>结果：</strong></p>
+<p>调用存储过程向MySQL数据库中批量插入1000万数据需要<strong>141.1秒</strong>。</p>
+<p><strong>分析：</strong></p>
+<p>存储过程需要141.1秒的时间我还是比较惊讶的，本来我对存储过程还是比较期待的。</p>
+<p>仔细想想，其实存储过程用在这个场景并没有发挥出它的优势，时间长点也不奇怪。</p>
+<p>为什么这么说？</p>
+<p>首先我们来看看存储过程的一些特点：</p>
+<ol>
+<li>可以封装一些复杂的业务逻辑，外部直接调用存储过程即可；</li>
+<li>存储过程只在创建时编译一次，以后每次执行存储过程都不需再重新编译，使用存储过程可提高执行速度；</li>
+<li>将操作直接放到数据库端执行，可以减少客户端与服务端进行网络通讯开销，提高通信效率；</li>
+</ol>
+<p>其次我们再来看看存储过程用在我们场景是否合适：</p>
+<ol>
+<li>我们使一次性提交所有数据，所以不存在多次通信增加耗时的操作，在这里存储过程的优势没有发挥出来；</li>
+<li>在存储过程的insert语句中，我们使用了concat函数来拼接字符串，函数运算会降低SQL执行效率；</li>
+</ol>
+<p>所以说存储过程在我们这个业务场景并没有发挥出它的优势。</p>
+<h1 id="越简单越快"><a href="#越简单越快" class="headerlink" title="越简单越快"></a>越简单越快</h1><p>面对<strong>快速往MySQL数据库中导入1000万数据</strong>这个问题，我们通过<strong>Mybatis</strong>、<strong>JdbcTemplate</strong>、<strong>原生JDBC</strong>以及<strong>存储过程</strong>4种方式分别进行测试，得出了最终结果：</p>
+<p>插入速度：<strong>原生JDBC &gt; JdbcTemplate &gt; 存储过程 &gt; Mybatis</strong></p>
+<p><strong>结果分析：</strong></p>
+<p>Mybatis由于封装程度较高，底层有一个SQL模版解析和SQL拼接的过程，所以导致速度较慢；</p>
+<p>存储过程一来由于本应用场景不太适合没有发挥出优势，二来由于SQL语句中加入了函数运算拖累了执行效率；</p>
+<p>JdbcTemplate是Spring框架为了方便开发者调用对原生JDBC的一个轻度封装，虽然有点小插曲，但整体来看插入效率还可以；</p>
+<p>原生JDBC是最最最基础的插入方式了，每个人刚学Java的时候应该都学过，没有过多花里胡哨的封装，简单实用。</p>
+<p><strong>总结：</strong></p>
+<p>越简单越实用，<strong>原生JDBC</strong>第一名实至名归！</p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="https://lvxiaoyi.top">吕小医</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="https://lvxiaoyi.top/859f2ea9.html">https://lvxiaoyi.top/859f2ea9.html</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://lvxiaoyi.top" target="_blank">吕小医のBLOG</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/%E5%A4%9A%E7%BA%BF%E7%A8%8B%E5%AE%9E%E6%88%98/">多线程实战</a></div><div class="post_share"><div class="social-share" data-image="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/a55f0e55.html"><img class="prev-cover" src="/" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">markdown之数学公式</div></div></a></div><div class="next-post pull-right"><a href="/cd598d8d.html"><img class="next-cover" src="https://img.lvxiaoyi.top/typora-img/thread-2-img/285763-20200617223221933-644434653.png/lvxiaoyi" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">AQS详解</div></div></a></div></nav></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">吕小医</div><div class="author-info__description">IT小白的健身小白</div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">202</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">26</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">49</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/xxxxxx"><i class="fab fa-github"></i><span>Follow Me</span></a></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">This is my Blog</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%89%8D%E8%A8%80"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%9C%BA%E6%99%AF%E4%BB%8B%E7%BB%8D"><span class="toc-number">2.</span> <span class="toc-text">场景介绍</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E9%A1%B9%E7%9B%AE%E9%85%8D%E7%BD%AE"><span class="toc-number">3.</span> <span class="toc-text">项目配置</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Mybatis%E4%B8%BA%E4%BB%80%E4%B9%88%E6%85%A2%EF%BC%9F"><span class="toc-number">4.</span> <span class="toc-text">Mybatis为什么慢？</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#JdbcTemplate%E8%AE%A9%E6%88%91%E7%9C%BC%E5%89%8D%E4%B8%80%E4%BA%AE"><span class="toc-number">5.</span> <span class="toc-text">JdbcTemplate让我眼前一亮</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%8E%9F%E7%94%9FJDBC%E5%B0%B1%E6%98%AF%E5%BF%AB%E5%95%8A%EF%BC%81"><span class="toc-number">6.</span> <span class="toc-text">原生JDBC就是快啊！</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%AD%98%E5%82%A8%E8%BF%87%E7%A8%8B%E8%A1%8C%E4%B8%8D%E8%A1%8C%EF%BC%9F"><span class="toc-number">7.</span> <span class="toc-text">存储过程行不行？</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E8%B6%8A%E7%AE%80%E5%8D%95%E8%B6%8A%E5%BF%AB"><span class="toc-number">8.</span> <span class="toc-text">越简单越快</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/f1601c3e.html" title="单例模式"><img src="https://img.lvxiaoyi.top/typora-img/1002892-20180912131026735-781767905.png/lvxiaoyi" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="单例模式"/></a><div class="content"><a class="title" href="/f1601c3e.html" title="单例模式">单例模式</a><time datetime="2022-09-12T07:22:48.777Z" title="发表于 2022-09-12 15:22:48">2022-09-12</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/b15f0f1b.html" title="设计模式基础-1"><img src="https://img.lvxiaoyi.top/typora-img/image-20211012093705433.png/lvxiaoyi" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="设计模式基础-1"/></a><div class="content"><a class="title" href="/b15f0f1b.html" title="设计模式基础-1">设计模式基础-1</a><time datetime="2022-09-12T07:22:48.777Z" title="发表于 2022-09-12 15:22:48">2022-09-12</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2109f677.html" title="计算机网络常见面试题"><img src="https://img.lvxiaoyi.top/typora-img/java-interview/1.png/lvxiaoyi" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="计算机网络常见面试题"/></a><div class="content"><a class="title" href="/2109f677.html" title="计算机网络常见面试题">计算机网络常见面试题</a><time datetime="2022-09-12T07:22:48.777Z" title="发表于 2022-09-12 15:22:48">2022-09-12</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/60bbc03b.html" title="Jmeter基础一"><img src="https://img.lvxiaoyi.top/typora-img/apachejmeter_0.jpg/lvxiaoyi" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Jmeter基础一"/></a><div class="content"><a class="title" href="/60bbc03b.html" title="Jmeter基础一">Jmeter基础一</a><time datetime="2022-09-12T07:22:48.775Z" title="发表于 2022-09-12 15:22:48">2022-09-12</time></div></div><div class="aside-list-item"><div class="content"><a class="title" href="/0.html" title="无题">无题</a><time datetime="2022-09-12T07:22:48.775Z" title="发表于 2022-09-12 15:22:48">2022-09-12</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2022 By 吕小医</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.umd.min.js"></script><div class="js-pjax"></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>

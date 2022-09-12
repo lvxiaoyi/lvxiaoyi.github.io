@@ -1,0 +1,422 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"><title>吕小医のBLOG - good good study</title><meta name="keywords" content="java 后端 面试 spring"><meta name="author" content="吕小医"><meta name="copyright" content="吕小医"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="IT小白的健身小白">
+<meta property="og:type" content="website">
+<meta property="og:title" content="吕小医のBLOG">
+<meta property="og:url" content="https://lvxiaoyi.top/index.html">
+<meta property="og:site_name" content="吕小医のBLOG">
+<meta property="og:description" content="IT小白的健身小白">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png">
+<meta property="article:author" content="吕小医">
+<meta property="article:tag" content="java 后端 面试 spring">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="https://lvxiaoyi.top/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '吕小医のBLOG',
+  isPost: false,
+  isHome: true,
+  isHighlightShrink: false,
+  isToc: false,
+  postUpdate: '2022-09-12 16:03:23'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><meta name="generator" content="Hexo 5.4.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">202</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">26</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">49</div></a></div><hr/></div></div><div class="page" id="body-wrap"><header class="full_page" id="page-header"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">吕小医のBLOG</a></span><div id="menus"><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="site-info"><h1 id="site-title">吕小医のBLOG</h1></div><div id="scroll-down"><i class="fas fa-angle-down scroll-down-effects"></i></div></header><main class="layout" id="content-inner"><div class="recent-posts" id="recent-posts"><div class="recent-post-item"><div class="post_cover left"><a href="/f1601c3e.html" title="单例模式"><img class="post_bg" src="https://img.lvxiaoyi.top/typora-img/1002892-20180912131026735-781767905.png/lvxiaoyi" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="单例模式"></a></div><div class="recent-post-info"><a class="article-title" href="/f1601c3e.html" title="单例模式">单例模式</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2022-09-12T07:22:48.777Z" title="发表于 2022-09-12 15:22:48">2022-09-12</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/">设计模式</a></span></div><div class="content">什么是单例模式单例模式是一种常用的软件设计模式，其定义是单例对象的类只能允许一个实例存在。
+许多时候整个系统只需要拥有一个的全局对象，这样有利于我们协调系统整体的行为。比如在某个服务器程序中，该服务器的配置信息存放在一个文件中，这些配置数据由一个单例对象统一读取，然后服务进程中的其他对象再通过这个单例对象获取这些配置信息。这种方式简化了在复杂环境下的配置管理。
+
+单例模式应用场景举一个小例子，在我们的windows桌面上，我们打开了一个回收站，当我们试图再次打开一个新的回收站时，Windows系统并不会为你弹出一个新的回收站窗口。，也就是说在整个系统运行的过程中，系统只维护一个回收站的实例。这就是一个典型的单例模式运用。
+ 继续说回收站，我们在实际使用中并不存在需要同时打开两个回收站窗口的必要性。假如我每次创建回收站时都需要消耗大量的资源，而每个回收站之间资源是共享的，那么在没有必要多次重复创建该实例的情况下，创建了多个实例，这样做就会给系统造成不必要的负担，造成资源浪费。
+ 再举一个例子，网站的计数器，一般也是采用单例模式实现，如果你存在多个计数器，每一个用户的访问都刷新计数器的值， ...</div></div></div><div class="recent-post-item"><div class="post_cover right"><a href="/b15f0f1b.html" title="设计模式基础-1"><img class="post_bg" src="https://img.lvxiaoyi.top/typora-img/image-20211012093705433.png/lvxiaoyi" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="设计模式基础-1"></a></div><div class="recent-post-info"><a class="article-title" href="/b15f0f1b.html" title="设计模式基础-1">设计模式基础-1</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2022-09-12T07:22:48.777Z" title="发表于 2022-09-12 15:22:48">2022-09-12</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/">设计模式</a></span></div><div class="content">设计模式基础-1概述在 1994 年，由 Erich Gamma、Richard Helm、Ralph Johnson 和 John Vlissides 四人合著出版了一本名为 Design Patterns - Elements of Reusable Object-Oriented Software（中文译名：设计模式 - 可复用的面向对象软件元素） 的书，该书首次提到了软件开发中设计模式的概念。
+==对接口编程而不是对实现编程。==
+这样一个方法B在调用A的时候，不是调用的实现（A1，A2，A3），而是调用的接口（A），通过多态性，根据调用者的不同而调用不同的实现方法
+==优先使用对象组合而不是继承。==
+java规定只能有一个父类
+设计模式的基石
+封装
+继承
+多态
+
+
+顺序
+判断
+循环
+
+总览
+创建型模式（Creational Patterns）
+单例（Singleton）模式
+原型（Prototype）模式
+工厂方法（FactoryMethod）模式
+抽象工厂（AbstractFactory）模式
+建造者（Builder）模式
+
+
+结构型模式（Structural Patte ...</div></div></div><div class="recent-post-item"><div class="post_cover left"><a href="/2109f677.html" title="计算机网络常见面试题"><img class="post_bg" src="https://img.lvxiaoyi.top/typora-img/java-interview/1.png/lvxiaoyi" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="计算机网络常见面试题"></a></div><div class="recent-post-info"><a class="article-title" href="/2109f677.html" title="计算机网络常见面试题">计算机网络常见面试题</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2022-09-12T07:22:48.777Z" title="发表于 2022-09-12 15:22:48">2022-09-12</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/">计算机网络</a><i class="fas fa-angle-right article-meta-link"></i><a class="article-meta__categories" href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E5%9F%BA%E7%A1%80/">计算机网络基础</a></span></div><div class="content">                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     ...</div></div></div><div class="recent-post-item"><div class="post_cover right"><a href="/60bbc03b.html" title="Jmeter基础一"><img class="post_bg" src="https://img.lvxiaoyi.top/typora-img/apachejmeter_0.jpg/lvxiaoyi" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Jmeter基础一"></a></div><div class="recent-post-info"><a class="article-title" href="/60bbc03b.html" title="Jmeter基础一">Jmeter基础一</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2022-09-12T07:22:48.775Z" title="发表于 2022-09-12 15:22:48">2022-09-12</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/%E6%B5%8B%E8%AF%95/">测试</a><i class="fas fa-angle-right article-meta-link"></i><a class="article-meta__categories" href="/categories/%E6%B5%8B%E8%AF%95/Jmeter/">Jmeter</a></span></div><div class="content">Jmeter介绍
+Jmeter入门</div></div></div><div class="recent-post-item"><div class="recent-post-info"><a class="article-title" href="/0.html" title="无题">无题</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2022-09-12T07:22:48.775Z" title="发表于 2022-09-12 15:22:48">2022-09-12</time></span></div><div class="content">
+
+自定义应用层协议在复杂的网络世界中，各种应用之间通信需要依赖各种各样的协议，比如：HTTP,Telnet,FTP,SMTP等等。
+在开发过程中，有时候我们需要构建一些适应自己业务的应用层协议，Netty作为一个非常优秀的网络通信框架，可以帮助我们完成自定义协议的通信。
+一般而言，我们制定的协议需要两个部分：
+
+Header : 协议头部，放置一些Meta信息。
+Content : 应用之间交互的信息主体。
+
+例如：
+
+
+
+字段
+类型
+长度（字节）
+说明
+
+
+
+STAG
+unsigned short
+2
+通信协议数据包的开始标志0xff 0xfeh2640001
+
+
+version
+unsigned short
+2
+通信协议的版本号，目前为0x01
+
+
+checksum
+unsigned char
+1
+计算协议数据校验和，如果为加密数据,则计算密文校验和。校验和计算范围:协议头CheckSum字段后数据,协议体全部数据。
+
+
+type
+unsigned char
+1
+0表示协议体是json格式，其它值未定义。设备心跳消息类型的值为OxAO
+
+
+seqno
+unsigned int
+4 ...</div></div></div><div class="recent-post-item"><div class="post_cover right"><a href="/30cac350.html" title="netty基础-1"><img class="post_bg" src="https://img.lvxiaoyi.top/typora-img/netty-1.jpg/lvxiaoyi" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="netty基础-1"></a></div><div class="recent-post-info"><a class="article-title" href="/30cac350.html" title="netty基础-1">netty基础-1</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2022-09-12T07:22:48.775Z" title="发表于 2022-09-12 15:22:48">2022-09-12</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/">计算机网络</a><i class="fas fa-angle-right article-meta-link"></i><a class="article-meta__categories" href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/netty/">netty</a></span></div><div class="content">Netty简介Netty 的介绍
+Netty 是由 JBOSS 提供的一个 Java 开源框架，现为 Github 上的独立项目。
+Netty 是一个异步的、基于事件驱动的网络应用框架，用以快速开发高性能、高可靠性的网络 IO 程序。
+Netty 主要针对在 TCP 协议下，面向 Client 端的高并发应用，或者 Peer-to-Peer 场景下的大量数据持续传输的应用。
+Netty 本质是一个 NIO 框架，适用于服务器通讯相关的多种应用场景。
+要透彻理解 Netty，需要先学习 NIO，这样我们才能阅读 Netty 的源码。
+
+
+
+相对简单的一个体系图
+
+Netty 的应用场景互联网行业
+互联网行业：在分布式系统中，各个节点之间需要远程服务调用，高性能的 RPC 框架必不可少，Netty 作为异步高性能的通信框架，往往作为基础通信组件被这些 RPC 框架使用。
+典型的应用有：阿里分布式服务框架 Dubbo 的 RPC 框 架使用 Dubbo 协议进行节点间通信，Dubbo 协议默认使用 Netty 作为基础通信组件，用于实现各进程节点之间的内部通信。
+
+游戏行业
+无论是手游服务端 ...</div></div></div><div class="recent-post-item"><div class="post_cover left"><a href="/a9c392ea.html" title="netty基础-2"><img class="post_bg" src="https://img.lvxiaoyi.top/typora-img/netty-2.jpg/lvxiaoyi" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="netty基础-2"></a></div><div class="recent-post-info"><a class="article-title" href="/a9c392ea.html" title="netty基础-2">netty基础-2</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2022-09-12T07:22:48.775Z" title="发表于 2022-09-12 15:22:48">2022-09-12</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/">计算机网络</a><i class="fas fa-angle-right article-meta-link"></i><a class="article-meta__categories" href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/netty/">netty</a></span></div><div class="content">Netty 概述原生 NIO 存在的问题
+NIO 的类库和 API 繁杂，使用麻烦：需要熟练掌握 Selector、ServerSocketChannel、SocketChannel、ByteBuffer等。
+需要具备其他的额外技能：要熟悉 Java 多线程编程，因为 NIO 编程涉及到 Reactor 模式，你必须对多线程和网络编程非常熟悉，才能编写出高质量的 NIO 程序。
+开发工作量和难度都非常大：例如客户端面临断连重连、网络闪断、半包读写、失败缓存、网络拥塞和异常流的处理等等。
+JDK NIO 的 Bug：例如臭名昭著的 Epoll Bug，它会导致 Selector 空轮询，最终导致 CPU100%。直到 JDK1.7 版本该问题仍旧存在，没有被根本解决。
+
+
+
+Netty 官网说明官网：https://netty.io/
+Netty is an asynchronous event-driven network application framework for rapid development of maintainable high performance proto ...</div></div></div><div class="recent-post-item"><div class="post_cover right"><a href="/dec4a27c.html" title="netty基础-3"><img class="post_bg" src="https://img.lvxiaoyi.top/typora-img/netty-3.jpg/lvxiaoyi" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="netty基础-3"></a></div><div class="recent-post-info"><a class="article-title" href="/dec4a27c.html" title="netty基础-3">netty基础-3</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2022-09-12T07:22:48.775Z" title="发表于 2022-09-12 15:22:48">2022-09-12</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/">计算机网络</a><i class="fas fa-angle-right article-meta-link"></i><a class="article-meta__categories" href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/netty/">netty</a></span></div><div class="content">Google Protobuf编码和解码的基本介绍
+编写网络应用程序时，因为数据在网络中传输的都是二进制字节码数据，在发送数据时就需要编码，接收数据时就需要解码[示意图]
+codec（编解码器）的组成部分有两个：decoder（解码器）和 encoder（编码器）。encoder 负责把业务数据转换成字节码数据，decoder 负责把字节码数据转换成业务数据
+
+
+
+
+Netty 本身的编码解码的机制和问题分析
+Netty 自身提供了一些 codec(编解码器)
+
+Netty提供的编码器
+
+StringEncoder：对字符串数据进行编码。
+ObjectEncoder：对Java对象进行编码。
+
+
+Netty提供的解码器
+
+StringDecoder,对字符串数据进行解码
+ObjectDecoder，对 Java 对象进行解码
+
+
+Netty本身自带的ObjectDecoder和ObjectEncoder可以用来实现POJO对象或各种业务对象的编码和解码，底层使用的仍是Java序列化技术,而Java序列化技术本身效率就不高，存在如下问题
+
+无法跨语言
+序列化后的体积太大，是二进制编码的5 ...</div></div></div><div class="recent-post-item"><div class="post_cover left"><a href="/2fad4cc3.html" title="操作系统基础1"><img class="post_bg" src="https://img.lvxiaoyi.top/typora-img/OIP.jpg/lvxiaoyi" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="操作系统基础1"></a></div><div class="recent-post-info"><a class="article-title" href="/2fad4cc3.html" title="操作系统基础1">操作系统基础1</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2022-09-12T07:22:48.774Z" title="发表于 2022-09-12 15:22:48">2022-09-12</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/">操作系统</a></span></div><div class="content">第 1 章 计算机系统概述1.1 操作系统的基本概念1.1.1 操作系统的概念、功能和目标（系统资源的管理者、提供接口、作为扩充机器、虚拟机）1.熟悉的操作系统举例
+
+
+2.操作系统的层次结构
+3.操作系统的概念
+是系统最基本最核心的软件，属于系统软件
+控制和管理整个计算机的硬件和软件资源
+合理的组织、调度计算机的工作与资源的分配
+为用户和其它软件提供方便的接口和环境
+
+4.操作系统的功能和目标
+先放一张思维导图，大致知道操作系统的具体功能和目标，然后再一一展开叙述。
+用一个直观的例子来理解上述图中操作系统的功能：
+
+
+
+我们假设：用户是雇主，操作系统是工人（用来操作机器），计算机是机器（由处理机(CPU)、存储器、设备、文件几个部件构成）
+工人有熟练的技能去控制和协调各个部件的工作，这就是操作系统对资源的管理
+同时，工人必须接受雇主的命令，这就是“接口”
+有了工人，机器就能发挥更大的作用，因此工人就成了“扩充机器”
+工人操作机器、机器有了更大的作用比如GUI界面，于是工人便成了扩充机器，去扩充GUI界面等功能
+
+
+（1）作为计算机系统资源的管理者
+管理软硬件资源、合理的组织、调度计算 ...</div></div></div><div class="recent-post-item"><div class="post_cover right"><a href="/c1a32def.html" title="操作系统基础3"><img class="post_bg" src="https://img.lvxiaoyi.top/typora-img/OIP.jpg/lvxiaoyi" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="操作系统基础3"></a></div><div class="recent-post-info"><a class="article-title" href="/c1a32def.html" title="操作系统基础3">操作系统基础3</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2022-09-12T07:22:48.774Z" title="发表于 2022-09-12 15:22:48">2022-09-12</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/">操作系统</a></span></div><div class="content">第 5 章 I/O管理5.1 I/O管理概述5.1.1 什么是I/O设备？有几类I/O设备？0.思维导图
+1.什么是I/O设备？
+
+2.I/O设备的分类（1）按使用特性分类
+（2）按传输速率分类
+（3）按信息交换单位分类
+5.1.2 控制I/O设备的I/O控制器0.思维导图
+1.I/O设备的组成
+（1）机械部件
+（2）电子部件—I/O控制器的功能
+2.I/O控制器的组成注意：
+3.I/O控制器的两种寄存器编址方式内存映像—独立编址
+5.1.3 控制I/O设备的几种方式？(程序直接控制方式、中断驱动方式、DMA、通道控制)0.思维导图
+1.程序直接控制方式key word : 轮询
+
+完成一次读/写操作的流程图(以读操作为例)下面以C语言代码和流程图来剖析，程序直接控制方式分析一下在思维导图中提到的几个问题：
+
+2.中断驱动方式
+由于程序直接控制方式CPU利用率低，忙等，所以提出了中断驱动方式。
+
+分析一下在思维导图中提到的几个问题：
+
+3.DMA方式
+虽然中断驱动方式解决了程序直接控制方式的问题，但是每一次只能读/写一个字，导致CPU频繁切换，耗费了很多时间。于是人们又发明了DMA方式 ...</div></div></div><div class="recent-post-item"><div class="post_cover left"><a href="/b6a41d79.html" title="操作系统基础2"><img class="post_bg" src="https://img.lvxiaoyi.top/typora-img/OIP.jpg/lvxiaoyi" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="操作系统基础2"></a></div><div class="recent-post-info"><a class="article-title" href="/b6a41d79.html" title="操作系统基础2">操作系统基础2</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2022-09-12T07:22:48.774Z" title="发表于 2022-09-12 15:22:48">2022-09-12</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/">操作系统</a></span></div><div class="content">第 3 章 内存管理3.1 内存管理的概念3.1.1 什么是内存？进程的基本原理，深入指令理解其过程0.思维导图
+1.什么是内存？有何作用？
+（1）存储单元
+关于存储单元有关内容在我写的组成原理笔记中有提到：存储单元
+
+（2）几个常用数量单位&amp;内存地址
+2.进程运行的基本原理（1）指令的工作原理—操作码+若干参数（可能包含地址参数）
+从X=X+1大致看一下指令的执行过程
+
+（2）逻辑地址（相对地址）vs物理地址（绝对地址）
+（3）从写程序到程序运行—编译、链接、装入
+（4）装入模块装入内存不修改装入模块中的指令地址就直接装入内存的话：
+（5）装入的三种方式①绝对装入
+②静态重定位
+③ 动态重定位
+（6）链接的三种方式① 静态链接
+②装入时动态链接
+③运行时动态链接
+3.1.2 内存管理管些什么？0.思维导图
+1.内存空间的分配与回收
+2.内存空间的扩展（实现虚拟性）
+3.地址转换
+三种方式
+4.内存保护
+两种方式
+3.1.3 覆盖技术与交换技术的思想0.思维导图
+1.覆盖技术
+3.交换技术
+
+回忆复习一下进程调度
+
+3.1.4 内存的分配与 回收0.思维导图
+1.单一连续分配
+ ...</div></div></div><div class="recent-post-item"><div class="post_cover right"><a href="/ec5abdd4.html" title="无题"><img class="post_bg" src="https://img.lvxiaoyi.top/typora-img/202111081621419.png/lvxiaoyi" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="无题"></a></div><div class="recent-post-info"><a class="article-title" href="/ec5abdd4.html" title="无题">无题</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2022-09-12T07:22:48.773Z" title="发表于 2022-09-12 15:22:48">2022-09-12</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/%E5%A4%A7%E6%95%B0%E6%8D%AE/">大数据</a><i class="fas fa-angle-right article-meta-link"></i><a class="article-meta__categories" href="/categories/%E5%A4%A7%E6%95%B0%E6%8D%AE/Spark/">Spark</a></span></div><div class="content">Spark基础-1SparkCoreSpark 概述Spark 是什么
+Spark 是一种基于内存的快速、通用、可扩展的大数据分析计算引擎。
+Spark and Hadoop在之前的学习中，Hadoop 的 MapReduce 是大家广为熟知的计算框架，那为什么咱们还要学习新的计算框架 Spark 呢，这里就不得不提到Spark 和Hadoop 的关系。
+首先从时间节点上来看:
+
+Hadoop
+
+2006 年 1 月，Doug Cutting 加入Yahoo，领导Hadoop 的开发
+
+2008 年 1 月，Hadoop 成为 Apache 顶级项目
+
+2011 年 1.0 正式发布
+
+2012 年 3 月稳定版发布
+
+2013 年 10 月发布 2.X (Yarn)版本
+
+
+
+Spark
+
+2009 年，Spark 诞生于伯克利大学的AMPLab 实验室
+2010 年，伯克利大学正式开源了 Spark 项目
+2013 年 6 月，Spark 成为了 Apache 基金会下的项目
+2014 年 2 月，Spark 以飞快的速度成为了 Apache 的顶级项目
+2015 年至今，Spar ...</div></div></div><div class="recent-post-item"><div class="post_cover left"><a href="/88815d0a.html" title="zookeeper基础"><img class="post_bg" src="https://img.lvxiaoyi.top/typora-img/202111222013828.png/lvxiaoyi" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="zookeeper基础"></a></div><div class="recent-post-info"><a class="article-title" href="/88815d0a.html" title="zookeeper基础">zookeeper基础</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2022-09-12T07:22:48.773Z" title="发表于 2022-09-12 15:22:48">2022-09-12</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/%E5%88%86%E5%B8%83%E5%BC%8F/">分布式</a><i class="fas fa-angle-right article-meta-link"></i><a class="article-meta__categories" href="/categories/%E5%88%86%E5%B8%83%E5%BC%8F/zookeeper/">zookeeper</a></span></div><div class="content">Zookeeper 入门概述Zookeeper 是一个开源的分布式的，为分布式框架提供协调服务的 Apache 项目。
+
+Zookeeper工作机制
+Zookeeper从设计模式角度来理解：是一个基 于观察者模式设计的分布式服务管理框架，它负责存储和管理大家都关心的数据，然后接受观察者的注册，一旦这些数据的状态发生变化，Zookeeper 就 将负责通知已经在Zookeeper上注册的那些观察 者做出相应的反应。
+
+
+特点
+
+Zookeeper：一个领导者（Leader），多个跟随者（Follower）组成的集群。
+集群中只要有半数以上节点存活，Zookeeper集群就能正常服务。所 以Zookeeper适合安装奇数台服务器。
+全局数据一致：每个Server保存一份相同的数据副本，Client无论连接到哪个Server，数据都是一致的。
+更新请求顺序执行，来自同一个Client的更新请求按其发送顺序依次执行。
+数据更新原子性，一次数据更新要么成功，要么失败。
+实时性，在一定时间范围内，Client能读到最新数据。
+
+数据结构ZooKeeper 数据模型的结构与 Unix 文件系统很类似 ...</div></div></div><div class="recent-post-item"><div class="post_cover right"><a href="/7d0492f0.html" title="大数据栈简介"><img class="post_bg" src="https://img.lvxiaoyi.top/typora-img/image-20211028174657424.png/lvxiaoyi" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="大数据栈简介"></a></div><div class="recent-post-info"><a class="article-title" href="/7d0492f0.html" title="大数据栈简介">大数据栈简介</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2022-09-12T07:22:48.773Z" title="发表于 2022-09-12 15:22:48">2022-09-12</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/%E5%A4%A7%E6%95%B0%E6%8D%AE/">大数据</a><i class="fas fa-angle-right article-meta-link"></i><a class="article-meta__categories" href="/categories/%E5%A4%A7%E6%95%B0%E6%8D%AE/hadoop/">hadoop</a></span></div><div class="content">
+HadoopHadoop实现了一个分布式文件系统（Hadoop Distributed File System），简称HDFS。
+
+HDFS有高容错性的特点，并且设计用来部署在低廉的（low-cost）硬件上；
+它提供高吞吐量（high throughput）来访问应用程序的数据，适合那些有着超大数据集（large data set）的应用程序。
+HDFS放宽了（relax）POSIX的要求，可以以流的形式访问（streaming access）文件系统中的数据。
+
+Hadoop的框架最核心的设计就是：HDFS和MapReduce。HDFS为海量的数据提供了存储，则MapReduce为海量的数据提供了计算。
+HDFSHadoop分布式文件系统(HDFS)被设计成适合运行在通用硬件(commodity hardware)上的分布式文件系统。它和现有的分布式文件系统有很多共同点。HDFS简化了文件的一致性模型，通过流式数据访问，提供高吞吐量应用程序数据访问功能，适合带有大型数据集的应用程序。 但同时，它和其他的分布式文件系统的区别也是很明显的。
+HDFS是一个高度容错性的系统，适合部署在 ...</div></div></div><div class="recent-post-item"><div class="post_cover left"><a href="/bb1e53b0.html" title="协程"><img class="post_bg" src="https://img.lvxiaoyi.top/typora-img/6765e36cc4604fba897976638af03524.jpeg/lvxiaoyi" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="协程"></a></div><div class="recent-post-info"><a class="article-title" href="/bb1e53b0.html" title="协程">协程</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2022-09-12T07:22:48.773Z" title="发表于 2022-09-12 15:22:48">2022-09-12</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/">操作系统</a></span></div><div class="content">进程和线程的痛点
+线程之间的通讯要设计到同步锁
+涉及到线程上下文切换
+涉及到阻塞状态和运行状态切换
+
+
+
+协程协程，英文Coroutines，是一种比线程更加轻量级的存在。正如一个进程可以拥有多个线程一样，一个线程也可以拥有多个协程。
+
+
+最重要的是，协程不是被操作系统内核所管理，而完全是由程序所控制（也就是在用户态执行）。
+这样带来的好处就是性能得到了很大的提升，不会像线程切换那样消耗资源。
+由于Java的原生语法中并没有实现协程（某些开源框架实现了协程，但是很少被使用），比较多的是python、lua中使用协程
+具体了解推荐：
+https://blog.csdn.net/zheng199172/article/details/88800275
+https://www.liaoxuefeng.com/wiki/897692888725344/923057403198272
+</div></div></div><nav id="pagination"><div class="pagination"><span class="page-number current">1</span><a class="page-number" href="/page/2/#content-inner">2</a><span class="space">&hellip;</span><a class="page-number" href="/page/14/#content-inner">14</a><a class="extend next" rel="next" href="/page/2/#content-inner"><i class="fas fa-chevron-right fa-fw"></i></a></div></nav></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">吕小医</div><div class="author-info__description">IT小白的健身小白</div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">202</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">26</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">49</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/xxxxxx"><i class="fab fa-github"></i><span>Follow Me</span></a></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">This is my Blog</div></div><div class="sticky_layout"><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/f1601c3e.html" title="单例模式"><img src="https://img.lvxiaoyi.top/typora-img/1002892-20180912131026735-781767905.png/lvxiaoyi" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="单例模式"/></a><div class="content"><a class="title" href="/f1601c3e.html" title="单例模式">单例模式</a><time datetime="2022-09-12T07:22:48.777Z" title="发表于 2022-09-12 15:22:48">2022-09-12</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/b15f0f1b.html" title="设计模式基础-1"><img src="https://img.lvxiaoyi.top/typora-img/image-20211012093705433.png/lvxiaoyi" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="设计模式基础-1"/></a><div class="content"><a class="title" href="/b15f0f1b.html" title="设计模式基础-1">设计模式基础-1</a><time datetime="2022-09-12T07:22:48.777Z" title="发表于 2022-09-12 15:22:48">2022-09-12</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2109f677.html" title="计算机网络常见面试题"><img src="https://img.lvxiaoyi.top/typora-img/java-interview/1.png/lvxiaoyi" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="计算机网络常见面试题"/></a><div class="content"><a class="title" href="/2109f677.html" title="计算机网络常见面试题">计算机网络常见面试题</a><time datetime="2022-09-12T07:22:48.777Z" title="发表于 2022-09-12 15:22:48">2022-09-12</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/60bbc03b.html" title="Jmeter基础一"><img src="https://img.lvxiaoyi.top/typora-img/apachejmeter_0.jpg/lvxiaoyi" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Jmeter基础一"/></a><div class="content"><a class="title" href="/60bbc03b.html" title="Jmeter基础一">Jmeter基础一</a><time datetime="2022-09-12T07:22:48.775Z" title="发表于 2022-09-12 15:22:48">2022-09-12</time></div></div><div class="aside-list-item"><div class="content"><a class="title" href="/0.html" title="无题">无题</a><time datetime="2022-09-12T07:22:48.775Z" title="发表于 2022-09-12 15:22:48">2022-09-12</time></div></div></div></div><div class="card-widget card-categories"><div class="item-headline">
+            <i class="fas fa-folder-open"></i>
+            <span>分类</span>
+            <a class="card-more-btn" href="/categories/" title="查看更多">
+    <i class="fas fa-angle-right"></i></a>
+            </div>
+            <ul class="card-category-list" id="aside-cat-list">
+            <li class="card-category-list-item "><a class="card-category-list-link" href="/categories/MySQL/"><span class="card-category-list-name">MySQL</span><span class="card-category-list-count">4</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/Spring/"><span class="card-category-list-name">Spring</span><span class="card-category-list-count">6</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/SpringMVC/"><span class="card-category-list-name">SpringMVC</span><span class="card-category-list-count">1</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/elasticsearch/"><span class="card-category-list-name">elasticsearch</span><span class="card-category-list-count">1</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/java/"><span class="card-category-list-name">java</span><span class="card-category-list-count">8</span></a><ul class="card-category-list child"><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/java/java%E5%9F%BA%E7%A1%80/"><span class="card-category-list-name">java基础</span><span class="card-category-list-count">6</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/java/%E4%BB%A3%E7%90%86%E6%A8%A1%E5%BC%8F/"><span class="card-category-list-name">代理模式</span><span class="card-category-list-count">1</span></a></li></ul></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/jvm/"><span class="card-category-list-name">jvm</span><span class="card-category-list-count">7</span></a></li>
+            </ul></div><div class="card-widget card-tags"><div class="item-headline"><i class="fas fa-tags"></i><span>标签</span></div><div class="card-tag-cloud"><a href="/tags/LeetCode/" style="font-size: 1.5em; color: #99a9bf">LeetCode</a> <a href="/tags/MySQL/" style="font-size: 1.21em; color: #999da3">MySQL</a> <a href="/tags/Spring/" style="font-size: 1.28em; color: #99a0aa">Spring</a> <a href="/tags/SpringMVC/" style="font-size: 1.1em; color: #999">SpringMVC</a> <a href="/tags/elasticsearch/" style="font-size: 1.1em; color: #999">elasticsearch</a> <a href="/tags/java/" style="font-size: 1.35em; color: #99a3b1">java</a> <a href="/tags/jvm/" style="font-size: 1.32em; color: #99a2ae">jvm</a> <a href="/tags/linux/" style="font-size: 1.1em; color: #999">linux</a> <a href="/tags/lua/" style="font-size: 1.14em; color: #999a9c">lua</a> <a href="/tags/markdown/" style="font-size: 1.1em; color: #999">markdown</a> <a href="/tags/redis/" style="font-size: 1.17em; color: #999ca0">redis</a> <a href="/tags/redis%E9%9B%86%E7%BE%A4/" style="font-size: 1.1em; color: #999">redis集群</a> <a href="/tags/zookeeper/" style="font-size: 1.1em; color: #999">zookeeper</a> <a href="/tags/%E5%81%A5%E8%BA%AB/" style="font-size: 1.1em; color: #999">健身</a> <a href="/tags/%E5%88%86%E5%B8%83%E5%BC%8F/" style="font-size: 1.21em; color: #999da3">分布式</a> <a href="/tags/%E5%88%86%E5%B8%83%E5%BC%8F%E9%94%81/" style="font-size: 1.14em; color: #999a9c">分布式锁</a> <a href="/tags/%E5%89%91%E6%8C%87offer/" style="font-size: 1.46em; color: #99a8bc">剑指offer</a> <a href="/tags/%E5%A4%9A%E7%BA%BF%E7%A8%8B/" style="font-size: 1.39em; color: #99a5b5">多线程</a> <a href="/tags/%E5%A4%9A%E7%BA%BF%E7%A8%8B%E5%AE%9E%E6%88%98/" style="font-size: 1.1em; color: #999">多线程实战</a> <a href="/tags/%E5%A4%A7%E6%95%B0%E6%8D%AE/" style="font-size: 1.43em; color: #99a6b8">大数据</a> <a href="/tags/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/" style="font-size: 1.25em; color: #999fa7">操作系统</a> <a href="/tags/%E6%B5%8B%E8%AF%95/" style="font-size: 1.17em; color: #999ca0">测试</a> <a href="/tags/%E7%AE%97%E6%B3%95/" style="font-size: 1.1em; color: #999">算法</a> <a href="/tags/%E7%AE%97%E6%B3%95%E6%80%9D%E6%83%B3/" style="font-size: 1.1em; color: #999">算法思想</a> <a href="/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" style="font-size: 1.14em; color: #999a9c">设计模式</a> <a href="/tags/%E9%9D%A2%E8%AF%95/" style="font-size: 1.1em; color: #999">面试</a></div></div><div class="card-widget card-archives"><div class="item-headline"><i class="fas fa-archive"></i><span>归档</span></div><ul class="card-archive-list"><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2022/09/"><span class="card-archive-list-date">九月 2022</span><span class="card-archive-list-count">202</span></a></li></ul></div><div class="card-widget card-webinfo"><div class="item-headline"><i class="fas fa-chart-line"></i><span>网站资讯</span></div><div class="webinfo"><div class="webinfo-item"><div class="item-name">文章数目 :</div><div class="item-count">202</div></div><div class="webinfo-item"><div class="item-name">本站访客数 :</div><div class="item-count" id="busuanzi_value_site_uv"><i class="fa-solid fa-spinner fa-spin"></i></div></div><div class="webinfo-item"><div class="item-name">本站总访问量 :</div><div class="item-count" id="busuanzi_value_site_pv"><i class="fa-solid fa-spinner fa-spin"></i></div></div><div class="webinfo-item"><div class="item-name">最后更新时间 :</div><div class="item-count" id="last-push-date" data-lastPushDate="2022-09-12T08:03:21.990Z"><i class="fa-solid fa-spinner fa-spin"></i></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2022 By 吕小医</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.umd.min.js"></script><div class="js-pjax"></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>

@@ -1,0 +1,213 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"><title>Spring源码分析-3 | 吕小医のBLOG</title><meta name="keywords" content="Spring"><meta name="author" content="吕小医"><meta name="copyright" content="吕小医"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="spring整体架构  基础接口Resource+ResourceLoader  Resource代表spring中的资源的高度抽象，spring中所有的加载最终都是由Resource来实现的，具体根据不同的需要实现不同的接口，可以来自于二进制文件，可以来自于网络、磁盘等等情况 通过Resource接口获取资源Resource接口的实现类有：   Resource接口继承了InputStreamS">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Spring源码分析-3">
+<meta property="og:url" content="https://lvxiaoyi.top/e3da91bd.html">
+<meta property="og:site_name" content="吕小医のBLOG">
+<meta property="og:description" content="spring整体架构  基础接口Resource+ResourceLoader  Resource代表spring中的资源的高度抽象，spring中所有的加载最终都是由Resource来实现的，具体根据不同的需要实现不同的接口，可以来自于二进制文件，可以来自于网络、磁盘等等情况 通过Resource接口获取资源Resource接口的实现类有：   Resource接口继承了InputStreamS">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png">
+<meta property="article:published_time" content="2022-09-12T07:22:48.751Z">
+<meta property="article:modified_time" content="2022-09-12T07:22:48.752Z">
+<meta property="article:author" content="吕小医">
+<meta property="article:tag" content="Spring">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="https://lvxiaoyi.top/e3da91bd"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'Spring源码分析-3',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2022-09-12 15:22:48'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><meta name="generator" content="Hexo 5.4.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">202</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">26</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">49</div></a></div><hr/></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">吕小医のBLOG</a></span><div id="menus"><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">Spring源码分析-3</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2022-09-12T07:22:48.751Z" title="发表于 2022-09-12 15:22:48">2022-09-12</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2022-09-12T07:22:48.752Z" title="更新于 2022-09-12 15:22:48">2022-09-12</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/Spring/">Spring</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="Spring源码分析-3"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h2 id="spring整体架构"><a href="#spring整体架构" class="headerlink" title="spring整体架构"></a>spring整体架构</h2><p><img src="https://img.lvxiaoyi.top/typora-img/202201171742124.jpg/lvxiaoyi" alt="Spring架构原理图"></p>
+<p><img src="https://img.lvxiaoyi.top/typora-img/202201171741088.jpg/lvxiaoyi" alt="Spring-流程图"></p>
+<h3 id="基础接口"><a href="#基础接口" class="headerlink" title="基础接口"></a>基础接口</h3><h4 id="Resource-ResourceLoader"><a href="#Resource-ResourceLoader" class="headerlink" title="Resource+ResourceLoader"></a>Resource+ResourceLoader</h4><img src="https://img.lvxiaoyi.top/typora-img/202201171744645.png/lvxiaoyi" alt="image-20220117174406452" style="zoom:50%;" />
+
+<p>Resource代表spring中的资源的高度抽象，spring中所有的加载最终都是由Resource来实现的，具体根据不同的需要实现不同的接口，可以来自于二进制文件，可以来自于网络、磁盘等等情况</p>
+<h5 id="通过Resource接口获取资源"><a href="#通过Resource接口获取资源" class="headerlink" title="通过Resource接口获取资源"></a>通过Resource接口获取资源</h5><p>Resource接口的实现类有：</p>
+<p><img src="https://img2018.cnblogs.com/blog/1645290/201909/1645290-20190908175212651-376760526.png" alt="img"></p>
+<p> Resource接口继承了<code>InputStreamSource</code> 接口，<code>InputStreamSource</code> 接口中有一个方法：<code>getInputStream()</code>，所以汇总起来，Resource接口中共有以下方法：</p>
+<p><img src="https://img2018.cnblogs.com/blog/1645290/201909/1645290-20190908175249585-769163389.png" alt="img"></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ResourceTest</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**使用ClassPathResource获取资源**/</span></span><br><span class="line">    <span class="meta">@Test</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">TestClassPath</span><span class="params">()</span> <span class="keyword">throws</span> IOException</span>&#123;</span><br><span class="line">        Resource resource = <span class="keyword">new</span> ClassPathResource(<span class="string">&quot;test.txt&quot;</span>);</span><br><span class="line"></span><br><span class="line">        <span class="comment">//判断文件是否存在：</span></span><br><span class="line">        <span class="keyword">if</span> (resource.exists()) &#123;</span><br><span class="line">            System.out.println(<span class="string">&quot;文件存在&quot;</span>);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">//判断资源文件是否可读</span></span><br><span class="line">        <span class="keyword">if</span> (resource.isReadable()) &#123;  </span><br><span class="line">            System.out.println(<span class="string">&quot;文件可读&quot;</span>); </span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">//判断当前Resource代表的底层资源是否已经打开</span></span><br><span class="line">        <span class="keyword">if</span> (resource.isOpen()) &#123;</span><br><span class="line">            System.out.println(<span class="string">&quot;资源文件已打开&quot;</span>);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        System.out.println(resource.getURL());<span class="comment">//获取资源所在的URL</span></span><br><span class="line">        System.out.println(resource.getURI());<span class="comment">//获取资源所在的URI</span></span><br><span class="line">        resource.getFile();<span class="comment">//返回当前资源对应的File。</span></span><br><span class="line">        System.out.println(resource.contentLength());<span class="comment">//输出内容长度</span></span><br><span class="line">        System.out.println(resource.lastModified());<span class="comment">//返回当前Resource代表的底层资源的最后修改时间。</span></span><br><span class="line">        resource.createRelative(<span class="string">&quot;MyFile&quot;</span>);<span class="comment">//根据资源的相对路径创建新资源。[默认不支持创建相对路径资源]</span></span><br><span class="line">        System.out.println(resource.getFilename());<span class="comment">//获取资源文件名</span></span><br><span class="line">        System.out.println(resource.getDescription());</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">        <span class="comment">//获取当前资源代表的输入流</span></span><br><span class="line">        <span class="keyword">if</span> (resource.isReadable()) &#123;</span><br><span class="line">            InputStream is = resource.getInputStream();  </span><br><span class="line">            System.out.println(is);</span><br><span class="line">            is.close();</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**使用FileSystemResource获取资源**/</span></span><br><span class="line">    <span class="meta">@Test</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">TestFileSystem</span><span class="params">()</span> <span class="keyword">throws</span> IOException </span>&#123;</span><br><span class="line">        Resource resource = <span class="keyword">new</span> FileSystemResource(<span class="string">&quot;D:\\test.txt&quot;</span>);</span><br><span class="line">        System.out.println(resource.getFilename());</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**使用UrlResource获取资源**/</span></span><br><span class="line">    <span class="meta">@Test</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">TestUrl</span><span class="params">()</span> <span class="keyword">throws</span> MalformedURLException</span>&#123;</span><br><span class="line">        Resource resource = <span class="keyword">new</span> UrlResource(<span class="string">&quot;http://docs.spring.io/spring/docs/4.0.0.M1/spring-framework-reference/pdf/spring-framework-reference.pdf&quot;</span>);</span><br><span class="line">        System.out.println(resource.getFilename());</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**使用ByteArrayResource获取字节数组封装的资源**/</span></span><br><span class="line">    <span class="meta">@Test</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">testByteArray</span><span class="params">()</span> <span class="keyword">throws</span> IOException </span>&#123;</span><br><span class="line">        ByteArrayResource resource = <span class="keyword">new</span> ByteArrayResource(<span class="string">&quot;Hello&quot;</span>.getBytes()); </span><br><span class="line">        System.out.println(resource.getInputStream());</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="comment">/**使用InputStreamResource获取输入流封装的资源。针对于输入流的Resource，其getInputStream()方法只能被调用一次。**/</span>  </span><br><span class="line">       <span class="meta">@Test</span>  </span><br><span class="line">       <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">testInputStream</span><span class="params">()</span> <span class="keyword">throws</span> Exception </span>&#123;  </span><br><span class="line">          InputStream is = <span class="keyword">new</span> FileInputStream(<span class="string">&quot;D\\test.txt&quot;</span>);  </span><br><span class="line">          InputStreamResource resource = <span class="keyword">new</span> InputStreamResource(is);  </span><br><span class="line">          <span class="comment">//对于InputStreamResource而言，其getInputStream()方法只能调用一次，继续调用将抛出异常。  </span></span><br><span class="line">          InputStream is2 = resource.getInputStream();   <span class="comment">//返回的就是构件时的那个InputStream</span></span><br><span class="line">          System.out.println(is2);</span><br><span class="line">          is.close();</span><br><span class="line">       &#125; </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<img src="C:/Users/Think/AppData/Roaming/Typora/typora-user-images/image-20220117174551283.png" alt="image-20220117174551283" style="zoom:50%;" />
+
+
+
+<h5 id="通过ResourceLoader接口获取资源"><a href="#通过ResourceLoader接口获取资源" class="headerlink" title="通过ResourceLoader接口获取资源"></a>通过ResourceLoader接口获取资源</h5><p>Spring框架为了更方便的获取资源，尽量弱化程序员对各个Resource接口的实现类的感知，定义了另一个<code>ResourceLoader</code>接口。该接口的<code>getResource(String location)</code>方法可以用来获取资源。它的DefaultResourceLoader实现类可以适用于所有的环境，可以返回ClassPathResource、UrlResource等。</p>
+<p>ResourceLoader在进行加载资源时需要使用前缀来指定需要加载：“classpath:path”表示返回ClasspathResource，“<a href="http://path”和“file:path”表示返回UrlResource资源，如果不加前缀则需要根据当前上下文来决定，DefaultResourceLoader默认实现是加载classpath资源。">http://path”和“file:path”表示返回UrlResource资源，如果不加前缀则需要根据当前上下文来决定，DefaultResourceLoader默认实现是加载classpath资源。</a> </p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Test</span>  </span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">testResourceLoader</span><span class="params">()</span> </span>&#123; </span><br><span class="line"></span><br><span class="line">       ResourceLoader loader = <span class="keyword">new</span> DefaultResourceLoader();  </span><br><span class="line">       Resource resource = loader.getResource(<span class="string">&quot;http://www.baidu.com&quot;</span>);  </span><br><span class="line">       System.out.println(resource <span class="keyword">instanceof</span> UrlResource); <span class="comment">//true  </span></span><br><span class="line">       resource = loader.getResource(<span class="string">&quot;classpath:test.txt&quot;</span>);  </span><br><span class="line">       System.out.println(resource <span class="keyword">instanceof</span> ClassPathResource); <span class="comment">//true  </span></span><br><span class="line">       resource = loader.getResource(<span class="string">&quot;test.txt&quot;</span>);  </span><br><span class="line">       System.out.println(resource <span class="keyword">instanceof</span> ClassPathResource); <span class="comment">//true  </span></span><br><span class="line"></span><br><span class="line">&#125; </span><br></pre></td></tr></table></figure>
+
+
+
+<p>ResourceLoader是一个策略模式，什么是策略模式：策略（Strategy）模式定义了一系列算法，并将每个算法封装起来，使它们可以相互替换，且算法的变化不会影响使用算法的客户。属于对象行为模式。</p>
+<p>抽象策略：ResourceLoader</p>
+<p>具体策略：ResourceLoader的DefaultResource的具体实现</p>
+<p>环境类：AbstractApplicationContext、因为AbstractApplicationContext初始化的时候必须进行resourcePatternResolver赋值</p>
+<h4 id="BeanFactory"><a href="#BeanFactory" class="headerlink" title="BeanFactory"></a>BeanFactory</h4><p><img src="https://img.lvxiaoyi.top/typora-img/202201172149777.png/lvxiaoyi" alt="image-20220117214904512"></p>
+<p>BeanFactory</p>
+<ul>
+<li><p>HierarchicalBeanFactory：定义父子工厂（父子容器）getParentBeanFactory和containsLocalBean</p>
+</li>
+<li><p>ListableBeanFacotory：的实现是DefaultListableBeanFactory，保存了ioc容器中的核心信息（只保存定义信息不保存具体的对象）：serializableFactories、beanDefinitionMap、singletonBeanNamesByType、beanDefinitionNames等</p>
+</li>
+<li><p>AutowireCapableBeanFactory：提供自动装配能力,提供了createbean、autowireBean、configureBean、initializeBean、destroyBean等一系列自动装配的自定义方法</p>
+</li>
+<li><p>AnnotationApplicationContext组合了档案馆，他有自动装配能力。</p>
+</li>
+</ul>
+<h4 id="BeanDefinition"><a href="#BeanDefinition" class="headerlink" title="BeanDefinition"></a>BeanDefinition</h4><p> <img src="https://img.lvxiaoyi.top/typora-img/202201201836522.png/lvxiaoyi" alt="image-20220120183650347"></p>
+<p><img src="https://img-blog.csdnimg.cn/20191018151632339.jpg?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2phdmFfbHl2ZWU=,size_16,color_FFFFFF,t_70" alt="img"></p>
+<p>BeanDefinition也就是bean的定义信息，所有加载过来的Resource全部都要先转化为BeanDefinition，在BeanDefinition中有一个map对象，用于保存所有bean的信息比如bean的作用域，bean的注入模型，bean是否是懒加载等等信息</p>
+<h4 id="BeanDefinitionReader"><a href="#BeanDefinitionReader" class="headerlink" title="BeanDefinitionReader"></a>BeanDefinitionReader</h4><p><img src="https://img.lvxiaoyi.top/typora-img/202201201846936.png/lvxiaoyi" alt="image-20220120184627843"></p>
+<p>Resource加载的途径有好多种，可能是xml文件、可能是注解，可能是本地的二进制文件、可能是网络的二进制文件等等，这个信息全部要通过BeanDefinitionReader进行读取，通过Document对象转化为Dom元素。所以BeanDefinitionReader就是Bean定义信息的加载器</p>
+<h4 id="BeanDefinitionRegistry"><a href="#BeanDefinitionRegistry" class="headerlink" title="BeanDefinitionRegistry"></a>BeanDefinitionRegistry</h4><p><img src="https://img.lvxiaoyi.top/typora-img/202201201858729.png/lvxiaoyi" alt="image-20220120185838670"></p>
+<p>所有的bean信息都要转化为BeanDefinition，但是我们知道我们所有的bean对象都是存放在BeanFactory中，那么这个存放的这个过程是怎样的？所以BeanDefinitionRegistry的所用就是把我们的beandefinition存放到BeanFactory中，其中定义了关于 BeanDefinition 的注册、移除、查询等一系列的操作。</p>
+<p>实现BeanDefinitionRegistry接口的有三个类：DefaultListableBeanFactory、GenericApplicationContext、SimpleBeanDefinitionRegistry，其中 GenericApplicationContext 底层调用的是 DefaultListableBeanFactory 中的实现方法，所以严格意义上来说，只有两个实现类。</p>
+<h4 id="ApplicationContext"><a href="#ApplicationContext" class="headerlink" title="ApplicationContext"></a>ApplicationContext</h4><p><img src="https://img.lvxiaoyi.top/typora-img/202201210955239.png/lvxiaoyi" alt="image-20220121095543140"></p>
+<p>1、ioc事件派发器<br>2、国际化解析<br>3、bean工厂功能—自动装配被组合进来的<br>4、资源解析功能</p>
+<h5 id="通过ApplicationContext获取资源"><a href="#通过ApplicationContext获取资源" class="headerlink" title="通过ApplicationContext获取资源"></a>通过ApplicationContext获取资源</h5><p>所有ApplicationContext实例都实现了ResourceLoader接口，因此我们在使用Spring容器时，可以不去过于计较底层Resource的实现，也不需要自己创建Resource实现类，而是直接使用applicationContext.getResource()，获取到bean容器本身的Resource，进而取到相关的资源信息。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MyResource</span> <span class="keyword">implements</span> <span class="title">ApplicationContextAware</span> </span>&#123;</span><br><span class="line">        <span class="keyword">private</span> ApplicationContext applicationContext;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setApplicationContext</span><span class="params">(ApplicationContext applicationContext)</span> <span class="keyword">throws</span> BeansException </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.applicationContext = applicationContext;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">resource</span><span class="params">()</span> <span class="keyword">throws</span> IOException </span>&#123;</span><br><span class="line">        Resource resource = applicationContext.getResource(<span class="string">&quot;file:D:\\test.txt&quot;</span>);</span><br><span class="line">        System.out.println(resource.getFilename());</span><br><span class="line">        System.out.println(resource.contentLength());</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<p>配置xml文件：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;bean id=&quot;myResource&quot; class=&quot;com.spring.test.MyResource&quot;&gt;&lt;/bean&gt;</span><br></pre></td></tr></table></figure>
+
+<p>测试类：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">App</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        <span class="meta">@SuppressWarnings(&quot;resource&quot;)</span></span><br><span class="line">        ApplicationContext context = <span class="keyword">new</span> ClassPathXmlApplicationContext(<span class="string">&quot;classpath:spring-resource.xml&quot;</span>);  </span><br><span class="line">        MyResource myResource = (MyResource) context.getBean(<span class="string">&quot;myResource&quot;</span>);</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            myResource.resource();</span><br><span class="line">        &#125; <span class="keyword">catch</span> (IOException e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="Aware"><a href="#Aware" class="headerlink" title="Aware"></a>Aware</h4><p><img src="https://img.lvxiaoyi.top/typora-img/202201211034977.png/lvxiaoyi" alt="image-20220121103436897"></p>
+<h3 id="生命周期-后置处理器"><a href="#生命周期-后置处理器" class="headerlink" title="生命周期-后置处理器"></a>生命周期-后置处理器</h3><h4 id="BeanFactoryPostProcessor"><a href="#BeanFactoryPostProcessor" class="headerlink" title="BeanFactoryPostProcessor"></a>BeanFactoryPostProcessor</h4><p><img src="https://img.lvxiaoyi.top/typora-img/202201242159061.png/lvxiaoyi" alt="image-20220124215901966"></p>
+<h4 id="InitializingBean"><a href="#InitializingBean" class="headerlink" title="InitializingBean"></a>InitializingBean</h4><p><img src="https://img.lvxiaoyi.top/typora-img/202201242159778.png/lvxiaoyi" alt="image-20220124215909721"></p>
+<h4 id="BeanPostProcessor"><a href="#BeanPostProcessor" class="headerlink" title="BeanPostProcessor"></a>BeanPostProcessor</h4><p><img src="https://img.lvxiaoyi.top/typora-img/202201242159594.png/lvxiaoyi" alt="image-20220124215937479"></p>
+<p>在一个Bean初始化前后进行功能增强。</p>
+<p>BeanPostProcessor：后置增强普通的Bean组件<br>BeanFactoryPostProcessor：后置增强BeanFactory</p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="https://lvxiaoyi.top">吕小医</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="https://lvxiaoyi.top/e3da91bd.html">https://lvxiaoyi.top/e3da91bd.html</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://lvxiaoyi.top" target="_blank">吕小医のBLOG</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/Spring/">Spring</a></div><div class="post_share"><div class="social-share" data-image="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/dd4f091.html"><img class="prev-cover" src="/" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">Spring源码分析-1</div></div></a></div><div class="next-post pull-right"><a href="/94dda12b.html"><img class="next-cover" src="/" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">Spring源码分析-2</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><div><a href="/440fb577.html" title="深究Spring中Bean的生命周期"><img class="cover" src="https://img.lvxiaoyi.top/typora-img/image-20210819214343270.png/lvxiaoyi" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-09-12</div><div class="title">深究Spring中Bean的生命周期</div></div></a></div><div><a href="/de7e93c2.html" title="spring核心知识点"><img class="cover" src="https://img.lvxiaoyi.top/typora-img/image-20210819214343270.png/lvxiaoyi" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-09-12</div><div class="title">spring核心知识点</div></div></a></div><div><a href="/542a9813.html" title="Spring注解驱动开发"><img class="cover" src="https://img.lvxiaoyi.top/typora-img/1624169818945-9e746934-e261-4bae-a8ca-a1800838e3df.png/lvxiaoyi" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-09-12</div><div class="title">Spring注解驱动开发</div></div></a></div><div><a href="/dd4f091.html" title="Spring源码分析-1"><img class="cover" src="/" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-09-12</div><div class="title">Spring源码分析-1</div></div></a></div><div><a href="/94dda12b.html" title="Spring源码分析-2"><img class="cover" src="/" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-09-12</div><div class="title">Spring源码分析-2</div></div></a></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">吕小医</div><div class="author-info__description">IT小白的健身小白</div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">202</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">26</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">49</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/xxxxxx"><i class="fab fa-github"></i><span>Follow Me</span></a></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">This is my Blog</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#spring%E6%95%B4%E4%BD%93%E6%9E%B6%E6%9E%84"><span class="toc-number">1.</span> <span class="toc-text">spring整体架构</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9F%BA%E7%A1%80%E6%8E%A5%E5%8F%A3"><span class="toc-number">1.1.</span> <span class="toc-text">基础接口</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Resource-ResourceLoader"><span class="toc-number">1.1.1.</span> <span class="toc-text">Resource+ResourceLoader</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E9%80%9A%E8%BF%87Resource%E6%8E%A5%E5%8F%A3%E8%8E%B7%E5%8F%96%E8%B5%84%E6%BA%90"><span class="toc-number">1.1.1.1.</span> <span class="toc-text">通过Resource接口获取资源</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E9%80%9A%E8%BF%87ResourceLoader%E6%8E%A5%E5%8F%A3%E8%8E%B7%E5%8F%96%E8%B5%84%E6%BA%90"><span class="toc-number">1.1.1.2.</span> <span class="toc-text">通过ResourceLoader接口获取资源</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#BeanFactory"><span class="toc-number">1.1.2.</span> <span class="toc-text">BeanFactory</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#BeanDefinition"><span class="toc-number">1.1.3.</span> <span class="toc-text">BeanDefinition</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#BeanDefinitionReader"><span class="toc-number">1.1.4.</span> <span class="toc-text">BeanDefinitionReader</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#BeanDefinitionRegistry"><span class="toc-number">1.1.5.</span> <span class="toc-text">BeanDefinitionRegistry</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#ApplicationContext"><span class="toc-number">1.1.6.</span> <span class="toc-text">ApplicationContext</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E9%80%9A%E8%BF%87ApplicationContext%E8%8E%B7%E5%8F%96%E8%B5%84%E6%BA%90"><span class="toc-number">1.1.6.1.</span> <span class="toc-text">通过ApplicationContext获取资源</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Aware"><span class="toc-number">1.1.7.</span> <span class="toc-text">Aware</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F-%E5%90%8E%E7%BD%AE%E5%A4%84%E7%90%86%E5%99%A8"><span class="toc-number">1.2.</span> <span class="toc-text">生命周期-后置处理器</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#BeanFactoryPostProcessor"><span class="toc-number">1.2.1.</span> <span class="toc-text">BeanFactoryPostProcessor</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#InitializingBean"><span class="toc-number">1.2.2.</span> <span class="toc-text">InitializingBean</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#BeanPostProcessor"><span class="toc-number">1.2.3.</span> <span class="toc-text">BeanPostProcessor</span></a></li></ol></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/f1601c3e.html" title="单例模式"><img src="https://img.lvxiaoyi.top/typora-img/1002892-20180912131026735-781767905.png/lvxiaoyi" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="单例模式"/></a><div class="content"><a class="title" href="/f1601c3e.html" title="单例模式">单例模式</a><time datetime="2022-09-12T07:22:48.777Z" title="发表于 2022-09-12 15:22:48">2022-09-12</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/b15f0f1b.html" title="设计模式基础-1"><img src="https://img.lvxiaoyi.top/typora-img/image-20211012093705433.png/lvxiaoyi" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="设计模式基础-1"/></a><div class="content"><a class="title" href="/b15f0f1b.html" title="设计模式基础-1">设计模式基础-1</a><time datetime="2022-09-12T07:22:48.777Z" title="发表于 2022-09-12 15:22:48">2022-09-12</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2109f677.html" title="计算机网络常见面试题"><img src="https://img.lvxiaoyi.top/typora-img/java-interview/1.png/lvxiaoyi" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="计算机网络常见面试题"/></a><div class="content"><a class="title" href="/2109f677.html" title="计算机网络常见面试题">计算机网络常见面试题</a><time datetime="2022-09-12T07:22:48.777Z" title="发表于 2022-09-12 15:22:48">2022-09-12</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/60bbc03b.html" title="Jmeter基础一"><img src="https://img.lvxiaoyi.top/typora-img/apachejmeter_0.jpg/lvxiaoyi" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Jmeter基础一"/></a><div class="content"><a class="title" href="/60bbc03b.html" title="Jmeter基础一">Jmeter基础一</a><time datetime="2022-09-12T07:22:48.775Z" title="发表于 2022-09-12 15:22:48">2022-09-12</time></div></div><div class="aside-list-item"><div class="content"><a class="title" href="/0.html" title="无题">无题</a><time datetime="2022-09-12T07:22:48.775Z" title="发表于 2022-09-12 15:22:48">2022-09-12</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2022 By 吕小医</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.umd.min.js"></script><div class="js-pjax"></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>

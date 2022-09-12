@@ -1,0 +1,217 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"><title>大数据栈简介 | 吕小医のBLOG</title><meta name="keywords" content="大数据"><meta name="author" content="吕小医"><meta name="copyright" content="吕小医"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="HadoopHadoop实现了一个分布式文件系统（Hadoop Distributed File System），简称HDFS。  HDFS有高容错性的特点，并且设计用来部署在低廉的（low-cost）硬件上； 它提供高吞吐量（high throughput）来访问应用程序的数据，适合那些有着超大数据集（large data set）的应用程序。 HDFS放宽了（relax）POSIX的要求，可">
+<meta property="og:type" content="article">
+<meta property="og:title" content="大数据栈简介">
+<meta property="og:url" content="https://lvxiaoyi.top/7d0492f0.html">
+<meta property="og:site_name" content="吕小医のBLOG">
+<meta property="og:description" content="HadoopHadoop实现了一个分布式文件系统（Hadoop Distributed File System），简称HDFS。  HDFS有高容错性的特点，并且设计用来部署在低廉的（low-cost）硬件上； 它提供高吞吐量（high throughput）来访问应用程序的数据，适合那些有着超大数据集（large data set）的应用程序。 HDFS放宽了（relax）POSIX的要求，可">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://img.lvxiaoyi.top/typora-img/image-20211028174657424.png/lvxiaoyi">
+<meta property="article:published_time" content="2022-09-12T07:22:48.773Z">
+<meta property="article:modified_time" content="2022-09-12T07:22:48.773Z">
+<meta property="article:author" content="吕小医">
+<meta property="article:tag" content="大数据">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://img.lvxiaoyi.top/typora-img/image-20211028174657424.png/lvxiaoyi"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="https://lvxiaoyi.top/7d0492f0"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '大数据栈简介',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2022-09-12 15:22:48'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><meta name="generator" content="Hexo 5.4.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">202</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">26</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">49</div></a></div><hr/></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://img.lvxiaoyi.top/typora-img/image-20211028174657424.png/lvxiaoyi')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">吕小医のBLOG</a></span><div id="menus"><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">大数据栈简介</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2022-09-12T07:22:48.773Z" title="发表于 2022-09-12 15:22:48">2022-09-12</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2022-09-12T07:22:48.773Z" title="更新于 2022-09-12 15:22:48">2022-09-12</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E5%A4%A7%E6%95%B0%E6%8D%AE/">大数据</a><i class="fas fa-angle-right post-meta-separator"></i><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E5%A4%A7%E6%95%B0%E6%8D%AE/hadoop/">hadoop</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="大数据栈简介"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><p><img src="https://img.lvxiaoyi.top/typora-img/2018032606192381.png/lvxiaoyi" alt="2018032606192381"></p>
+<h1 id="Hadoop"><a href="#Hadoop" class="headerlink" title="Hadoop"></a>Hadoop</h1><p>Hadoop实现了一个分布式文件系统（Hadoop Distributed File System），简称HDFS。</p>
+<ul>
+<li>HDFS有高容错性的特点，并且设计用来部署在低廉的（low-cost）硬件上；</li>
+<li>它提供高吞吐量（high throughput）来访问应用程序的数据，适合那些有着超大数据集（large data set）的应用程序。</li>
+<li>HDFS放宽了（relax）POSIX的要求，可以以流的形式访问（streaming access）文件系统中的数据。</li>
+</ul>
+<p>Hadoop的框架最核心的设计就是：HDFS和MapReduce。HDFS为海量的数据提供了存储，则MapReduce为海量的数据提供了计算。</p>
+<h2 id="HDFS"><a href="#HDFS" class="headerlink" title="HDFS"></a>HDFS</h2><p>Hadoop分布式文件系统(HDFS)被设计成适合运行在通用硬件(commodity hardware)上的分布式文件系统。它和现有的分布式文件系统有很多共同点。HDFS简化了文件的一致性模型，通过流式数据访问，提供高吞吐量应用程序数据访问功能，适合带有大型数据集的应用程序。 但同时，它和其他的分布式文件系统的区别也是很明显的。</p>
+<p>HDFS是一个高度容错性的系统，适合部署在廉价的机器上。HDFS能提供高吞吐量的数据访问，非常适合大规模数据集上的应用。</p>
+<p>HDFS放宽了一部分POSIX约束，来实现流式读取文件系统数据的目的。</p>
+<p>HDFS在最开始是作为Apache Nutch搜索引擎项目的基础架构而开发的。HDFS是Apache Hadoop Core项目的一部分。HDFS有着高容错性（fault-tolerant）的特点，并且设计用来部署在低廉的（low-cost）硬件上。而且它提供高吞吐量（high throughput）来访问应用程序的数据，适合那些有着超大数据集（large data set）的应用程序。HDFS放宽了（relax）POSIX的要求（requirements）这样可以实现流的形式访问（streaming access）文件系统中的数据。</p>
+<h2 id="Yarn"><a href="#Yarn" class="headerlink" title="Yarn"></a>Yarn</h2><p>Yarn是Hadoop2.0新增的系统，负责集群的资源管理和调度，使得多种计算框架可以运行在一个集群中。</p>
+<h4 id="Yarn具有如下特点："><a href="#Yarn具有如下特点：" class="headerlink" title="Yarn具有如下特点："></a>Yarn具有如下特点：</h4><ol>
+<li>良好的扩展性、高可用性</li>
+<li>对多种数据类型的应用程序进行统一管理和资源调度</li>
+<li>自带了多种用户调度器，适合共享集群环境</li>
+</ol>
+<h2 id="Spark"><a href="#Spark" class="headerlink" title="Spark"></a>Spark</h2><p>Spark是一个高效的分布式计算系统，相比Hadoop的Mapreduce计算框架，它在性能上比Mapreduce要高100倍。Spark提供比Hadoop更上层的API，同样的算法在Spark中实现往往只有Hadoop的1/10或者1/100的长度。Shark类似“SQL on Spark”，是一个在Spark上数据仓库的实现，在兼容Hive的情况下，性能最高可以达到Hive的一百倍。</p>
+<h2 id="flink"><a href="#flink" class="headerlink" title="flink"></a>flink</h2><p>计算模型方面，Flink是真正能满足实时性要求的计算框架,Spark是批处理的计算框架，而基于批处理的计算框架，都不能帮你真正实时响应（毫秒级），而Flink是可以的。</p>
+<p>Spark之所有能做流计算，是因为它将流切成一段一段，每一个小段做一个批处理，用每一个小段批处理去模拟批处理，而切成小段，最小的单位是秒，实现不了毫秒级。而Flink模型在设计时，是真正面向流数据的，它是以一行一行为计算单位，可以实现毫秒级计算，这个与Storm相似。</p>
+<h2 id="Hbase"><a href="#Hbase" class="headerlink" title="Hbase"></a>Hbase</h2><p>是一个高可靠性、高性能、面向列、可伸缩的分布式存储系统，利用HBase技术可在廉价PC Server上搭建起大规模结构化数据集群。像Facebook，都拿它做大型实时应用 <a target="_blank" rel="noopener" href="http://highscalability.com/blog/2011/3/22/facebooks-new-realtime-analytics-system-hbase-to-process-20.html">Facebook’s New Realtime Analytics System: HBase to Process 20 Billion Events Per Day</a>。非关系型数据库</p>
+<h2 id="pig"><a href="#pig" class="headerlink" title="pig"></a>pig</h2><p>Yahoo开发的，并行地执行数据流处理的引擎，它包含了一种脚本语言，称为Pig Latin，用来描述这些数据流。Pig Latin本身提供了许多传统的数据操作，同时允许用户自己开发一些自定义函数用来读取、处理和写数据。在LinkedIn也是大量使用。</p>
+<h2 id="hive"><a href="#hive" class="headerlink" title="hive"></a>hive</h2><p>Facebook领导的一个数据仓库工具，可以将结构化的数据文件映射为一张数据库表，并提供完整的sql查询功能，可以将sql语句转换为MapReduce任务进行运行。其优点是学习成本低，可以通过类SQL语句快速实现简单的MapReduce统计。像一些data scientist 就可以直接查询，不需要学习其他编程接口。</p>
+<h2 id="Mahout"><a href="#Mahout" class="headerlink" title="Mahout"></a>Mahout</h2><p>数据挖掘库</p>
+<p>Mahout是基于Hadoop的机器学习和数据挖掘的分布式计算框架。它实现了三大算法：推荐、聚类、分类。</p>
+<h2 id="impala"><a href="#impala" class="headerlink" title="impala"></a>impala</h2><p>Impala是Cloudera在受到Google的Dremel启发下开发的实时交互SQL大数据查询工具，Impala没有再使用缓慢的 Hive+MapReduce批处理，而是通过使用与商用并行关系数据库中类似的分布式查询引擎（由Query Planner、Query Coordinator和Query Exec Engine三部分组成），可以直接从HDFS或HBase中用SELECT、JOIN和统计函数查询数据，从而大大降低了延迟。</p>
+<h2 id="Apache-Kudu"><a href="#Apache-Kudu" class="headerlink" title="Apache Kudu"></a>Apache Kudu</h2><p>​        Apache Kudu 是由 Cloudera 开源的存储引擎，可以同时提供低延迟的随机读写和高效的数据分析能力。它是一个融合 HDFS 和 HBase 的功能的新组件，具备介于两者之间的新存储组件。</p>
+<p>​    Kudu 支持水平扩展，并且与 Cloudera Impala 和 Apache Spark 等当前流行的大数据查询和分析工具结合紧密。</p>
+<p>Kudu 应用场景：</p>
+<ul>
+<li><p>适用于那些既有随机访问，也有批量数据扫描的复合场景</p>
+</li>
+<li><p>高计算量的场景</p>
+</li>
+<li><p>使用了高性能的存储设备，包括使用更多的内存</p>
+</li>
+<li><p>支持数据更新，避免数据反复迁移</p>
+</li>
+<li><p>支持跨地域的实时数据备份和查询</p>
+</li>
+</ul>
+<h2 id="SKV"><a href="#SKV" class="headerlink" title="SKV"></a>SKV</h2><h2 id="Cascading-Scalding"><a href="#Cascading-Scalding" class="headerlink" title="Cascading/Scalding"></a><a target="_blank" rel="noopener" href="http://www.cascading.org/">Cascading</a>/<a target="_blank" rel="noopener" href="http://www.cascading.org/projects/scalding/">Scalding</a></h2><p>Cascading是Twitter收购的一个公司技术，主要是提供数据管道的一些抽象接口，然后又推出了基于Cascading的Scala版本就叫Scalding。Coursera是用Scalding作为MapReduce的编程接口放在Amazon的EMR运行。</p>
+<h2 id="zookeeper"><a href="#zookeeper" class="headerlink" title="zookeeper"></a>zookeeper</h2><p>一个分布式的，开放源码的分布式应用程序协调服务，是Google的Chubby一个开源的实现。</p>
+<h2 id="Oozie"><a href="#Oozie" class="headerlink" title="Oozie"></a><a target="_blank" rel="noopener" href="http://oozie.apache.org/">Oozie</a></h2><p>一个基于工作流引擎的开源框架。由Cloudera公司贡献给Apache的，它能够提供对Hadoop MapReduce和Pig Jobs的任务调度与协调。</p>
+<h2 id="Azkaban"><a href="#Azkaban" class="headerlink" title="Azkaban"></a><a target="_blank" rel="noopener" href="http://data.linkedin.com/opensource/azkaban">Azkaban</a></h2><p>跟上面很像，Linkedin开源的面向Hadoop的开源工作流系统，提供了类似于cron 的管理任务。</p>
+<h2 id="Tez"><a href="#Tez" class="headerlink" title="Tez"></a><a target="_blank" rel="noopener" href="http://hortonworks.com/hadoop/tez/">Tez</a></h2><p>Hortonworks主推的优化MapReduce执行引擎，与MapReduce相比较，Tez在性能方面更加出色。</p>
+<h2 id="Mesos"><a href="#Mesos" class="headerlink" title="Mesos"></a><a target="_blank" rel="noopener" href="http://mesos.apache.org/">Mesos</a></h2><p>一个分布式环境的资源管理平台，它使得Hadoop、MPI、Spark作业在统一资源管理环境下执行。它对Hadoop2.0支持很好。Twitter，Coursera都在使用。</p>
+<h2 id="Tachyon"><a href="#Tachyon" class="headerlink" title="Tachyon"></a><a target="_blank" rel="noopener" href="http://tachyon-project.org/">Tachyon</a></h2><p>是一个高容错的分布式文件系统，允许文件以内存的速度在集群框架中进行可靠的共享，就像Spark和MapReduce那样。</p>
+<h2 id="整体概述"><a href="#整体概述" class="headerlink" title="整体概述"></a>整体概述</h2><p>大数据本身是个很宽泛的概念，Hadoop生态圈（或者泛生态圈）基本上都是为了处理超过单机尺度的数据处理而诞生的。你可以把它比作一个厨房所以需要的各种工具。锅碗瓢盆，各有各的用处，互相之间又有重合。你可以用汤锅直接当碗吃饭喝汤，你可以用小刀或者刨子去皮。但是每个工具有自己的特性，虽然奇怪的组合也能工作，但是未必是最佳选择。</p>
+<p>大数据，首先你要能存的下大数据。</p>
+<p>传统的文件系统是单机的，不能横跨不同的机器。HDFS（Hadoop Distributed FileSystem）的设计本质上是为了大量的数据能横跨成百上千台机器，但是你看到的是一个文件系统而不是很多文件系统。比如你说我要获取/hdfs/tmp/file1的数据，你引用的是一个文件路径，但是实际的数据存放在很多不同的机器上。你作为用户，不需要知道这些，就好比在单机上你不关心文件分散在什么磁道什么扇区一样。HDFS为你管理这些数据。</p>
+<p>存的下数据之后，你就开始考虑怎么处理数据。虽然HDFS可以为你整体管理不同机器上的数据，但是这些数据太大了。一台机器读取成T上P的数据（很大的数据哦，比如整个东京热有史以来所有高清电影的大小甚至更大），一台机器慢慢跑也许需要好几天甚至好几周。对于很多公司来说，单机处理是不可忍受的，比如微博要更新24小时热博，它必须在24小时之内跑完这些处理。那么我如果要用很多台机器处理，我就面临了如何分配工作，如果一台机器挂了如何重新启动相应的任务，机器之间如何互相通信交换数据以完成复杂的计算等等。这就是MapReduce / Tez / Spark的功能。MapReduce是第一代计算引擎，Tez和Spark是第二代。MapReduce的设计，采用了很简化的计算模型，只有Map和Reduce两个计算过程（中间用Shuffle串联），用这个模型，已经可以处理大数据领域很大一部分问题了。</p>
+<p>那什么是Map什么是Reduce？</p>
+<p>考虑如果你要统计一个巨大的文本文件存储在类似HDFS上，你想要知道这个文本里各个词的出现频率。你启动了一个MapReduce程序。Map阶段，几百台机器同时读取这个文件的各个部分，分别把各自读到的部分分别统计出词频，产生类似（hello, 12100次），（world，15214次）等等这样的Pair（我这里把Map和Combine放在一起说以便简化）；这几百台机器各自都产生了如上的集合，然后又有几百台机器启动Reduce处理。Reducer机器A将从Mapper机器收到所有以A开头的统计结果，机器B将收到B开头的词汇统计结果（当然实际上不会真的以字母开头做依据，而是用函数产生Hash值以避免数据串化。因为类似X开头的词肯定比其他要少得多，而你不希望数据处理各个机器的工作量相差悬殊）。然后这些Reducer将再次汇总，（hello，12100）＋（hello，12311）＋（hello，345881）= （hello，370292）。每个Reducer都如上处理，你就得到了整个文件的词频结果。</p>
+<p>这看似是个很简单的模型，但很多算法都可以用这个模型描述了。</p>
+<p>Map＋Reduce的简单模型很黄很暴力，虽然好用，但是很笨重。第二代的Tez和Spark除了内存Cache之类的新feature，本质上来说，是让Map/Reduce模型更通用，让Map和Reduce之间的界限更模糊，数据交换更灵活，更少的磁盘读写，以便更方便地描述复杂算法，取得更高的吞吐量。</p>
+<p>有了MapReduce，Tez和Spark之后，程序员发现，MapReduce的程序写起来真麻烦。他们希望简化这个过程。这就好比你有了汇编语言，虽然你几乎什么都能干了，但是你还是觉得繁琐。你希望有个更高层更抽象的语言层来描述算法和数据处理流程。于是就有了Pig和Hive。Pig是接近脚本方式去描述MapReduce，Hive则用的是SQL。它们把脚本和SQL语言翻译成MapReduce程序，丢给计算引擎去计算，而你就从繁琐的MapReduce程序中解脱出来，用更简单更直观的语言去写程序了。</p>
+<p>有了Hive之后，人们发现SQL对比Java有巨大的优势。一个是它太容易写了。刚才词频的东西，用SQL描述就只有一两行，MapReduce写起来大约要几十上百行。而更重要的是，非计算机背景的用户终于感受到了爱：我也会写SQL！于是数据分析人员终于从乞求工程师帮忙的窘境解脱出来，工程师也从写奇怪的一次性的处理程序中解脱出来。大家都开心了。Hive逐渐成长成了大数据仓库的核心组件。甚至很多公司的流水线作业集完全是用SQL描述，因为易写易改，一看就懂，容易维护。</p>
+<p>自从数据分析人员开始用Hive分析数据之后，它们发现，Hive在MapReduce上跑，太慢！流水线作业集也许没啥关系，比如24小时更新的推荐，反正24小时内跑完就算了。但是数据分析，人们总是希望能跑更快一些。比如我希望看过去一个小时内多少人在充气娃娃页面驻足，分别停留了多久，对于一个巨型网站海量数据下，这个处理过程也许要花几十分钟甚至很多小时。而这个分析也许只是你万里长征的第一步，你还要看多少人浏览了跳蛋多少人看了拉赫曼尼诺夫的CD，以便跟老板汇报，我们的用户是猥琐男闷骚女更多还是文艺青年／少女更多。你无法忍受等待的折磨，只能跟帅帅的工程师蝈蝈说，快，快，再快一点！</p>
+<p>于是Impala，Presto，Drill诞生了（当然还有无数非著名的交互SQL引擎，就不一一列举了）。三个系统的核心理念是，MapReduce引擎太慢，因为它太通用，太强壮，太保守，我们SQL需要更轻量，更激进地获取资源，更专门地对SQL做优化，而且不需要那么多容错性保证（因为系统出错了大不了重新启动任务，如果整个处理时间更短的话，比如几分钟之内）。这些系统让用户更快速地处理SQL任务，牺牲了通用性稳定性等特性。如果说MapReduce是大砍刀，砍啥都不怕，那上面三个就是剔骨刀，灵巧锋利，但是不能搞太大太硬的东西。</p>
+<p>这些系统，说实话，一直没有达到人们期望的流行度。因为这时候又两个异类被造出来了。他们是Hive on Tez / Spark和SparkSQL。它们的设计理念是，MapReduce慢，但是如果我用新一代通用计算引擎Tez或者Spark来跑SQL，那我就能跑的更快。而且用户不需要维护两套系统。这就好比如果你厨房小，人又懒，对吃的精细程度要求有限，那你可以买个电饭煲，能蒸能煲能烧，省了好多厨具。</p>
+<p>上面的介绍，基本就是一个数据仓库的构架了。底层HDFS，上面跑MapReduce／Tez／Spark，在上面跑Hive，Pig。或者HDFS上直接跑Impala，Drill，Presto。这解决了中低速数据处理的要求。</p>
+<p>那如果我要更高速的处理呢？</p>
+<p>如果我是一个类似微博的公司，我希望显示不是24小时热博，我想看一个不断变化的热播榜，更新延迟在一分钟之内，上面的手段都将无法胜任。于是又一种计算模型被开发出来，这就是Streaming（流）计算。Storm是最流行的流计算平台。流计算的思路是，如果要达到更实时的更新，我何不在数据流进来的时候就处理了？比如还是词频统计的例子，我的数据流是一个一个的词，我就让他们一边流过我就一边开始统计了。流计算很牛逼，基本无延迟，但是它的短处是，不灵活，你想要统计的东西必须预先知道，毕竟数据流过就没了，你没算的东西就无法补算了。因此它是个很好的东西，但是无法替代上面数据仓库和批处理系统。</p>
+<p>还有一个有些独立的模块是KV Store，比如Cassandra，HBase，MongoDB以及很多很多很多很多其他的（多到无法想象）。所以KV Store就是说，我有一堆键值，我能很快速滴获取与这个Key绑定的数据。比如我用身份证号，能取到你的身份数据。这个动作用MapReduce也能完成，但是很可能要扫描整个数据集。而KV Store专用来处理这个操作，所有存和取都专门为此优化了。从几个P的数据中查找一个身份证号，也许只要零点几秒。这让大数据公司的一些专门操作被大大优化了。比如我网页上有个根据订单号查找订单内容的页面，而整个网站的订单数量无法单机数据库存储，我就会考虑用33来存。KV Store的理念是，基本无法处理复杂的计算，大多没法JOIN，也许没法聚合，没有强一致性保证（不同数据分布在不同机器上，你每次读取也许会读到不同的结果，也无法处理类似银行转账那样的强一致性要求的操作）。但是丫就是快。极快。</p>
+<p>每个不同的KV Store设计都有不同取舍，有些更快，有些容量更高，有些可以支持更复杂的操作。必有一款适合你。</p>
+<p>除此之外，还有一些更特制的系统／组件，比如Mahout是分布式机器学习库，Protobuf是数据交换的编码和库，ZooKeeper是高一致性的分布存取协同系统，等等。</p>
+<p>有了这么多乱七八糟的工具，都在同一个集群上运转，大家需要互相尊重有序工作。所以另外一个重要组件是，调度系统。现在最流行的是Yarn。你可以把他看作中央管理，好比你妈在厨房监工，哎，你妹妹切菜切完了，你可以把刀拿去杀鸡了。只要大家都服从你妈分配，那大家都能愉快滴烧菜。</p>
+<p>你可以认为，大数据生态圈就是一个厨房工具生态圈。为了做不同的菜，中国菜，日本菜，法国菜，你需要各种不同的工具。而且客人的需求正在复杂化，你的厨具不断被发明，也没有一个万用的厨具可以处理所有情况，因此它会变的越来越复杂。</p>
+<p>参考文章：</p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/wdr2003/article/details/79692886">https://blog.csdn.net/wdr2003/article/details/79692886</a></p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="https://lvxiaoyi.top">吕小医</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="https://lvxiaoyi.top/7d0492f0.html">https://lvxiaoyi.top/7d0492f0.html</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://lvxiaoyi.top" target="_blank">吕小医のBLOG</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/%E5%A4%A7%E6%95%B0%E6%8D%AE/">大数据</a></div><div class="post_share"><div class="social-share" data-image="https://img.lvxiaoyi.top/typora-img/image-20211028174657424.png/lvxiaoyi" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/88815d0a.html"><img class="prev-cover" src="https://img.lvxiaoyi.top/typora-img/202111222013828.png/lvxiaoyi" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">zookeeper基础</div></div></a></div><div class="next-post pull-right"><a href="/bb1e53b0.html"><img class="next-cover" src="https://img.lvxiaoyi.top/typora-img/6765e36cc4604fba897976638af03524.jpeg/lvxiaoyi" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">协程</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><div><a href="/5eb2dc8b.html" title="hadoop基础-3Yarn"><img class="cover" src="https://img.lvxiaoyi.top/typora-img/image-20211028174657424.png/lvxiaoyi" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-09-12</div><div class="title">hadoop基础-3Yarn</div></div></a></div><div><a href="/bc13a2ae.html" title="HBase基础"><img class="cover" src="https://img.lvxiaoyi.top/typora-img/image-20211028174657424.png/lvxiaoyi" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-09-12</div><div class="title">HBase基础</div></div></a></div><div><a href="/1d83a7d1.html" title="Hive基础-1"><img class="cover" src="https://img.lvxiaoyi.top/typora-img/image-20211028174657424.png/lvxiaoyi" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-09-12</div><div class="title">Hive基础-1</div></div></a></div><div><a href="/9cbb2d93.html" title="hive基础-2"><img class="cover" src="https://img.lvxiaoyi.top/typora-img/image-20211028174657424.png/lvxiaoyi" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-09-12</div><div class="title">hive基础-2</div></div></a></div><div><a href="/beeb1f38.html" title="Kafka基础"><img class="cover" src="/" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-09-12</div><div class="title">Kafka基础</div></div></a></div><div><a href="/6362a21d.html" title="Scala基础-1"><img class="cover" src="https://img.lvxiaoyi.top/typora-img/202111082146936.png/lvxiaoyi" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-09-12</div><div class="title">Scala基础-1</div></div></a></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">吕小医</div><div class="author-info__description">IT小白的健身小白</div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">202</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">26</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">49</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/xxxxxx"><i class="fab fa-github"></i><span>Follow Me</span></a></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">This is my Blog</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Hadoop"><span class="toc-number">1.</span> <span class="toc-text">Hadoop</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#HDFS"><span class="toc-number">1.1.</span> <span class="toc-text">HDFS</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Yarn"><span class="toc-number">1.2.</span> <span class="toc-text">Yarn</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Yarn%E5%85%B7%E6%9C%89%E5%A6%82%E4%B8%8B%E7%89%B9%E7%82%B9%EF%BC%9A"><span class="toc-number">1.2.0.1.</span> <span class="toc-text">Yarn具有如下特点：</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Spark"><span class="toc-number">1.3.</span> <span class="toc-text">Spark</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#flink"><span class="toc-number">1.4.</span> <span class="toc-text">flink</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Hbase"><span class="toc-number">1.5.</span> <span class="toc-text">Hbase</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#pig"><span class="toc-number">1.6.</span> <span class="toc-text">pig</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#hive"><span class="toc-number">1.7.</span> <span class="toc-text">hive</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Mahout"><span class="toc-number">1.8.</span> <span class="toc-text">Mahout</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#impala"><span class="toc-number">1.9.</span> <span class="toc-text">impala</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Apache-Kudu"><span class="toc-number">1.10.</span> <span class="toc-text">Apache Kudu</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#SKV"><span class="toc-number">1.11.</span> <span class="toc-text">SKV</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Cascading-Scalding"><span class="toc-number">1.12.</span> <span class="toc-text">Cascading&#x2F;Scalding</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#zookeeper"><span class="toc-number">1.13.</span> <span class="toc-text">zookeeper</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Oozie"><span class="toc-number">1.14.</span> <span class="toc-text">Oozie</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Azkaban"><span class="toc-number">1.15.</span> <span class="toc-text">Azkaban</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Tez"><span class="toc-number">1.16.</span> <span class="toc-text">Tez</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Mesos"><span class="toc-number">1.17.</span> <span class="toc-text">Mesos</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Tachyon"><span class="toc-number">1.18.</span> <span class="toc-text">Tachyon</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%95%B4%E4%BD%93%E6%A6%82%E8%BF%B0"><span class="toc-number">1.19.</span> <span class="toc-text">整体概述</span></a></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/f1601c3e.html" title="单例模式"><img src="https://img.lvxiaoyi.top/typora-img/1002892-20180912131026735-781767905.png/lvxiaoyi" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="单例模式"/></a><div class="content"><a class="title" href="/f1601c3e.html" title="单例模式">单例模式</a><time datetime="2022-09-12T07:22:48.777Z" title="发表于 2022-09-12 15:22:48">2022-09-12</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/b15f0f1b.html" title="设计模式基础-1"><img src="https://img.lvxiaoyi.top/typora-img/image-20211012093705433.png/lvxiaoyi" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="设计模式基础-1"/></a><div class="content"><a class="title" href="/b15f0f1b.html" title="设计模式基础-1">设计模式基础-1</a><time datetime="2022-09-12T07:22:48.777Z" title="发表于 2022-09-12 15:22:48">2022-09-12</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2109f677.html" title="计算机网络常见面试题"><img src="https://img.lvxiaoyi.top/typora-img/java-interview/1.png/lvxiaoyi" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="计算机网络常见面试题"/></a><div class="content"><a class="title" href="/2109f677.html" title="计算机网络常见面试题">计算机网络常见面试题</a><time datetime="2022-09-12T07:22:48.777Z" title="发表于 2022-09-12 15:22:48">2022-09-12</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/60bbc03b.html" title="Jmeter基础一"><img src="https://img.lvxiaoyi.top/typora-img/apachejmeter_0.jpg/lvxiaoyi" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Jmeter基础一"/></a><div class="content"><a class="title" href="/60bbc03b.html" title="Jmeter基础一">Jmeter基础一</a><time datetime="2022-09-12T07:22:48.775Z" title="发表于 2022-09-12 15:22:48">2022-09-12</time></div></div><div class="aside-list-item"><div class="content"><a class="title" href="/0.html" title="无题">无题</a><time datetime="2022-09-12T07:22:48.775Z" title="发表于 2022-09-12 15:22:48">2022-09-12</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2022 By 吕小医</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.umd.min.js"></script><div class="js-pjax"></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>

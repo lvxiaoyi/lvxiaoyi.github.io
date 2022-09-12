@@ -1,0 +1,1005 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"><title>hadoop高级-1生产调优 | 吕小医のBLOG</title><meta name="keywords" content="大数据"><meta name="author" content="吕小医"><meta name="copyright" content="吕小医"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="hadoop高级-1生产调优视频资料和笔记资料来自尚硅谷：https:&#x2F;&#x2F;www.bilibili.com&#x2F;video&#x2F;BV1Qp4y1n7EN?p&#x3D;1 HDFS—核心参数NameNode内存生产配置 NameNode内存计算 ​    每个文件块大概占用150byte，一台服务器128G内存为例，能存储多少文件块呢？ 123128 * 1024 * 1024 * 1024  &#x2F; 150Byte">
+<meta property="og:type" content="article">
+<meta property="og:title" content="hadoop高级-1生产调优">
+<meta property="og:url" content="https://lvxiaoyi.top/5eb2dc8b.html">
+<meta property="og:site_name" content="吕小医のBLOG">
+<meta property="og:description" content="hadoop高级-1生产调优视频资料和笔记资料来自尚硅谷：https:&#x2F;&#x2F;www.bilibili.com&#x2F;video&#x2F;BV1Qp4y1n7EN?p&#x3D;1 HDFS—核心参数NameNode内存生产配置 NameNode内存计算 ​    每个文件块大概占用150byte，一台服务器128G内存为例，能存储多少文件块呢？ 123128 * 1024 * 1024 * 1024  &#x2F; 150Byte">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://img.lvxiaoyi.top/typora-img/image-20211028174657424.png/lvxiaoyi">
+<meta property="article:published_time" content="2022-09-12T07:22:48.771Z">
+<meta property="article:modified_time" content="2022-09-12T07:22:48.771Z">
+<meta property="article:author" content="吕小医">
+<meta property="article:tag" content="大数据">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://img.lvxiaoyi.top/typora-img/image-20211028174657424.png/lvxiaoyi"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="https://lvxiaoyi.top/5eb2dc8b"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'hadoop高级-1生产调优',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2022-09-12 15:22:48'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><meta name="generator" content="Hexo 5.4.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">202</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">26</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">49</div></a></div><hr/></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://img.lvxiaoyi.top/typora-img/image-20211028174657424.png/lvxiaoyi')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">吕小医のBLOG</a></span><div id="menus"><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">hadoop高级-1生产调优</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2022-09-12T07:22:48.771Z" title="发表于 2022-09-12 15:22:48">2022-09-12</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2022-09-12T07:22:48.771Z" title="更新于 2022-09-12 15:22:48">2022-09-12</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E5%A4%A7%E6%95%B0%E6%8D%AE-hadoop/">大数据 &amp;&amp; - hadoop</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="hadoop高级-1生产调优"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h1 id="hadoop高级-1生产调优"><a href="#hadoop高级-1生产调优" class="headerlink" title="hadoop高级-1生产调优"></a>hadoop高级-1生产调优</h1><p>视频资料和笔记资料来自尚硅谷：<a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1Qp4y1n7EN?p=1">https://www.bilibili.com/video/BV1Qp4y1n7EN?p=1</a></p>
+<h1 id="HDFS—核心参数"><a href="#HDFS—核心参数" class="headerlink" title="HDFS—核心参数"></a>HDFS—核心参数</h1><h2 id="NameNode内存生产配置"><a href="#NameNode内存生产配置" class="headerlink" title="NameNode内存生产配置"></a>NameNode内存生产配置</h2><ol>
+<li><p>NameNode内存计算</p>
+<p>​    每个文件块大概占用150byte，一台服务器128G内存为例，能存储多少文件块呢？</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">128 * 1024 * 1024 * 1024  / 150Byte ≈ 9.1亿</span><br><span class="line"></span><br><span class="line">G	   MB	  KB	 Byte</span><br></pre></td></tr></table></figure></li>
+<li><p>Hadoop2.x系列，配置NameNode内存</p>
+<p>​    NameNode内存默认2000m，如果服务器内存4G，NameNode内存可以配置3g。在hadoop-env.sh文件中配置如下。</p>
+<p>​    HADOOP_NAMENODE_OPTS=-Xmx3072m</p>
+</li>
+<li><p>Hadoop3.x系列，配置NameNode内存</p>
+<ol>
+<li><p>hadoop-env.sh中描述Hadoop的内存是动态分配的</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"># The maximum amount of heap to use (Java -Xmx).  If no unit</span><br><span class="line"># is provided, it will be converted to MB.  Daemons will</span><br><span class="line"># prefer any Xmx setting in their respective _OPT variable.</span><br><span class="line"># There is no default; the JVM will autoscale based upon machine</span><br><span class="line"># memory size.</span><br><span class="line"># export HADOOP_HEAPSIZE_MAX=</span><br><span class="line"></span><br><span class="line"># The minimum amount of heap to use (Java -Xms).  If no unit</span><br><span class="line"># is provided, it will be converted to MB.  Daemons will</span><br><span class="line"># prefer any Xms setting in their respective _OPT variable.</span><br><span class="line"># There is no default; the JVM will autoscale based upon machine</span><br><span class="line"># memory size.</span><br><span class="line"># export HADOOP_HEAPSIZE_MIN=</span><br><span class="line">HADOOP_NAMENODE_OPTS=-Xmx102400m</span><br></pre></td></tr></table></figure></li>
+<li><p>查看NameNode占用内存</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">[lvxiaoyi@hadoop102 ~]$ jps</span><br><span class="line">1778 DataNode</span><br><span class="line">5410 Jps</span><br><span class="line">2115 NodeManager</span><br><span class="line">2279 JobHistoryServer</span><br><span class="line">1640 NameNode</span><br><span class="line">[lvxiaoyi@hadoop102 ~]$ jmap -heap 1640</span><br><span class="line">...</span><br><span class="line">Heap Configuration:</span><br><span class="line">   MinHeapFreeRatio         = 0</span><br><span class="line">   MaxHeapFreeRatio         = 100</span><br><span class="line">   MaxHeapSize              = 1031798784 (984.0MB)</span><br><span class="line">   NewSize                  = 21495808 (20.5MB)</span><br><span class="line">   MaxNewSize               = 343932928 (328.0MB)</span><br><span class="line">   OldSize                  = 43515904 (41.5MB)</span><br><span class="line">   NewRatio                 = 2</span><br><span class="line">   SurvivorRatio            = 8</span><br><span class="line">   MetaspaceSize            = 21807104 (20.796875MB)</span><br><span class="line">   CompressedClassSpaceSize = 1073741824 (1024.0MB)</span><br><span class="line">   MaxMetaspaceSize         = 17592186044415 MB</span><br><span class="line">   G1HeapRegionSize         = 0 (0.0MB)</span><br><span class="line"></span><br></pre></td></tr></table></figure></li>
+<li><p>查看DataNode占用内存</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">[lvxiaoyi@hadoop102 ~]$ jmap -heap 1778</span><br><span class="line">...</span><br><span class="line">Heap Configuration:</span><br><span class="line">   MinHeapFreeRatio         = 0</span><br><span class="line">   MaxHeapFreeRatio         = 100</span><br><span class="line">   MaxHeapSize              = 1031798784 (984.0MB)</span><br><span class="line">   NewSize                  = 21495808 (20.5MB)</span><br><span class="line">   MaxNewSize               = 343932928 (328.0MB)</span><br><span class="line">   OldSize                  = 43515904 (41.5MB)</span><br><span class="line">   NewRatio                 = 2</span><br><span class="line">   SurvivorRatio            = 8</span><br><span class="line">   MetaspaceSize            = 21807104 (20.796875MB)</span><br><span class="line">   CompressedClassSpaceSize = 1073741824 (1024.0MB)</span><br><span class="line">   MaxMetaspaceSize         = 17592186044415 MB</span><br><span class="line">   G1HeapRegionSize         = 0 (0.0MB)</span><br><span class="line"></span><br></pre></td></tr></table></figure></li>
+</ol>
+</li>
+</ol>
+<p>查看发现hadoop102上的NameNode和DataNode占用内存都是自动分配的，且相等。不是很合理。</p>
+<p>经验参考：<a href="#concept_fzz_dq4_gbb">https://docs.cloudera.com/documentation/enterprise/6/release-notes/topics/rg_hardware_requirements.html#concept_fzz_dq4_gbb</a></p>
+<img src="https://img.lvxiaoyi.top/typora-img/202111021755417.png/lvxiaoyi" alt="image-20211101180122615" style="zoom:67%;" />
+
+<p>具体修改：hadoop-env.sh</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">export HDFS_NAMENODE_OPTS=&quot;-Dhadoop.security.logger=INFO,RFAS -Xmx1024m&quot;</span><br><span class="line"></span><br><span class="line">export HDFS_DATANODE_OPTS=&quot;-Dhadoop.security.logger=ERROR,RFAS -Xmx1024m&quot;</span><br></pre></td></tr></table></figure>
+
+<h2 id="NameNode心跳并发配置"><a href="#NameNode心跳并发配置" class="headerlink" title="NameNode心跳并发配置"></a>NameNode心跳并发配置</h2><img src="https://img.lvxiaoyi.top/typora-img/202111021756217.png/lvxiaoyi" alt="image-20211101180317804" style="zoom:67%;" />
+
+<ol>
+<li><p>hdfs-site.xml</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">The number of Namenode RPC server threads that listen to requests from clients. If dfs.namenode.servicerpc-address is not configured then Namenode RPC server threads listen to requests from all nodes.</span><br><span class="line">NameNode有一个工作线程池，用来处理不同DataNode的并发心跳以及客户端并发的元数据操作。</span><br><span class="line">对于大集群或者有大量客户端的集群来说，通常需要增大该参数。默认值是10。</span><br><span class="line"><span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">name</span>&gt;</span>dfs.namenode.handler.count<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">value</span>&gt;</span>21<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>企业经验：<br>$$<br>dfs.namenode.handler.count = 20 \times {log_2{Cluster \cdot size}}<br>$$<br>比如集群规模（DataNode台数)为3台时，此参数设置为21。可通过简单的python代码计算该值，代码如下。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">[lvxiaoyi@hadoop102 hadoop-3.1.3]$ python</span><br><span class="line">Python 2.7.5 (default, Apr 11 2018, 07:36:10) </span><br><span class="line">[GCC 4.8.5 20150623 (Red Hat 4.8.5-28)] on linux2</span><br><span class="line">Type &quot;help&quot;, &quot;copyright&quot;, &quot;credits&quot; or &quot;license&quot; for more information.</span><br><span class="line">&gt;&gt;&gt; import math</span><br><span class="line">&gt;&gt;&gt; print int(20*math.log(3))</span><br><span class="line">21</span><br><span class="line">&gt;&gt;&gt; quit()</span><br></pre></td></tr></table></figure></li>
+</ol>
+<h2 id="开启回收站配置"><a href="#开启回收站配置" class="headerlink" title="开启回收站配置"></a>开启回收站配置</h2><p>开启回收站功能，可以将删除的文件在不超时的情况下，恢复原数据，起到防止误删除、备份等作用。</p>
+<ol>
+<li>回收站工作机制</li>
+</ol>
+<img src="https://img.lvxiaoyi.top/typora-img/202111121011776.png/lvxiaoyi" alt="image-20211101182610965" style="zoom:50%;" />
+
+<ol start="2">
+<li><p>开启回收站功能参数说明</p>
+<ol>
+<li><p>默认值fs.trash.interval = 0，0表示禁用回收站；其他值表示设置文件的存活时间。</p>
+</li>
+<li><p>默认值fs.trash.checkpoint.interval = 0，检查回收站的间隔时间。如果该值为0，则该值设置和fs.trash.interval的参数值相等。</p>
+</li>
+<li><p>要求fs.trash.checkpoint.interval &lt;= fs.trash.interval。</p>
+</li>
+</ol>
+</li>
+<li><p>启用回收站</p>
+<p>修改core-site.xml，配置垃圾回收时间为1分钟。</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">name</span>&gt;</span>fs.trash.interval<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">value</span>&gt;</span>1<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br></pre></td></tr></table></figure></li>
+<li><p>查看回收站</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">回收站目录在HDFS集群中的路径：/user/lvxiaoyi/.Trash/...</span><br></pre></td></tr></table></figure></li>
+<li><p>注意：通过网页上直接删除的文件也不会走回收站。</p>
+</li>
+<li><p>通过程序删除的文件不会经过回收站，需要调用moveToTrash()才进入回收站</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Trash trash = New Trash(conf);</span><br><span class="line">trash.moveToTrash(path);</span><br></pre></td></tr></table></figure></li>
+<li><p>只有在命令行利用hadoop fs -rm命令删除的文件才会走回收站。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[lvxiaoyi@hadoop102 hadoop-3.1.3]$ hadoop fs -rm -r /user/lvxiaoyi/input</span><br><span class="line">2021-11-11 17:05:40,643 INFO fs.TrashPolicyDefault: Moved: &#x27;hdfs://hadoop102:9820/user/lvxiaoyi/input&#x27; to trash at: hdfs://hadoop102:9820/user/lvxiaoyi/.Trash/Current/user/lvxiaoyi/input</span><br></pre></td></tr></table></figure></li>
+<li><p>恢复回收站数据</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[lvxiaoyi@hadoop102 hadoop-3.1.3]$ hadoop fs -mv</span><br><span class="line">/user/lvxiaoyi/.Trash/Current/user/lvxiaoyi/input    /user/lvxiaoyi/input</span><br></pre></td></tr></table></figure></li>
+</ol>
+<h1 id="HDFS—集群压测"><a href="#HDFS—集群压测" class="headerlink" title="HDFS—集群压测"></a>HDFS—集群压测</h1><p>在企业中非常关心每天从Java后台拉取过来的数据，需要多久能上传到集群？消费者关心多久能从HDFS上拉取需要的数据？</p>
+<p>为了搞清楚HDFS的读写性能，生产环境上非常需要对集群进行压测。</p>
+<img src="https://img.lvxiaoyi.top/typora-img/202111121012289.png/lvxiaoyi" alt="image-20211101183130091" style="zoom:50%;" />
+
+<p>HDFS的读写性能主要受网络和磁盘影响比较大。为了方便测试，将hadoop102、hadoop103、hadoop104虚拟机网络都设置为100mbps。</p>
+<p>100Mbps单位是bit；10M/s单位是byte ; 1byte=8bit，100Mbps/8=12.5M/s。</p>
+<img src="https://img.lvxiaoyi.top/typora-img/20211112105216540.png/lvxiaoyi" alt="image-20211112105216540" style="zoom:50%;" />
+
+<p>测试网速：来到hadoop102的/opt/module目录，创建一个</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[lvxiaoyi@hadoop102 software]$ python -m SimpleHTTPServer</span><br></pre></td></tr></table></figure>
+
+<h2 id="测试HDFS写性能"><a href="#测试HDFS写性能" class="headerlink" title="测试HDFS写性能"></a>测试HDFS写性能</h2><ol start="0">
+<li><p>写测试底层原理</p>
+<img src="https://img.lvxiaoyi.top/typora-img/202111011832299.png/lvxiaoyi" alt="image-20211101183255180" style="zoom: 67%;" /></li>
+<li><p>测试内容：向HDFS集群写10个128M的文件</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">[lvxiaoyi@hadoop102 mapreduce]$ hadoop jar /opt/module/hadoop-3.1.3/share/hadoop/mapreduce/hadoop-mapreduce-client-jobclient-3.1.3-tests.jar TestDFSIO -write -nrFiles 10 -fileSize 128MB</span><br><span class="line">......</span><br><span class="line">2021-11-11 18:13:55,251 INFO sasl.SaslDataTransferClient: SASL encryption trust check: localHostTrusted = <span class="literal">false</span>, remoteHostTrusted = <span class="literal">false</span></span><br><span class="line">2021-11-11 18:13:55,651 INFO fs.TestDFSIO: ----- TestDFSIO ----- : write</span><br><span class="line">2021-11-11 18:13:55,651 INFO fs.TestDFSIO:             Date &amp; time: Thu Nov 11 18:13:55 CST 2021</span><br><span class="line">2021-11-11 18:13:55,651 INFO fs.TestDFSIO:         Number of files: 10</span><br><span class="line">2021-11-11 18:13:55,651 INFO fs.TestDFSIO:  Total MBytes processed: 1280</span><br><span class="line">2021-11-11 18:13:55,651 INFO fs.TestDFSIO:       Throughput mb/sec: 0.11</span><br><span class="line">2021-11-11 18:13:55,651 INFO fs.TestDFSIO:  Average IO rate mb/sec: 0.11</span><br><span class="line">2021-11-11 18:13:55,651 INFO fs.TestDFSIO:   IO rate std deviation: 0</span><br><span class="line">2021-11-11 18:13:55,651 INFO fs.TestDFSIO:      Test <span class="built_in">exec</span> time sec: 1403.69   </span><br><span class="line">2021-11-11 18:13:55,651 INFO fs.TestDFSIO: </span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>注意：nrFiles n为生成mapTask的数量，生产环境一般可通过hadoop103:8088查看CPU核数，设置为（CPU核数 - 1）</p>
+<ul>
+<li><p>Number of files：生成mapTask数量，一般是集群中（CPU核数-1），我们测试虚拟机就按照实际的物理内存-1分配即可</p>
+</li>
+<li><p>Total MBytes processed：单个map处理的文件大小</p>
+</li>
+<li><p>Throughput mb/sec:单个mapTak的吞吐量 </p>
+<p>计算方式：处理的总文件大小/每一个mapTask写数据的时间累加</p>
+<p>集群整体吞吐量：生成mapTask数量*单个mapTak的吞吐量</p>
+</li>
+<li><p>Average IO rate mb/sec::平均mapTak的吞吐量</p>
+<p>计算方式：每个mapTask处理文件大小/每一个mapTask写数据的时间 </p>
+<p> 全部相加除以task数量</p>
+</li>
+<li><p>IO rate std deviation:方差、反映各个mapTask处理的差值，越小越均衡</p>
+</li>
+</ul>
+</li>
+<li><p>注意：如果测试过程中，出现异常</p>
+<ol>
+<li><p>可以在yarn-site.xml中设置虚拟内存检测为false</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!--是否启动一个线程检查每个任务正使用的虚拟内存量，如果任务超出分配值，则直接将其杀掉，默认是true --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">     <span class="tag">&lt;<span class="name">name</span>&gt;</span>yarn.nodemanager.vmem-check-enabled<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">     <span class="tag">&lt;<span class="name">value</span>&gt;</span>false<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br></pre></td></tr></table></figure></li>
+<li><p>分发配置并重启Yarn集群</p>
+</li>
+</ol>
+</li>
+<li><p>测试结果分析</p>
+<ol>
+<li><p>由于副本1就在本地，所以该副本不参与测试</p>
+<img src="https://img.lvxiaoyi.top/typora-img/202111011838462.png/lvxiaoyi" alt="image-20211101183756811" style="zoom:50%;" />
+
+<p>一共参与测试的文件：10个文件 * 2个副本 = 20个</p>
+<p>压测后的速度：1.61</p>
+<p>实测速度：1.61M/s * 20个文件 ≈ 32M/s</p>
+<p>三台服务器的带宽：12.5 + 12.5 + 12.5 ≈ 30m/s</p>
+<p>所有网络资源都已经用满。</p>
+<p>如果实测速度远远小于网络，并且实测速度不能满足工作需求，可以考虑采用固态硬盘或者增加磁盘个数。</p>
+</li>
+<li><p>如果客户端不在集群节点，那就三个副本都参与计算</p>
+<img src="https://img.lvxiaoyi.top/typora-img/202111011838504.png/lvxiaoyi" alt="image-20211101183818428" style="zoom:50%;" /></li>
+</ol>
+</li>
+</ol>
+<h2 id="测试HDFS读性能"><a href="#测试HDFS读性能" class="headerlink" title="测试HDFS读性能"></a>测试HDFS读性能</h2><ol>
+<li><p>测试内容：读取HDFS集群10个128M的文件</p>
+<p>测试一直报错</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">[lvxiaoyi@hadoop102 mapreduce]$ hadoop jar /opt/module/hadoop-3.1.3/share/hadoop/mapreduce/hadoop-mapreduce-client-jobclient-3.1.3-tests.jar TestDFSIO -<span class="built_in">read</span> -nrFiles 10 -fileSize 128MB</span><br><span class="line"></span><br><span class="line">2021-02-09 11:34:15,847 INFO fs.TestDFSIO: ----- TestDFSIO ----- : <span class="built_in">read</span></span><br><span class="line">2021-02-09 11:34:15,847 INFO fs.TestDFSIO:             Date &amp; time: Tue Feb 09 11:34:15 CST 2021</span><br><span class="line">2021-02-09 11:34:15,847 INFO fs.TestDFSIO:         Number of files: 10</span><br><span class="line">2021-02-09 11:34:15,847 INFO fs.TestDFSIO:  Total MBytes processed: 1280</span><br><span class="line">2021-02-09 11:34:15,848 INFO fs.TestDFSIO:       Throughput mb/sec: 200.28</span><br><span class="line">2021-02-09 11:34:15,848 INFO fs.TestDFSIO:  Average IO rate mb/sec: 266.74</span><br><span class="line">2021-02-09 11:34:15,848 INFO fs.TestDFSIO:   IO rate std deviation: 143.12</span><br><span class="line">2021-02-09 11:34:15,848 INFO fs.TestDFSIO:      Test <span class="built_in">exec</span> time sec: 20.83</span><br></pre></td></tr></table></figure></li>
+<li><p>删除测试生成数据</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[lvxiaoyi@hadoop102 mapreduce]$ hadoop jar /opt/module/hadoop-3.1.3/share/hadoop/mapreduce/hadoop-mapreduce-client-jobclient-3.1.3-tests.jar TestDFSIO -clean</span><br></pre></td></tr></table></figure></li>
+<li><p>测试结果分析：为什么读取文件速度大于网络带宽？由于目前只有三台服务器，且有三个副本，数据读取就近原则，相当于都是读取的本地磁盘数据，没有走网络。</p>
+<p><img src="https://img.lvxiaoyi.top/typora-img/202111021758347.png/lvxiaoyi" alt="image-20211102175829281"></p>
+</li>
+</ol>
+<h1 id="HDFS—多目录"><a href="#HDFS—多目录" class="headerlink" title="HDFS—多目录"></a>HDFS—多目录</h1><h2 id="NameNode多目录配置"><a href="#NameNode多目录配置" class="headerlink" title="NameNode多目录配置"></a>NameNode多目录配置</h2><ol>
+<li><p>NameNode的本地目录可以配置成多个，且每个目录存放内容相同，增加了可靠性</p>
+<img src="C:/Users/Think/AppData/Roaming/Typora/typora-user-images/image-20211102175921349.png" alt="image-20211102175921349" style="zoom:50%;" /></li>
+<li><p>具体配置如下</p>
+<ol>
+<li><p>在hdfs-site.xml文件中添加如下内容</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">     <span class="tag">&lt;<span class="name">name</span>&gt;</span>dfs.namenode.name.dir<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">     <span class="tag">&lt;<span class="name">value</span>&gt;</span>file://$&#123;hadoop.tmp.dir&#125;/dfs/name1,file://$&#123;hadoop.tmp.dir&#125;/dfs/name2<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>注意：因为每台服务器节点的磁盘情况不同，所以这个配置配完之后，可以选择不分发</p>
+</li>
+<li><p>停止集群，删除三台节点的data和logs中所有数据。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[lvxiaoyi@hadoop102 hadoop-3.1.3]$ myhadoop.sh stop</span><br><span class="line">[lvxiaoyi@hadoop102 hadoop-3.1.3]$ rm -rf /opt/module/hadoop-3.1.3/data/ /opt/module/hadoop-3.1.3/logs/</span><br><span class="line">[lvxiaoyi@hadoop103 hadoop-3.1.3]$ rm -rf /opt/module/hadoop-3.1.3/data/ /opt/module/hadoop-3.1.3/logs/</span><br><span class="line">[lvxiaoyi@hadoop104 hadoop-3.1.3]$ rm -rf /opt/module/hadoop-3.1.3/data/ /opt/module/hadoop-3.1.3/logs/</span><br></pre></td></tr></table></figure></li>
+<li><p>格式化集群并启动。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[lvxiaoyi@hadoop102 hadoop-3.1.3]$ bin/hdfs namenode -format</span><br><span class="line">[lvxiaoyi@hadoop102 hadoop-3.1.3]$ sbin/start-dfs.sh</span><br></pre></td></tr></table></figure></li>
+</ol>
+</li>
+<li><p>查看结果</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">[lvxiaoyi@hadoop102 dfs]$ ll</span><br><span class="line">总用量 0</span><br><span class="line">drwx------. 3 lvxiaoyi lvxiaoyi 40 11月 12 11:39 data</span><br><span class="line">drwxrwxr-x. 3 lvxiaoyi lvxiaoyi 40 11月 12 11:39 name1</span><br><span class="line">drwxrwxr-x. 3 lvxiaoyi lvxiaoyi 40 11月 12 11:39 name2</span><br></pre></td></tr></table></figure>
+
+<p>检查name1和name2里面的内容，发现一模一样。</p>
+</li>
+</ol>
+<h2 id="DataNode多目录配置"><a href="#DataNode多目录配置" class="headerlink" title="DataNode多目录配置"></a>DataNode多目录配置</h2><ol>
+<li><p>DataNode可以配置成多个目录，每个目录存储的数据不一样（数据不是副本）</p>
+<img src="C:/Users/Think/AppData/Roaming/Typora/typora-user-images/image-20211102210754246.png" alt="image-20211102210754246" style="zoom:50%;" /></li>
+<li><p>具体配置如下</p>
+<p>在hdfs-site.xml文件中添加如下内容</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&lt;property&gt;</span><br><span class="line">     &lt;name&gt;dfs.datanode.data.dir&lt;/name&gt;</span><br><span class="line">     &lt;value&gt;file://$&#123;hadoop.tmp.dir&#125;/dfs/data1,file://$&#123;hadoop.tmp.dir&#125;/dfs/data2&lt;/value&gt;</span><br><span class="line">&lt;/property&gt;</span><br></pre></td></tr></table></figure></li>
+<li><p>查看结果</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">[lvxiaoyi@hadoop102 dfs]$ ll</span><br><span class="line">总用量 12</span><br><span class="line">drwx------. 3 lvxiaoyi lvxiaoyi 4096 11月 12 11:42 data1</span><br><span class="line">drwx------. 3 lvxiaoyi lvxiaoyi 4096 11月 12 11:42 data2</span><br><span class="line">drwxrwxr-x. 3 lvxiaoyi lvxiaoyi 4096 11月 12 11:39 name1</span><br><span class="line">drwxrwxr-x. 3 lvxiaoyi lvxiaoyi 4096 11月 12 11:39 name2</span><br></pre></td></tr></table></figure></li>
+<li><p>向集群上传一个文件，再次观察两个文件夹里面的内容发现不一致（一个有数一个没有）</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[lvxiaoyi@hadoop102 hadoop-3.1.3]$ hadoop fs -put wcinput/word.txt /</span><br></pre></td></tr></table></figure></li>
+</ol>
+<h2 id="集群数据均衡之磁盘间数据均衡"><a href="#集群数据均衡之磁盘间数据均衡" class="headerlink" title="集群数据均衡之磁盘间数据均衡"></a>集群数据均衡之磁盘间数据均衡</h2><p>生产环境，由于硬盘空间不足，往往需要增加一块硬盘。刚加载的硬盘没有数据时，可以执行磁盘数据均衡命令。（Hadoop3.x新特性）</p>
+<img src="C:/Users/Think/AppData/Roaming/Typora/typora-user-images/image-20211102211026618.png" alt="image-20211102211026618" style="zoom:50%;" />
+
+<ol>
+<li><p>生成均衡计划（我们只有一块磁盘，不会生成计划）</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hdfs diskbalancer -plan hadoop103</span><br></pre></td></tr></table></figure></li>
+<li><p>执行均衡计划</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hdfs diskbalancer -execute hadoop103.plan.json</span><br></pre></td></tr></table></figure></li>
+<li><p>查看当前均衡任务的执行情况</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hdfs diskbalancer -query hadoop103</span><br></pre></td></tr></table></figure></li>
+<li><p>取消均衡任务</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hdfs diskbalancer -cancel hadoop103.plan.json</span><br></pre></td></tr></table></figure></li>
+</ol>
+<h1 id="HDFS—集群扩容及缩容"><a href="#HDFS—集群扩容及缩容" class="headerlink" title="HDFS—集群扩容及缩容"></a>HDFS—集群扩容及缩容</h1><h2 id="添加白名单"><a href="#添加白名单" class="headerlink" title="添加白名单"></a>添加白名单</h2><p>白名单：表示在白名单的主机IP地址可以，用来存储数据。</p>
+<p>企业中：配置白名单，可以尽量防止黑客恶意访问攻击。</p>
+<img src="C:/Users/Think/AppData/Roaming/Typora/typora-user-images/image-20211102211305383.png" alt="image-20211102211305383" style="zoom:50%;" />
+
+<p>配置白名单步骤如下：</p>
+<ol>
+<li><p>在NameNode节点的/opt/module/hadoop-3.1.3/etc/hadoop目录下分别创建whitelist 和blacklist文件</p>
+<ol>
+<li><p>创建白名单</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[lvxiaoyi@hadoop102 hadoop]$ vim whitelist</span><br></pre></td></tr></table></figure>
+
+<p>在whitelist中添加如下主机名称，假如集群正常工作的节点为102 103 </p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">hadoop102</span><br><span class="line">hadoop103</span><br></pre></td></tr></table></figure></li>
+<li><p>创建黑名单</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[lvxiaoyi@hadoop102 hadoop]$ touch blacklist</span><br></pre></td></tr></table></figure>
+
+<p>保持空的就可以</p>
+</li>
+</ol>
+</li>
+<li><p>在hdfs-site.xml配置文件中增加dfs.hosts配置参数</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- 白名单 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">     <span class="tag">&lt;<span class="name">name</span>&gt;</span>dfs.hosts<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">     <span class="tag">&lt;<span class="name">value</span>&gt;</span>/opt/module/hadoop-3.1.3/etc/hadoop/whitelist<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">&lt;!-- 黑名单 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">     <span class="tag">&lt;<span class="name">name</span>&gt;</span>dfs.hosts.exclude<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">     <span class="tag">&lt;<span class="name">value</span>&gt;</span>/opt/module/hadoop-3.1.3/etc/hadoop/blacklist<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br></pre></td></tr></table></figure></li>
+<li><p>分发配置文件whitelist，hdfs-site.xml</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[lvxiaoyi@hadoop104 hadoop]$ xsync hdfs-site.xml whitelist</span><br></pre></td></tr></table></figure></li>
+<li><p>第一次添加白名单必须重启集群，不是第一次，只需要刷新NameNode节点即可</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[lvxiaoyi@hadoop102 hadoop-3.1.3]$ myhadoop.sh stop</span><br><span class="line">[lvxiaoyi@hadoop102 hadoop-3.1.3]$ myhadoop.sh start</span><br></pre></td></tr></table></figure></li>
+<li><p>在web浏览器上查看DN，<a target="_blank" rel="noopener" href="http://hadoop102:9870/dfshealth.html#tab-datanode">http://hadoop102:9870/dfshealth.html#tab-datanode</a></p>
+</li>
+<li><p>在hadoop104上执行上传数据数据失败</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[lvxiaoyi@hadoop104 hadoop-3.1.3]$ hadoop fs -put NOTICE.txt /</span><br></pre></td></tr></table></figure></li>
+<li><p>二次修改白名单，增加hadoop104</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">[lvxiaoyi@hadoop102 hadoop]$ vim whitelist</span><br><span class="line">修改为如下内容</span><br><span class="line">hadoop102</span><br><span class="line">hadoop103</span><br><span class="line">hadoop104</span><br></pre></td></tr></table></figure></li>
+<li><p>刷新NameNode</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[lvxiaoyi@hadoop102 hadoop-3.1.3]$ hdfs dfsadmin -refreshNodes</span><br><span class="line">Refresh nodes successful</span><br></pre></td></tr></table></figure></li>
+<li><p>在web浏览器上查看DN，<a target="_blank" rel="noopener" href="http://hadoop102:9870/dfshealth.html#tab-datanode">http://hadoop102:9870/dfshealth.html#tab-datanode</a></p>
+</li>
+</ol>
+<h2 id="服役新服务器"><a href="#服役新服务器" class="headerlink" title="服役新服务器"></a>服役新服务器</h2><h3 id="需求"><a href="#需求" class="headerlink" title="需求"></a>需求</h3><p>随着公司业务的增长，数据量越来越大，原有的数据节点的容量已经不能满足存储数据的需求，需要在原有集群基础上动态添加新的数据节点。</p>
+<h3 id="环境准备"><a href="#环境准备" class="headerlink" title="环境准备"></a>环境准备</h3><ol>
+<li><p>在hadoop100主机上再克隆一台hadoop105主机</p>
+</li>
+<li><p>修改IP地址和主机名称</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[root@hadoop105 ~]# vim /etc/sysconfig/network-scripts/ifcfg-ens33</span><br><span class="line">[root@hadoop105 ~]# vim /etc/hostname</span><br></pre></td></tr></table></figure></li>
+<li><p>拷贝hadoop102的/opt/module目录和/etc/profile.d/my_env.sh到hadoop105</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">[lvxiaoyi@hadoop102 opt]$ scp -r module/* lvxiaoyi@hadoop105:/opt/module/</span><br><span class="line"></span><br><span class="line">[lvxiaoyi@hadoop102 opt]$ sudo scp /etc/profile.d/my_env.sh root@hadoop105:/etc/profile.d/my_env.sh</span><br><span class="line"></span><br><span class="line">[lvxiaoyi@hadoop105 hadoop-3.1.3]$ source /etc/profile</span><br></pre></td></tr></table></figure></li>
+<li><p>删除hadoop105上Hadoop的历史数据，data和log数据</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[lvxiaoyi@hadoop105 hadoop-3.1.3]$ rm -rf data/ logs/</span><br></pre></td></tr></table></figure></li>
+<li><p>配置hadoop102和hadoop103到hadoop105的ssh无密登录</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[lvxiaoyi@hadoop102 .ssh]$ ssh-copy-id hadoop105</span><br><span class="line"></span><br><span class="line">[lvxiaoyi@hadoop103 .ssh]$ ssh-copy-id hadoop105</span><br></pre></td></tr></table></figure></li>
+</ol>
+<h3 id="服役新节点具体步骤"><a href="#服役新节点具体步骤" class="headerlink" title="服役新节点具体步骤"></a>服役新节点具体步骤</h3><ol>
+<li><p>直接启动DataNode，即可关联到集群</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[lvxiaoyi@hadoop105 hadoop-3.1.3]$ hdfs --daemon start datanode</span><br><span class="line">[lvxiaoyi@hadoop105 hadoop-3.1.3]$ yarn --daemon start nodemanager</span><br></pre></td></tr></table></figure></li>
+<li><p>在白名单中增加新服役的服务器</p>
+<ol>
+<li><p>在白名单whitelist中增加hadoop104、hadoop105，并重启集群</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">[lvxiaoyi@hadoop102 hadoop]$ vim whitelist</span><br><span class="line">修改为如下内容</span><br><span class="line">hadoop102</span><br><span class="line">hadoop103</span><br><span class="line">hadoop104</span><br><span class="line">hadoop105</span><br></pre></td></tr></table></figure></li>
+<li><p>分发</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[lvxiaoyi@hadoop102 hadoop]$ xsync whitelist</span><br></pre></td></tr></table></figure></li>
+<li><p>刷新NameNode</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[lvxiaoyi@hadoop102 hadoop-3.1.3]$ hdfs dfsadmin -refreshNodes</span><br><span class="line">Refresh nodes successful</span><br></pre></td></tr></table></figure></li>
+</ol>
+</li>
+<li><p>在hadoop105上上传文件</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[lvxiaoyi@hadoop105 hadoop-3.1.3]$ hadoop fs -put /opt/module/hadoop-3.1.3/LICENSE.txt /</span><br></pre></td></tr></table></figure>
+
+<p>思考：如果数据不均衡（hadoop105数据少，其他节点数据多），怎么处理？</p>
+</li>
+</ol>
+<h2 id="服务器间数据均衡"><a href="#服务器间数据均衡" class="headerlink" title="服务器间数据均衡"></a>服务器间数据均衡</h2><ol>
+<li><p>企业经验</p>
+<p>在企业开发中，如果经常在hadoop102和hadoop104上提交任务，且副本数为2，由于数据本地性原则，就会导致hadoop102和hadoop104数据过多，hadoop103存储的数据量小。</p>
+<p>另一种情况，就是新服役的服务器数据量比较少，需要执行集群均衡命令。</p>
+</li>
+<li><p>开启数据均衡命令：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[lvxiaoyi@hadoop105 hadoop-3.1.3]$ sbin/start-balancer.sh -threshold 10</span><br></pre></td></tr></table></figure>
+
+<p>对于参数10，代表的是集群中各个节点的磁盘空间利用率相差不超过10%，可根据实际情况进行调整。</p>
+</li>
+<li><p>停止数据均衡命令：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[lvxiaoyi@hadoop105 hadoop-3.1.3]$ sbin/stop-balancer.sh</span><br></pre></td></tr></table></figure>
+
+<p>注意：由于HDFS需要启动单独的Rebalance Server来执行Rebalance操作，<a target="_blank" rel="noopener" href="http://所以尽量不要在namenode上执行start-balancer.sh/">所以尽量不要在NameNode上执行start-balancer.sh</a>，而是找一台比较空闲的机器。</p>
+</li>
+</ol>
+<h2 id="黑名单退役服务器"><a href="#黑名单退役服务器" class="headerlink" title="黑名单退役服务器"></a>黑名单退役服务器</h2><p>黑名单：表示在黑名单的主机IP地址不可以，用来存储数据。</p>
+<p>企业中：配置黑名单，用来退役服务器。</p>
+<img src="https://img.lvxiaoyi.top/typora-img/202111022122950.png/lvxiaoyi" alt="image-20211102212228881" style="zoom:50%;" />
+
+<p>黑名单配置步骤如下：</p>
+<ol>
+<li><p>编辑/opt/module/hadoop-3.1.3/etc/hadoop目录下的blacklist文件</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[lvxiaoyi@hadoop102 hadoop] vim blacklist</span><br></pre></td></tr></table></figure>
+
+<p>添加如下主机名称（要退役的节点）</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hadoop105</span><br></pre></td></tr></table></figure>
+
+<p>注意：如果白名单中没有配置，需要在hdfs-site.xml配置文件中增加dfs.hosts配置参数</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&lt;!-- 黑名单 --&gt;</span><br><span class="line">&lt;property&gt;</span><br><span class="line">     &lt;name&gt;dfs.hosts.exclude&lt;/name&gt;</span><br><span class="line">     &lt;value&gt;/opt/module/hadoop-3.1.3/etc/hadoop/blacklist&lt;/value&gt;</span><br><span class="line">&lt;/property&gt;</span><br></pre></td></tr></table></figure></li>
+<li><p>分发配置文件blacklist，hdfs-site.xml</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[lvxiaoyi@hadoop104 hadoop]$ xsync hdfs-site.xml blacklist</span><br></pre></td></tr></table></figure></li>
+<li><p>第一次添加黑名单必须重启集群，不是第一次，只需要刷新NameNode节点即可</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[lvxiaoyi@hadoop102 hadoop-3.1.3]$ hdfs dfsadmin -refreshNodes </span><br><span class="line">Refresh nodes successful</span><br></pre></td></tr></table></figure></li>
+<li><p>检查Web浏览器，退役节点的状态为decommission in progress（退役中），说明数据节点正在复制块到其他节点</p>
+</li>
+<li><p>等待退役节点状态为decommissioned（所有块已经复制完成），停止该节点及节点资源管理器。注意：如果副本数是3，服役的节点小于等于3，是不能退役成功的，需要修改副本数后才能退役</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[lvxiaoyi@hadoop105 hadoop-3.1.3]$ hdfs --daemon stop datanode</span><br></pre></td></tr></table></figure>
+
+<p>stopping datanode</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[lvxiaoyi@hadoop105 hadoop-3.1.3]$ yarn --daemon stop nodemanager</span><br></pre></td></tr></table></figure>
+
+<p>stopping nodemanager</p>
+</li>
+<li><p>如果数据不均衡，可以用命令实现集群的再平衡</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[lvxiaoyi@hadoop102 hadoop-3.1.3]$ sbin/start-balancer.sh -threshold 10</span><br></pre></td></tr></table></figure></li>
+</ol>
+<h1 id="HDFS—存储优化"><a href="#HDFS—存储优化" class="headerlink" title="HDFS—存储优化"></a>HDFS—存储优化</h1><p>注：演示纠删码和异构存储需要一共5台虚拟机。尽量拿另外一套集群。提前准备5台服务器的集群。</p>
+<h2 id="纠删码"><a href="#纠删码" class="headerlink" title="纠删码"></a>纠删码</h2><h3 id="纠删码原理"><a href="#纠删码原理" class="headerlink" title="纠删码原理"></a>纠删码原理</h3><p>HDFS默认情况下，一个文件有3个副本，这样提高了数据的可靠性，但也带来了2倍的冗余开销。Hadoop3.x引入了纠删码，采用计算的方式，可以节省约50％左右的存储空间。</p>
+<img src="C:/Users/Think/AppData/Roaming/Typora/typora-user-images/image-20211102212625461.png" alt="image-20211102212625461" style="zoom:50%;" />
+
+<ol>
+<li><p>纠删码操作相关的命令</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">[lvxiaoyi@hadoop102 hadoop-3.1.3]$ hdfs ec</span><br><span class="line">Usage: bin/hdfs ec [COMMAND]</span><br><span class="line">          [-listPolicies]</span><br><span class="line">          [-addPolicies -policyFile &lt;file&gt;]</span><br><span class="line">          [-getPolicy -path &lt;path&gt;]</span><br><span class="line">          [-removePolicy -policy &lt;policy&gt;]</span><br><span class="line">          [-setPolicy -path &lt;path&gt; [-policy &lt;policy&gt;] [-replicate]]</span><br><span class="line">          [-unsetPolicy -path &lt;path&gt;]</span><br><span class="line">          [-listCodecs]</span><br><span class="line">          [-enablePolicy -policy &lt;policy&gt;]</span><br><span class="line">          [-disablePolicy -policy &lt;policy&gt;]</span><br><span class="line">          [-help &lt;command-name&gt;].</span><br></pre></td></tr></table></figure></li>
+<li><p>查看当前支持的纠删码策略</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">[lvxiaoyi@hadoop102 hadoop-3.1.3] hdfs ec -listPolicies</span><br><span class="line"></span><br><span class="line">Erasure Coding Policies:</span><br><span class="line">ErasureCodingPolicy=[Name=RS-10-4-1024k, Schema=[ECSchema=[Codec=rs, numDataUnits=10, numParityUnits=4]], CellSize=1048576, Id=5], State=DISABLED</span><br><span class="line"></span><br><span class="line">ErasureCodingPolicy=[Name=RS-3-2-1024k, Schema=[ECSchema=[Codec=rs, numDataUnits=3, numParityUnits=2]], CellSize=1048576, Id=2], State=DISABLED</span><br><span class="line"></span><br><span class="line">ErasureCodingPolicy=[Name=RS-6-3-1024k, Schema=[ECSchema=[Codec=rs, numDataUnits=6, numParityUnits=3]], CellSize=1048576, Id=1], State=ENABLED</span><br><span class="line"> </span><br><span class="line">ErasureCodingPolicy=[Name=RS-LEGACY-6-3-1024k, Schema=[ECSchema=[Codec=rs-legacy, numDataUnits=6, numParityUnits=3]], CellSize=1048576, Id=3], State=DISABLED</span><br><span class="line"></span><br><span class="line">ErasureCodingPolicy=[Name=XOR-2-1-1024k, Schema=[ECSchema=[Codec=xor, numDataUnits=2, numParityUnits=1]], CellSize=1048576, Id=4], State=DISABLED</span><br></pre></td></tr></table></figure></li>
+<li><p>纠删码策略解释:</p>
+<p>RS-3-2-1024k：使用RS编码，每3个数据单元，生成2个校验单元，共5个单元，也就是说：这5个单元中，只要有任意的3个单元存在（不管是数据单元还是校验单元，只要总数=3），就可以得到原始数据。每个单元的大小是1024k=1024*1024=1048576。</p>
+<img src="C:/Users/Think/AppData/Roaming/Typora/typora-user-images/image-20211102212748569.png" alt="image-20211102212748569" style="zoom:50%;" />
+
+<p>RS-10-4-1024k：使用RS编码，每10个数据单元（cell），生成4个校验单元，共14个单元，也就是说：这14个单元中，只要有任意的10个单元存在（不管是数据单元还是校验单元，只要总数=10），就可以得到原始数据。每个单元的大小是1024k=1024*1024=1048576。</p>
+<p>RS-6-3-1024k：使用RS编码，每6个数据单元，生成3个校验单元，共9个单元，也就是说：这9个单元中，只要有任意的6个单元存在（不管是数据单元还是校验单元，只要总数=6），就可以得到原始数据。每个单元的大小是1024k=1024*1024=1048576。</p>
+<p>RS-LEGACY-6-3-1024k：策略和上面的RS-6-3-1024k一样，只是编码的算法用的是rs-legacy。 </p>
+<p>XOR-2-1-1024k：使用XOR编码（速度比RS编码快），每2个数据单元，生成1个校验单元，共3个单元，也就是说：这3个单元中，只要有任意的2个单元存在（不管是数据单元还是校验单元，只要总数= 2），就可以得到原始数据。每个单元的大小是1024k=1024*1024=1048576。</p>
+</li>
+</ol>
+<h3 id="纠删码案例实操"><a href="#纠删码案例实操" class="headerlink" title="纠删码案例实操"></a>纠删码案例实操</h3><img src="C:/Users/Think/AppData/Roaming/Typora/typora-user-images/image-20211102212846370.png" alt="image-20211102212846370" style="zoom:50%;" />
+
+<p>纠删码策略是给具体一个路径设置。所有往此路径下存储的文件，都会执行此策略。</p>
+<p>默认只开启对RS-6-3-1024k策略的支持，如要使用别的策略需要提前启用。</p>
+<h4 id="需求："><a href="#需求：" class="headerlink" title="需求："></a>需求：</h4><p>将/input目录设置为RS-3-2-1024k策略</p>
+<h4 id="具体步骤"><a href="#具体步骤" class="headerlink" title="具体步骤"></a>具体步骤</h4><ol>
+<li><p>开启对RS-3-2-1024k策略的支持</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[lvxiaoyi@hadoop102 hadoop-3.1.3]$  hdfs ec -enablePolicy  -policy RS-3-2-1024k</span><br><span class="line">Erasure coding policy RS-3-2-1024k is enabled</span><br></pre></td></tr></table></figure></li>
+<li><p>在HDFS创建目录，并设置RS-3-2-1024k策略</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[lvxiaoyi@hadoop102  hadoop-3.1.3]$  hdfs dfs -mkdir /input</span><br><span class="line"></span><br><span class="line">[lvxiaoyi@hadoop202 hadoop-3.1.3]$ hdfs ec -setPolicy -path /input -policy RS-3-2-1024k</span><br></pre></td></tr></table></figure></li>
+<li><p>上传文件，并查看文件编码后的存储情况</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[lvxiaoyi@hadoop102 hadoop-3.1.3]$ hdfs dfs -put web.log /input</span><br></pre></td></tr></table></figure>
+
+<p>注：你所上传的文件需要大于2M才能看出效果。（低于2M，只有一个数据单元和两个校验单元）</p>
+</li>
+<li><p>查看存储路径的数据单元和校验单元，并作破坏实验</p>
+</li>
+</ol>
+<h2 id="异构存储（冷热数据分离）"><a href="#异构存储（冷热数据分离）" class="headerlink" title="异构存储（冷热数据分离）"></a>异构存储（冷热数据分离）</h2><p>异构存储主要解决，不同的数据，存储在不同类型的硬盘中，达到最佳性能的问题。</p>
+<img src="C:/Users/Think/AppData/Roaming/Typora/typora-user-images/image-20211102213127381.png" alt="image-20211102213127381" style="zoom:50%;" />
+
+<p>存储类型和存储策略</p>
+<ol>
+<li><p>关于存储类型</p>
+<p>RAM_DISK:（内存镜像文件系统)</p>
+<p>SSD：(SSD固态硬盘）</p>
+<p>DISK：（普通磁盘，在HDFS中，如果没有主动声明数据目录存储类型默认都是DISK)<br>ARCHIVE：（没有特指哪种存储介质，主要的指的是计算能力比较弱而存储密度比较高的存储介质，用来解决数据量的容量扩增的问题，一般用于归档)</p>
+</li>
+<li><p>关于存储策略  说明:从Lazy_Persist到Cold，分别代表了设备的访问速度从快到慢</p>
+<table>
+<thead>
+<tr>
+<th>策路ID</th>
+<th>策路名称</th>
+<th>副本分布</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>15</td>
+<td>Lazy_Persist</td>
+<td>RAM_DISK:1，DISK:n-1</td>
+</tr>
+<tr>
+<td>12</td>
+<td>All_ssD</td>
+<td>SSD:n</td>
+</tr>
+<tr>
+<td>10</td>
+<td>one_ssD</td>
+<td>SSD:1，DISK:n-1</td>
+</tr>
+<tr>
+<td>7</td>
+<td>Hot(default)</td>
+<td>DISK:n</td>
+</tr>
+<tr>
+<td>5</td>
+<td>Warm</td>
+<td>DSK:1，ARCHIVE:n-1</td>
+</tr>
+<tr>
+<td>2</td>
+<td>Cold</td>
+<td>ARCHIVE:n</td>
+</tr>
+</tbody></table>
+<p>一个副本保存在内存RAM_DISK中，其余副本保存在磁盘中。</p>
+<p>所有副本都保存在SSD中。</p>
+<p>一个副本保存在SSD中，其余副本保存在磁盘中。</p>
+<p>Hot：所有副本保存在磁盘中，这也是默认的存储策略。一个副本保存在磁盘上，其余副本保存在归档存储上。所有副本都保存在归档存储上。</p>
+</li>
+</ol>
+<h3 id="异构存储Shell操作"><a href="#异构存储Shell操作" class="headerlink" title="异构存储Shell操作"></a>异构存储Shell操作</h3><ol>
+<li><p>查看当前有哪些存储策略可以用</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[lvxiaoyi@hadoop102 hadoop-3.1.3]$ hdfs storagepolicies -listPolicies</span><br></pre></td></tr></table></figure></li>
+<li><p>为指定路径（数据存储目录）设置指定的存储策略</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hdfs storagepolicies -setStoragePolicy -path xxx -policy xxx</span><br></pre></td></tr></table></figure></li>
+<li><p>获取指定路径（数据存储目录或文件）的存储策略</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hdfs storagepolicies -getStoragePolicy -path xxx</span><br></pre></td></tr></table></figure></li>
+<li><p>取消存储策略；执行改命令之后该目录或者文件，以其上级的目录为准，如果是根目录，那么就是HOT</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hdfs storagepolicies -unsetStoragePolicy -path xxx</span><br></pre></td></tr></table></figure></li>
+<li><p>查看文件块的分布</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">bin/hdfs fsck xxx -files -blocks -locations</span><br></pre></td></tr></table></figure></li>
+<li><p>查看集群节点</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hadoop dfsadmin -report</span><br></pre></td></tr></table></figure></li>
+</ol>
+<h3 id="测试环境准备"><a href="#测试环境准备" class="headerlink" title="测试环境准备"></a>测试环境准备</h3><h4 id="测试环境描述"><a href="#测试环境描述" class="headerlink" title="测试环境描述"></a>测试环境描述</h4><p>服务器规模：5台</p>
+<p>集群配置：副本数为2，创建好带有存储类型的目录（提前创建）</p>
+<p>集群规划：</p>
+<table>
+<thead>
+<tr>
+<th>节点</th>
+<th>存储类型分配</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>hadoop102</td>
+<td>RAM_DISK，SSD</td>
+</tr>
+<tr>
+<td>hadoop103</td>
+<td>SSD，DISK</td>
+</tr>
+<tr>
+<td>hadoop104</td>
+<td>DISK，RAM_DISK</td>
+</tr>
+<tr>
+<td>hadoop105</td>
+<td>ARCHIVE</td>
+</tr>
+<tr>
+<td>hadoop106</td>
+<td>ARCHIVE</td>
+</tr>
+</tbody></table>
+<h4 id="配置文件信息"><a href="#配置文件信息" class="headerlink" title="配置文件信息"></a>配置文件信息</h4><ol>
+<li><p>为hadoop102节点的hdfs-site.xml添加如下信息</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">&lt;property&gt;</span><br><span class="line">	&lt;name&gt;dfs.replication&lt;/name&gt;</span><br><span class="line">	&lt;value&gt;2&lt;/value&gt;</span><br><span class="line">&lt;/property&gt;</span><br><span class="line">&lt;property&gt;</span><br><span class="line">	&lt;name&gt;dfs.storage.policy.enabled&lt;/name&gt;</span><br><span class="line">	&lt;value&gt;true&lt;/value&gt;</span><br><span class="line">&lt;/property&gt;</span><br><span class="line">&lt;property&gt;</span><br><span class="line">	&lt;name&gt;dfs.datanode.data.dir&lt;/name&gt; </span><br><span class="line">	&lt;value&gt;[SSD]file:///opt/module/hadoop-3.1.3/hdfsdata/ssd,[RAM_DISK]file:///opt/module/hadoop-3.1.3/hdfsdata/ram_disk&lt;/value&gt;</span><br><span class="line">&lt;/property&gt;</span><br></pre></td></tr></table></figure></li>
+<li><p>为hadoop103节点的hdfs-site.xml添加如下信息</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">&lt;property&gt;</span><br><span class="line">	&lt;name&gt;dfs.replication&lt;/name&gt;</span><br><span class="line">	&lt;value&gt;2&lt;/value&gt;</span><br><span class="line">&lt;/property&gt;</span><br><span class="line">&lt;property&gt;</span><br><span class="line">	&lt;name&gt;dfs.storage.policy.enabled&lt;/name&gt;</span><br><span class="line">	&lt;value&gt;true&lt;/value&gt;</span><br><span class="line">&lt;/property&gt;</span><br><span class="line">&lt;property&gt;</span><br><span class="line">	&lt;name&gt;dfs.datanode.data.dir&lt;/name&gt;</span><br><span class="line">	&lt;value&gt;[SSD]file:///opt/module/hadoop-3.1.3/hdfsdata/ssd,[DISK]file:///opt/module/hadoop-3.1.3/hdfsdata/disk&lt;/value&gt;</span><br><span class="line">&lt;/property&gt;</span><br></pre></td></tr></table></figure></li>
+<li><p>为hadoop104节点的hdfs-site.xml添加如下信息</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">&lt;property&gt;</span><br><span class="line">	&lt;name&gt;dfs.replication&lt;/name&gt;</span><br><span class="line">	&lt;value&gt;2&lt;/value&gt;</span><br><span class="line">&lt;/property&gt;</span><br><span class="line">&lt;property&gt;</span><br><span class="line">	&lt;name&gt;dfs.storage.policy.enabled&lt;/name&gt;</span><br><span class="line">	&lt;value&gt;true&lt;/value&gt;</span><br><span class="line">&lt;/property&gt;</span><br><span class="line">&lt;property&gt;</span><br><span class="line">	&lt;name&gt;dfs.datanode.data.dir&lt;/name&gt;</span><br><span class="line">	&lt;value&gt;[RAM_DISK]file:///opt/module/hdfsdata/ram_disk,[DISK]file:///opt/module/hadoop-3.1.3/hdfsdata/disk&lt;/value&gt;</span><br><span class="line">&lt;/property&gt;</span><br></pre></td></tr></table></figure></li>
+<li><p>为hadoop105节点的hdfs-site.xml添加如下信息</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">&lt;property&gt;</span><br><span class="line">	&lt;name&gt;dfs.replication&lt;/name&gt;</span><br><span class="line">	&lt;value&gt;2&lt;/value&gt;</span><br><span class="line">&lt;/property&gt;</span><br><span class="line">&lt;property&gt;</span><br><span class="line">	&lt;name&gt;dfs.storage.policy.enabled&lt;/name&gt;</span><br><span class="line">	&lt;value&gt;true&lt;/value&gt;</span><br><span class="line">&lt;/property&gt;</span><br><span class="line">&lt;property&gt;</span><br><span class="line">	&lt;name&gt;dfs.datanode.data.dir&lt;/name&gt;</span><br><span class="line">	&lt;value&gt;[ARCHIVE]file:///opt/module/hadoop-3.1.3/hdfsdata/archive&lt;/value&gt;</span><br><span class="line">&lt;/property&gt;</span><br></pre></td></tr></table></figure></li>
+<li><p>为hadoop106节点的hdfs-site.xml添加如下信息</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">&lt;property&gt;</span><br><span class="line">	&lt;name&gt;dfs.replication&lt;/name&gt;</span><br><span class="line">	&lt;value&gt;2&lt;/value&gt;</span><br><span class="line">&lt;/property&gt;</span><br><span class="line">&lt;property&gt;</span><br><span class="line">	&lt;name&gt;dfs.storage.policy.enabled&lt;/name&gt;</span><br><span class="line">	&lt;value&gt;true&lt;/value&gt;</span><br><span class="line">&lt;/property&gt;</span><br><span class="line">&lt;property&gt;</span><br><span class="line">	&lt;name&gt;dfs.datanode.data.dir&lt;/name&gt;</span><br><span class="line">	&lt;value&gt;[ARCHIVE]file:///opt/module/hadoop-3.1.3/hdfsdata/archive&lt;/value&gt;</span><br><span class="line">&lt;/property&gt;</span><br></pre></td></tr></table></figure></li>
+</ol>
+<h4 id="数据准备"><a href="#数据准备" class="headerlink" title="数据准备"></a>数据准备</h4><ol>
+<li><p>启动集群</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[lvxiaoyi@hadoop102 hadoop-3.1.3]$ hdfs namenode -format</span><br><span class="line">[lvxiaoyi@hadoop102 hadoop-3.1.3]$ myhadoop.sh start</span><br></pre></td></tr></table></figure></li>
+<li><p>并在HDFS上创建文件目录</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[lvxiaoyi@hadoop102 hadoop-3.1.3]$ hadoop fs -mkdir /hdfsdata</span><br></pre></td></tr></table></figure></li>
+<li><p>并将文件资料上传</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[lvxiaoyi@hadoop102 hadoop-3.1.3]$ hadoop fs -put /opt/module/hadoop-3.1.3/NOTICE.txt /hdfsdata</span><br></pre></td></tr></table></figure></li>
+</ol>
+<h3 id="HOT存储策略案例"><a href="#HOT存储策略案例" class="headerlink" title="HOT存储策略案例"></a>HOT存储策略案例</h3><ol>
+<li><p>最开始我们未设置存储策略的情况下，我们获取该目录的存储策略</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[lvxiaoyi@hadoop102 hadoop-3.1.3]$ hdfs storagepolicies -getStoragePolicy -path /hdfsdata</span><br></pre></td></tr></table></figure></li>
+<li><p>我们查看上传的文件块分布</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[lvxiaoyi@hadoop102 hadoop-3.1.3]$ hdfs fsck /hdfsdata -files -blocks -locations</span><br><span class="line"></span><br><span class="line">[DatanodeInfoWithStorage[192.168.10.104:9866,DS-0b133854-7f9e-48df-939b-5ca6482c5afb,DISK], DatanodeInfoWithStorage[192.168.10.103:9866,DS-ca1bd3b9-d9a5-4101-9f92-3da5f1baa28b,DISK]]</span><br></pre></td></tr></table></figure>
+
+<p>未设置存储策略，所有文件块都存储在DISK下。所以，默认存储策略为HOT。</p>
+</li>
+</ol>
+<h3 id="WARM存储策略测试"><a href="#WARM存储策略测试" class="headerlink" title="WARM存储策略测试"></a>WARM存储策略测试</h3><ol>
+<li><p>接下来我们为数据降温</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[lvxiaoyi@hadoop102 hadoop-3.1.3]$  </span><br></pre></td></tr></table></figure></li>
+<li><p>再次查看文件块分布，我们可以看到文件块依然放在原处。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[lvxiaoyi@hadoop102 hadoop-3.1.3]$ hdfs fsck /hdfsdata -files -blocks -locations</span><br></pre></td></tr></table></figure></li>
+<li><p>我们需要让他HDFS按照存储策略自行移动文件块</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[lvxiaoyi@hadoop102 hadoop-3.1.3]$ hdfs mover /hdfsdata</span><br></pre></td></tr></table></figure></li>
+<li><p>再次查看文件块分布，</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[lvxiaoyi@hadoop102 hadoop-3.1.3]$ hdfs fsck /hdfsdata -files -blocks -locations</span><br><span class="line"></span><br><span class="line">[DatanodeInfoWithStorage[192.168.10.105:9866,DS-d46d08e1-80c6-4fca-b0a2-4a3dd7ec7459,ARCHIVE], DatanodeInfoWithStorage[192.168.10.103:9866,DS-ca1bd3b9-d9a5-4101-9f92-3da5f1baa28b,DISK]]</span><br></pre></td></tr></table></figure>
+
+<p>文件块一半在DISK，一半在ARCHIVE，符合我们设置的WARM策略</p>
+</li>
+</ol>
+<h3 id="COLD策略测试"><a href="#COLD策略测试" class="headerlink" title="COLD策略测试"></a>COLD策略测试</h3><ol>
+<li><p>我们继续将数据降温为cold</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[lvxiaoyi@hadoop102 hadoop-3.1.3]$ hdfs storagepolicies -setStoragePolicy -path /hdfsdata -policy COLD</span><br></pre></td></tr></table></figure>
+
+<p>注意：当我们将目录设置为COLD并且我们未配置ARCHIVE存储目录的情况下，不可以向该目录直接上传文件，会报出异常。</p>
+</li>
+<li><p>手动转移</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[lvxiaoyi@hadoop102 hadoop-3.1.3]$ hdfs mover /hdfsdata</span><br></pre></td></tr></table></figure></li>
+<li><p>检查文件块的分布</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[lvxiaoyi@hadoop102 hadoop-3.1.3]$ bin/hdfs fsck /hdfsdata -files -blocks -locations</span><br><span class="line"></span><br><span class="line">[DatanodeInfoWithStorage[192.168.10.105:9866,DS-d46d08e1-80c6-4fca-b0a2-4a3dd7ec7459,ARCHIVE], DatanodeInfoWithStorage[192.168.10.106:9866,DS-827b3f8b-84d7-47c6-8a14-0166096f919d,ARCHIVE]]</span><br></pre></td></tr></table></figure>
+
+<p>所有文件块都在ARCHIVE，符合COLD存储策略。</p>
+</li>
+</ol>
+<h3 id="ONE-SSD策略测试"><a href="#ONE-SSD策略测试" class="headerlink" title="ONE_SSD策略测试"></a>ONE_SSD策略测试</h3><ol>
+<li><p>接下来我们将存储策略从默认的HOT更改为One_SSD</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[lvxiaoyi@hadoop102 hadoop-3.1.3]$ hdfs storagepolicies -setStoragePolicy -path /hdfsdata -policy One_SSD</span><br></pre></td></tr></table></figure></li>
+<li><p>手动转移文件块</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[lvxiaoyi@hadoop102 hadoop-3.1.3]$ hdfs mover /hdfsdata</span><br></pre></td></tr></table></figure></li>
+<li><p>转移完成后，我们查看文件块分布，</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[lvxiaoyi@hadoop102 hadoop-3.1.3]$ bin/hdfs fsck /hdfsdata -files -blocks -locations</span><br><span class="line"></span><br><span class="line">[DatanodeInfoWithStorage[192.168.10.104:9866,DS-0b133854-7f9e-48df-939b-5ca6482c5afb,DISK], DatanodeInfoWithStorage[192.168.10.103:9866,DS-2481a204-59dd-46c0-9f87-ec4647ad429a,SSD]]</span><br></pre></td></tr></table></figure>
+
+<p>文件块分布为一半在SSD，一半在DISK，符合One_SSD存储策略。</p>
+</li>
+</ol>
+<h3 id="ALL-SSD策略测试"><a href="#ALL-SSD策略测试" class="headerlink" title="ALL_SSD策略测试"></a>ALL_SSD策略测试</h3><ol>
+<li><p>接下来，我们再将存储策略更改为All_SSD</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[lvxiaoyi@hadoop102 hadoop-3.1.3]$ hdfs storagepolicies -setStoragePolicy -path /hdfsdata -policy All_SSD</span><br></pre></td></tr></table></figure></li>
+<li><p>手动转移文件块</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[lvxiaoyi@hadoop102 hadoop-3.1.3]$ hdfs mover /hdfsdata</span><br></pre></td></tr></table></figure></li>
+<li><p>查看文件块分布，我们可以看到，</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[lvxiaoyi@hadoop102 hadoop-3.1.3]$ bin/hdfs fsck /hdfsdata -files -blocks -locations</span><br><span class="line"></span><br><span class="line">[DatanodeInfoWithStorage[192.168.10.102:9866,DS-c997cfb4-16dc-4e69-a0c4-9411a1b0c1eb,SSD], DatanodeInfoWithStorage[192.168.10.103:9866,DS-2481a204-59dd-46c0-9f87-ec4647ad429a,SSD]]</span><br></pre></td></tr></table></figure>
+
+<p>所有的文件块都存储在SSD，符合All_SSD存储策略。</p>
+</li>
+</ol>
+<h2 id="LAZY-PERSIST策略测试"><a href="#LAZY-PERSIST策略测试" class="headerlink" title="LAZY_PERSIST策略测试"></a>LAZY_PERSIST策略测试</h2><ol>
+<li><p>继续改变策略，将存储策略改为lazy_persist</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[lvxiaoyi@hadoop102 hadoop-3.1.3]$ hdfs storagepolicies -setStoragePolicy -path /hdfsdata -policy lazy_persist</span><br></pre></td></tr></table></figure></li>
+<li><p>手动转移文件块</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[lvxiaoyi@hadoop102 hadoop-3.1.3]$ hdfs mover /hdfsdata</span><br></pre></td></tr></table></figure></li>
+<li><p>查看文件块分布</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[lvxiaoyi@hadoop102 hadoop-3.1.3]$ hdfs fsck /hdfsdata -files -blocks -locations</span><br><span class="line"></span><br><span class="line">[DatanodeInfoWithStorage[192.168.10.104:9866,DS-0b133854-7f9e-48df-939b-5ca6482c5afb,DISK], DatanodeInfoWithStorage[192.168.10.103:9866,DS-ca1bd3b9-d9a5-4101-9f92-3da5f1baa28b,DISK]]</span><br></pre></td></tr></table></figure>
+
+<p>这里我们发现所有的文件块都是存储在DISK，按照理论一个副本存储在RAM_DISK，其他副本存储在DISK中，这是因为，我们还需要配置“dfs.datanode.max.locked.memory”，“dfs.block.size”参数。</p>
+<p>那么出现存储策略为LAZY_PERSIST时，文件块副本都存储在DISK上的原因有如下两点：</p>
+<ol>
+<li>当客户端所在的DataNode节点没有RAM_DISK时，则会写入客户端所在的DataNode节点的DISK磁盘，其余副本会写入其他节点的DISK磁盘。</li>
+<li>当客户端所在的DataNode有RAM_DISK，但“dfs.datanode.max.locked.memory”参数值未设置或者设置过小（小于“dfs.block.size”参数值）时，则会写入客户端所在的DataNode节点的DISK磁盘，其余副本会写入其他节点的DISK磁盘。</li>
+</ol>
+<p>但是由于虚拟机的“max locked memory”为64KB，所以，如果参数配置过大，还会报出错误：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ERROR org.apache.hadoop.hdfs.server.datanode.DataNode: Exception in secureMain</span><br><span class="line">java.lang.RuntimeException: Cannot start datanode because the configured max locked memory size (dfs.datanode.max.locked.memory) of 209715200 bytes is more than the datanode&#x27;s available RLIMIT_MEMLOCK ulimit of 65536 bytes.</span><br></pre></td></tr></table></figure>
+
+<p>我们可以通过该命令查询此参数的内存</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[lvxiaoyi@hadoop102 hadoop-3.1.3]$ ulimit -a</span><br><span class="line"></span><br><span class="line">max locked memory       (kbytes, -l) 64</span><br></pre></td></tr></table></figure></li>
+</ol>
+<h1 id="HDFS—故障排除"><a href="#HDFS—故障排除" class="headerlink" title="HDFS—故障排除"></a>HDFS—故障排除</h1><p>注意：采用三台服务器即可，恢复到Yarn开始的服务器快照。</p>
+<h2 id="NameNode故障处理"><a href="#NameNode故障处理" class="headerlink" title="NameNode故障处理"></a>NameNode故障处理</h2><img src="https://img.lvxiaoyi.top/typora-img/202111022203651.png/lvxiaoyi" alt="image-20211102220322562" style="zoom:50%;" />
+
+<h3 id="需求-1"><a href="#需求-1" class="headerlink" title="需求"></a>需求</h3><p>NameNode进程挂了并且存储的数据也丢失了，如何恢复NameNode</p>
+<h2 id="故障模拟"><a href="#故障模拟" class="headerlink" title="故障模拟"></a>故障模拟</h2><ol>
+<li><p>kill -9 NameNode进程</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[lvxiaoyi@hadoop102 current]$ kill -9 19886</span><br></pre></td></tr></table></figure></li>
+<li><p>删除NameNode存储的数据（/opt/module/hadoop-3.1.3/data/tmp/dfs/name）</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[lvxiaoyi@hadoop102 hadoop-3.1.3]$ rm -rf /opt/module/hadoop-3.1.3/data/dfs/name/*</span><br></pre></td></tr></table></figure></li>
+</ol>
+<h3 id="问题解决"><a href="#问题解决" class="headerlink" title="问题解决"></a>问题解决</h3><ol>
+<li><p>拷贝SecondaryNameNode中数据到原NameNode存储数据目录</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[lvxiaoyi@hadoop102 dfs]$ scp -r lvxiaoyi@hadoop104:/opt/module/hadoop-3.1.3/data/dfs/namesecondary/* ./name/</span><br></pre></td></tr></table></figure></li>
+<li><p>重新启动NameNode</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[lvxiaoyi@hadoop102 hadoop-3.1.3]$ hdfs --daemon start namenode</span><br></pre></td></tr></table></figure></li>
+<li><p>向集群上传一个文件</p>
+</li>
+</ol>
+<h2 id="集群安全模式-amp-磁盘修复"><a href="#集群安全模式-amp-磁盘修复" class="headerlink" title="集群安全模式&amp;磁盘修复"></a>集群安全模式&amp;磁盘修复</h2><h3 id="安全模式"><a href="#安全模式" class="headerlink" title="安全模式"></a>安全模式</h3><p>文件系统只接受读数据请求，而不接受删除、修改等变更请求</p>
+<h3 id="进入安全模式场景"><a href="#进入安全模式场景" class="headerlink" title="进入安全模式场景"></a>进入安全模式场景</h3><ul>
+<li><p>NameNode在加载镜像文件和编辑日志期间处于安全模式；</p>
+</li>
+<li><p> NameNode再接收DataNode注册时，处于安全模式</p>
+</li>
+</ul>
+<img src="C:/Users/Think/AppData/Roaming/Typora/typora-user-images/image-20211102220629706.png" alt="image-20211102220629706" style="zoom:50%;" />
+
+<h3 id="退出安全模式条件"><a href="#退出安全模式条件" class="headerlink" title="退出安全模式条件"></a>退出安全模式条件</h3><p>dfs.namenode.safemode.min.datanodes:最小可用datanode数量，默认0</p>
+<p>dfs.namenode.safemode.threshold-pct:副本数达到最小要求的block占系统总block数的百分比，默认0.999f。（只允许丢一个块）</p>
+<p>dfs.namenode.safemode.extension:稳定时间，默认值30000毫秒，即30秒</p>
+<h3 id="基本语法"><a href="#基本语法" class="headerlink" title="基本语法"></a>基本语法</h3><p>集群处于安全模式，不能执行重要操作（写操作）。集群启动完成后，自动退出安全模式。</p>
+<ol>
+<li><p>bin/hdfs dfsadmin -safemode get    （功能描述：查看安全模式状态）</p>
+</li>
+<li><p>bin/hdfs dfsadmin -safemode enter （功能描述：进入安全模式状态）</p>
+</li>
+<li><p>bin/hdfs dfsadmin -safemode leave    （功能描述：离开安全模式状态）</p>
+</li>
+<li><p>bin/hdfs dfsadmin -safemode wait    （功能描述：等待安全模式状态）</p>
+</li>
+</ol>
+<h3 id="案例1启动集群进入安全模式"><a href="#案例1启动集群进入安全模式" class="headerlink" title="案例1启动集群进入安全模式"></a>案例1启动集群进入安全模式</h3><ol>
+<li><p>重新启动集群</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[lvxiaoyi@hadoop102 subdir0]$ myhadoop.sh stop</span><br><span class="line">[lvxiaoyi@hadoop102 subdir0]$ myhadoop.sh start</span><br></pre></td></tr></table></figure></li>
+<li><p>集群启动后，立即来到集群上删除数据，提示集群处于安全模式</p>
+</li>
+</ol>
+<h3 id="案例2：磁盘修复"><a href="#案例2：磁盘修复" class="headerlink" title="案例2：磁盘修复"></a>案例2：磁盘修复</h3><p>需求：数据块损坏，进入安全模式，如何处理</p>
+<ol>
+<li><p>分别进入hadoop102、hadoop103、hadoop104的<code>/opt/module/hadoop-3.1.3/data/dfs/data/current/BP-1015489500-192.168.10.102-1611909480872/current/finalized/subdir0/subdir0</code>目录，统一删除某2个块信息</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[lvxiaoyi@hadoop102 subdir0]$ pwd</span><br><span class="line">/opt/module/hadoop-3.1.3/data/dfs/data/current/BP-1015489500-192.168.10.102-1611909480872/current/finalized/subdir0/subdir0</span><br><span class="line">[lvxiaoyi@hadoop102 subdir0]$ rm -rf blk_1073741847 blk_1073741847_1023.meta</span><br><span class="line">[lvxiaoyi@hadoop102 subdir0]$ rm -rf blk_1073741865 blk_1073741865_1042.meta</span><br></pre></td></tr></table></figure>
+
+<p>说明：hadoop103/hadoop104重复执行以上命令</p>
+</li>
+<li><p>重新启动集群</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[lvxiaoyi@hadoop102 subdir0]$ myhadoop.sh stop</span><br><span class="line">[lvxiaoyi@hadoop102 subdir0]$ myhadoop.sh start</span><br></pre></td></tr></table></figure></li>
+<li><p>观察<a target="_blank" rel="noopener" href="http://hadoop102:9870/dfshealth.html#tab-overview">http://hadoop102:9870/dfshealth.html#tab-overview</a></p>
+<p>说明：安全模式已经打开，块的数量没有达到要求。</p>
+</li>
+<li><p>离开安全模式</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[lvxiaoyi@hadoop102 subdir0]$ hdfs dfsadmin -safemode get</span><br><span class="line">Safe mode is ON</span><br><span class="line">[lvxiaoyi@hadoop102 subdir0]$ hdfs dfsadmin -safemode leave</span><br><span class="line">Safe mode is OFF</span><br></pre></td></tr></table></figure></li>
+<li><p>观察<a target="_blank" rel="noopener" href="http://hadoop102:9870/dfshealth.html#tab-overview">http://hadoop102:9870/dfshealth.html#tab-overview</a></p>
+</li>
+<li><p>将元数据删除</p>
+</li>
+<li><p>观察<a href="#tab-overview">http://hadoop102:9870/dfshealth.html#tab-overview</a>，集群已经正常</p>
+</li>
+</ol>
+<h3 id="案例3："><a href="#案例3：" class="headerlink" title="案例3："></a>案例3：</h3><p>需求：模拟等待安全模式</p>
+<ol>
+<li><p>查看当前模式</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[lvxiaoyi@hadoop102 hadoop-3.1.3]$ hdfs dfsadmin -safemode get</span><br><span class="line">Safe mode is OFF</span><br></pre></td></tr></table></figure></li>
+<li><p>先进入安全模式</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[lvxiaoyi@hadoop102 hadoop-3.1.3]$ bin/hdfs dfsadmin -safemode enter</span><br></pre></td></tr></table></figure></li>
+<li><p>创建并执行下面的脚本</p>
+<p>在/opt/module/hadoop-3.1.3路径上，编辑一个脚本safemode.sh</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">[lvxiaoyi@hadoop102 hadoop-3.1.3]$ vim safemode.sh</span><br><span class="line"></span><br><span class="line">#!/bin/bash</span><br><span class="line">hdfs dfsadmin -safemode wait</span><br><span class="line">hdfs dfs -put /opt/module/hadoop-3.1.3/README.txt /</span><br><span class="line"></span><br><span class="line">[lvxiaoyi@hadoop102 hadoop-3.1.3]$ chmod 777 safemode.sh</span><br><span class="line"></span><br><span class="line">[lvxiaoyi@hadoop102 hadoop-3.1.3]$ ./safemode.sh </span><br></pre></td></tr></table></figure></li>
+<li><p>再打开一个窗口，执行</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[lvxiaoyi@hadoop102 hadoop-3.1.3]$ bin/hdfs dfsadmin -safemode leave</span><br></pre></td></tr></table></figure></li>
+<li><p>再观察上一个窗口</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Safe mode is OFF</span><br></pre></td></tr></table></figure></li>
+<li><p>HDFS集群上已经有上传的数据了</p>
+</li>
+</ol>
+<h2 id="慢磁盘监控"><a href="#慢磁盘监控" class="headerlink" title="慢磁盘监控"></a>慢磁盘监控</h2><p>“慢磁盘”指的时写入数据非常慢的一类磁盘。其实慢性磁盘并不少见，当机器运行时间长了，上面跑的任务多了，磁盘的读写性能自然会退化，严重时就会出现写入数据延时的问题。</p>
+<p>如何发现慢磁盘？</p>
+<p>正常在HDFS上创建一个目录，只需要不到1s的时间。如果你发现创建目录超过1分钟及以上，而且这个现象并不是每次都有。只是偶尔慢了一下，就很有可能存在慢磁盘。</p>
+<p>可以采用如下方法找出是哪块磁盘慢：</p>
+<ol>
+<li><p>通过心跳未联系时间</p>
+<p>一般出现慢磁盘现象，会影响到DataNode与NameNode之间的心跳。正常情况心跳时间间隔是3s。超过3s说明有异常。</p>
+</li>
+<li><p>fio命令，测试磁盘的读写性能</p>
+<ol>
+<li><p>顺序读测试</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">[lvxiaoyi@hadoop102 ~]# sudo yum install -y fio</span><br><span class="line">[lvxiaoyi@hadoop102 ~]$ sudo fio -filename=/home/lvxiaoyi/test.log -direct=1 -iodepth 1 -thread -rw=read -ioengine=psync -bs=16k -size=500M -numjobs=10 -runtime=60 -group_reporting -name=test_r</span><br><span class="line"></span><br><span class="line">Run status group 0 (all jobs):</span><br><span class="line">   READ: bw=72.6MiB/s (76.1MB/s), 72.6MiB/s-72.6MiB/s (76.1MB/s-76.1MB/s), io=4356MiB (4568MB), run=60002-60002msec</span><br></pre></td></tr></table></figure>
+
+<p>结果显示，磁盘的总体顺序读速度为72MiB/s。</p>
+</li>
+<li><p>顺序写测试</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">[lvxiaoyi@hadoop102 ~]# sudo fio -filename=/home/lvxiaoyi/test.log -direct=1 -iodepth 1 -thread -rw=write -ioengine=psync -bs=16k -size=200M -numjobs=10 -runtime=60 -group_reporting -name=test_w</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">Run status group 0 (all jobs):</span><br><span class="line">  WRITE: bw=82.5MiB/s (86.5MB/s), 82.5MiB/s-82.5MiB/s (86.5MB/s-86.5MB/s), io=2000MiB (2097MB), run=24235-24235msec</span><br></pre></td></tr></table></figure>
+
+<p>结果显示，磁盘的总体顺序写速度为82.5MiB/s。</p>
+</li>
+<li><p>随机写测试</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[lvxiaoyi@hadoop102 ~]# sudo fio -filename=/home/lvxiaoyi/test.log -direct=1 -iodepth 1 -thread -rw=randwrite -ioengine=psync -bs=16k -size=200M -numjobs=10 -runtime=60 -group_reporting -name=test_randw</span><br><span class="line"></span><br><span class="line">Run status group 0 (all jobs):</span><br><span class="line">  WRITE: bw=80.1MiB/s (84.0MB/s), 80.1MiB/s-80.1MiB/s (84.0MB/s-84.0MB/s), io=2000MiB (2097MB), run=24960-24960msec</span><br></pre></td></tr></table></figure>
+
+<p>结果显示，磁盘的总体随机写速度为84MiB/s。</p>
+</li>
+<li><p>混合随机读写：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">[lvxiaoyi@hadoop102 ~]# sudo fio -filename=/home/lvxiaoyi/test.log -direct=1 -iodepth 1 -thread -rw=randrw -rwmixread=70 -ioengine=psync -bs=16k -size=200M -numjobs=10 -runtime=60 -group_reporting -name=test_r_w -ioscheduler=noop</span><br><span class="line"></span><br><span class="line">Run status group 0 (all jobs):</span><br><span class="line">   READ: bw=56.4MiB/s (59.1MB/s), 56.4MiB/s-56.4MiB/s (59.1MB/s-59.1MB/s), io=1397MiB (1465MB), run=24772-24772msec</span><br><span class="line">  WRITE: bw=24.3MiB/s (25.5MB/s), 24.3MiB/s-24.3MiB/s (25.5MB/s-25.5MB/s), io=603MiB (632MB), run=24772-24772msec</span><br></pre></td></tr></table></figure>
+
+<p>结果显示，磁盘的总体混合随机读写，读速度为56MiB/s，写速度24.3MiB/s。</p>
+</li>
+</ol>
+<h2 id="小文件归档"><a href="#小文件归档" class="headerlink" title="小文件归档"></a>小文件归档</h2><ol>
+<li><p>HDFS存储小文件弊端</p>
+<img src="https://img.lvxiaoyi.top/typora-img/202111040848912.png/lvxiaoyi" alt="image-20211104084821774" style="zoom:50%;" />
+
+<p>每个文件均按块存储，每个块的元数据存储在NameNode的内存中，因此HDFS存储小文件会非常低效。因为大量的小文件会耗尽NameNode中的大部分内存。但注意，存储小文件所需要的磁盘容量和数据块的大小无关。例如，一个1MB的文件设置为128MB的块存储，实际使用的是1MB的磁盘空间，而不是128MB。</p>
+</li>
+<li><p>解决存储小文件办法之一</p>
+<p>HDFS存档文件或HAR文件，是一个更高效的文件存档工具，它将文件存入HDFS块，在减少NameNode内存使用的同时，允许对文件进行透明的访问。具体说来，HDFS存档文件对内还是一个一个独立文件，对NameNode而言却是一个整体，减少了NameNode的内存。</p>
+<p><img src="https://img.lvxiaoyi.top/typora-img/202111040848356.png/lvxiaoyi" alt="image-20211104084856224"></p>
+</li>
+<li><p>案例实操</p>
+<ol>
+<li><p>需要启动YARN进程</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[lvxiaoyi@hadoop102 hadoop-3.1.3]$ start-yarn.sh</span><br></pre></td></tr></table></figure></li>
+<li><p>归档文件</p>
+<p>把/input目录里面的所有文件归档成一个叫input.har的归档文件，并把归档后文件存储到/output路径下。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[lvxiaoyi@hadoop102 hadoop-3.1.3]$ hadoop archive -archiveName input.har -p  /input   /output</span><br></pre></td></tr></table></figure></li>
+<li><p>查看归档</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[lvxiaoyi@hadoop102 hadoop-3.1.3]$ hadoop fs -ls /output/input.har</span><br><span class="line">[lvxiaoyi@hadoop102 hadoop-3.1.3]$ hadoop fs -ls har:///output/input.har</span><br></pre></td></tr></table></figure></li>
+<li><p>解归档文件</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[lvxiaoyi@hadoop102 hadoop-3.1.3]$ hadoop fs -cp har:///output/input.har/*    /</span><br></pre></td></tr></table></figure></li>
+</ol>
+</li>
+</ol>
+</li>
+</ol>
+<h1 id="HDFS—集群迁移"><a href="#HDFS—集群迁移" class="headerlink" title="HDFS—集群迁移"></a>HDFS—集群迁移</h1><h2 id="Apache和Apache集群间数据拷贝"><a href="#Apache和Apache集群间数据拷贝" class="headerlink" title="Apache和Apache集群间数据拷贝"></a>Apache和Apache集群间数据拷贝</h2><ol>
+<li><p>scp实现两个远程主机之间的文件复制</p>
+<p>​    scp -r hello.txt <a href="mailto:root@hadoop103:/user/lvxiaoyi/hello.txt">root@hadoop103:/user/lvxiaoyi/hello.txt</a>        // 推 push</p>
+<p>​    scp -r [root@hadoop103:/user/lvxiaoyi/hello.txt  hello.txt](mailto:root@hadoop103:/user/lvxiaoyi/hello.txt  hello.txt)        // 拉 pull</p>
+<p>​    scp -r <a href="mailto:root@hadoop103:/user/lvxiaoyi/hello.txt">root@hadoop103:/user/lvxiaoyi/hello.txt</a> root@hadoop104:/user/lvxiaoyi  //是通过本地主机中转实现两个远程主机的文件复制；如果在两个远程主机之间ssh没有配置的情况下可以使用该方式。</p>
+</li>
+<li><p>采用distcp命令实现两个Hadoop集群之间的递归数据复制</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[lvxiaoyi@hadoop102 hadoop-3.1.3]$  bin/hadoop distcp hdfs://hadoop102:8020/user/lvxiaoyi/hello.txt hdfs://hadoop105:8020/user/lvxiaoyi/hello.txt</span><br></pre></td></tr></table></figure></li>
+<li><p>Apache和CDH集群间数据拷贝</p>
+</li>
+</ol>
+<h1 id="MapReduce生产经验"><a href="#MapReduce生产经验" class="headerlink" title="MapReduce生产经验"></a>MapReduce生产经验</h1><h2 id="MapReduce跑的慢的原因"><a href="#MapReduce跑的慢的原因" class="headerlink" title="MapReduce跑的慢的原因"></a>MapReduce跑的慢的原因</h2><p>MapReduce程序效率的瓶颈在于两点：</p>
+<ol>
+<li><p>计算机性能：CPU、内存、磁盘、网络</p>
+</li>
+<li><p>I/O操作优化：</p>
+<ol>
+<li><p>数据倾斜</p>
+</li>
+<li><p>Map运行时间太长，导致Reduce等待过久</p>
+</li>
+<li><p>小文件过多</p>
+</li>
+</ol>
+</li>
+</ol>
+<h2 id="MapReduce常用调优参数"><a href="#MapReduce常用调优参数" class="headerlink" title="MapReduce常用调优参数"></a>MapReduce常用调优参数</h2><p><img src="https://img.lvxiaoyi.top/typora-img/202111040859149.png/lvxiaoyi" alt="image-20211104085912047"></p>
+<ol>
+<li><p>自定义分区，减少数据倾斜：</p>
+<p>定义类，继承Partitioner接口，重写getPartition方法</p>
+</li>
+<li><p>减少溢写的次数<br>mapreduce.task. io.sort.mb</p>
+<p>Shuffle的环形缓冲区大小，默认100m，可以提高到200mmapreduce.map .sort. sp ill.percent</p>
+<p>环形缓冲区溢出的阈值，默认80%，可以提高的90%</p>
+</li>
+<li><p>增加每次Merge合并次数<br>mapreduce .task.io.sort.factor默认10，可以提高到20（数值越大需要的内存越大）</p>
+</li>
+<li><p>在不影响业务结果的前提条件下可以提前采用Combinerjob.setCombinerclass (xxxReducer.class) ;</p>
+</li>
+<li><p>为了诚少磁盘IO，可以采用<strong>snappy</strong>或者LZo压缩</p>
+<p>conf.setBoolean(“ mapreduce.map.output.compress”, true);conf. setC1ass(“mapreduce.map. output compress.codec” ,SnappyCodec.class,CormpressionCodec.class);,</p>
+</li>
+<li><p>mapreduce.map.memory.mb默认MapTask内存上限1024MB。</p>
+<p>可以根据128m数据对应1G内存原则提高该内存。</p>
+</li>
+<li><p>mapreduce.map.java.opts:控制MapTask堆内存大小（一般与memory.mb大小一致）。（如果内存不够,报:java.lang.OutofMenoryError )</p>
+</li>
+<li><p>mapreduce.map.cpu.vcores默认MapTask的CPU核数1。计算密集型任务可以增加CPU核数</p>
+</li>
+<li><p>异常重试<br> mapreduce map.maxattempts每个Map Task最大重试次数，一旦重试次数超过该值，则认为Map Task运行失败，默认值:4。根据机器性能适当提高。</p>
+</li>
+</ol>
+<p><img src="https://img.lvxiaoyi.top/typora-img/202111040901529.png/lvxiaoyi" alt="image-20211104090155432"></p>
+<ol>
+<li><p>mapreduce.redce.shuffle.parallelcopies每个Redce去Map中拉取数据的并行数，默认值是5。可以提高到10。</p>
+</li>
+<li><p>mapreduce.reduce.shuffle.input.buffer.percent</p>
+<p>Buffer大小占Reduce可用内存的比例，默认值总内存的0.7。可以提高到0.8</p>
+</li>
+<li><p>maprecuce.reduce.shuffle.merge.percent Buffer中的数据达到多少比例开始写入磁盘，默认值0.66。可以提高到0.75</p>
+</li>
+<li><p>mapredce.reduce.memory.mb默认ReduceTask内存上限1024MB，根据128m数据对应1G内存原则，适当提高内存到4-6G</p>
+</li>
+<li><p>maprecce.redce.java.opts:控制RecuceTask堆内存大小。（如果内存不够，报: java.lang.OutofMemoryError )</p>
+</li>
+<li><p>mapreduce.reduce.cpu.vcores默认ReduceTask的CPU核数1个。可以提高到2-4个</p>
+</li>
+<li><p>mapreduce.reduce.maxattempts每个Reduce Task最大重试次数，一旦重试次数超过该值，则认为MapTask运行失败，默认值:4。</p>
+</li>
+<li><p>mapreduce.job.reduce.slowstart.completedmaps当MapTask完成的比例达到该值后才会为ReduceTask申请资源。默认是0.05。</p>
+</li>
+</ol>
+<ol start="9">
+<li>mapreduce.task.ti meout如果一个Task在一定时间内没有任何进入，即不会读取新的数据，也没有输出数据，则认为该Task处于Block状态，可能是卡住了，也许永远会卡住，为了防止因为用户程序永远B1ock住不退出，则强制设置了一个该超时时间（单位毫秒），默认是600000(10分钟）。如果你的程序对每条输入数据的处理时间过长，建议将该参数调大。</li>
+<li>如果可以不用Reduce，尽可能不用</li>
+</ol>
+<h2 id="MapReduce数据倾斜问题"><a href="#MapReduce数据倾斜问题" class="headerlink" title="MapReduce数据倾斜问题"></a>MapReduce数据倾斜问题</h2><h3 id="数据倾斜现象"><a href="#数据倾斜现象" class="headerlink" title="数据倾斜现象"></a>数据倾斜现象</h3><p>数据频率倾斜——某一个区域的数据量要远远大于其他区域。</p>
+<p>数据大小倾斜——部分记录的大小远远大于平均值。</p>
+<p><img src="https://img.lvxiaoyi.top/typora-img/20211112172252783.png/lvxiaoyi" alt="image-20211112172252783"></p>
+<h3 id="减少数据倾斜的方法"><a href="#减少数据倾斜的方法" class="headerlink" title="减少数据倾斜的方法"></a>减少数据倾斜的方法</h3><ol>
+<li><p>首先检查是否空值过多造成的数据倾斜</p>
+<p>生产环境，可以直接过滤掉空值；如果想保留空值，就自定义分区，将空值加随机数打散。最后再二次聚合。</p>
+</li>
+<li><p>能在map阶段提前处理，最好先在Map阶段处理。如：Combiner、MapJoin</p>
+</li>
+<li><p>设置多个reduce个数</p>
+</li>
+</ol>
+<h1 id="Hadoop-Yarn生产经验"><a href="#Hadoop-Yarn生产经验" class="headerlink" title="Hadoop-Yarn生产经验"></a>Hadoop-Yarn生产经验</h1><h2 id="常用的调优参数"><a href="#常用的调优参数" class="headerlink" title="常用的调优参数"></a>常用的调优参数</h2><h3 id="调优参数列表"><a href="#调优参数列表" class="headerlink" title="调优参数列表"></a>调优参数列表</h3><ol>
+<li><p>Resourcemanager相关</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">yarn.resourcemanager.scheduler.client.thread-count	ResourceManager处理调度器请求的线程数量</span><br><span class="line">yarn.resourcemanager.scheduler.class	配置调度器</span><br></pre></td></tr></table></figure></li>
+<li><p>Nodemanager相关</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">yarn.nodemanager.resource.memory-mb	              NodeManager使用内存数</span><br><span class="line">yarn.nodemanager.resource.system-reserved-memory-mb  NodeManager为系统保留多少内存，和上一个参数二者取一即可</span><br><span class="line"></span><br><span class="line">yarn.nodemanager.resource.cpu-vcores	NodeManager使用CPU核数</span><br><span class="line">yarn.nodemanager.resource.count-logical-processors-as-cores	是否将虚拟核数当作CPU核数</span><br><span class="line">yarn.nodemanager.resource.pcores-vcores-multiplier	虚拟核数和物理核数乘数，例如：4核8线程，该参数就应设为2</span><br><span class="line">yarn.nodemanager.resource.detect-hardware-capabilities	是否让yarn自己检测硬件进行配置</span><br><span class="line"></span><br><span class="line">yarn.nodemanager.pmem-check-enabled	是否开启物理内存检查限制container</span><br><span class="line">yarn.nodemanager.vmem-check-enabled	是否开启虚拟内存检查限制container</span><br><span class="line">yarn.nodemanager.vmem-pmem-ratio        虚拟内存物理内存比例</span><br></pre></td></tr></table></figure></li>
+<li><p>Container容器相关</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">yarn.scheduler.minimum-allocation-mb	     容器最小内存</span><br><span class="line">yarn.scheduler.maximum-allocation-mb	     容器最大内存</span><br><span class="line">yarn.scheduler.minimum-allocation-vcores	 容器最小核数</span><br><span class="line">yarn.scheduler.maximum-allocation-vcores	 容器最大核数</span><br></pre></td></tr></table></figure></li>
+</ol>
+<p>2）参数具体使用案例</p>
+<p>详见《尚硅谷大数据技术之Hadoop（Yarn）》，第2.1节。</p>
+<p>容量调度器使用</p>
+<p>详见《尚硅谷大数据技术之Hadoop（Yarn）》，第2.2节。</p>
+<p>公平调度器使用</p>
+<p>详见《尚硅谷大数据技术之Hadoop（Yarn）》，第2.3节。</p>
+<h1 id="Hadoop综合调优"><a href="#Hadoop综合调优" class="headerlink" title="Hadoop综合调优"></a>Hadoop综合调优</h1><h1 id="Hadoop综合调优-1"><a href="#Hadoop综合调优-1" class="headerlink" title="Hadoop综合调优"></a>Hadoop综合调优</h1><h2 id="Hadoop小文件优化方法"><a href="#Hadoop小文件优化方法" class="headerlink" title="Hadoop小文件优化方法"></a>Hadoop小文件优化方法</h2><h3 id="Hadoop小文件弊端"><a href="#Hadoop小文件弊端" class="headerlink" title="Hadoop小文件弊端"></a>Hadoop小文件弊端</h3><p>HDFS上每个文件都要在NameNode上创建对应的元数据，这个元数据的大小约为150byte，这样当小文件比较多的时候，就会产生很多的元数据文件，一方面会大量占用NameNode的内存空间，另一方面就是元数据文件过多，使得寻址索引速度变慢。</p>
+<p>小文件过多，在进行MR计算时，会生成过多切片，需要启动过多的MapTask。每个MapTask处理的数据量小，导致MapTask的处理时间比启动时间还小，白白消耗资源。</p>
+<h3 id="Hadoop小文件解决方案"><a href="#Hadoop小文件解决方案" class="headerlink" title="Hadoop小文件解决方案"></a>Hadoop小文件解决方案</h3><ol>
+<li><p>在数据采集的时候，就将小文件或小批数据合成大文件再上传HDFS（数据源头）</p>
+</li>
+<li><p>Hadoop Archive（存储方向）</p>
+<p>是一个高效的将小文件放入HDFS块中的文件存档工具，能够将多个小文件打包成一个HAR文件，从而达到减少NameNode的内存使用</p>
+</li>
+<li><p>CombineTextInputFormat（计算方向）</p>
+<p>CombineTextInputFormat用于将多个小文件在切片过程中生成一个单独的切片或者少量的切片。</p>
+</li>
+<li><p>开启uber模式，实现JVM重用（计算方向）</p>
+<p>默认情况下，每个Task任务都需要启动一个JVM来运行，如果Task任务计算的数据量很小，我们可以让同一个Job的多个Task运行在一个JVM中，不必为每个Task都开启一个JVM（开启和退出共用一个container）。</p>
+<ol>
+<li><p>未开启uber模式，在/input路径上上传多个小文件并执行wordcount程序</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[lvxiaoyi@hadoop102 hadoop-3.1.3]$ hadoop jar share/hadoop/mapreduce/hadoop-mapreduce-examples-3.1.3.jar wordcount /input /output2</span><br></pre></td></tr></table></figure></li>
+<li><p>观察控制台</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">2021-11-12 17:55:10,522 INFO mapreduce.Job: Job job_1636710438145_0003 running in uber mode : false</span><br></pre></td></tr></table></figure></li>
+<li><p>观察<a target="_blank" rel="noopener" href="http://hadoop103:8088/cluster">http://hadoop103:8088/cluster</a></p>
+</li>
+<li><p>开启uber模式，在mapred-site.xml中添加如下配置</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!--  开启uber模式，默认关闭 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">  	<span class="tag">&lt;<span class="name">name</span>&gt;</span>mapreduce.job.ubertask.enable<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">  	<span class="tag">&lt;<span class="name">value</span>&gt;</span>true<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">&lt;!-- uber模式中最大的mapTask数量，可向下修改  --&gt;</span> </span><br><span class="line"><span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">  	<span class="tag">&lt;<span class="name">name</span>&gt;</span>mapreduce.job.ubertask.maxmaps<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">  	<span class="tag">&lt;<span class="name">value</span>&gt;</span>9<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line"><span class="comment">&lt;!-- uber模式中最大的reduce数量，可向下修改 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">  	<span class="tag">&lt;<span class="name">name</span>&gt;</span>mapreduce.job.ubertask.maxreduces<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">  	<span class="tag">&lt;<span class="name">value</span>&gt;</span>1<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line"><span class="comment">&lt;!-- uber模式中最大的输入数据量，默认使用dfs.blocksize 的值，可向下修改 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">  	<span class="tag">&lt;<span class="name">name</span>&gt;</span>mapreduce.job.ubertask.maxbytes<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">  	<span class="tag">&lt;<span class="name">value</span>&gt;</span><span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br></pre></td></tr></table></figure></li>
+<li><p>分发配置</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[lvxiaoyi@hadoop102 hadoop]$ xsync mapred-site.xml</span><br></pre></td></tr></table></figure></li>
+<li><p>再次执行wordcount程序</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[lvxiaoyi@hadoop102 hadoop-3.1.3]$ hadoop jar share/hadoop/mapreduce/hadoop-mapreduce-examples-3.1.3.jar wordcount /input /output2</span><br></pre></td></tr></table></figure></li>
+<li><p>观察控制台</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">2021-11-12 17:58:10,522 INFO mapreduce.Job: Job job_1636710438145_0003 running in uber mode : true</span><br></pre></td></tr></table></figure></li>
+<li><p>观察<a target="_blank" rel="noopener" href="http://hadoop103:8088/cluster">http://hadoop103:8088/cluster</a></p>
+</li>
+</ol>
+</li>
+</ol>
+<h2 id="测试MapReduce计算性能"><a href="#测试MapReduce计算性能" class="headerlink" title="测试MapReduce计算性能"></a>测试MapReduce计算性能</h2><p>使用Sort程序评测MapReduce</p>
+<p>==注：一个虚拟机不超过150G磁盘尽量不要执行这段代码==</p>
+<ol>
+<li><p>使用RandomWriter来产生随机数，每个节点运行10个Map任务，每个Map产生大约1G大小的二进制随机数</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[lvxiaoyi@hadoop102 mapreduce]$ hadoop jar /opt/module/hadoop-3.1.3/share/hadoop/mapreduce/hadoop-mapreduce-examples-3.1.3.jar randomwriter random-data</span><br></pre></td></tr></table></figure></li>
+<li><p>执行Sort程序</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[lvxiaoyi@hadoop102 mapreduce]$ hadoop jar /opt/module/hadoop-3.1.3/share/hadoop/mapreduce/hadoop-mapreduce-examples-3.1.3.jar sort random-data sorted-data</span><br></pre></td></tr></table></figure></li>
+<li><p>验证数据是否真正排好序了</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[lvxiaoyi@hadoop102 mapreduce]$ </span><br><span class="line">hadoop jar /opt/module/hadoop-3.1.3/share/hadoop/mapreduce/hadoop-mapreduce-client-jobclient-3.1.3-tests.jar testmapredsort -sortInput random-data -sortOutput sorted-data</span><br></pre></td></tr></table></figure></li>
+</ol>
+<h2 id="企业开发场景案例"><a href="#企业开发场景案例" class="headerlink" title="企业开发场景案例"></a>企业开发场景案例</h2><h3 id="需求-2"><a href="#需求-2" class="headerlink" title="需求"></a>需求</h3><ol>
+<li><p>需求：从1G数据中，统计每个单词出现次数。服务器3台，每台配置4G内存，4核CPU，4线程。</p>
+</li>
+<li><p>需求分析：</p>
+<p>1G / 128m = 8个MapTask；1个ReduceTask；1个mrAppMaster</p>
+<p>平均每个节点运行10个 / 3台 ≈ 3个任务（4    3    3）</p>
+</li>
+</ol>
+<h3 id="HDFS参数调优"><a href="#HDFS参数调优" class="headerlink" title="HDFS参数调优"></a>HDFS参数调优</h3><ol>
+<li><p>修改：hadoop-env.sh</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">export HDFS_NAMENODE_OPTS=&quot;-Dhadoop.security.logger=INFO,RFAS -Xmx1024m&quot;</span><br><span class="line"></span><br><span class="line">export HDFS_DATANODE_OPTS=&quot;-Dhadoop.security.logger=ERROR,RFAS -Xmx1024m&quot;</span><br></pre></td></tr></table></figure></li>
+<li><p>修改hdfs-site.xml</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- NameNode有一个工作线程池，默认值是10 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">name</span>&gt;</span>dfs.namenode.handler.count<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">value</span>&gt;</span>21<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br></pre></td></tr></table></figure></li>
+<li><p>修改core-site.xml</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- 配置垃圾回收时间为60分钟 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">name</span>&gt;</span>fs.trash.interval<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">value</span>&gt;</span>60<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br></pre></td></tr></table></figure></li>
+<li><p>分发配置</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[lvxiaoyi@hadoop102 hadoop]$ xsync hadoop-env.sh hdfs-site.xml core-site.xml</span><br></pre></td></tr></table></figure></li>
+</ol>
+<h3 id="MapReduce参数调优"><a href="#MapReduce参数调优" class="headerlink" title="MapReduce参数调优"></a>MapReduce参数调优</h3><ol>
+<li><p>修改mapred-site.xml</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- 环形缓冲区大小，默认100m --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">name</span>&gt;</span>mapreduce.task.io.sort.mb<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">value</span>&gt;</span>100<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">&lt;!-- 环形缓冲区溢写阈值，默认0.8 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">name</span>&gt;</span>mapreduce.map.sort.spill.percent<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">value</span>&gt;</span>0.80<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">&lt;!-- merge合并次数，默认10个 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">name</span>&gt;</span>mapreduce.task.io.sort.factor<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">value</span>&gt;</span>10<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">&lt;!-- maptask内存，默认1g； maptask堆内存大小默认和该值大小一致mapreduce.map.java.opts --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">name</span>&gt;</span>mapreduce.map.memory.mb<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">value</span>&gt;</span>-1<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">description</span>&gt;</span>The amount of memory to request from the scheduler for each    map task. If this is not specified or is non-positive, it is inferred from mapreduce.map.java.opts and mapreduce.job.heap.memory-mb.ratio. If java-opts are also not specified, we set it to 1024.</span><br><span class="line">  <span class="tag">&lt;/<span class="name">description</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">&lt;!-- matask的CPU核数，默认1个 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">name</span>&gt;</span>mapreduce.map.cpu.vcores<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">value</span>&gt;</span>1<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">&lt;!-- matask异常重试次数，默认4次 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">name</span>&gt;</span>mapreduce.map.maxattempts<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">value</span>&gt;</span>4<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">&lt;!-- 每个Reduce去Map中拉取数据的并行数。默认值是5 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">name</span>&gt;</span>mapreduce.reduce.shuffle.parallelcopies<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">value</span>&gt;</span>5<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">&lt;!-- Buffer大小占Reduce可用内存的比例，默认值0.7 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">name</span>&gt;</span>mapreduce.reduce.shuffle.input.buffer.percent<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">value</span>&gt;</span>0.70<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">&lt;!-- Buffer中的数据达到多少比例开始写入磁盘，默认值0.66。 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">name</span>&gt;</span>mapreduce.reduce.shuffle.merge.percent<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">value</span>&gt;</span>0.66<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">&lt;!-- reducetask内存，默认1g；reducetask堆内存大小默认和该值大小一致mapreduce.reduce.java.opts --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">name</span>&gt;</span>mapreduce.reduce.memory.mb<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">value</span>&gt;</span>-1<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">description</span>&gt;</span>The amount of memory to request from the scheduler for each    reduce task. If this is not specified or is non-positive, it is inferred</span><br><span class="line">    from mapreduce.reduce.java.opts and mapreduce.job.heap.memory-mb.ratio.</span><br><span class="line">    If java-opts are also not specified, we set it to 1024.</span><br><span class="line">  <span class="tag">&lt;/<span class="name">description</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">&lt;!-- reducetask的CPU核数，默认1个 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">name</span>&gt;</span>mapreduce.reduce.cpu.vcores<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">value</span>&gt;</span>2<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">&lt;!-- reducetask失败重试次数，默认4次 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">name</span>&gt;</span>mapreduce.reduce.maxattempts<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">value</span>&gt;</span>4<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">&lt;!-- 当MapTask完成的比例达到该值后才会为ReduceTask申请资源。默认是0.05 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">name</span>&gt;</span>mapreduce.job.reduce.slowstart.completedmaps<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">value</span>&gt;</span>0.05<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">&lt;!-- 如果程序在规定的默认10分钟内没有读到数据，将强制超时退出 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">name</span>&gt;</span>mapreduce.task.timeout<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">value</span>&gt;</span>600000<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br></pre></td></tr></table></figure></li>
+<li><p>分发配置</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[lvxiaoyi@hadoop102 hadoop]$ xsync mapred-site.xml</span><br></pre></td></tr></table></figure></li>
+</ol>
+<h3 id="Yarn参数调优"><a href="#Yarn参数调优" class="headerlink" title="Yarn参数调优"></a>Yarn参数调优</h3><ol>
+<li><p>修改yarn-site.xml配置参数如下：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- 选择调度器，默认容量 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">description</span>&gt;</span>The class to use as the resource scheduler.<span class="tag">&lt;/<span class="name">description</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">name</span>&gt;</span>yarn.resourcemanager.scheduler.class<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">value</span>&gt;</span>org.apache.hadoop.yarn.server.resourcemanager.scheduler.capacity.CapacityScheduler<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">&lt;!-- ResourceManager处理调度器请求的线程数量,默认50；如果提交的任务数大于50，可以增加该值，但是不能超过3台 * 4线程 = 12线程（去除其他应用程序实际不能超过8） --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">description</span>&gt;</span>Number of threads to handle scheduler interface.<span class="tag">&lt;/<span class="name">description</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">name</span>&gt;</span>yarn.resourcemanager.scheduler.client.thread-count<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">value</span>&gt;</span>8<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">&lt;!-- 是否让yarn自动检测硬件进行配置，默认是false，如果该节点有很多其他应用程序，建议手动配置。如果该节点没有其他应用程序，可以采用自动 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">description</span>&gt;</span>Enable auto-detection of node capabilities such as</span><br><span class="line">	memory and CPU.</span><br><span class="line">	<span class="tag">&lt;/<span class="name">description</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">name</span>&gt;</span>yarn.nodemanager.resource.detect-hardware-capabilities<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">value</span>&gt;</span>false<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">&lt;!-- 是否将虚拟核数当作CPU核数，默认是false，采用物理CPU核数 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">description</span>&gt;</span>Flag to determine if logical processors(such as</span><br><span class="line">	hyperthreads) should be counted as cores. Only applicable on Linux</span><br><span class="line">	when yarn.nodemanager.resource.cpu-vcores is set to -1 and</span><br><span class="line">	yarn.nodemanager.resource.detect-hardware-capabilities is true.</span><br><span class="line">	<span class="tag">&lt;/<span class="name">description</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">name</span>&gt;</span>yarn.nodemanager.resource.count-logical-processors-as-cores<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">value</span>&gt;</span>false<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">&lt;!-- 虚拟核数和物理核数乘数，默认是1.0 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">description</span>&gt;</span>Multiplier to determine how to convert phyiscal cores to</span><br><span class="line">	vcores. This value is used if yarn.nodemanager.resource.cpu-vcores</span><br><span class="line">	is set to -1(which implies auto-calculate vcores) and</span><br><span class="line">	yarn.nodemanager.resource.detect-hardware-capabilities is set to true. The	number of vcores will be calculated as	number of CPUs * multiplier.</span><br><span class="line">	<span class="tag">&lt;/<span class="name">description</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">name</span>&gt;</span>yarn.nodemanager.resource.pcores-vcores-multiplier<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">value</span>&gt;</span>1.0<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">&lt;!-- NodeManager使用内存数，默认8G，修改为4G内存 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">description</span>&gt;</span>Amount of physical memory, in MB, that can be allocated </span><br><span class="line">	for containers. If set to -1 and</span><br><span class="line">	yarn.nodemanager.resource.detect-hardware-capabilities is true, it is</span><br><span class="line">	automatically calculated(in case of Windows and Linux).</span><br><span class="line">	In other cases, the default is 8192MB.</span><br><span class="line">	<span class="tag">&lt;/<span class="name">description</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">name</span>&gt;</span>yarn.nodemanager.resource.memory-mb<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">value</span>&gt;</span>4096<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">&lt;!-- nodemanager的CPU核数，不按照硬件环境自动设定时默认是8个，修改为4个 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">description</span>&gt;</span>Number of vcores that can be allocated</span><br><span class="line">	for containers. This is used by the RM scheduler when allocating</span><br><span class="line">	resources for containers. This is not used to limit the number of</span><br><span class="line">	CPUs used by YARN containers. If it is set to -1 and</span><br><span class="line">	yarn.nodemanager.resource.detect-hardware-capabilities is true, it is</span><br><span class="line">	automatically determined from the hardware in case of Windows and Linux.</span><br><span class="line">	In other cases, number of vcores is 8 by default.<span class="tag">&lt;/<span class="name">description</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">name</span>&gt;</span>yarn.nodemanager.resource.cpu-vcores<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">value</span>&gt;</span>4<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">&lt;!-- 容器最小内存，默认1G --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">description</span>&gt;</span>The minimum allocation for every container request at the RM	in MBs. Memory requests lower than this will be set to the value of this	property. Additionally, a node manager that is configured to have less memory	than this value will be shut down by the resource manager.</span><br><span class="line">	<span class="tag">&lt;/<span class="name">description</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">name</span>&gt;</span>yarn.scheduler.minimum-allocation-mb<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">value</span>&gt;</span>1024<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">&lt;!-- 容器最大内存，默认8G，修改为2G --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">description</span>&gt;</span>The maximum allocation for every container request at the RM	in MBs. Memory requests higher than this will throw an	InvalidResourceRequestException.</span><br><span class="line">	<span class="tag">&lt;/<span class="name">description</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">name</span>&gt;</span>yarn.scheduler.maximum-allocation-mb<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">value</span>&gt;</span>2048<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">&lt;!-- 容器最小CPU核数，默认1个 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">description</span>&gt;</span>The minimum allocation for every container request at the RM	in terms of virtual CPU cores. Requests lower than this will be set to the	value of this property. Additionally, a node manager that is configured to	have fewer virtual cores than this value will be shut down by the resource	manager.</span><br><span class="line">	<span class="tag">&lt;/<span class="name">description</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">name</span>&gt;</span>yarn.scheduler.minimum-allocation-vcores<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">value</span>&gt;</span>1<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">&lt;!-- 容器最大CPU核数，默认4个，修改为2个 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">description</span>&gt;</span>The maximum allocation for every container request at the RM	in terms of virtual CPU cores. Requests higher than this will throw an</span><br><span class="line">	InvalidResourceRequestException.<span class="tag">&lt;/<span class="name">description</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">name</span>&gt;</span>yarn.scheduler.maximum-allocation-vcores<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">value</span>&gt;</span>2<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">&lt;!-- 虚拟内存检查，默认打开，修改为关闭 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">description</span>&gt;</span>Whether virtual memory limits will be enforced for</span><br><span class="line">	containers.<span class="tag">&lt;/<span class="name">description</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">name</span>&gt;</span>yarn.nodemanager.vmem-check-enabled<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">value</span>&gt;</span>false<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">&lt;!-- 虚拟内存和物理内存设置比例,默认2.1 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">description</span>&gt;</span>Ratio between virtual memory to physical memory when	setting memory limits for containers. Container allocations are	expressed in terms of physical memory, and virtual memory usage	is allowed to exceed this allocation by this ratio.</span><br><span class="line">	<span class="tag">&lt;/<span class="name">description</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">name</span>&gt;</span>yarn.nodemanager.vmem-pmem-ratio<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">value</span>&gt;</span>2.1<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br></pre></td></tr></table></figure></li>
+<li><p>分发配置</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[lvxiaoyi@hadoop102 hadoop]$ xsync yarn-site.xml</span><br></pre></td></tr></table></figure></li>
+</ol>
+<h3 id="执行程序"><a href="#执行程序" class="headerlink" title="执行程序"></a>执行程序</h3><ol>
+<li><p>重启集群</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[lvxiaoyi@hadoop102 hadoop-3.1.3]$ sbin/stop-yarn.sh</span><br><span class="line">[lvxiaoyi@hadoop103 hadoop-3.1.3]$ sbin/start-yarn.sh</span><br></pre></td></tr></table></figure></li>
+<li><p>执行WordCount程序</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[lvxiaoyi@hadoop102 hadoop-3.1.3]$ hadoop jar share/hadoop/mapreduce/hadoop-mapreduce-examples-3.1.3.jar wordcount /input /output</span><br></pre></td></tr></table></figure></li>
+<li><p>观察Yarn任务执行页面</p>
+<p><a target="_blank" rel="noopener" href="http://hadoop103:8088/cluster/apps">http://hadoop103:8088/cluster/apps</a></p>
+</li>
+</ol>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="https://lvxiaoyi.top">吕小医</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="https://lvxiaoyi.top/5eb2dc8b.html">https://lvxiaoyi.top/5eb2dc8b.html</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://lvxiaoyi.top" target="_blank">吕小医のBLOG</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/%E5%A4%A7%E6%95%B0%E6%8D%AE/">大数据</a></div><div class="post_share"><div class="social-share" data-image="https://img.lvxiaoyi.top/typora-img/image-20211028174657424.png/lvxiaoyi" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/5eb2dc8b.html"><img class="prev-cover" src="https://img.lvxiaoyi.top/typora-img/image-20211028174657424.png/lvxiaoyi" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">hadoop基础-3Yarn</div></div></a></div><div class="next-post pull-right"><a href="/136e7b9b.html"><img class="next-cover" src="https://img.lvxiaoyi.top/typora-img/image-20211028174657424.png/lvxiaoyi" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">hadoop基础-1</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><div><a href="/bc13a2ae.html" title="HBase基础"><img class="cover" src="https://img.lvxiaoyi.top/typora-img/image-20211028174657424.png/lvxiaoyi" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-09-12</div><div class="title">HBase基础</div></div></a></div><div><a href="/1d83a7d1.html" title="Hive基础-1"><img class="cover" src="https://img.lvxiaoyi.top/typora-img/image-20211028174657424.png/lvxiaoyi" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-09-12</div><div class="title">Hive基础-1</div></div></a></div><div><a href="/9cbb2d93.html" title="hive基础-2"><img class="cover" src="https://img.lvxiaoyi.top/typora-img/image-20211028174657424.png/lvxiaoyi" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-09-12</div><div class="title">hive基础-2</div></div></a></div><div><a href="/beeb1f38.html" title="Kafka基础"><img class="cover" src="/" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-09-12</div><div class="title">Kafka基础</div></div></a></div><div><a href="/6362a21d.html" title="Scala基础-1"><img class="cover" src="https://img.lvxiaoyi.top/typora-img/202111082146936.png/lvxiaoyi" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-09-12</div><div class="title">Scala基础-1</div></div></a></div><div><a href="/fa6bf3a7.html" title="Scala基础-2"><img class="cover" src="https://img.lvxiaoyi.top/typora-img/202111082146936.png/lvxiaoyi" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-09-12</div><div class="title">Scala基础-2</div></div></a></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">吕小医</div><div class="author-info__description">IT小白的健身小白</div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">202</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">26</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">49</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/xxxxxx"><i class="fab fa-github"></i><span>Follow Me</span></a></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">This is my Blog</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#hadoop%E9%AB%98%E7%BA%A7-1%E7%94%9F%E4%BA%A7%E8%B0%83%E4%BC%98"><span class="toc-number">1.</span> <span class="toc-text">hadoop高级-1生产调优</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#HDFS%E2%80%94%E6%A0%B8%E5%BF%83%E5%8F%82%E6%95%B0"><span class="toc-number">2.</span> <span class="toc-text">HDFS—核心参数</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#NameNode%E5%86%85%E5%AD%98%E7%94%9F%E4%BA%A7%E9%85%8D%E7%BD%AE"><span class="toc-number">2.1.</span> <span class="toc-text">NameNode内存生产配置</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#NameNode%E5%BF%83%E8%B7%B3%E5%B9%B6%E5%8F%91%E9%85%8D%E7%BD%AE"><span class="toc-number">2.2.</span> <span class="toc-text">NameNode心跳并发配置</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%BC%80%E5%90%AF%E5%9B%9E%E6%94%B6%E7%AB%99%E9%85%8D%E7%BD%AE"><span class="toc-number">2.3.</span> <span class="toc-text">开启回收站配置</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#HDFS%E2%80%94%E9%9B%86%E7%BE%A4%E5%8E%8B%E6%B5%8B"><span class="toc-number">3.</span> <span class="toc-text">HDFS—集群压测</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%B5%8B%E8%AF%95HDFS%E5%86%99%E6%80%A7%E8%83%BD"><span class="toc-number">3.1.</span> <span class="toc-text">测试HDFS写性能</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%B5%8B%E8%AF%95HDFS%E8%AF%BB%E6%80%A7%E8%83%BD"><span class="toc-number">3.2.</span> <span class="toc-text">测试HDFS读性能</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#HDFS%E2%80%94%E5%A4%9A%E7%9B%AE%E5%BD%95"><span class="toc-number">4.</span> <span class="toc-text">HDFS—多目录</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#NameNode%E5%A4%9A%E7%9B%AE%E5%BD%95%E9%85%8D%E7%BD%AE"><span class="toc-number">4.1.</span> <span class="toc-text">NameNode多目录配置</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#DataNode%E5%A4%9A%E7%9B%AE%E5%BD%95%E9%85%8D%E7%BD%AE"><span class="toc-number">4.2.</span> <span class="toc-text">DataNode多目录配置</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%9B%86%E7%BE%A4%E6%95%B0%E6%8D%AE%E5%9D%87%E8%A1%A1%E4%B9%8B%E7%A3%81%E7%9B%98%E9%97%B4%E6%95%B0%E6%8D%AE%E5%9D%87%E8%A1%A1"><span class="toc-number">4.3.</span> <span class="toc-text">集群数据均衡之磁盘间数据均衡</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#HDFS%E2%80%94%E9%9B%86%E7%BE%A4%E6%89%A9%E5%AE%B9%E5%8F%8A%E7%BC%A9%E5%AE%B9"><span class="toc-number">5.</span> <span class="toc-text">HDFS—集群扩容及缩容</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%B7%BB%E5%8A%A0%E7%99%BD%E5%90%8D%E5%8D%95"><span class="toc-number">5.1.</span> <span class="toc-text">添加白名单</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9C%8D%E5%BD%B9%E6%96%B0%E6%9C%8D%E5%8A%A1%E5%99%A8"><span class="toc-number">5.2.</span> <span class="toc-text">服役新服务器</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%9C%80%E6%B1%82"><span class="toc-number">5.2.1.</span> <span class="toc-text">需求</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%8E%AF%E5%A2%83%E5%87%86%E5%A4%87"><span class="toc-number">5.2.2.</span> <span class="toc-text">环境准备</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9C%8D%E5%BD%B9%E6%96%B0%E8%8A%82%E7%82%B9%E5%85%B7%E4%BD%93%E6%AD%A5%E9%AA%A4"><span class="toc-number">5.2.3.</span> <span class="toc-text">服役新节点具体步骤</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9C%8D%E5%8A%A1%E5%99%A8%E9%97%B4%E6%95%B0%E6%8D%AE%E5%9D%87%E8%A1%A1"><span class="toc-number">5.3.</span> <span class="toc-text">服务器间数据均衡</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%BB%91%E5%90%8D%E5%8D%95%E9%80%80%E5%BD%B9%E6%9C%8D%E5%8A%A1%E5%99%A8"><span class="toc-number">5.4.</span> <span class="toc-text">黑名单退役服务器</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#HDFS%E2%80%94%E5%AD%98%E5%82%A8%E4%BC%98%E5%8C%96"><span class="toc-number">6.</span> <span class="toc-text">HDFS—存储优化</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BA%A0%E5%88%A0%E7%A0%81"><span class="toc-number">6.1.</span> <span class="toc-text">纠删码</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BA%A0%E5%88%A0%E7%A0%81%E5%8E%9F%E7%90%86"><span class="toc-number">6.1.1.</span> <span class="toc-text">纠删码原理</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BA%A0%E5%88%A0%E7%A0%81%E6%A1%88%E4%BE%8B%E5%AE%9E%E6%93%8D"><span class="toc-number">6.1.2.</span> <span class="toc-text">纠删码案例实操</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%9C%80%E6%B1%82%EF%BC%9A"><span class="toc-number">6.1.2.1.</span> <span class="toc-text">需求：</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%85%B7%E4%BD%93%E6%AD%A5%E9%AA%A4"><span class="toc-number">6.1.2.2.</span> <span class="toc-text">具体步骤</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%BC%82%E6%9E%84%E5%AD%98%E5%82%A8%EF%BC%88%E5%86%B7%E7%83%AD%E6%95%B0%E6%8D%AE%E5%88%86%E7%A6%BB%EF%BC%89"><span class="toc-number">6.2.</span> <span class="toc-text">异构存储（冷热数据分离）</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%BC%82%E6%9E%84%E5%AD%98%E5%82%A8Shell%E6%93%8D%E4%BD%9C"><span class="toc-number">6.2.1.</span> <span class="toc-text">异构存储Shell操作</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B5%8B%E8%AF%95%E7%8E%AF%E5%A2%83%E5%87%86%E5%A4%87"><span class="toc-number">6.2.2.</span> <span class="toc-text">测试环境准备</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%B5%8B%E8%AF%95%E7%8E%AF%E5%A2%83%E6%8F%8F%E8%BF%B0"><span class="toc-number">6.2.2.1.</span> <span class="toc-text">测试环境描述</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6%E4%BF%A1%E6%81%AF"><span class="toc-number">6.2.2.2.</span> <span class="toc-text">配置文件信息</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%95%B0%E6%8D%AE%E5%87%86%E5%A4%87"><span class="toc-number">6.2.2.3.</span> <span class="toc-text">数据准备</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#HOT%E5%AD%98%E5%82%A8%E7%AD%96%E7%95%A5%E6%A1%88%E4%BE%8B"><span class="toc-number">6.2.3.</span> <span class="toc-text">HOT存储策略案例</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#WARM%E5%AD%98%E5%82%A8%E7%AD%96%E7%95%A5%E6%B5%8B%E8%AF%95"><span class="toc-number">6.2.4.</span> <span class="toc-text">WARM存储策略测试</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#COLD%E7%AD%96%E7%95%A5%E6%B5%8B%E8%AF%95"><span class="toc-number">6.2.5.</span> <span class="toc-text">COLD策略测试</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ONE-SSD%E7%AD%96%E7%95%A5%E6%B5%8B%E8%AF%95"><span class="toc-number">6.2.6.</span> <span class="toc-text">ONE_SSD策略测试</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ALL-SSD%E7%AD%96%E7%95%A5%E6%B5%8B%E8%AF%95"><span class="toc-number">6.2.7.</span> <span class="toc-text">ALL_SSD策略测试</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#LAZY-PERSIST%E7%AD%96%E7%95%A5%E6%B5%8B%E8%AF%95"><span class="toc-number">6.3.</span> <span class="toc-text">LAZY_PERSIST策略测试</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#HDFS%E2%80%94%E6%95%85%E9%9A%9C%E6%8E%92%E9%99%A4"><span class="toc-number">7.</span> <span class="toc-text">HDFS—故障排除</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#NameNode%E6%95%85%E9%9A%9C%E5%A4%84%E7%90%86"><span class="toc-number">7.1.</span> <span class="toc-text">NameNode故障处理</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%9C%80%E6%B1%82-1"><span class="toc-number">7.1.1.</span> <span class="toc-text">需求</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%95%85%E9%9A%9C%E6%A8%A1%E6%8B%9F"><span class="toc-number">7.2.</span> <span class="toc-text">故障模拟</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%97%AE%E9%A2%98%E8%A7%A3%E5%86%B3"><span class="toc-number">7.2.1.</span> <span class="toc-text">问题解决</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%9B%86%E7%BE%A4%E5%AE%89%E5%85%A8%E6%A8%A1%E5%BC%8F-amp-%E7%A3%81%E7%9B%98%E4%BF%AE%E5%A4%8D"><span class="toc-number">7.3.</span> <span class="toc-text">集群安全模式&amp;磁盘修复</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%89%E5%85%A8%E6%A8%A1%E5%BC%8F"><span class="toc-number">7.3.1.</span> <span class="toc-text">安全模式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%BF%9B%E5%85%A5%E5%AE%89%E5%85%A8%E6%A8%A1%E5%BC%8F%E5%9C%BA%E6%99%AF"><span class="toc-number">7.3.2.</span> <span class="toc-text">进入安全模式场景</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%80%80%E5%87%BA%E5%AE%89%E5%85%A8%E6%A8%A1%E5%BC%8F%E6%9D%A1%E4%BB%B6"><span class="toc-number">7.3.3.</span> <span class="toc-text">退出安全模式条件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9F%BA%E6%9C%AC%E8%AF%AD%E6%B3%95"><span class="toc-number">7.3.4.</span> <span class="toc-text">基本语法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%A1%88%E4%BE%8B1%E5%90%AF%E5%8A%A8%E9%9B%86%E7%BE%A4%E8%BF%9B%E5%85%A5%E5%AE%89%E5%85%A8%E6%A8%A1%E5%BC%8F"><span class="toc-number">7.3.5.</span> <span class="toc-text">案例1启动集群进入安全模式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%A1%88%E4%BE%8B2%EF%BC%9A%E7%A3%81%E7%9B%98%E4%BF%AE%E5%A4%8D"><span class="toc-number">7.3.6.</span> <span class="toc-text">案例2：磁盘修复</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%A1%88%E4%BE%8B3%EF%BC%9A"><span class="toc-number">7.3.7.</span> <span class="toc-text">案例3：</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%85%A2%E7%A3%81%E7%9B%98%E7%9B%91%E6%8E%A7"><span class="toc-number">7.4.</span> <span class="toc-text">慢磁盘监控</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%B0%8F%E6%96%87%E4%BB%B6%E5%BD%92%E6%A1%A3"><span class="toc-number">7.5.</span> <span class="toc-text">小文件归档</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#HDFS%E2%80%94%E9%9B%86%E7%BE%A4%E8%BF%81%E7%A7%BB"><span class="toc-number">8.</span> <span class="toc-text">HDFS—集群迁移</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Apache%E5%92%8CApache%E9%9B%86%E7%BE%A4%E9%97%B4%E6%95%B0%E6%8D%AE%E6%8B%B7%E8%B4%9D"><span class="toc-number">8.1.</span> <span class="toc-text">Apache和Apache集群间数据拷贝</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#MapReduce%E7%94%9F%E4%BA%A7%E7%BB%8F%E9%AA%8C"><span class="toc-number">9.</span> <span class="toc-text">MapReduce生产经验</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#MapReduce%E8%B7%91%E7%9A%84%E6%85%A2%E7%9A%84%E5%8E%9F%E5%9B%A0"><span class="toc-number">9.1.</span> <span class="toc-text">MapReduce跑的慢的原因</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#MapReduce%E5%B8%B8%E7%94%A8%E8%B0%83%E4%BC%98%E5%8F%82%E6%95%B0"><span class="toc-number">9.2.</span> <span class="toc-text">MapReduce常用调优参数</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#MapReduce%E6%95%B0%E6%8D%AE%E5%80%BE%E6%96%9C%E9%97%AE%E9%A2%98"><span class="toc-number">9.3.</span> <span class="toc-text">MapReduce数据倾斜问题</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%95%B0%E6%8D%AE%E5%80%BE%E6%96%9C%E7%8E%B0%E8%B1%A1"><span class="toc-number">9.3.1.</span> <span class="toc-text">数据倾斜现象</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%87%8F%E5%B0%91%E6%95%B0%E6%8D%AE%E5%80%BE%E6%96%9C%E7%9A%84%E6%96%B9%E6%B3%95"><span class="toc-number">9.3.2.</span> <span class="toc-text">减少数据倾斜的方法</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Hadoop-Yarn%E7%94%9F%E4%BA%A7%E7%BB%8F%E9%AA%8C"><span class="toc-number">10.</span> <span class="toc-text">Hadoop-Yarn生产经验</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%B8%B8%E7%94%A8%E7%9A%84%E8%B0%83%E4%BC%98%E5%8F%82%E6%95%B0"><span class="toc-number">10.1.</span> <span class="toc-text">常用的调优参数</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%B0%83%E4%BC%98%E5%8F%82%E6%95%B0%E5%88%97%E8%A1%A8"><span class="toc-number">10.1.1.</span> <span class="toc-text">调优参数列表</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Hadoop%E7%BB%BC%E5%90%88%E8%B0%83%E4%BC%98"><span class="toc-number">11.</span> <span class="toc-text">Hadoop综合调优</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Hadoop%E7%BB%BC%E5%90%88%E8%B0%83%E4%BC%98-1"><span class="toc-number">12.</span> <span class="toc-text">Hadoop综合调优</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Hadoop%E5%B0%8F%E6%96%87%E4%BB%B6%E4%BC%98%E5%8C%96%E6%96%B9%E6%B3%95"><span class="toc-number">12.1.</span> <span class="toc-text">Hadoop小文件优化方法</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Hadoop%E5%B0%8F%E6%96%87%E4%BB%B6%E5%BC%8A%E7%AB%AF"><span class="toc-number">12.1.1.</span> <span class="toc-text">Hadoop小文件弊端</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Hadoop%E5%B0%8F%E6%96%87%E4%BB%B6%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88"><span class="toc-number">12.1.2.</span> <span class="toc-text">Hadoop小文件解决方案</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%B5%8B%E8%AF%95MapReduce%E8%AE%A1%E7%AE%97%E6%80%A7%E8%83%BD"><span class="toc-number">12.2.</span> <span class="toc-text">测试MapReduce计算性能</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BC%81%E4%B8%9A%E5%BC%80%E5%8F%91%E5%9C%BA%E6%99%AF%E6%A1%88%E4%BE%8B"><span class="toc-number">12.3.</span> <span class="toc-text">企业开发场景案例</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%9C%80%E6%B1%82-2"><span class="toc-number">12.3.1.</span> <span class="toc-text">需求</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#HDFS%E5%8F%82%E6%95%B0%E8%B0%83%E4%BC%98"><span class="toc-number">12.3.2.</span> <span class="toc-text">HDFS参数调优</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#MapReduce%E5%8F%82%E6%95%B0%E8%B0%83%E4%BC%98"><span class="toc-number">12.3.3.</span> <span class="toc-text">MapReduce参数调优</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Yarn%E5%8F%82%E6%95%B0%E8%B0%83%E4%BC%98"><span class="toc-number">12.3.4.</span> <span class="toc-text">Yarn参数调优</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%89%A7%E8%A1%8C%E7%A8%8B%E5%BA%8F"><span class="toc-number">12.3.5.</span> <span class="toc-text">执行程序</span></a></li></ol></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/f1601c3e.html" title="单例模式"><img src="https://img.lvxiaoyi.top/typora-img/1002892-20180912131026735-781767905.png/lvxiaoyi" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="单例模式"/></a><div class="content"><a class="title" href="/f1601c3e.html" title="单例模式">单例模式</a><time datetime="2022-09-12T07:22:48.777Z" title="发表于 2022-09-12 15:22:48">2022-09-12</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/b15f0f1b.html" title="设计模式基础-1"><img src="https://img.lvxiaoyi.top/typora-img/image-20211012093705433.png/lvxiaoyi" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="设计模式基础-1"/></a><div class="content"><a class="title" href="/b15f0f1b.html" title="设计模式基础-1">设计模式基础-1</a><time datetime="2022-09-12T07:22:48.777Z" title="发表于 2022-09-12 15:22:48">2022-09-12</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2109f677.html" title="计算机网络常见面试题"><img src="https://img.lvxiaoyi.top/typora-img/java-interview/1.png/lvxiaoyi" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="计算机网络常见面试题"/></a><div class="content"><a class="title" href="/2109f677.html" title="计算机网络常见面试题">计算机网络常见面试题</a><time datetime="2022-09-12T07:22:48.777Z" title="发表于 2022-09-12 15:22:48">2022-09-12</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/60bbc03b.html" title="Jmeter基础一"><img src="https://img.lvxiaoyi.top/typora-img/apachejmeter_0.jpg/lvxiaoyi" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Jmeter基础一"/></a><div class="content"><a class="title" href="/60bbc03b.html" title="Jmeter基础一">Jmeter基础一</a><time datetime="2022-09-12T07:22:48.775Z" title="发表于 2022-09-12 15:22:48">2022-09-12</time></div></div><div class="aside-list-item"><div class="content"><a class="title" href="/0.html" title="无题">无题</a><time datetime="2022-09-12T07:22:48.775Z" title="发表于 2022-09-12 15:22:48">2022-09-12</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2022 By 吕小医</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.umd.min.js"></script><div class="js-pjax"></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
