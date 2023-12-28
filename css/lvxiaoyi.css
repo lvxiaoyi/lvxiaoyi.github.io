@@ -1,0 +1,144 @@
+/* 中间subtitle主题 */
+@font-face {
+    font-family: OldEnglish;
+    src: url(https://npm.elemecdn.com/hassan-assets/fonts/OldEnglish.TTF);
+    font-display: swap
+}
+
+#site-info  #site-title {
+    font-family: OldEnglish,sans-serif !important;
+    font-size: 55px!important;
+    font-weight: lighter;
+}
+
+
+/*个人信息 card*/
+/*白天模式*/
+#aside-content>.card-widget.card-info {
+    background: -webkit-linear-gradient(135deg, #dddcd7, #eae1e1, #4c6667, #d5c6c6, #4b677e);
+    background: -moz-linear-gradient(135deg, #dddcd7, #eae1e1, #4c6667, #d5c6c6, #4b677e);
+    background: -o-linear-gradient(135deg, #dddcd7, #eae1e1, #4c6667, #d5c6c6, #4b677e);
+    background: -ms-linear-gradient(135deg, #dddcd7, #eae1e1, #4c6667, #d5c6c6, #4b677e);
+    background: linear-gradient(-45deg, #dddcd7, #eae1e1, #4c6667, #d5c6c6, #4b677e);
+    -webkit-box-shadow: 0 0 5px #424444;
+    box-shadow: 0 0 5px #424444;
+    position: relative;
+    background-size: 400% 400%;
+    -webkit-animation: Gradient 4s ease infinite !important;
+    -moz-animation: Gradient 4s ease infinite !important;
+    -o-animation: Gradient 4s ease infinite !important;
+    -ms-animation: Gradient 4s ease infinite !important;
+    animation: Gradient 4s ease infinite !important;
+    border-radius: 40px;
+    border: 9px solid #000;
+    padding: 17px 14px 8px;
+    height: 349px !important;
+}
+
+/*黑暗主题下的配置*/
+[data-theme=dark] #aside-content>.card-widget.card-info {
+    background: -webkit-linear-gradient(135deg, #393939, #282624, #282626, #282626, #282626);
+    background: -moz-linear-gradient(135deg, #393939, #282624, #282626, #282626, #282626);
+    background: -o-linear-gradient(135deg, #393939, #282624, #282626, #282626, #282626);
+    background: -ms-linear-gradient(135deg, #393939, #282624, #282626, #282626, #282626);
+    background: linear-gradient(59deg, #393939, #282624, #282626, #282626, #282626) !important;
+}
+
+/* 博主昵称颜色 */
+.author-info__name{
+    color: #d4e7ec;
+    font-family: OldEnglish,sans-serif !important;
+    font-weight: lighter;
+}
+/* a标签默认颜色 */
+
+#article-container a {
+    color: #00c4b6;
+    text-decoration: none;
+}
+
+/* 鼠标悬停时的颜色 */
+
+#article-container a:hover {
+    color: #e58a8a;
+    text-decoration: none;
+}
+/*a标签颜色*/
+a {
+    color: #00c4b6;
+}
+/* 首页中间打字效果上方 */
+#page-header #site_title {
+    color: #80bdab;
+}
+/* 顶部导航栏 */
+#nav a {
+    color: #f9f2f4;
+}
+/* 滚动条 */
+
+::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: rgba(196, 219, 253, 0.7);
+    background-image: -webkit-linear-gradient( 45deg, rgba(255, 255, 255, 0.4) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, 0.4) 50%, rgba(255, 255, 255, 0.4) 75%, transparent 75%, transparent);
+    border-radius: 2em;
+}
+
+[data-theme=dark] ::-webkit-scrollbar-thumb {
+    background-color: rgba(101, 101, 101, 0.3);
+    background-image: -webkit-linear-gradient( 45deg, rgba(189, 189, 189, 0.4) 25%, transparent 25%, transparent 50%, rgba(189, 189, 189, 0.4) 50%, rgba(189, 189, 189, 0.4) 75%, transparent 75%, transparent);
+    border-radius: 2em;
+}
+
+
+::-webkit-scrollbar-corner {
+    background-color: transparent;
+}
+
+::-moz-selection {
+    color: #fff;
+    background-color: rgba(196, 219, 253, 0.7);
+}
+
+[data-theme=dark] ::-moz-selection {
+    color: #fff;
+    background-color: rgba(101, 101, 101, 0.3);
+}
+
+.layout {
+    max-width: 1290px;
+}
+
+/* 背景宇宙星光  */
+#universe{
+    display: block;
+    position: fixed;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    outline: 0;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: -1;
+}
+
+[data-theme=dark] #post{
+    background-color: rgb(0 0 0 / 75%);
+}
+[data-theme=dark] #aside-content{
+    background-color: rgb(0 0 0 / 75%);
+}
+[data-theme=dark] #footer-wrap{
+    background-color: rgb(0 0 0 / 75%);
+}
+
+[data-theme=dark] #page-header:not(.full_page){
+    opacity: 0.75;
+}
