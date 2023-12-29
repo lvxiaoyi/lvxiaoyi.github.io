@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://lvxiaoyi.top/560e8e48.html</loc>
+    
+    <lastmod>2023-12-29</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https://lvxiaoyi.top/music/index.html</loc>
     
     <lastmod>2023-12-26</lastmod>
@@ -1655,6 +1662,13 @@
     <priority>0.6</priority>
   </url>
   
+  <url>
+    <loc>https://lvxiaoyi.top/tags/%E5%8D%9A%E5%AE%A2/</loc>
+    <lastmod>2023-12-29</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
 
   
   <url>
@@ -2002,6 +2016,13 @@
   
   <url>
     <loc>https://lvxiaoyi.top/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E5%9F%BA%E7%A1%80/</loc>
+    <lastmod>2023-12-29</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://lvxiaoyi.top/categories/%E5%8D%9A%E5%AE%A2/</loc>
     <lastmod>2023-12-29</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
