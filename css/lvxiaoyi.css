@@ -110,7 +110,7 @@ a {
 }
 
 .layout {
-    max-width: 1290px;
+    max-width: 80%;
 }
 
 /* 背景宇宙星光  */
@@ -141,4 +141,13 @@ a {
 
 [data-theme=dark] #page-header:not(.full_page){
     opacity: 0.75;
+}
+
+:root{
+    --global-font-size: 15px;
+}
+
+
+#page-header:not(.not-top-img):before {
+    background-color: rgba(0, 0, 0, 0.1);
 }
