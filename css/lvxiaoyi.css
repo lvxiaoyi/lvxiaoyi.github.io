@@ -151,3 +151,7 @@ a {
 #page-header:not(.not-top-img):before {
     background-color: rgba(0, 0, 0, 0.1);
 }
+
+#aside-content {
+    width: 17%;
+}
